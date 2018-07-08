@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C46A15120EC6F2600094EA4 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C46A14B20EC6F2600094EA4 /* BasicLanguage.strings */; };
-		4C46A15220EC6F2600094EA4 /* TPI_Caffeine.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C46A14D20EC6F2600094EA4 /* TPI_Caffeine.xib */; };
+		4C36AAF420F27E9B007CA939 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C36AAF220F27E9B007CA939 /* BasicLanguage.strings */; };
+		4C36AAF720F27EA3007CA939 /* TPI_Caffeine.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C36AAF520F27EA3007CA939 /* TPI_Caffeine.xib */; };
 		4C46A15320EC6F2600094EA4 /* TPI_Caffeine.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46A15020EC6F2600094EA4 /* TPI_Caffeine.m */; };
 		4CBE7B591A91485C008FB230 /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBE7B341A913F34008FB230 /* CocoaExtensions.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4C46A14B20EC6F2600094EA4 /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = BasicLanguage.strings; sourceTree = "<group>"; };
-		4C46A14D20EC6F2600094EA4 /* TPI_Caffeine.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TPI_Caffeine.xib; sourceTree = "<group>"; };
+		4C36AAF320F27E9B007CA939 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/BasicLanguage.strings; sourceTree = "<group>"; };
+		4C36AAF620F27EA3007CA939 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TPI_Caffeine.xib; sourceTree = "<group>"; };
 		4C46A14F20EC6F2600094EA4 /* TPI_Caffeine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_Caffeine.h; sourceTree = "<group>"; };
 		4C46A15020EC6F2600094EA4 /* TPI_Caffeine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPI_Caffeine.m; sourceTree = "<group>"; };
 		4C46A15720EC6F3100094EA4 /* Inherited.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Inherited.entitlements; sourceTree = "<group>"; };
@@ -102,7 +102,7 @@
 		4C46A14A20EC6F2600094EA4 /* Language Files */ = {
 			isa = PBXGroup;
 			children = (
-				4C46A14B20EC6F2600094EA4 /* BasicLanguage.strings */,
+				4C36AAF220F27E9B007CA939 /* BasicLanguage.strings */,
 			);
 			path = "Language Files";
 			sourceTree = "<group>";
@@ -110,7 +110,7 @@
 		4C46A14C20EC6F2600094EA4 /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
-				4C46A14D20EC6F2600094EA4 /* TPI_Caffeine.xib */,
+				4C36AAF520F27EA3007CA939 /* TPI_Caffeine.xib */,
 			);
 			path = "User Interface";
 			sourceTree = "<group>";
@@ -243,13 +243,10 @@
 			};
 			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Caffeine Extension" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				English,
-				Japanese,
-				French,
-				German,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* BragSpam */;
 			projectDirPath = "";
@@ -265,8 +262,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C46A15220EC6F2600094EA4 /* TPI_Caffeine.xib in Resources */,
-				4C46A15120EC6F2600094EA4 /* BasicLanguage.strings in Resources */,
+				4C36AAF720F27EA3007CA939 /* TPI_Caffeine.xib in Resources */,
+				4C36AAF420F27E9B007CA939 /* BasicLanguage.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +279,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		4C36AAF220F27E9B007CA939 /* BasicLanguage.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C36AAF320F27E9B007CA939 /* en */,
+			);
+			name = BasicLanguage.strings;
+			sourceTree = "<group>";
+		};
+		4C36AAF520F27EA3007CA939 /* TPI_Caffeine.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C36AAF620F27EA3007CA939 /* en */,
+			);
+			name = TPI_Caffeine.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		1DEB911B08733D790010E9CD /* Debug */ = {

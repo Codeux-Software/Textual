@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C46A07B20EC6A5000094EA4 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C46A07820EC6A5000094EA4 /* BasicLanguage.strings */; };
+		4C36AAC820F27AB4007CA939 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C36AAC620F27AB4007CA939 /* BasicLanguage.strings */; };
 		4C46A08020EC6A8200094EA4 /* TPI_ZNCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46A07F20EC6A8200094EA4 /* TPI_ZNCAdditions.m */; };
 		4C661D491C2428DC001C2352 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C661D481C2428DC001C2352 /* Security.framework */; };
 		4CF7B6C81C02836A00C986AA /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF7B6C71C02836A00C986AA /* SecurityInterface.framework */; };
@@ -32,7 +32,7 @@
 		4C1D105120EBF29F00E72D80 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Textual Extensions.xcconfig"; sourceTree = "<group>"; };
 		4C1D105520EBF29F00E72D80 /* Enabled Features.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Enabled Features.xcconfig"; sourceTree = "<group>"; };
 		4C1D105720EBF29F00E72D80 /* Inherited.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Inherited.entitlements; sourceTree = "<group>"; };
-		4C46A07820EC6A5000094EA4 /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = BasicLanguage.strings; sourceTree = "<group>"; };
+		4C36AAC720F27AB4007CA939 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/BasicLanguage.strings; sourceTree = "<group>"; };
 		4C46A07A20EC6A5000094EA4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C46A07E20EC6A8200094EA4 /* TPI_ZNCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_ZNCAdditions.h; sourceTree = "<group>"; };
 		4C46A07F20EC6A8200094EA4 /* TPI_ZNCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPI_ZNCAdditions.m; sourceTree = "<group>"; };
@@ -167,7 +167,7 @@
 		4C46A07720EC6A5000094EA4 /* Language Files */ = {
 			isa = PBXGroup;
 			children = (
-				4C46A07820EC6A5000094EA4 /* BasicLanguage.strings */,
+				4C36AAC620F27AB4007CA939 /* BasicLanguage.strings */,
 			);
 			path = "Language Files";
 			sourceTree = "<group>";
@@ -236,13 +236,10 @@
 			};
 			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "ZNC Additions Extension" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				English,
-				Japanese,
-				French,
-				German,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* BragSpam */;
 			projectDirPath = "";
@@ -258,7 +255,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C46A07B20EC6A5000094EA4 /* BasicLanguage.strings in Resources */,
+				4C36AAC820F27AB4007CA939 /* BasicLanguage.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +271,17 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		4C36AAC620F27AB4007CA939 /* BasicLanguage.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C36AAC720F27AB4007CA939 /* en */,
+			);
+			name = BasicLanguage.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		1DEB911B08733D790010E9CD /* Debug */ = {

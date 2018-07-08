@@ -10,7 +10,7 @@
 		4C06DE7E20EC48560055D09A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAC2A071F12AFFB00D06046 /* Security.framework */; };
 		4C06DE7F20EC48560055D09A /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAC2A081F12AFFB00D06046 /* SecurityInterface.framework */; };
 		4C06DE8020EC48570055D09A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAC2A0B1F12B01700D06046 /* SystemConfiguration.framework */; };
-		4C46A02520EC67A500094EA4 /* SecureTransportErrorCodes.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C46A01F20EC677B00094EA4 /* SecureTransportErrorCodes.strings */; };
+		4C36AAD120F27BDA007CA939 /* SecureTransportErrorCodes.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C36AACF20F27BDA007CA939 /* SecureTransportErrorCodes.strings */; };
 		4C46A06820EC68B800094EA4 /* RCMTrustPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46A05120EC67E300094EA4 /* RCMTrustPanel.m */; };
 		4C46A06920EC68B800094EA4 /* NSObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46A05720EC67E300094EA4 /* NSObjectHelper.m */; };
 		4C46A06A20EC68B800094EA4 /* IRCConnectionConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46A02B20EC67E300094EA4 /* IRCConnectionConfig.m */; };
@@ -30,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		4C1406421F11942B00C73D53 /* RemoteConnectionManager.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = RemoteConnectionManager.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C36AAD020F27BDA007CA939 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SecureTransportErrorCodes.strings; sourceTree = "<group>"; };
 		4C469FFD20EC626E00094EA4 /* IRCConnectionSocketNWF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRCConnectionSocketNWF.swift; sourceTree = "<group>"; };
 		4C469FFE20EC626E00094EA4 /* IRCConnectionSocketClassic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRCConnectionSocketClassic.swift; sourceTree = "<group>"; };
 		4C469FFF20EC626E00094EA4 /* IRCConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRCConnection.swift; sourceTree = "<group>"; };
@@ -43,7 +44,6 @@
 		4C46A00A20EC626E00094EA4 /* RCMProcessDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCMProcessDelegate.m; sourceTree = "<group>"; };
 		4C46A00B20EC626E00094EA4 /* RCMProcessMain.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCMProcessMain.m; sourceTree = "<group>"; };
 		4C46A00C20EC626E00094EA4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		4C46A02020EC677B00094EA4 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/SecureTransportErrorCodes.strings; sourceTree = "<group>"; };
 		4C46A02220EC677B00094EA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C46A02B20EC67E300094EA4 /* IRCConnectionConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCConnectionConfig.m; sourceTree = "<group>"; };
 		4C46A02F20EC67E300094EA4 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
@@ -204,7 +204,7 @@
 		4C46A01C20EC677B00094EA4 /* Language Files */ = {
 			isa = PBXGroup;
 			children = (
-				4C46A01F20EC677B00094EA4 /* SecureTransportErrorCodes.strings */,
+				4C36AACF20F27BDA007CA939 /* SecureTransportErrorCodes.strings */,
 			);
 			path = "Language Files";
 			sourceTree = "<group>";
@@ -481,7 +481,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				English,
 			);
 			mainGroup = 4C1406391F11942B00C73D53;
 			productRefGroup = 4C1406431F11942B00C73D53 /* Products */;
@@ -498,7 +497,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C46A02520EC67A500094EA4 /* SecureTransportErrorCodes.strings in Resources */,
+				4C36AAD120F27BDA007CA939 /* SecureTransportErrorCodes.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,10 +528,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		4C46A01F20EC677B00094EA4 /* SecureTransportErrorCodes.strings */ = {
+		4C36AACF20F27BDA007CA939 /* SecureTransportErrorCodes.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4C46A02020EC677B00094EA4 /* English */,
+				4C36AAD020F27BDA007CA939 /* en */,
 			);
 			name = SecureTransportErrorCodes.strings;
 			sourceTree = "<group>";

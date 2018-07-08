@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C46A14220EC6E3C00094EA4 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C46A13D20EC6E3C00094EA4 /* BasicLanguage.strings */; };
-		4C46A14320EC6E3C00094EA4 /* TPIWikiStyleLinkParser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C46A13F20EC6E3C00094EA4 /* TPIWikiStyleLinkParser.xib */; };
+		4C36AACB20F27B2E007CA939 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C36AAC920F27B2E007CA939 /* BasicLanguage.strings */; };
+		4C36AACE20F27B85007CA939 /* TPIWikiStyleLinkParser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C36AACC20F27B85007CA939 /* TPIWikiStyleLinkParser.xib */; };
 		4C46A14720EC6E4E00094EA4 /* TPIWikiStyleLinkParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46A14520EC6E4D00094EA4 /* TPIWikiStyleLinkParser.m */; };
 		4CBE7B481A9146E2008FB230 /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBE7B471A9146E2008FB230 /* CocoaExtensions.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C36AACA20F27B2E007CA939 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/BasicLanguage.strings; sourceTree = "<group>"; };
+		4C36AACD20F27B85007CA939 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TPIWikiStyleLinkParser.xib; sourceTree = "<group>"; };
 		4C46A0E420EC6DD900094EA4 /* Inherited.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Inherited.entitlements; sourceTree = "<group>"; };
 		4C46A0E820EC6DD900094EA4 /* Textual.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
 		4C46A0E920EC6DD900094EA4 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Textual Extensions.xcconfig"; sourceTree = "<group>"; };
@@ -33,8 +35,6 @@
 		4C46A10D20EC6DD900094EA4 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Textual Extensions.xcconfig"; sourceTree = "<group>"; };
 		4C46A11120EC6DD900094EA4 /* Enabled Features.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Enabled Features.xcconfig"; sourceTree = "<group>"; };
 		4C46A13B20EC6E3C00094EA4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4C46A13D20EC6E3C00094EA4 /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = BasicLanguage.strings; sourceTree = "<group>"; };
-		4C46A14020EC6E3C00094EA4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TPIWikiStyleLinkParser.xib; sourceTree = "<group>"; };
 		4C46A14520EC6E4D00094EA4 /* TPIWikiStyleLinkParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPIWikiStyleLinkParser.m; sourceTree = "<group>"; };
 		4C46A14620EC6E4D00094EA4 /* TPIWikiStyleLinkParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPIWikiStyleLinkParser.h; sourceTree = "<group>"; };
 		4CBE7B471A9146E2008FB230 /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "../../../.tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<group>"; };
@@ -184,7 +184,7 @@
 		4C46A13C20EC6E3C00094EA4 /* Language Files */ = {
 			isa = PBXGroup;
 			children = (
-				4C46A13D20EC6E3C00094EA4 /* BasicLanguage.strings */,
+				4C36AAC920F27B2E007CA939 /* BasicLanguage.strings */,
 			);
 			path = "Language Files";
 			sourceTree = "<group>";
@@ -192,7 +192,7 @@
 		4C46A13E20EC6E3C00094EA4 /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
-				4C46A13F20EC6E3C00094EA4 /* TPIWikiStyleLinkParser.xib */,
+				4C36AACC20F27B85007CA939 /* TPIWikiStyleLinkParser.xib */,
 			);
 			path = "User Interface";
 			sourceTree = "<group>";
@@ -243,13 +243,10 @@
 			};
 			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Wiki-style Link Parser Extension" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				English,
-				Japanese,
-				French,
-				German,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* BragSpam */;
 			projectDirPath = "";
@@ -265,8 +262,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C46A14220EC6E3C00094EA4 /* BasicLanguage.strings in Resources */,
-				4C46A14320EC6E3C00094EA4 /* TPIWikiStyleLinkParser.xib in Resources */,
+				4C36AACE20F27B85007CA939 /* TPIWikiStyleLinkParser.xib in Resources */,
+				4C36AACB20F27B2E007CA939 /* BasicLanguage.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,10 +281,18 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		4C46A13F20EC6E3C00094EA4 /* TPIWikiStyleLinkParser.xib */ = {
+		4C36AAC920F27B2E007CA939 /* BasicLanguage.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4C46A14020EC6E3C00094EA4 /* English */,
+				4C36AACA20F27B2E007CA939 /* en */,
+			);
+			name = BasicLanguage.strings;
+			sourceTree = "<group>";
+		};
+		4C36AACC20F27B85007CA939 /* TPIWikiStyleLinkParser.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C36AACD20F27B85007CA939 /* en */,
 			);
 			name = TPIWikiStyleLinkParser.xib;
 			sourceTree = "<group>";

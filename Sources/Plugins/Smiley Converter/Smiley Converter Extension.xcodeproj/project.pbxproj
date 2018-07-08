@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C36AADF20F27D8E007CA939 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C36AADD20F27D8E007CA939 /* BasicLanguage.strings */; };
+		4C36AAE220F27D9A007CA939 /* TPISmileyConverter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C36AAE020F27D9A007CA939 /* TPISmileyConverter.xib */; };
 		4C46A0C820EC6BA900094EA4 /* TPISmileyConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C46A0C620EC6BA900094EA4 /* TPISmileyConverter.m */; };
 		4C46A0D220EC6BB700094EA4 /* conversionTable2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C46A0CA20EC6BB700094EA4 /* conversionTable2.plist */; };
 		4C46A0D320EC6BB700094EA4 /* conversionTable.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C46A0CB20EC6BB700094EA4 /* conversionTable.plist */; };
-		4C46A0D520EC6BB700094EA4 /* TPISmileyConverter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C46A0CE20EC6BB700094EA4 /* TPISmileyConverter.xib */; };
-		4C46A0D620EC6BB700094EA4 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C46A0D120EC6BB700094EA4 /* BasicLanguage.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,13 +33,13 @@
 		4C1D111120EBF45200E72D80 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Textual Extensions.xcconfig"; sourceTree = "<group>"; };
 		4C1D111520EBF45200E72D80 /* Enabled Features.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Enabled Features.xcconfig"; sourceTree = "<group>"; };
 		4C1D111720EBF45200E72D80 /* Inherited.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Inherited.entitlements; sourceTree = "<group>"; };
+		4C36AADE20F27D8E007CA939 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/BasicLanguage.strings; sourceTree = "<group>"; };
+		4C36AAE120F27D9A007CA939 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TPISmileyConverter.xib; sourceTree = "<group>"; };
 		4C46A0C620EC6BA900094EA4 /* TPISmileyConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPISmileyConverter.m; sourceTree = "<group>"; };
 		4C46A0C720EC6BA900094EA4 /* TPISmileyConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPISmileyConverter.h; sourceTree = "<group>"; };
 		4C46A0CA20EC6BB700094EA4 /* conversionTable2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = conversionTable2.plist; sourceTree = "<group>"; };
 		4C46A0CB20EC6BB700094EA4 /* conversionTable.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = conversionTable.plist; sourceTree = "<group>"; };
 		4C46A0CC20EC6BB700094EA4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4C46A0CF20EC6BB700094EA4 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TPISmileyConverter.xib; sourceTree = "<group>"; };
-		4C46A0D120EC6BB700094EA4 /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = BasicLanguage.strings; sourceTree = "<group>"; };
 		8D576316048677EA00EA77CD /* SmileyConverter.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmileyConverter.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -185,7 +185,7 @@
 		4C46A0CD20EC6BB700094EA4 /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
-				4C46A0CE20EC6BB700094EA4 /* TPISmileyConverter.xib */,
+				4C36AAE020F27D9A007CA939 /* TPISmileyConverter.xib */,
 			);
 			path = "User Interface";
 			sourceTree = "<group>";
@@ -193,7 +193,7 @@
 		4C46A0D020EC6BB700094EA4 /* Language Files */ = {
 			isa = PBXGroup;
 			children = (
-				4C46A0D120EC6BB700094EA4 /* BasicLanguage.strings */,
+				4C36AADD20F27D8E007CA939 /* BasicLanguage.strings */,
 			);
 			path = "Language Files";
 			sourceTree = "<group>";
@@ -245,13 +245,10 @@
 			};
 			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Smiley Converter Extension" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
-				English,
-				Japanese,
-				French,
-				German,
+				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* BragSpam */;
 			projectDirPath = "";
@@ -268,9 +265,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C46A0D220EC6BB700094EA4 /* conversionTable2.plist in Resources */,
-				4C46A0D620EC6BB700094EA4 /* BasicLanguage.strings in Resources */,
 				4C46A0D320EC6BB700094EA4 /* conversionTable.plist in Resources */,
-				4C46A0D520EC6BB700094EA4 /* TPISmileyConverter.xib in Resources */,
+				4C36AADF20F27D8E007CA939 /* BasicLanguage.strings in Resources */,
+				4C36AAE220F27D9A007CA939 /* TPISmileyConverter.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,10 +285,18 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		4C46A0CE20EC6BB700094EA4 /* TPISmileyConverter.xib */ = {
+		4C36AADD20F27D8E007CA939 /* BasicLanguage.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4C46A0CF20EC6BB700094EA4 /* English */,
+				4C36AADE20F27D8E007CA939 /* en */,
+			);
+			name = BasicLanguage.strings;
+			sourceTree = "<group>";
+		};
+		4C36AAE020F27D9A007CA939 /* TPISmileyConverter.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C36AAE120F27D9A007CA939 /* en */,
 			);
 			name = TPISmileyConverter.xib;
 			sourceTree = "<group>";
