@@ -487,10 +487,6 @@
 		4C06E1B320EC4AC40055D09A /* TDCLicenseManagerMigrateAppStoreSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C06E14D20EC4AC40055D09A /* TDCLicenseManagerMigrateAppStoreSheet.xib */; };
 		4C06E1B420EC4AC40055D09A /* TDCLicenseManagerMigrateAppStoreSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C06E14D20EC4AC40055D09A /* TDCLicenseManagerMigrateAppStoreSheet.xib */; };
 		4C06E1B520EC4AC40055D09A /* TDCLicenseManagerMigrateAppStoreSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C06E14D20EC4AC40055D09A /* TDCLicenseManagerMigrateAppStoreSheet.xib */; };
-		4C06E1B620EC4AC40055D09A /* TDCBuddyListDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C06E14F20EC4AC40055D09A /* TDCBuddyListDialog.xib */; };
-		4C06E1B720EC4AC40055D09A /* TDCBuddyListDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C06E14F20EC4AC40055D09A /* TDCBuddyListDialog.xib */; };
-		4C06E1B820EC4AC40055D09A /* TDCBuddyListDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C06E14F20EC4AC40055D09A /* TDCBuddyListDialog.xib */; };
-		4C06E1B920EC4AC40055D09A /* TDCBuddyListDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C06E14F20EC4AC40055D09A /* TDCBuddyListDialog.xib */; };
 		4C06E1BB20EC4AC40055D09A /* TDCLicenseUpgradeEligibilitySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C06E15120EC4AC40055D09A /* TDCLicenseUpgradeEligibilitySheet.xib */; };
 		4C06E1BC20EC4AC40055D09A /* TDCLicenseUpgradeEligibilitySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C06E15120EC4AC40055D09A /* TDCLicenseUpgradeEligibilitySheet.xib */; };
 		4C06E1BD20EC4AC40055D09A /* TDCLicenseUpgradeEligibilitySheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C06E15120EC4AC40055D09A /* TDCLicenseUpgradeEligibilitySheet.xib */; };
@@ -866,10 +862,6 @@
 		4C06E4CA20EC551C0055D09A /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152A120EB673E00448776 /* TXMenuController.m */; };
 		4C06E4CB20EC551C0055D09A /* TXSharedApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529D20EB673E00448776 /* TXSharedApplication.m */; };
 		4C06E4CC20EC551C0055D09A /* TXWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152A020EB673E00448776 /* TXWindowController.m */; };
-		4C06E4CD20EC551C0055D09A /* TDCBuddyListDialogDropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529620EB673E00448776 /* TDCBuddyListDialogDropView.m */; };
-		4C06E4CE20EC551C0055D09A /* TDCBuddyListDialogTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529720EB673E00448776 /* TDCBuddyListDialogTable.m */; };
-		4C06E4CF20EC551C0055D09A /* TDCBuddyListDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529820EB673E00448776 /* TDCBuddyListDialog.m */; };
-		4C06E4D020EC551C0055D09A /* TDCBuddyListDialogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529920EB673E00448776 /* TDCBuddyListDialogEntry.m */; };
 		4C06E4D120EC551C0055D09A /* TDCChannelSpotlightControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31526B20EB673E00448776 /* TDCChannelSpotlightControls.m */; };
 		4C06E4D220EC551C0055D09A /* TDCChannelSpotlightSearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31526C20EB673E00448776 /* TDCChannelSpotlightSearchResult.m */; };
 		4C06E4D320EC551C0055D09A /* TDCChannelSpotlightController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31526D20EB673E00448776 /* TDCChannelSpotlightController.m */; };
@@ -1041,10 +1033,6 @@
 		4C06E58320EC553A0055D09A /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152A120EB673E00448776 /* TXMenuController.m */; };
 		4C06E58420EC553A0055D09A /* TXSharedApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529D20EB673E00448776 /* TXSharedApplication.m */; };
 		4C06E58520EC553A0055D09A /* TXWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152A020EB673E00448776 /* TXWindowController.m */; };
-		4C06E58620EC553A0055D09A /* TDCBuddyListDialogDropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529620EB673E00448776 /* TDCBuddyListDialogDropView.m */; };
-		4C06E58720EC553A0055D09A /* TDCBuddyListDialogTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529720EB673E00448776 /* TDCBuddyListDialogTable.m */; };
-		4C06E58820EC553A0055D09A /* TDCBuddyListDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529820EB673E00448776 /* TDCBuddyListDialog.m */; };
-		4C06E58920EC553A0055D09A /* TDCBuddyListDialogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529920EB673E00448776 /* TDCBuddyListDialogEntry.m */; };
 		4C06E58A20EC553A0055D09A /* TDCChannelSpotlightControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31526B20EB673E00448776 /* TDCChannelSpotlightControls.m */; };
 		4C06E58B20EC553A0055D09A /* TDCChannelSpotlightSearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31526C20EB673E00448776 /* TDCChannelSpotlightSearchResult.m */; };
 		4C06E58C20EC553A0055D09A /* TDCChannelSpotlightController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31526D20EB673E00448776 /* TDCChannelSpotlightController.m */; };
@@ -1219,10 +1207,6 @@
 		4C06E63C20EC55B90055D09A /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152A120EB673E00448776 /* TXMenuController.m */; };
 		4C06E63D20EC55B90055D09A /* TXSharedApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529D20EB673E00448776 /* TXSharedApplication.m */; };
 		4C06E63E20EC55B90055D09A /* TXWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152A020EB673E00448776 /* TXWindowController.m */; };
-		4C06E63F20EC55B90055D09A /* TDCBuddyListDialogDropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529620EB673E00448776 /* TDCBuddyListDialogDropView.m */; };
-		4C06E64020EC55B90055D09A /* TDCBuddyListDialogTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529720EB673E00448776 /* TDCBuddyListDialogTable.m */; };
-		4C06E64120EC55B90055D09A /* TDCBuddyListDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529820EB673E00448776 /* TDCBuddyListDialog.m */; };
-		4C06E64220EC55B90055D09A /* TDCBuddyListDialogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529920EB673E00448776 /* TDCBuddyListDialogEntry.m */; };
 		4C06E64320EC55B90055D09A /* TDCChannelSpotlightControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31526B20EB673E00448776 /* TDCChannelSpotlightControls.m */; };
 		4C06E64420EC55B90055D09A /* TDCChannelSpotlightSearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31526C20EB673E00448776 /* TDCChannelSpotlightSearchResult.m */; };
 		4C06E64520EC55B90055D09A /* TDCChannelSpotlightController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31526D20EB673E00448776 /* TDCChannelSpotlightController.m */; };
@@ -1397,10 +1381,6 @@
 		4C06E6F520EC55DA0055D09A /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152A120EB673E00448776 /* TXMenuController.m */; };
 		4C06E6F620EC55DA0055D09A /* TXSharedApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529D20EB673E00448776 /* TXSharedApplication.m */; };
 		4C06E6F720EC55DA0055D09A /* TXWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152A020EB673E00448776 /* TXWindowController.m */; };
-		4C06E6F820EC55DA0055D09A /* TDCBuddyListDialogDropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529620EB673E00448776 /* TDCBuddyListDialogDropView.m */; };
-		4C06E6F920EC55DA0055D09A /* TDCBuddyListDialogTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529720EB673E00448776 /* TDCBuddyListDialogTable.m */; };
-		4C06E6FA20EC55DA0055D09A /* TDCBuddyListDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529820EB673E00448776 /* TDCBuddyListDialog.m */; };
-		4C06E6FB20EC55DA0055D09A /* TDCBuddyListDialogEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31529920EB673E00448776 /* TDCBuddyListDialogEntry.m */; };
 		4C06E6FC20EC55DA0055D09A /* TDCChannelSpotlightControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31526B20EB673E00448776 /* TDCChannelSpotlightControls.m */; };
 		4C06E6FD20EC55DA0055D09A /* TDCChannelSpotlightSearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31526C20EB673E00448776 /* TDCChannelSpotlightSearchResult.m */; };
 		4C06E6FE20EC55DA0055D09A /* TDCChannelSpotlightController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31526D20EB673E00448776 /* TDCChannelSpotlightController.m */; };
@@ -1954,10 +1934,6 @@
 		4C31566F20EB6D0400448776 /* SwiftBridgingHeaderPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31520A20EB673E00448776 /* SwiftBridgingHeaderPrivate.h */; };
 		4C31567020EB6D0400448776 /* TDCAboutDialogPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31522820EB673E00448776 /* TDCAboutDialogPrivate.h */; };
 		4C31567120EB6D0400448776 /* TDCAddressBookSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151BA20EB673E00448776 /* TDCAddressBookSheetPrivate.h */; };
-		4C31567220EB6D0400448776 /* TDCBuddyListDialogDropViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151CB20EB673E00448776 /* TDCBuddyListDialogDropViewPrivate.h */; };
-		4C31567320EB6D0400448776 /* TDCBuddyListDialogEntryPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31522E20EB673E00448776 /* TDCBuddyListDialogEntryPrivate.h */; };
-		4C31567420EB6D0400448776 /* TDCBuddyListDialogPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151FE20EB673E00448776 /* TDCBuddyListDialogPrivate.h */; };
-		4C31567520EB6D0400448776 /* TDCBuddyListDialogTablePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31521320EB673E00448776 /* TDCBuddyListDialogTablePrivate.h */; };
 		4C31567620EB6D0400448776 /* TDCChannelBanListSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151B920EB673E00448776 /* TDCChannelBanListSheetPrivate.h */; };
 		4C31567720EB6D0400448776 /* TDCChannelInviteSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31523E20EB673E00448776 /* TDCChannelInviteSheetPrivate.h */; };
 		4C31567820EB6D0400448776 /* TDCChannelModifyModesSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31523D20EB673E00448776 /* TDCChannelModifyModesSheetPrivate.h */; };
@@ -2093,10 +2069,6 @@
 		4C31570220EB6D0500448776 /* SwiftBridgingHeaderPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31520A20EB673E00448776 /* SwiftBridgingHeaderPrivate.h */; };
 		4C31570320EB6D0500448776 /* TDCAboutDialogPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31522820EB673E00448776 /* TDCAboutDialogPrivate.h */; };
 		4C31570420EB6D0500448776 /* TDCAddressBookSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151BA20EB673E00448776 /* TDCAddressBookSheetPrivate.h */; };
-		4C31570520EB6D0500448776 /* TDCBuddyListDialogDropViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151CB20EB673E00448776 /* TDCBuddyListDialogDropViewPrivate.h */; };
-		4C31570620EB6D0500448776 /* TDCBuddyListDialogEntryPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31522E20EB673E00448776 /* TDCBuddyListDialogEntryPrivate.h */; };
-		4C31570720EB6D0500448776 /* TDCBuddyListDialogPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151FE20EB673E00448776 /* TDCBuddyListDialogPrivate.h */; };
-		4C31570820EB6D0500448776 /* TDCBuddyListDialogTablePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31521320EB673E00448776 /* TDCBuddyListDialogTablePrivate.h */; };
 		4C31570920EB6D0500448776 /* TDCChannelBanListSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151B920EB673E00448776 /* TDCChannelBanListSheetPrivate.h */; };
 		4C31570A20EB6D0500448776 /* TDCChannelInviteSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31523E20EB673E00448776 /* TDCChannelInviteSheetPrivate.h */; };
 		4C31570B20EB6D0500448776 /* TDCChannelModifyModesSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31523D20EB673E00448776 /* TDCChannelModifyModesSheetPrivate.h */; };
@@ -2232,10 +2204,6 @@
 		4C31579520EB6D0600448776 /* SwiftBridgingHeaderPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31520A20EB673E00448776 /* SwiftBridgingHeaderPrivate.h */; };
 		4C31579620EB6D0600448776 /* TDCAboutDialogPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31522820EB673E00448776 /* TDCAboutDialogPrivate.h */; };
 		4C31579720EB6D0600448776 /* TDCAddressBookSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151BA20EB673E00448776 /* TDCAddressBookSheetPrivate.h */; };
-		4C31579820EB6D0600448776 /* TDCBuddyListDialogDropViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151CB20EB673E00448776 /* TDCBuddyListDialogDropViewPrivate.h */; };
-		4C31579920EB6D0600448776 /* TDCBuddyListDialogEntryPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31522E20EB673E00448776 /* TDCBuddyListDialogEntryPrivate.h */; };
-		4C31579A20EB6D0600448776 /* TDCBuddyListDialogPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151FE20EB673E00448776 /* TDCBuddyListDialogPrivate.h */; };
-		4C31579B20EB6D0600448776 /* TDCBuddyListDialogTablePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31521320EB673E00448776 /* TDCBuddyListDialogTablePrivate.h */; };
 		4C31579C20EB6D0600448776 /* TDCChannelBanListSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151B920EB673E00448776 /* TDCChannelBanListSheetPrivate.h */; };
 		4C31579D20EB6D0600448776 /* TDCChannelInviteSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31523E20EB673E00448776 /* TDCChannelInviteSheetPrivate.h */; };
 		4C31579E20EB6D0600448776 /* TDCChannelModifyModesSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31523D20EB673E00448776 /* TDCChannelModifyModesSheetPrivate.h */; };
@@ -2372,10 +2340,6 @@
 		4C31582820EB6D0700448776 /* SwiftBridgingHeaderPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31520A20EB673E00448776 /* SwiftBridgingHeaderPrivate.h */; };
 		4C31582920EB6D0700448776 /* TDCAboutDialogPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31522820EB673E00448776 /* TDCAboutDialogPrivate.h */; };
 		4C31582A20EB6D0700448776 /* TDCAddressBookSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151BA20EB673E00448776 /* TDCAddressBookSheetPrivate.h */; };
-		4C31582B20EB6D0700448776 /* TDCBuddyListDialogDropViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151CB20EB673E00448776 /* TDCBuddyListDialogDropViewPrivate.h */; };
-		4C31582C20EB6D0700448776 /* TDCBuddyListDialogEntryPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31522E20EB673E00448776 /* TDCBuddyListDialogEntryPrivate.h */; };
-		4C31582D20EB6D0700448776 /* TDCBuddyListDialogPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151FE20EB673E00448776 /* TDCBuddyListDialogPrivate.h */; };
-		4C31582E20EB6D0700448776 /* TDCBuddyListDialogTablePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31521320EB673E00448776 /* TDCBuddyListDialogTablePrivate.h */; };
 		4C31582F20EB6D0700448776 /* TDCChannelBanListSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151B920EB673E00448776 /* TDCChannelBanListSheetPrivate.h */; };
 		4C31583020EB6D0700448776 /* TDCChannelInviteSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31523E20EB673E00448776 /* TDCChannelInviteSheetPrivate.h */; };
 		4C31583120EB6D0700448776 /* TDCChannelModifyModesSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31523D20EB673E00448776 /* TDCChannelModifyModesSheetPrivate.h */; };
@@ -2481,7 +2445,6 @@
 		4C31589F20EB6D0F00448776 /* IRCAddressBookInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518720EB673E00448776 /* IRCAddressBookInternal.h */; };
 		4C3158A020EB6D0F00448776 /* TDCChannelPropertiesSheetInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518820EB673E00448776 /* TDCChannelPropertiesSheetInternal.h */; };
 		4C3158A120EB6D0F00448776 /* TDCChannelSpotlightAppearanceInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518920EB673E00448776 /* TDCChannelSpotlightAppearanceInternal.h */; };
-		4C3158A220EB6D0F00448776 /* TDCBuddyListDialogInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518A20EB673E00448776 /* TDCBuddyListDialogInternal.h */; };
 		4C3158A320EB6D0F00448776 /* IRCPrefixInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518B20EB673E00448776 /* IRCPrefixInternal.h */; };
 		4C3158A420EB6D0F00448776 /* IRCChannelConfigInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518C20EB673E00448776 /* IRCChannelConfigInternal.h */; };
 		4C3158A520EB6D0F00448776 /* IRCClientConfigInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518D20EB673E00448776 /* IRCClientConfigInternal.h */; };
@@ -2498,7 +2461,6 @@
 		4C3158B020EB6D0F00448776 /* IRCAddressBookInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518720EB673E00448776 /* IRCAddressBookInternal.h */; };
 		4C3158B120EB6D0F00448776 /* TDCChannelPropertiesSheetInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518820EB673E00448776 /* TDCChannelPropertiesSheetInternal.h */; };
 		4C3158B220EB6D0F00448776 /* TDCChannelSpotlightAppearanceInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518920EB673E00448776 /* TDCChannelSpotlightAppearanceInternal.h */; };
-		4C3158B320EB6D0F00448776 /* TDCBuddyListDialogInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518A20EB673E00448776 /* TDCBuddyListDialogInternal.h */; };
 		4C3158B420EB6D0F00448776 /* IRCPrefixInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518B20EB673E00448776 /* IRCPrefixInternal.h */; };
 		4C3158B520EB6D0F00448776 /* IRCChannelConfigInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518C20EB673E00448776 /* IRCChannelConfigInternal.h */; };
 		4C3158B620EB6D0F00448776 /* IRCClientConfigInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518D20EB673E00448776 /* IRCClientConfigInternal.h */; };
@@ -2515,7 +2477,6 @@
 		4C3158C120EB6D1000448776 /* IRCAddressBookInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518720EB673E00448776 /* IRCAddressBookInternal.h */; };
 		4C3158C220EB6D1000448776 /* TDCChannelPropertiesSheetInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518820EB673E00448776 /* TDCChannelPropertiesSheetInternal.h */; };
 		4C3158C320EB6D1000448776 /* TDCChannelSpotlightAppearanceInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518920EB673E00448776 /* TDCChannelSpotlightAppearanceInternal.h */; };
-		4C3158C420EB6D1000448776 /* TDCBuddyListDialogInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518A20EB673E00448776 /* TDCBuddyListDialogInternal.h */; };
 		4C3158C520EB6D1000448776 /* IRCPrefixInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518B20EB673E00448776 /* IRCPrefixInternal.h */; };
 		4C3158C620EB6D1000448776 /* IRCChannelConfigInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518C20EB673E00448776 /* IRCChannelConfigInternal.h */; };
 		4C3158C720EB6D1000448776 /* IRCClientConfigInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518D20EB673E00448776 /* IRCClientConfigInternal.h */; };
@@ -2532,7 +2493,6 @@
 		4C3158D220EB6D1000448776 /* IRCAddressBookInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518720EB673E00448776 /* IRCAddressBookInternal.h */; };
 		4C3158D320EB6D1000448776 /* TDCChannelPropertiesSheetInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518820EB673E00448776 /* TDCChannelPropertiesSheetInternal.h */; };
 		4C3158D420EB6D1000448776 /* TDCChannelSpotlightAppearanceInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518920EB673E00448776 /* TDCChannelSpotlightAppearanceInternal.h */; };
-		4C3158D520EB6D1000448776 /* TDCBuddyListDialogInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518A20EB673E00448776 /* TDCBuddyListDialogInternal.h */; };
 		4C3158D620EB6D1000448776 /* IRCPrefixInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518B20EB673E00448776 /* IRCPrefixInternal.h */; };
 		4C3158D720EB6D1000448776 /* IRCChannelConfigInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518C20EB673E00448776 /* IRCChannelConfigInternal.h */; };
 		4C3158D820EB6D1000448776 /* IRCClientConfigInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31518D20EB673E00448776 /* IRCClientConfigInternal.h */; };
@@ -5341,7 +5301,6 @@
 				4C31551520EB6CB300448776 /* TDCWindowBase.h in Headers */,
 				4C31585420EB6D0700448776 /* TDCWelcomeSheetPrivate.h in Headers */,
 				4C31585520EB6D0700448776 /* TextualPrivate.h in Headers */,
-				4C31582E20EB6D0700448776 /* TDCBuddyListDialogTablePrivate.h in Headers */,
 				4C3158A820EB6D0F00448776 /* IRCModeInfoInternal.h in Headers */,
 				4C31581520EB6D0700448776 /* IRCColorFormatPrivate.h in Headers */,
 				4C31586620EB6D0700448776 /* TPCApplicationInfoPrivate.h in Headers */,
@@ -5361,7 +5320,6 @@
 				4C31553D20EB6CB300448776 /* TVCMainWindowTextView.h in Headers */,
 				4C06E41120EC52240055D09A /* TVCLogLineXPCPrivate.h in Headers */,
 				4C3158AB20EB6D0F00448776 /* TDCChannelSpotlightControllerInternal.h in Headers */,
-				4C31582B20EB6D0700448776 /* TDCBuddyListDialogDropViewPrivate.h in Headers */,
 				4C31553E20EB6CB300448776 /* TVCMainWindowTextViewAppearance.h in Headers */,
 				4C469E3520EC569D00094EA4 /* ARLReceiptLoader.h in Headers */,
 				4C06E27020EC4E350055D09A /* StaticDefinitions.h in Headers */,
@@ -5406,7 +5364,6 @@
 				4C31550020EB6CB300448776 /* IRCConnection.h in Headers */,
 				4C31581F20EB6D0700448776 /* IRCTreeItemPrivate.h in Headers */,
 				4C31585020EB6D0700448776 /* TDCServerEndpointListSheetTablePrivate.h in Headers */,
-				4C31582D20EB6D0700448776 /* TDCBuddyListDialogPrivate.h in Headers */,
 				4C3158A720EB6D0F00448776 /* IRCChannelUserInternal.h in Headers */,
 				4C31554B20EB6CB300448776 /* TXSharedApplication.h in Headers */,
 				4C7B04FF1D1210EC00295E82 /* BuildConfig.h in Headers */,
@@ -5484,7 +5441,6 @@
 				4C31584020EB6D0700448776 /* TDCInAppPurchaseProductTableEntryPrivate.h in Headers */,
 				4C31584C20EB6D0700448776 /* TDCProgressIndicatorSheetPrivate.h in Headers */,
 				4C06E3C820EC51380055D09A /* ICLPayloadInternal.h in Headers */,
-				4C31582C20EB6D0700448776 /* TDCBuddyListDialogEntryPrivate.h in Headers */,
 				4C31587720EB6D0700448776 /* TVCLogControllerInlineMediaServicePrivate.h in Headers */,
 				4C31584920EB6D0700448776 /* TDCNicknameColorSheetPrivate.h in Headers */,
 				4C31581920EB6D0700448776 /* IRCHighlightLogEntryPrivate.h in Headers */,
@@ -5506,7 +5462,6 @@
 				4C31551320EB6CB300448776 /* TDCInputPrompt.h in Headers */,
 				4C31588020EB6D0700448776 /* TVCMainWindowAppearancePrivate.h in Headers */,
 				4C31581A20EB6D0700448776 /* IRCISupportInfoPrivate.h in Headers */,
-				4C3158A220EB6D0F00448776 /* TDCBuddyListDialogInternal.h in Headers */,
 				4C06E27820EC4E870055D09A /* TLOTimer.h in Headers */,
 				4C3154FB20EB6CB300448776 /* IRCChannelUser.h in Headers */,
 				4C31588F20EB6D0700448776 /* TVCServerListAppearancePrivate.h in Headers */,
@@ -5622,7 +5577,6 @@
 				4C06E3B720EC51380055D09A /* GCDAsyncSocket.h in Headers */,
 				4C31569B20EB6D0500448776 /* TDCWelcomeSheetPrivate.h in Headers */,
 				4C31569C20EB6D0500448776 /* TextualPrivate.h in Headers */,
-				4C31567520EB6D0400448776 /* TDCBuddyListDialogTablePrivate.h in Headers */,
 				4C3158DB20EB6D1000448776 /* IRCModeInfoInternal.h in Headers */,
 				4C31565C20EB6D0400448776 /* IRCColorFormatPrivate.h in Headers */,
 				4C31568B20EB6D0400448776 /* TDCLicenseManagerRecoverLostLicenseSheetPrivate.h in Headers */,
@@ -5646,7 +5600,6 @@
 				4C06E26620EC4C560055D09A /* TPCPreferencesPrivate.h in Headers */,
 				4C3158DE20EB6D1000448776 /* TDCChannelSpotlightControllerInternal.h in Headers */,
 				4C06E25F20EC4BBD0055D09A /* IRCConnectionConfigInternal.h in Headers */,
-				4C31567220EB6D0400448776 /* TDCBuddyListDialogDropViewPrivate.h in Headers */,
 				4C31564320EB6CB400448776 /* TVCMainWindowTextViewAppearance.h in Headers */,
 				4C3156B520EB6D0500448776 /* TPCResourceManagerPrivate.h in Headers */,
 				4C06E41420EC52240055D09A /* TVCLogLineXPCPrivate.h in Headers */,
@@ -5688,7 +5641,6 @@
 				4C31560520EB6CB400448776 /* IRCConnection.h in Headers */,
 				4C31566620EB6D0400448776 /* IRCTreeItemPrivate.h in Headers */,
 				4C31569720EB6D0500448776 /* TDCServerEndpointListSheetTablePrivate.h in Headers */,
-				4C31567420EB6D0400448776 /* TDCBuddyListDialogPrivate.h in Headers */,
 				4C3158DA20EB6D1000448776 /* IRCChannelUserInternal.h in Headers */,
 				4C31565020EB6CB400448776 /* TXSharedApplication.h in Headers */,
 				4C4732B820C7599800713C91 /* BuildConfig.h in Headers */,
@@ -5763,7 +5715,6 @@
 				4C31561620EB6CB400448776 /* NSViewHelper.h in Headers */,
 				4C3156CF20EB6D0500448776 /* TVCMainWindowTextViewPrivate.h in Headers */,
 				4C31569320EB6D0500448776 /* TDCProgressIndicatorSheetPrivate.h in Headers */,
-				4C31567320EB6D0400448776 /* TDCBuddyListDialogEntryPrivate.h in Headers */,
 				4C06E3D720EC51380055D09A /* ICLPayload.h in Headers */,
 				4C3156BE20EB6D0500448776 /* TVCLogControllerInlineMediaServicePrivate.h in Headers */,
 				4C31569020EB6D0500448776 /* TDCNicknameColorSheetPrivate.h in Headers */,
@@ -5784,7 +5735,6 @@
 				4C3156C720EB6D0500448776 /* TVCMainWindowAppearancePrivate.h in Headers */,
 				4C06E27F20EC4E870055D09A /* TPCPreferencesUserDefaults.h in Headers */,
 				4C31566120EB6D0400448776 /* IRCISupportInfoPrivate.h in Headers */,
-				4C3158D520EB6D1000448776 /* TDCBuddyListDialogInternal.h in Headers */,
 				4C06E27B20EC4E870055D09A /* TLOTimer.h in Headers */,
 				4C31560020EB6CB400448776 /* IRCChannelUser.h in Headers */,
 				4C3156D620EB6D0500448776 /* TVCServerListAppearancePrivate.h in Headers */,
@@ -5896,7 +5846,6 @@
 				4C06E3B520EC51380055D09A /* GCDAsyncSocket.h in Headers */,
 				4C3157C120EB6D0600448776 /* TDCWelcomeSheetPrivate.h in Headers */,
 				4C3157C220EB6D0600448776 /* TextualPrivate.h in Headers */,
-				4C31579B20EB6D0600448776 /* TDCBuddyListDialogTablePrivate.h in Headers */,
 				4C3158B920EB6D0F00448776 /* IRCModeInfoInternal.h in Headers */,
 				4C31578220EB6D0600448776 /* IRCColorFormatPrivate.h in Headers */,
 				4C3157B120EB6D0600448776 /* TDCLicenseManagerRecoverLostLicenseSheetPrivate.h in Headers */,
@@ -5920,7 +5869,6 @@
 				4C06E26420EC4C560055D09A /* TPCPreferencesPrivate.h in Headers */,
 				4C3158BC20EB6D0F00448776 /* TDCChannelSpotlightControllerInternal.h in Headers */,
 				4C06E25D20EC4BBD0055D09A /* IRCConnectionConfigInternal.h in Headers */,
-				4C31579820EB6D0600448776 /* TDCBuddyListDialogDropViewPrivate.h in Headers */,
 				4C31559520EB6CB300448776 /* TVCMainWindowTextViewAppearance.h in Headers */,
 				4C3157DB20EB6D0600448776 /* TPCResourceManagerPrivate.h in Headers */,
 				4C06E41220EC52240055D09A /* TVCLogLineXPCPrivate.h in Headers */,
@@ -5962,7 +5910,6 @@
 				4C31555720EB6CB300448776 /* IRCConnection.h in Headers */,
 				4C31578C20EB6D0600448776 /* IRCTreeItemPrivate.h in Headers */,
 				4C3157BD20EB6D0600448776 /* TDCServerEndpointListSheetTablePrivate.h in Headers */,
-				4C31579A20EB6D0600448776 /* TDCBuddyListDialogPrivate.h in Headers */,
 				4C3158B820EB6D0F00448776 /* IRCChannelUserInternal.h in Headers */,
 				4C3155A220EB6CB300448776 /* TXSharedApplication.h in Headers */,
 				4C7B05001D1210F300295E82 /* BuildConfig.h in Headers */,
@@ -6037,7 +5984,6 @@
 				4C31556820EB6CB300448776 /* NSViewHelper.h in Headers */,
 				4C3157F520EB6D0600448776 /* TVCMainWindowTextViewPrivate.h in Headers */,
 				4C3157B920EB6D0600448776 /* TDCProgressIndicatorSheetPrivate.h in Headers */,
-				4C31579920EB6D0600448776 /* TDCBuddyListDialogEntryPrivate.h in Headers */,
 				4C06E3D520EC51380055D09A /* ICLPayload.h in Headers */,
 				4C3157E420EB6D0600448776 /* TVCLogControllerInlineMediaServicePrivate.h in Headers */,
 				4C3157B620EB6D0600448776 /* TDCNicknameColorSheetPrivate.h in Headers */,
@@ -6058,7 +6004,6 @@
 				4C3157ED20EB6D0600448776 /* TVCMainWindowAppearancePrivate.h in Headers */,
 				4C06E27D20EC4E870055D09A /* TPCPreferencesUserDefaults.h in Headers */,
 				4C31578720EB6D0600448776 /* IRCISupportInfoPrivate.h in Headers */,
-				4C3158B320EB6D0F00448776 /* TDCBuddyListDialogInternal.h in Headers */,
 				4C06E27920EC4E870055D09A /* TLOTimer.h in Headers */,
 				4C31555220EB6CB300448776 /* IRCChannelUser.h in Headers */,
 				4C3157FC20EB6D0600448776 /* TVCServerListAppearancePrivate.h in Headers */,
@@ -6170,7 +6115,6 @@
 				4C06E3B620EC51380055D09A /* GCDAsyncSocket.h in Headers */,
 				4C31572E20EB6D0500448776 /* TDCWelcomeSheetPrivate.h in Headers */,
 				4C31572F20EB6D0500448776 /* TextualPrivate.h in Headers */,
-				4C31570820EB6D0500448776 /* TDCBuddyListDialogTablePrivate.h in Headers */,
 				4C3158CA20EB6D1000448776 /* IRCModeInfoInternal.h in Headers */,
 				4C3156EF20EB6D0500448776 /* IRCColorFormatPrivate.h in Headers */,
 				4C31571E20EB6D0500448776 /* TDCLicenseManagerRecoverLostLicenseSheetPrivate.h in Headers */,
@@ -6194,7 +6138,6 @@
 				4C06E26520EC4C560055D09A /* TPCPreferencesPrivate.h in Headers */,
 				4C3158CD20EB6D1000448776 /* TDCChannelSpotlightControllerInternal.h in Headers */,
 				4C06E25E20EC4BBD0055D09A /* IRCConnectionConfigInternal.h in Headers */,
-				4C31570520EB6D0500448776 /* TDCBuddyListDialogDropViewPrivate.h in Headers */,
 				4C3155EC20EB6CB400448776 /* TVCMainWindowTextViewAppearance.h in Headers */,
 				4C31574820EB6D0500448776 /* TPCResourceManagerPrivate.h in Headers */,
 				4C06E41320EC52240055D09A /* TVCLogLineXPCPrivate.h in Headers */,
@@ -6236,7 +6179,6 @@
 				4C3155AE20EB6CB400448776 /* IRCConnection.h in Headers */,
 				4C3156F920EB6D0500448776 /* IRCTreeItemPrivate.h in Headers */,
 				4C31572A20EB6D0500448776 /* TDCServerEndpointListSheetTablePrivate.h in Headers */,
-				4C31570720EB6D0500448776 /* TDCBuddyListDialogPrivate.h in Headers */,
 				4C3158C920EB6D1000448776 /* IRCChannelUserInternal.h in Headers */,
 				4C3155F920EB6CB400448776 /* TXSharedApplication.h in Headers */,
 				4C7B05011D12110500295E82 /* BuildConfig.h in Headers */,
@@ -6311,7 +6253,6 @@
 				4C3155BF20EB6CB400448776 /* NSViewHelper.h in Headers */,
 				4C31576220EB6D0500448776 /* TVCMainWindowTextViewPrivate.h in Headers */,
 				4C31572620EB6D0500448776 /* TDCProgressIndicatorSheetPrivate.h in Headers */,
-				4C31570620EB6D0500448776 /* TDCBuddyListDialogEntryPrivate.h in Headers */,
 				4C06E3D620EC51380055D09A /* ICLPayload.h in Headers */,
 				4C31575120EB6D0500448776 /* TVCLogControllerInlineMediaServicePrivate.h in Headers */,
 				4C31572320EB6D0500448776 /* TDCNicknameColorSheetPrivate.h in Headers */,
@@ -6332,7 +6273,6 @@
 				4C31575A20EB6D0500448776 /* TVCMainWindowAppearancePrivate.h in Headers */,
 				4C06E27E20EC4E870055D09A /* TPCPreferencesUserDefaults.h in Headers */,
 				4C3156F420EB6D0500448776 /* IRCISupportInfoPrivate.h in Headers */,
-				4C3158C420EB6D1000448776 /* TDCBuddyListDialogInternal.h in Headers */,
 				4C06E27A20EC4E870055D09A /* TLOTimer.h in Headers */,
 				4C3155A920EB6CB400448776 /* IRCChannelUser.h in Headers */,
 				4C31576920EB6D0500448776 /* TVCServerListAppearancePrivate.h in Headers */,
@@ -6750,7 +6690,6 @@
 				4C06DF2520EC49A50055D09A /* RegisteredUserDefaultsInContainer.plist in Resources */,
 				4C06E0FB20EC4A620055D09A /* TPWTB_Controls.png in Resources */,
 				4C06E0FF20EC4A620055D09A /* TPWTB_Notifications@2x.png in Resources */,
-				4C06E1B620EC4AC40055D09A /* TDCBuddyListDialog.xib in Resources */,
 				4C06E2DC20EC4FF00055D09A /* Prompts.strings in Resources */,
 				4C06E05520EC4A3E0055D09A /* Copyright Information for Images.txt in Resources */,
 				4C06E30020EC4FF00055D09A /* TDCFileTransferDialog.strings in Resources */,
@@ -6927,7 +6866,6 @@
 				4C06E11620EC4A630055D09A /* TPWTB_Advanced@2x.png in Resources */,
 				4C06DF3720EC49A60055D09A /* RegisteredUserDefaultsInContainer.plist in Resources */,
 				4C06E1F020EC4AC50055D09A /* TDCLicenseUpgradeDialog.xib in Resources */,
-				4C06E1B820EC4AC40055D09A /* TDCBuddyListDialog.xib in Resources */,
 				4C06DFF520EC49FB0055D09A /* MavericksDarkServerListViewDisclosureUp@2x.tif in Resources */,
 				4C06DFF320EC49FB0055D09A /* MavericksDarkServerListViewDisclosureUpSelected@2x.tif in Resources */,
 				4C06DF3320EC49A60055D09A /* IRCCommandIndexLocalData.plist in Resources */,
@@ -7106,7 +7044,6 @@
 				4C06E12620EC4A640055D09A /* TPWTB_Advanced@2x.png in Resources */,
 				4C06DF4020EC49A70055D09A /* RegisteredUserDefaultsInContainer.plist in Resources */,
 				4C06E1F120EC4AC50055D09A /* TDCLicenseUpgradeDialog.xib in Resources */,
-				4C06E1B920EC4AC40055D09A /* TDCBuddyListDialog.xib in Resources */,
 				4C06E01020EC49FB0055D09A /* MavericksDarkServerListViewDisclosureUp@2x.tif in Resources */,
 				4C06E00E20EC49FB0055D09A /* MavericksDarkServerListViewDisclosureUpSelected@2x.tif in Resources */,
 				4C06DF3C20EC49A70055D09A /* IRCCommandIndexLocalData.plist in Resources */,
@@ -7285,7 +7222,6 @@
 				4C06E10620EC4A630055D09A /* TPWTB_Advanced@2x.png in Resources */,
 				4C06DF2E20EC49A60055D09A /* RegisteredUserDefaultsInContainer.plist in Resources */,
 				4C06E1EF20EC4AC50055D09A /* TDCLicenseUpgradeDialog.xib in Resources */,
-				4C06E1B720EC4AC40055D09A /* TDCBuddyListDialog.xib in Resources */,
 				4C06DFDA20EC49FA0055D09A /* MavericksDarkServerListViewDisclosureUp@2x.tif in Resources */,
 				4C06DFD820EC49FA0055D09A /* MavericksDarkServerListViewDisclosureUpSelected@2x.tif in Resources */,
 				4C06DF2A20EC49A60055D09A /* IRCCommandIndexLocalData.plist in Resources */,
@@ -7505,10 +7441,6 @@
 				4C06E58320EC553A0055D09A /* TXMenuController.m in Sources */,
 				4C06E58420EC553A0055D09A /* TXSharedApplication.m in Sources */,
 				4C06E58520EC553A0055D09A /* TXWindowController.m in Sources */,
-				4C06E58620EC553A0055D09A /* TDCBuddyListDialogDropView.m in Sources */,
-				4C06E58720EC553A0055D09A /* TDCBuddyListDialogTable.m in Sources */,
-				4C06E58820EC553A0055D09A /* TDCBuddyListDialog.m in Sources */,
-				4C06E58920EC553A0055D09A /* TDCBuddyListDialogEntry.m in Sources */,
 				4C06E58A20EC553A0055D09A /* TDCChannelSpotlightControls.m in Sources */,
 				4C06E58B20EC553A0055D09A /* TDCChannelSpotlightSearchResult.m in Sources */,
 				4C06E58C20EC553A0055D09A /* TDCChannelSpotlightController.m in Sources */,
@@ -7692,10 +7624,6 @@
 				4C06E4CA20EC551C0055D09A /* TXMenuController.m in Sources */,
 				4C06E4CB20EC551C0055D09A /* TXSharedApplication.m in Sources */,
 				4C06E4CC20EC551C0055D09A /* TXWindowController.m in Sources */,
-				4C06E4CD20EC551C0055D09A /* TDCBuddyListDialogDropView.m in Sources */,
-				4C06E4CE20EC551C0055D09A /* TDCBuddyListDialogTable.m in Sources */,
-				4C06E4CF20EC551C0055D09A /* TDCBuddyListDialog.m in Sources */,
-				4C06E4D020EC551C0055D09A /* TDCBuddyListDialogEntry.m in Sources */,
 				4C06E4D120EC551C0055D09A /* TDCChannelSpotlightControls.m in Sources */,
 				4C06E4D220EC551C0055D09A /* TDCChannelSpotlightSearchResult.m in Sources */,
 				4C06E4D320EC551C0055D09A /* TDCChannelSpotlightController.m in Sources */,
@@ -7877,10 +7805,6 @@
 				4C06E63C20EC55B90055D09A /* TXMenuController.m in Sources */,
 				4C06E63D20EC55B90055D09A /* TXSharedApplication.m in Sources */,
 				4C06E63E20EC55B90055D09A /* TXWindowController.m in Sources */,
-				4C06E63F20EC55B90055D09A /* TDCBuddyListDialogDropView.m in Sources */,
-				4C06E64020EC55B90055D09A /* TDCBuddyListDialogTable.m in Sources */,
-				4C06E64120EC55B90055D09A /* TDCBuddyListDialog.m in Sources */,
-				4C06E64220EC55B90055D09A /* TDCBuddyListDialogEntry.m in Sources */,
 				4C06E64320EC55B90055D09A /* TDCChannelSpotlightControls.m in Sources */,
 				4C06E64420EC55B90055D09A /* TDCChannelSpotlightSearchResult.m in Sources */,
 				4C06E64520EC55B90055D09A /* TDCChannelSpotlightController.m in Sources */,
@@ -8064,10 +7988,6 @@
 				4C06E6F520EC55DA0055D09A /* TXMenuController.m in Sources */,
 				4C06E6F620EC55DA0055D09A /* TXSharedApplication.m in Sources */,
 				4C06E6F720EC55DA0055D09A /* TXWindowController.m in Sources */,
-				4C06E6F820EC55DA0055D09A /* TDCBuddyListDialogDropView.m in Sources */,
-				4C06E6F920EC55DA0055D09A /* TDCBuddyListDialogTable.m in Sources */,
-				4C06E6FA20EC55DA0055D09A /* TDCBuddyListDialog.m in Sources */,
-				4C06E6FB20EC55DA0055D09A /* TDCBuddyListDialogEntry.m in Sources */,
 				4C06E6FC20EC55DA0055D09A /* TDCChannelSpotlightControls.m in Sources */,
 				4C06E6FD20EC55DA0055D09A /* TDCChannelSpotlightSearchResult.m in Sources */,
 				4C06E6FE20EC55DA0055D09A /* TDCChannelSpotlightController.m in Sources */,
