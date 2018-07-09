@@ -355,38 +355,6 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
 #pragma mark Deprecated
 
 - (nullable NSString *)processInlineMediaContentURL:(NSString *)resource TEXTUAL_DEPRECATED("There is currently no alternative to this method. It is no longer called.");
-
-- (void)didReceiveServerInputOnClient:(IRCClient *)client
-	                senderInformation:(NSDictionary<NSString *, id> *)senderDict
-	               messageInformation:(NSDictionary<NSString *, id> *)messageDict TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
-
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderHostmaskAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderNicknameAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderUsernameAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderAddressAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageReceivedAtTimeAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageParamatersAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageCommandAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNumericReplyAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkAddressAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
-
-- (void)didPostNewMessageForViewController:(TVCLogController *)viewController
-	                           messageInfo:(NSDictionary<NSString *, id> *)messageInfo
-	                         isThemeReload:(BOOL)isThemeReload
-	                       isHistoryReload:(BOOL)isHistoryReload TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
-
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageLineNumberAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageSenderNicknameAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageLineTypeAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageMemberTypeAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageReceivedAtTimeAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageListOfHyperlinksAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageListOfUsersAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageMessageBodyAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
 @end
 
 #pragma mark -
