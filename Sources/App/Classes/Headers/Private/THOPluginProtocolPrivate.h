@@ -51,8 +51,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readwrite) NSArray<AHHyperlinkScannerResult *> *listOfHyperlinks;
 @property (nonatomic, copy, readwrite) NSSet<IRCChannelUser *> *listOfUsers;
 @property (nonatomic, assign, readwrite) BOOL keywordMatchFound;
-
-- (NSDictionary<NSString *, id> *)dictionaryValue;
 @end
 
 #pragma mark -
@@ -70,9 +68,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) NSUInteger messageCommandNumeric;
 @property (nonatomic, copy, readwrite, nullable) NSString *networkAddress;
 @property (nonatomic, copy, readwrite, nullable) NSString *networkName;
-
-- (NSDictionary<NSString *, id> *)senderDictionary;
-- (NSDictionary<NSString *, id> *)messageDictionary;
 @end
 
 #pragma mark -

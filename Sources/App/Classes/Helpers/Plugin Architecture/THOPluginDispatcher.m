@@ -46,30 +46,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 NSString * const THOPluginProtocolCompatibilityMinimumVersion = @"6.0.0";
 
-NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute = @"wordMatchFound";
-NSString * const THOPluginProtocolDidPostNewMessageLineNumberAttribute = @"lineNumber";
-NSString * const THOPluginProtocolDidPostNewMessageLineTypeAttribute = @"lineType";
-NSString * const THOPluginProtocolDidPostNewMessageListOfHyperlinksAttribute = @"allHyperlinksInBody";
-NSString * const THOPluginProtocolDidPostNewMessageListOfUsersAttribute	= @"mentionedUsers";
-NSString * const THOPluginProtocolDidPostNewMessageMemberTypeAttribute = @"memberType";
-NSString * const THOPluginProtocolDidPostNewMessageMessageBodyAttribute	= @"messageBody";
-NSString * const THOPluginProtocolDidPostNewMessageReceivedAtTimeAttribute = @"receivedAtTime";
-NSString * const THOPluginProtocolDidPostNewMessageSenderNicknameAttribute = @"senderNickname";
-
-NSString * const THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute = @"senderIsServer";
-NSString * const THOPluginProtocolDidReceiveServerInputSenderNicknameAttribute = @"senderNickname";
-NSString * const THOPluginProtocolDidReceiveServerInputSenderUsernameAttribute = @"senderUsername";
-NSString * const THOPluginProtocolDidReceiveServerInputSenderAddressAttribute = @"senderDNSMask";
-NSString * const THOPluginProtocolDidReceiveServerInputSenderHostmaskAttribute = @"senderHostmask";
-
-NSString * const THOPluginProtocolDidReceiveServerInputMessageCommandAttribute = @"messageCommand";
-NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkAddressAttribute = @"messageServer";
-NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribute = @"messageNetwork";
-NSString * const THOPluginProtocolDidReceiveServerInputMessageNumericReplyAttribute = @"messageNumericReply";
-NSString * const THOPluginProtocolDidReceiveServerInputMessageParamatersAttribute = @"messageParamaters";
-NSString * const THOPluginProtocolDidReceiveServerInputMessageReceivedAtTimeAttribute = @"messageReceived";
-NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute = @"messageSequence";
-
 @interface IRCMessage (IRCMessagePluginExtension)
 - (THOPluginDidReceiveServerInputConcreteObject *)didReceiveServerInputConcreteObject;
 @end
@@ -273,10 +249,6 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 	NSParameterAssert(client != nil);
 
 	XRPerformBlockAsynchronouslyOnQueue([self dispatchQueue], ^{
-		NSDictionary *senderDictionary = nil;
-
-		NSDictionary *messageDictionary = nil;
-
 		THOPluginDidReceiveServerInputConcreteObject *messageObject =
 		inputObject.didReceiveServerInputConcreteObject;
 
@@ -295,26 +267,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 				continue;
 			}
 
-			if ([plugin.primaryClass respondsToSelector:@selector(didReceiveServerInput:onClient:)])
-			{
-				[plugin.primaryClass didReceiveServerInput:messageObject onClient:client];
-			}
-			else if ([plugin.primaryClass respondsToSelector:@selector(didReceiveServerInputOnClient:senderInformation:messageInformation:)])
-			{
-				if (senderDictionary == nil) {
-					senderDictionary = messageObject.senderDictionary;
-				}
-
-				if (messageDictionary == nil) {
-					messageDictionary = messageObject.messageDictionary;
-				}
-
-TEXTUAL_IGNORE_DEPRECATION_BEGIN
-
-				[plugin.primaryClass didReceiveServerInputOnClient:client senderInformation:senderDictionary messageInformation:messageDictionary];
-
-TEXTUAL_IGNORE_DEPRECATION_END
-			}
+			[plugin.primaryClass didReceiveServerInput:messageObject onClient:client];
 		}
 	});
 }
@@ -351,34 +304,13 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	}
 
 	XRPerformBlockAsynchronouslyOnQueue([self dispatchQueue], ^{
-		NSDictionary *messageDictionary = nil;
-
 		for (THOPluginItem *plugin in sharedPluginManager().loadedPlugins)
 		{
 			if ([plugin supportsFeature:THOPluginItemSupportsNewMessagePostedEvent] == NO) {
 				continue;
 			}
 
-			if ([plugin.primaryClass respondsToSelector:@selector(didPostNewMessage:forViewController:)])
-			{
-				[plugin.primaryClass didPostNewMessage:messageObject forViewController:viewController];
-			}
-			else if ([plugin.primaryClass respondsToSelector:@selector(didPostNewMessageForViewController:messageInfo:isThemeReload:isHistoryReload:)])
-			{
-				if (messageDictionary == nil) {
-					messageDictionary = messageObject.dictionaryValue;
-				}
-
-TEXTUAL_IGNORE_DEPRECATION_BEGIN
-
-				[plugin.primaryClass didPostNewMessageForViewController:viewController
-															messageInfo:messageDictionary
-														  isThemeReload:messageObject.isProcessedInBulk
-														isHistoryReload:messageObject.isProcessedInBulk];
-
-TEXTUAL_IGNORE_DEPRECATION_END
-
-			}
+			[plugin.primaryClass didPostNewMessage:messageObject forViewController:viewController];
 		}
 	});
 }
@@ -417,81 +349,11 @@ TEXTUAL_IGNORE_DEPRECATION_END
 #pragma mark -
 
 @implementation THOPluginDidPostNewMessageConcreteObject
-
-- (NSDictionary<NSString *, id> *)dictionaryValue
-{
-	NSMutableDictionary<NSString *, id> *dictionaryValue = [[NSMutableDictionary alloc] initWithCapacity:9];
-
-TEXTUAL_IGNORE_DEPRECATION_BEGIN
-
-	[dictionaryValue setBool:self.keywordMatchFound forKey:THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute];
-
-	[dictionaryValue setInteger:self.lineType forKey:THOPluginProtocolDidPostNewMessageLineTypeAttribute];
-	[dictionaryValue setInteger:self.memberType forKey:THOPluginProtocolDidPostNewMessageMemberTypeAttribute];
-
-	[dictionaryValue maybeSetObject:self.senderNickname forKey:THOPluginProtocolDidPostNewMessageSenderNicknameAttribute];
-
-	[dictionaryValue maybeSetObject:self.receivedAt forKey:THOPluginProtocolDidPostNewMessageReceivedAtTimeAttribute];
-
-	[dictionaryValue maybeSetObject:self.lineNumber forKey:THOPluginProtocolDidPostNewMessageLineNumberAttribute];
-
-	[dictionaryValue maybeSetObject:self.listOfHyperlinks forKey:THOPluginProtocolDidPostNewMessageListOfHyperlinksAttribute];
-	[dictionaryValue maybeSetObject:self.listOfUsers forKey:THOPluginProtocolDidPostNewMessageListOfUsersAttribute];
-
-	[dictionaryValue maybeSetObject:self.messageContents forKey:THOPluginProtocolDidPostNewMessageMessageBodyAttribute];
-
-TEXTUAL_IGNORE_DEPRECATION_END
-
-	return [dictionaryValue copy];
-}
-
 @end
 
 #pragma mark -
 
 @implementation THOPluginDidReceiveServerInputConcreteObject
-
-- (NSDictionary<NSString *, id> *)senderDictionary
-{
-	NSMutableDictionary<NSString *, id> *dictionaryValue = [NSMutableDictionary dictionaryWithCapacity:7];
-
-TEXTUAL_IGNORE_DEPRECATION_BEGIN
-
-	[dictionaryValue setBool:self.senderIsServer forKey:THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute];
-
-	[dictionaryValue maybeSetObject:self.senderNickname forKey:THOPluginProtocolDidReceiveServerInputSenderNicknameAttribute];
-	[dictionaryValue maybeSetObject:self.senderUsername forKey:THOPluginProtocolDidReceiveServerInputSenderUsernameAttribute];
-	[dictionaryValue maybeSetObject:self.senderAddress forKey:THOPluginProtocolDidReceiveServerInputSenderAddressAttribute];
-	[dictionaryValue maybeSetObject:self.senderHostmask forKey:THOPluginProtocolDidReceiveServerInputSenderHostmaskAttribute];
-
-TEXTUAL_IGNORE_DEPRECATION_END
-
-	return [dictionaryValue copy];
-}
-
-- (NSDictionary<NSString *, id> *)messageDictionary
-{
-	NSMutableDictionary<NSString *, id> *dictionaryValue = [NSMutableDictionary dictionaryWithCapacity:7];
-
-TEXTUAL_IGNORE_DEPRECATION_BEGIN
-
-	[dictionaryValue maybeSetObject:self.receivedAt forKey:THOPluginProtocolDidReceiveServerInputMessageReceivedAtTimeAttribute];
-
-	[dictionaryValue maybeSetObject:self.messageParamaters forKey:THOPluginProtocolDidReceiveServerInputMessageParamatersAttribute];
-	[dictionaryValue maybeSetObject:self.messageSequence forKey:THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute];
-
-	[dictionaryValue maybeSetObject:self.messageCommand forKey:THOPluginProtocolDidReceiveServerInputMessageCommandAttribute];
-
-	[dictionaryValue setUnsignedInteger:self.messageCommandNumeric forKey:THOPluginProtocolDidReceiveServerInputMessageNumericReplyAttribute];
-
-	[dictionaryValue maybeSetObject:self.networkAddress forKey:THOPluginProtocolDidReceiveServerInputMessageNetworkAddressAttribute];
-	[dictionaryValue maybeSetObject:self.networkName forKey:THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribute];
-
-TEXTUAL_IGNORE_DEPRECATION_END
-
-	return [dictionaryValue copy];
-}
-
 @end
 
 #pragma mark -

@@ -137,9 +137,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Process server input commands */
-	if ( [primaryClass respondsToSelector:@selector(subscribedServerInputCommands)] &&
-		([primaryClass respondsToSelector:@selector(didReceiveServerInput:onClient:)] ||
-		 [primaryClass respondsToSelector:@selector(didReceiveServerInputOnClient:senderInformation:messageInformation:)]))
+	if ([primaryClass respondsToSelector:@selector(subscribedServerInputCommands)] &&
+		[primaryClass respondsToSelector:@selector(didReceiveServerInput:onClient:)])
 	{
 		id subscribedCommands = primaryClass.subscribedServerInputCommands;
 
@@ -164,9 +163,7 @@ NS_ASSUME_NONNULL_BEGIN
 	 to ask if it responds to the selector every time we call it. */
 
 	/* Renderer events */
-	if ([primaryClass respondsToSelector:@selector(didPostNewMessage:forViewController:)] ||
-		[primaryClass respondsToSelector:@selector(didPostNewMessageForViewController:messageInfo:isThemeReload:isHistoryReload:)])
-	{
+	if ([primaryClass respondsToSelector:@selector(didPostNewMessage:forViewController:)]) {
 		supportedFeatures |= THOPluginItemSupportsNewMessagePostedEvent;
 	}
 
@@ -193,6 +190,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if ([primaryClass respondsToSelector:@selector(receivedCommand:withText:authoredBy:destinedFor:onClient:receivedAt:referenceMessage:)]) {
 		supportedFeatures |= THOPluginItemSupportsDidReceiveCommandEvent;
+	}
+
+	/* Deprecated and removed */
+	if ([primaryClass respondsToSelector:@selector(didPostNewMessageForViewController:messageInfo:isThemeReload:isHistoryReload:)]) {
+		LogToConsoleError("'%@' implements '-[THOPluginProtocol %@]' but that wont be called because it's obsolete.",
+			bundle, @"didPostNewMessageForViewController:messageInfo:isThemeReload:isHistoryReload:");
+	}
+
+	if ([primaryClass respondsToSelector:@selector(didReceiveServerInputOnClient:senderInformation:messageInformation:)]) {
+		LogToConsoleError("'%@' implements '-[THOPluginProtocol %@]' but that wont be called because it's obsolete.",
+			bundle, @"didReceiveServerInputOnClient:senderInformation:messageInformation:");
 	}
 
 	/* Finish up */
