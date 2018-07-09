@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSString *valueKey = nil;
 
-	if (value != 1) {
+	if (value == 1) {
 		valueKey = [NSString stringWithFormat:@"BasicLanguage[%@-1]", valueToken];
 	} else {
 		valueKey = [NSString stringWithFormat:@"BasicLanguage[%@-2]", valueToken];
