@@ -198,7 +198,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 {
 	self.preferencesDidChangeTimerIsActive = NO;
 
-	[self evaluateFunctionOnAllViews:@"preferencesDidChange" arguments:nil onQueue:YES];
+	[self evaluateFunctionOnAllViews:@"Textual.preferencesDidChange" arguments:nil onQueue:YES];
 }
 
 - (void)mainWindowAppearanceChanged:(NSNotification *)notification
