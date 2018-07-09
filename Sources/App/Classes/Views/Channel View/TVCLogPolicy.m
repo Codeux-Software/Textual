@@ -298,16 +298,6 @@ NS_ASSUME_NONNULL_BEGIN
 	if (action == WKNavigationTypeLinkActivated) {
 		NSURL *actionURL = navigationAction.request.URL;
 
-		if (actionURL.isFileURL) {
-			if ([actionURL.path hasPrefix:themeController().temporaryPath] &&
-				[actionURL.fragment isEqualToString:@"most_recent_anchor"])
-			{
-				decisionHandler(WKNavigationActionPolicyAllow);
-
-				return;
-			}
-		}
-
 		decisionHandler(WKNavigationActionPolicyCancel);
 
 		[self openWebpage:actionURL];
