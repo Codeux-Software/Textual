@@ -2903,7 +2903,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		while (lineMutable.length > 0)
 		{
-			NSString *unencryptedMessage = [NSAttributedString attributedStringToASCIIFormatting:&lineMutable inChannel:channel onClient:self withLineType:lineType];
+			NSString *unencryptedMessage = [lineMutable stringFormattedForChannel:channel.name onClient:self withLineType:lineType];
 
 			TLOEncryptionManagerEncodingDecodingCallbackBlock encryptionBlock = ^(NSString *originalString, BOOL wasEncrypted) {
 				if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityEchoMessage] && wasEncrypted == NO) {
@@ -4695,7 +4695,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				targetChannelName = stringIn.tokenAsString;
 			}
 
-			NSString *topic = stringIn.attributedStringToASCIIFormatting;
+			NSString *topic = stringIn.stringFormattedForIRC;
 
 			NSUInteger topicLength = topic.length;
 
@@ -5006,7 +5006,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 				while (lineMutable.length > 0)
 				{
-					NSString *unencryptedMessage = [NSAttributedString attributedStringToASCIIFormatting:&lineMutable inChannel:destination onClient:self withLineType:lineType];
+					NSString *unencryptedMessage = [lineMutable stringFormattedForChannel:destinationName onClient:self withLineType:lineType];
 
 					TLOEncryptionManagerEncodingDecodingCallbackBlock encryptionBlock = ^(NSString *originalString, BOOL wasEncrypted) {
 						if (destination == nil) {

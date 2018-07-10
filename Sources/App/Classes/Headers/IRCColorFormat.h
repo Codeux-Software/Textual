@@ -39,7 +39,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, IRCTextFormatterEffectType) {
-	IRCTextFormatterNoEffect = 0, // does nothing, unimplemented
+	IRCTextFormatterNoEffect = 0,
 	IRCTextFormatterBoldEffect,
 	IRCTextFormatterItalicEffect,
 	IRCTextFormatterMonospaceEffect,
@@ -69,12 +69,58 @@ TEXTUAL_EXTERN NSString * const IRCTextFormatterSpoilerAttributeName; // BOOL
 #define IRCTextFormatterUnderlineEffectCharacter		0x1F
 #define IRCTextFormatterTerminatingCharacter			0x0F
 
-@interface NSAttributedString (IRCTextFormatter)
-/* Returns an NSString with appropriate formatting characters. */
-@property (readonly, copy) NSString *attributedStringToASCIIFormatting;
+@class IRCTextFormatterEffects;
 
+@interface IRCTextFormatterEffect : NSObject
+@property (readonly) IRCTextFormatterEffectType type;
+@property (readonly, copy, nullable) NSString *value;
+@property (readonly) UniChar controlCharacter;
+
+/* Number of bytes needed to support this effect.
+ Open control character + value + close control character.
+ For background color, only the comma and color value is counted. */
+@property (readonly) NSUInteger length;
+
++ (nullable instancetype)effectWithType:(IRCTextFormatterEffectType)type;
++ (nullable instancetype)effectWithType:(IRCTextFormatterEffectType)type withValue:(nullable id)value;
+
+- (nullable instancetype)initWithEffect:(IRCTextFormatterEffectType)type;
+- (nullable instancetype)initWithEffect:(IRCTextFormatterEffectType)type withValue:(nullable id)value NS_DESIGNATED_INITIALIZER;
+
+/* Appends control character and value for the effect.
+ For background color, appends comma and color value instead. */
+- (void)appendToStartOf:(NSMutableString *)string;
+
+/* Appends control character for the effect.
+ For background color, does nothing. */
+- (void)appendToEndOf:(NSMutableString *)string;
+@end
+
+@interface IRCTextFormatterEffects : NSObject
+@property (readonly, copy) NSArray<IRCTextFormatterEffect *> *effects;
+
+/* Number of bytes needed to support all effects. */
+@property (readonly) NSUInteger maximumLength;
+
++ (instancetype)effectsInAttributes:(NSDictionary<NSString *, id> *)attributes;
+
+- (instancetype)initWithAttributes:(NSDictionary<NSString *, id> *)attributes NS_DESIGNATED_INITIALIZER;
+
+- (void)appendToStartOf:(NSMutableString *)string;
+- (void)appendToEndOf:(NSMutableString *)string;
+@end
+
+#pragma mark -
+
+@interface NSAttributedString (IRCTextFormatter)
 - (BOOL)IRCFormatterAttributeSetInRange:(IRCTextFormatterEffectType)effect
 								  range:(NSRange)limitRange;
+
+/* Returns an NSString with appropriate formatting characters. */
+@property (readonly, copy) NSString *stringFormattedForIRC;
+
+/* Deprecated */
+@property (readonly, copy) NSString *attributedStringToASCIIFormatting TEXTUAL_DEPRECATED("Use -stringFormattedForIRC instead");
 @end
 
 #pragma mark -

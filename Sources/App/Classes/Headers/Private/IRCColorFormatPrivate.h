@@ -43,16 +43,23 @@ NS_ASSUME_NONNULL_BEGIN
 @class IRCClient, IRCChannel;
 
 @interface NSAttributedString (IRCTextFormatterPrivate)
-/* Given contextual information (client, channel, lineType), the original attributed
- string is converted to use appropriate formatting characters, but this method does
- not allow the result to exceed TXMaximumIRCBodyLength. If the result exceeds this
- length, then it returns the remaining buffer in textToFormat for later processing. */
-/* The only valid lineType value is PRIVMSG, ACTION, or NOTICE. Any other will proxy
- to the -attributedStringToASCIIFormatting method defined above. */
-+ (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString * _Nonnull * _Nonnull)textToFormat
-									  inChannel:(IRCChannel *)channel
-									   onClient:(IRCClient *)client
-								   withLineType:(TVCLogLineType)lineType;
+/* Given contextual information (client, channel, lineType), the original
+ attributed string is converted to use appropriate formatting characters,
+ but this method does not allow the result to exceed TXMaximumIRCBodyLength. */
+/* The only valid lineType value is PRIVMSG, ACTION, or NOTICE. */
+/* effectiveRange is the range of the result in the attributed string.
+ Use this value to delete those characters during enumeration.  */
+- (NSString *)stringFormattedForChannel:(NSString *)channelName
+							   onClient:(IRCClient *)client
+						   withLineType:(TVCLogLineType)lineType
+						 effectiveRange:(NSRange * _Nullable)effectiveRange;
+@end
+
+@interface NSMutableAttributedString (IRCTextFormatterPrivate)
+/* This method truncates self to the effective range */
+- (NSString *)stringFormattedForChannel:(NSString *)channelName
+							   onClient:(IRCClient *)client
+						   withLineType:(TVCLogLineType)lineType;
 @end
 
 NS_ASSUME_NONNULL_END
