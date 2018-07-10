@@ -625,15 +625,15 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 							 options:0
 						  usingBlock:^(NSDictionary *attributes, NSRange effectiveRange, BOOL *stop)
 	 {
-		 IRCTextFormatterEffects *effects = [IRCTextFormatterEffects effectsInAttributes:attributes];
+		 IRCTextFormatterEffects *formatters = [IRCTextFormatterEffects effectsInAttributes:attributes];
 
-		 [effects appendToStartOf:result];
+		 [formatters appendToStartOf:result];
 
 		 NSString *segment = [string substringWithRange:effectiveRange];
 
 		 [result appendString:segment];
 
-		 [effects appendToEndOf:result];
+		 [formatters appendToEndOf:result];
 	 }];
 
 	return result;
