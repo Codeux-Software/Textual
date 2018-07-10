@@ -2607,7 +2607,10 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	 are selected, then simply update selection inside grouping. */
 	if (optionMaintainGrouping &&
 		(itemIndexOld >= 0 && [selectedRows containsIndex:itemIndexOld]) &&
-		(itemIndexNew >= 0 && [selectedRows containsIndex:itemIndexNew]))
+		(itemIndexNew >= 0 && [selectedRows containsIndex:itemIndexNew]) &&
+		newItem != nil) // This condition is impossible but static analzyer doesn't know that.
+						// Condition is impossible because itemIndexNew will never return
+						// greater to or equal zero unless item is non-nil.
 	{
 		[self selectItemInSelectedItems:newItem];
 

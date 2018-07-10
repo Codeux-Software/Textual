@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 					 completionBlock:^(ICLMediaAssessment *assessment, NSError *error) {
 						 ICLMediaType type = ((assessment) ? assessment.type : ICLMediaTypeUnknown);
 						 
-						 BOOL safeToLoad = (error == nil && [ICLInlineContentModule isTypeDeferrable:type]);
+						 BOOL safeToLoad = (assessment != nil && error == nil && [ICLInlineContentModule isTypeDeferrable:type]);
 
 						 if (safeToLoad) {
 							 [self _safeToLoadMediaOfType:type atURL:assessment.url];

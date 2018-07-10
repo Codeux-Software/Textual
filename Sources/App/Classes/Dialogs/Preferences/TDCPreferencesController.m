@@ -772,11 +772,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setServerListUnreadCountBadgeHighlightColor:(NSColor *)serverListUnreadCountBadgeHighlightColor
 {
-	if ([serverListUnreadCountBadgeHighlightColor isEqual:[NSColor clearColor]]) {
-		serverListUnreadCountBadgeHighlightColor = nil;
+	NSColor *newValue = serverListUnreadCountBadgeHighlightColor;
+
+	if ([newValue isEqual:[NSColor clearColor]]) {
+		newValue = nil;
 	}
 
-	[RZUserDefaults() setColor:serverListUnreadCountBadgeHighlightColor
+	[RZUserDefaults() setColor:newValue
 						forKey:@"Server List Unread Message Count Badge Colors -> Highlight"];
 }
 
@@ -793,11 +795,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setUserListNoModeColor:(NSColor *)userListNoModeColor
 {
-	if ([userListNoModeColor isEqual:[NSColor clearColor]]) {
-		userListNoModeColor = nil;
+	NSColor *newValue = userListNoModeColor;
+
+	if ([newValue isEqual:[NSColor clearColor]]) {
+		newValue = nil;
 	}
 
-	[RZUserDefaults() setColor:userListNoModeColor
+	[RZUserDefaults() setColor:newValue
 						forKey:@"User List Mode Badge Colors -> no mode"];
 }
 

@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation IRCCommandIndex
 
-static NSArray *_cachedLocalCommandList = nil;
+static NSArray * _Nullable _cachedLocalCommandList = nil;
 
 static NSDictionary *IRCCommandIndexLocalData = nil;
 static NSDictionary *IRCCommandIndexRemoteData = nil;

@@ -197,7 +197,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSMenu *)constructContextMenuForWebView:(TVCLogView *)webView withDefaultMenuItems:(NSArray<NSMenuItem *> *)defaultMenuItems
 {
-	NSMenu *contextMenu = [[NSMenu alloc] initWithTitle:@"Context Menu"];
+	NSMenu *contextMenu = [[NSMenu alloc] initWithTitle:TXLocalizationNotNeeded(@"Context Menu")];
 
 	NSArray *menuItems = [self constructContextMenuItemsForWebView:webView defaultMenuItems:defaultMenuItems];
 

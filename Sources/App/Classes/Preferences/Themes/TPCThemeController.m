@@ -1078,7 +1078,8 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 
 	destinationPath = [destinationPath stringByAppendingPathComponent:self.themeName];
 
-	self.pathBeingCopiedTo = destinationPath;
+	/* Cast as nonnull to make static analzyer happy */
+	self.pathBeingCopiedTo = (NSString * _Nonnull)destinationPath;
 }
 
 - (void)cancelOperation

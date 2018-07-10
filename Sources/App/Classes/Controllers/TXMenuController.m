@@ -1814,6 +1814,8 @@ NS_ASSUME_NONNULL_BEGIN
 		pointedChannelName = ((NSMenuItem *)sender).userInfo;
 	} else if ([sender isKindOfClass:[NSString class]]) {
 		pointedChannelName = sender;
+	} else {
+		return;
 	}
 
 	if ([u stringIsChannelName:pointedChannelName] == NO) {
@@ -3370,7 +3372,7 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCChannel *c = sender.channel;
 
 	if (c == nil) {
-		c = [worldController() createChannelWithConfig:config onClient:u];
+		[worldController() createChannelWithConfig:config onClient:u];
 
 		[mainWindow() expandClient:u];
 
