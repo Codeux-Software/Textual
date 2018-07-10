@@ -86,92 +86,79 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(stringHash != nil);
 
-	if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
-		colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
+	BOOL onLightBackground = (colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle);
+
+	unsigned int stringHash32 = stringHash.intValue;
+
+	int shash = (stringHash32 >> 1);
+	int lhash = (stringHash32 >> 2);
+
+	int h = (stringHash32 % 360);
+
+	int s;
+	int l;
+
+	if (onLightBackground)
 	{
-		/* Define base pair */
-		BOOL onLightBackground = (colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle);
+		s = (shash % 50 + 35);   // 35 - 85
+		l = (lhash % 38 + 20);   // 20 - 58
 
-		unsigned int stringHash32 = stringHash.intValue;
+		// Lower lightness for Yello, Green, Cyan
+		if (h > 45 && h <= 195) {
+			l = (lhash % 21 + 20);   // 20 - 41
 
-		int shash = (stringHash32 >> 1);
-		int lhash = (stringHash32 >> 2);
-
-		int h = (stringHash32 % 360);
-
-		int s;
-		int l;
-
-		if (onLightBackground)
-		{
-			s = (shash % 50 + 35);   // 35 - 85
-			l = (lhash % 38 + 20);   // 20 - 58
-
-			// Lower lightness for Yello, Green, Cyan
-			if (h > 45 && h <= 195) {
-				l = (lhash % 21 + 20);   // 20 - 41
-
-				if (l > 31) {
-					s = (shash % 40 + 55);   // 55 - 95
-				} else {
-					s = (shash % 35 + 65);   // 65 - 95
-				}
-			}
-
-			// Give the reds a bit more saturation
-			if (h <= 25 || h >= 335) {
-				s = (shash % 33 + 45); // 45 - 78
-			}
-		}
-		else
-		{
-			s = (shash % 50 + 45);   // 50 - 95
-			l = (lhash % 36 + 45);   // 45 - 81
-
-			// give the pinks a wee bit more lightness
-			if (h >= 280 && h < 335) {
-				l = (lhash % 36 + 50); // 50 - 86
-			}
-
-			// Give the blues a smaller (but lighter) range
-			if (h >= 210 && h < 240) {
-				l = (lhash % 30 + 60); // 60 - 90
-			}
-
-			// Tone down very specific range of blue/purple
-			if (h >= 240 && h < 280) {
-				s = (shash % 55 + 40); // 40 - 95
-				l = (lhash % 20 + 65); // 65 - 85
-			}
-
-			// Give the reds a bit less saturation
-			if (h <= 25 || h >= 335) {
-				s = (shash % 33 + 45); // 45 - 78
-			}
-
-			// Give the yellows and greens a bit less saturation as well
-			if (h >= 50 && h <= 150) {
-				s = (shash % 50 + 40); // 40 - 90
+			if (l > 31) {
+				s = (shash % 40 + 55);   // 55 - 95
+			} else {
+				s = (shash % 35 + 65);   // 65 - 95
 			}
 		}
 
-		return [NSString stringWithFormat:@"hsl(%i,%i%%,%i%%)", h, s, l];
+		// Give the reds a bit more saturation
+		if (h <= 25 || h >= 335) {
+			s = (shash % 33 + 45); // 45 - 78
+		}
+	}
+	else
+	{
+		s = (shash % 50 + 45);   // 50 - 95
+		l = (lhash % 36 + 45);   // 45 - 81
+
+		// give the pinks a wee bit more lightness
+		if (h >= 280 && h < 335) {
+			l = (lhash % 36 + 50); // 50 - 86
+		}
+
+		// Give the blues a smaller (but lighter) range
+		if (h >= 210 && h < 240) {
+			l = (lhash % 30 + 60); // 60 - 90
+		}
+
+		// Tone down very specific range of blue/purple
+		if (h >= 240 && h < 280) {
+			s = (shash % 55 + 40); // 40 - 95
+			l = (lhash % 20 + 65); // 65 - 85
+		}
+
+		// Give the reds a bit less saturation
+		if (h <= 25 || h >= 335) {
+			s = (shash % 33 + 45); // 45 - 78
+		}
+
+		// Give the yellows and greens a bit less saturation as well
+		if (h >= 50 && h <= 150) {
+			s = (shash % 50 + 40); // 40 - 90
+		}
 	}
 
-	return nil;
+	return [NSString stringWithFormat:@"hsl(%i,%i%%,%i%%)", h, s, l];
 }
 
 + (NSString *)preprocessString:(NSString *)inputString colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle
 {
 	NSParameterAssert(inputString != nil);
 
-	if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
-		colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
-	{
-		return [NSString stringWithFormat:@"a-%@", inputString];
-	}
-
-	return inputString;
+	return [NSString stringWithFormat:@"a-%@", inputString];
 }
 
 + (NSNumber *)hashForString:(NSString *)inputString colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle
@@ -180,34 +167,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *stringToHash = [self preprocessString:inputString colorStyle:colorStyle];
 
-	NSUInteger stringToHashLength = stringToHash.length;
+	NSData *stringToHashData = [stringToHash dataUsingEncoding:NSUTF8StringEncoding];
 
-	if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
-		colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
-	{
-		NSData *stringToHashData = [stringToHash dataUsingEncoding:NSUTF8StringEncoding];
+	NSMutableData *hashedData = [NSMutableData dataWithLength:CC_MD5_DIGEST_LENGTH];
 
-		NSMutableData *hashedData = [NSMutableData dataWithLength:CC_MD5_DIGEST_LENGTH];
+	CC_MD5(stringToHashData.bytes, (CC_LONG)stringToHashData.length, hashedData.mutableBytes);
 
-		CC_MD5(stringToHashData.bytes, (CC_LONG)stringToHashData.length, hashedData.mutableBytes);
+	unsigned int hashedValue;
+	[hashedData getBytes:&hashedValue length:sizeof(unsigned int)];
 
-		unsigned int hashedValue;
-		[hashedData getBytes:&hashedValue length:sizeof(unsigned int)];
-
-		return @(hashedValue);
-	}
-	else
-	{
-		NSInteger hashedValue = 0;
-
-		for (NSUInteger i = 0; i < stringToHashLength; i++) {
-			UniChar c = [stringToHash characterAtIndex:i];
-
-			hashedValue = ((hashedValue << 6) + hashedValue + c);
-		}
-
-		return @(hashedValue);
-	}
+	return @(hashedValue);
 }
 
 /*
