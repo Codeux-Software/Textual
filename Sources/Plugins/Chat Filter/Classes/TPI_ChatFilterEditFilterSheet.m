@@ -146,7 +146,7 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterEditFilterSheetNavigationSelection)
 
 - (void)prepareInitialState
 {
-	(void)[TPIBundleFromClass() loadNibNamed:@"TPI_ChatFilterEditFilterSheet" owner:self topLevelObjects:nil];
+	[TPIBundleFromClass() loadNibNamed:@"TPI_ChatFilterEditFilterSheet" owner:self topLevelObjects:nil];
 
 	[self populateTokenFieldStringValues];
 

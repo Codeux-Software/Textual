@@ -247,7 +247,7 @@ NS_ASSUME_NONNULL_BEGIN
 			[client updateConfig:clientConfig];
 		}
 	} else {
-		(void)[worldController() createClientWithConfig:clientConfig reload:YES];
+		[worldController() createClientWithConfig:clientConfig reload:YES];
 	}
 }
 
@@ -259,7 +259,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[worldController() setIsImportingConfiguration:NO];
 
-	(void)[mainWindow() reloadLoadingScreen];
+	[mainWindow() reloadLoadingScreen];
 }
 
 #pragma mark -
@@ -358,7 +358,7 @@ NS_ASSUME_NONNULL_BEGIN
 		if (returnCode == NSModalResponseOK) {
 			NSURL *pathURL = d.URL;
 
-			(void)[self exportPostflightForURL:pathURL filterJunk:YES];
+			[self exportPostflightForURL:pathURL filterJunk:YES];
 		}
 	}];
 }

@@ -335,10 +335,10 @@ NS_ASSUME_NONNULL_BEGIN
 		TPI_ChatFilter *filter = [[TPI_ChatFilter alloc] initWithContentsOfURL:pathURL];
 
 		if (filter == nil) {
-			(void)[TDCAlert modalAlertWithMessage:@""
-											title:TPILocalizedString(@"TPI_ChatFilterExtension[eqr-7t]")
-									defaultButton:TPILocalizedString(@"TPI_ChatFilterExtension[ybz-7i]")
-								  alternateButton:nil];
+			[TDCAlert modalAlertWithMessage:@""
+									  title:TPILocalizedString(@"TPI_ChatFilterExtension[eqr-7t]")
+							  defaultButton:TPILocalizedString(@"TPI_ChatFilterExtension[ybz-7i]")
+							alternateButton:nil];
 
 			return;
 		}

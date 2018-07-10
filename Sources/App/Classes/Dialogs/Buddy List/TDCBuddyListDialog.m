@@ -63,7 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
-	(void)[RZMainBundle() loadNibNamed:@"TDCBuddyListDialog" owner:self topLevelObjects:nil];
+	[RZMainBundle() loadNibNamed:@"TDCBuddyListDialog" owner:self topLevelObjects:nil];
 }
 
 - (void)droppedNicknames:(NSArray<NSString *> *)nicknames fromClient:(IRCClient *)client

@@ -2553,7 +2553,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)addUser:(IRCUser *)user
 {
-	(void)[self addUserAndReturn:user];
+	[self addUserAndReturn:user];
 }
 
 - (IRCUser *)addUserAndReturn:(IRCUser *)user
@@ -6587,7 +6587,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		^(TVCLogControllerPrintOperationContext *context)
 		{
 			if ([self isSafeToPostNotificationForMessage:m inChannel:channel]) {
-				(void)[self notifyText:TXNotificationChannelNoticeType lineType:lineType target:channel nickname:sender text:text];
+				[self notifyText:TXNotificationChannelNoticeType lineType:lineType target:channel nickname:sender text:text];
 			}
 		};
 	} else {
@@ -7376,7 +7376,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			[self requestModesForChannel:channel];
 		}
 	} else {
-		(void)[self notifyEvent:TXNotificationUserJoinedType lineType:TVCLogLineJoinType target:channel nickname:sender text:nil];
+		[self notifyEvent:TXNotificationUserJoinedType lineType:TVCLogLineJoinType target:channel nickname:sender text:nil];
 	}
 }
 
@@ -7420,7 +7420,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			[channel removeMemberWithNickname:sender];
 
 			/* Notify user */
-			(void)[self notifyEvent:TXNotificationUserPartedType lineType:TVCLogLinePartType target:channel nickname:sender text:comment];
+			[self notifyEvent:TXNotificationUserPartedType lineType:TVCLogLinePartType target:channel nickname:sender text:comment];
 		}
 	}
 
@@ -7682,7 +7682,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if (myself == NO) {
 		[mainWindow() updateTitleFor:self];
 
-		(void)[self notifyEvent:TXNotificationUserDisconnectedType lineType:TVCLogLineQuitType target:nil nickname:sender text:comment];
+		[self notifyEvent:TXNotificationUserDisconnectedType lineType:TVCLogLineQuitType target:nil nickname:sender text:comment];
 	}
 }
 
@@ -8764,7 +8764,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		}
 	}
 
-	(void)[self postReceivedMessage:m];
+	[self postReceivedMessage:m];
 }
 
 #pragma mark -
@@ -8870,7 +8870,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[self sendPong:token];
 
-	(void)[self postReceivedMessage:m];
+	[self postReceivedMessage:m];
 }
 
 - (void)receiveAwayNotifyCapability:(IRCMessage *)m

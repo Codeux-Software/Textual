@@ -128,7 +128,7 @@ enum {
 
 - (void)prepareInitialState
 {
-	(void)[RZMainBundle() loadNibNamed:@"TDCInAppPurchaseDialog" owner:self topLevelObjects:nil];
+	[RZMainBundle() loadNibNamed:@"TDCInAppPurchaseDialog" owner:self topLevelObjects:nil];
 
 	self.windowIsAllowedToClose = YES;
 }
@@ -1101,7 +1101,7 @@ enum {
 	
 	self.performRestoreNextChance = YES;
 
-	(void)[self restoreTransactionsDeferred];
+	[self restoreTransactionsDeferred];
 }
 
 - (BOOL)restoreTransactionsDeferred
@@ -1150,7 +1150,7 @@ enum {
 
 - (void)loadReceiptDuringLaunch
 {
-	(void)[self loadReceipt];
+	[self loadReceipt];
 
 	/* If the receipt fails to load for some reason,
 	 then we aren't going to make a stink behind it.

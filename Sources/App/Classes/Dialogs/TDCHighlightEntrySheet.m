@@ -77,7 +77,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)prepareInitialState
 {
-	(void)[RZMainBundle() loadNibNamed:@"TDCHighlightEntrySheet" owner:self topLevelObjects:nil];
+	[RZMainBundle() loadNibNamed:@"TDCHighlightEntrySheet" owner:self topLevelObjects:nil];
 
 	self.matchKeywordTextField.stringValueUsesOnlyFirstToken = NO;
 	self.matchKeywordTextField.stringValueIsInvalidOnEmpty = YES;

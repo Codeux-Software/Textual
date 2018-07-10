@@ -323,7 +323,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (inFirstLine == NO) {
 		NSRange firstLineRange;
 
-		(void)[layoutManager lineFragmentRectForGlyphAtIndex:0 effectiveRange:&firstLineRange];
+		[layoutManager lineFragmentRectForGlyphAtIndex:0 effectiveRange:&firstLineRange];
 
 		inFirstLine = (selectedRange.location <= NSMaxRange(firstLineRange));
 	}
@@ -334,7 +334,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (inLastLine == NO) {
 		NSRange lastLineRange;
 
-		(void)[layoutManager lineFragmentRectForGlyphAtIndex:(stringLength - 1) effectiveRange:&lastLineRange];
+		[layoutManager lineFragmentRectForGlyphAtIndex:(stringLength - 1) effectiveRange:&lastLineRange];
 
 		inLastLine = (selectedRange.location >= lastLineRange.location);
 	}

@@ -888,7 +888,7 @@ ClassWithDesignatedInitializerInitMethod
 	if (self.isSender == NO && self.isResume == NO) {
 		[self setNonexistentFilename];
 
-		(void)[RZFileManager() createFileAtPath:filePath contents:[NSData data] attributes:nil];
+		[RZFileManager() createFileAtPath:filePath contents:[NSData data] attributes:nil];
 	}
 
 	NSFileHandle *fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:filePath];

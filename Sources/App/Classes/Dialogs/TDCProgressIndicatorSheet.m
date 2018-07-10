@@ -65,7 +65,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)prepareInitialState
 {
-	(void)[RZMainBundle() loadNibNamed:@"TDCProgressIndicatorSheet" owner:self topLevelObjects:nil];
+	[RZMainBundle() loadNibNamed:@"TDCProgressIndicatorSheet" owner:self topLevelObjects:nil];
 }
 
 - (void)start

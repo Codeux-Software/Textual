@@ -75,7 +75,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
-	(void)[RZMainBundle() loadNibNamed:@"TDCInAppPurchaseUpgradeEligibilitySheet" owner:self topLevelObjects:nil];
+	[RZMainBundle() loadNibNamed:@"TDCInAppPurchaseUpgradeEligibilitySheet" owner:self topLevelObjects:nil];
 
 	self.eligibility = TLOInAppPurchaseUpgradeEligibilityUnknown;
 }

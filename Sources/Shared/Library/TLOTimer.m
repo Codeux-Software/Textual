@@ -190,7 +190,7 @@ TEXTUAL_IGNORE_DEPRECATION_BEGIN
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-	(void)[self.target performSelector:self.action withObject:self];
+	[self.target performSelector:self.action withObject:self];
 #pragma clang diagnostic pop
 
 TEXTUAL_IGNORE_DEPRECATION_END

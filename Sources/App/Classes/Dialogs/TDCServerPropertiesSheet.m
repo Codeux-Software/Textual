@@ -248,7 +248,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
-	(void)[RZMainBundle() loadNibNamed:@"TDCServerPropertiesSheet" owner:self topLevelObjects:nil];
+	[RZMainBundle() loadNibNamed:@"TDCServerPropertiesSheet" owner:self topLevelObjects:nil];
 
 	/* Populate server list combo box */
 	self.networkList = [IRCNetworkList new];
@@ -1367,11 +1367,11 @@ NS_ASSUME_NONNULL_BEGIN
 	{
 		return;
 	}
-
-	(void)[TDCAlert modalAlertWithMessage:TXTLS(@"TDCServerPropertiesSheet[26u-j8]")
-									title:TXTLS(@"TDCServerPropertiesSheet[94r-eq]")
-							defaultButton:TXTLS(@"Prompts[c7s-dq]")
-						  alternateButton:nil];
+	
+	[TDCAlert modalAlertWithMessage:TXTLS(@"TDCServerPropertiesSheet[26u-j8]")
+							  title:TXTLS(@"TDCServerPropertiesSheet[94r-eq]")
+					  defaultButton:TXTLS(@"Prompts[c7s-dq]")
+					alternateButton:nil];
 }
 
 - (void)preferredCipherSuitesChanged:(id)sender

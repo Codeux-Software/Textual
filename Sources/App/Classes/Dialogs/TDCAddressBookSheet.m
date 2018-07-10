@@ -115,7 +115,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)prepareInitialState
 {
-	(void)[RZMainBundle() loadNibNamed:@"TDCAddressBookSheet" owner:self topLevelObjects:nil];
+	[RZMainBundle() loadNibNamed:@"TDCAddressBookSheet" owner:self topLevelObjects:nil];
 
 	self.ignoreEntryHostmaskTextField.stringValueIsInvalidOnEmpty = YES;
 	self.ignoreEntryHostmaskTextField.stringValueUsesOnlyFirstToken = YES;

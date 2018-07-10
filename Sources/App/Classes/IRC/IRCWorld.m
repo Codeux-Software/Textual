@@ -555,7 +555,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 		}
 	}
 
-	(void)[mainWindow() reloadLoadingScreen];
+	[mainWindow() reloadLoadingScreen];
 
 	[menuController() populateNavigationChannelList];
 
@@ -702,7 +702,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 
 	[self postClientListWasModifiedNotification];
 
-	(void)[mainWindow() reloadLoadingScreen];
+	[mainWindow() reloadLoadingScreen];
 
 	[menuController() populateNavigationChannelList];
 }
