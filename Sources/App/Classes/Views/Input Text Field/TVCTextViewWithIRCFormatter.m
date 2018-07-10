@@ -147,7 +147,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)stringValueWithIRCFormatting
 {
-	return [self attributedString].attributedStringToASCIIFormatting;
+	return self.attributedString.stringFormattedForIRC;
 }
 
 - (void)setStringValue:(NSString *)stringValue

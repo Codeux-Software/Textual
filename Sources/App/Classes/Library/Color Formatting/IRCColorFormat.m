@@ -35,11 +35,11 @@
  *
  *********************************************************************** */
 
+#import "NSObjectHelperPrivate.h"
 #import "TVCLogRenderer.h"
 #import "IRC.h"
 #import "IRCClientConfig.h"
 #import "IRCClient.h"
-#import "IRCChannel.h"
 #import "IRCColorFormatPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -53,333 +53,501 @@ NSString * const IRCTextFormatterForegroundColorAttributeName = @"IRCTextFormatt
 NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatterBackgroundColorAttributeName";
 NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoilerAttributeName";
 
-@implementation NSAttributedString (IRCTextFormatterPrivate)
+#pragma mark -
+#pragma mark Private Headers
+
+@interface NSMutableString (IRCTextFormatterPrivate)
+- (NSUInteger)wrapIRCTextFormatterResultWith:(NSUInteger)minimumIndex maxDistance:(NSUInteger)maxDistance;
+@end
 
 #pragma mark -
-#pragma mark Text Truncation
+#pragma mark Effects Container
 
-+ (void)IRCColorComponentsInAttributes:(NSDictionary<NSString *, id> *)attributes
-					  controlCharacter:(UniChar *)controlCharacter
-					   foregroundColor:(NSString **)foregroundColor
-					   backgroundColor:(NSString **)backgroundColor
+@interface IRCTextFormatterEffect ()
+@property (nonatomic, assign, readwrite) IRCTextFormatterEffectType type;
+@property (nonatomic, copy, nullable, readwrite) NSString *value;
+@property (nonatomic, assign, readwrite) UniChar controlCharacter;
+@property (nonatomic, assign, readwrite) NSUInteger length;
+@end
+
+@interface IRCTextFormatterEffects ()
+@property (nonatomic, copy, readwrite) NSArray<IRCTextFormatterEffect *> *effects;
+@property (nonatomic, assign, readwrite) NSUInteger maximumLength;
+@end
+
+@implementation IRCTextFormatterEffect
+
++ (nullable instancetype)effectWithType:(IRCTextFormatterEffectType)type
 {
-	NSParameterAssert(attributes != nil);
+	return [[self alloc] initWithEffect:type withValue:nil];
+}
 
-	/* Color hex */
-	id foregroundColorValue = attributes[IRCTextFormatterForegroundColorAttributeName];
-	id backgroundColorValue = attributes[IRCTextFormatterBackgroundColorAttributeName];
++ (nullable instancetype)effectWithType:(IRCTextFormatterEffectType)type withValue:(nullable id)value
+{
+	return [[self alloc] initWithEffect:type withValue:value];
+}
 
-	if ([foregroundColorValue isKindOfClass:[NSColor class]]) {
-		*controlCharacter = IRCTextFormatterColorAsHexEffectCharacter;
+- (instancetype)init
+{
+	return [self initWithEffect:IRCTextFormatterNoEffect withValue:nil];
+}
 
-		*foregroundColor = [[foregroundColorValue hexadecimalValue] substringFromIndex:1]; // Remove leading #
+- (nullable instancetype)initWithEffect:(IRCTextFormatterEffectType)type
+{
+	return [self initWithEffect:type withValue:nil];
+}
 
-		if ([backgroundColorValue isKindOfClass:[NSColor class]]) {
-			*backgroundColor = [[backgroundColorValue hexadecimalValue] substringFromIndex:1]; // Remove leading #
+- (nullable instancetype)initWithEffect:(IRCTextFormatterEffectType)type withValue:(nullable id)value
+{
+	if ((self = [super init])) {
+		return [self _setupWithEffect:type withValue:value];
+	}
+
+	return nil;
+}
+
+- (nullable instancetype)_setupWithEffect:(IRCTextFormatterEffectType)type withValue:(nullable id)value
+{
+	UniChar controlCharacter = 0x00;
+
+	NSUInteger valueLength = 0;
+
+	NSString *valueOut = nil;
+
+	switch (type) {
+		case IRCTextFormatterNoEffect:
+		{
+			break;
 		}
+		case IRCTextFormatterBoldEffect:
+		{
+			controlCharacter = IRCTextFormatterBoldEffectCharacter;
+
+			valueLength = 2; // opening and closing
+
+			break;
+		}
+		case IRCTextFormatterItalicEffect:
+		{
+			controlCharacter = IRCTextFormatterItalicEffectCharacter;
+
+			valueLength = 2; // opening and closing
+
+			break;
+		}
+		case IRCTextFormatterMonospaceEffect:
+		{
+			controlCharacter = IRCTextFormatterMonospaceEffectCharacter;
+
+			valueLength = 2; // opening and closing
+
+			break;
+		}
+		case IRCTextFormatterStrikethroughEffect:
+		{
+			controlCharacter = IRCTextFormatterStrikethroughEffectCharacter;
+
+			valueLength = 2; // opening and closing
+
+			break;
+		}
+		case IRCTextFormatterUnderlineEffect:
+		{
+			controlCharacter = IRCTextFormatterUnderlineEffectCharacter;
+
+			valueLength = 2; // opening and closing
+
+			break;
+		}
+		case IRCTextFormatterForegroundColorEffect:
+		case IRCTextFormatterBackgroundColorEffect:
+		{
+			if ([value isKindOfClass:[NSColor class]])
+			{
+				controlCharacter = IRCTextFormatterColorAsHexEffectCharacter;
+
+				valueOut = [[value hexadecimalValue] substringFromIndex:1]; // Remove leading #
+			}
+			else if ([value isKindOfClass:[NSNumber class]])
+			{
+				controlCharacter = IRCTextFormatterColorAsDigitEffectCharacter;
+
+				valueOut = [value integerStringValueWithLeadingZero];
+			}
+
+			if (valueOut == nil) {
+				return nil;
+			}
+
+			if (type == IRCTextFormatterForegroundColorEffect) {
+				valueLength = (valueOut.length + 2); // opening and closing
+			} else {
+				valueLength = (valueOut.length + 1); // leading comma
+			}
+
+			break;
+		}
+		default:
+		{
+			/* We return nil because all other formatters are just aliases.
+			 For example, spoiler is an alias for foreground and background. */
+
+			return nil;
+		}
+	}
+
+	self.type = type;
+
+	self.controlCharacter = controlCharacter;
+
+	self.value = valueOut;
+
+	self.length = valueLength;
+
+	return self;
+}
+
+- (void)appendToStartOf:(NSMutableString *)string
+{
+	NSParameterAssert(string != nil);
+
+	IRCTextFormatterEffectType type = self.type;
+
+	NSString *value = self.value;
+
+	if (type == IRCTextFormatterBackgroundColorEffect) {
+		[string appendFormat:@",%@", value];
 
 		return;
 	}
 
-	/* Color digits */
-	if ([foregroundColorValue isKindOfClass:[NSNumber class]]) {
-		*controlCharacter = IRCTextFormatterColorAsDigitEffectCharacter;
+	UniChar controlCharacter = self.controlCharacter;
 
-		*foregroundColor = [foregroundColorValue integerStringValueWithLeadingZero];
-
-		if ([backgroundColorValue isKindOfClass:[NSNumber class]]) {
-			*backgroundColor = [backgroundColorValue integerStringValueWithLeadingZero];
-		}
+	if (value == nil) {
+		[string appendFormat:@"%c", controlCharacter];
+	} else {
+		[string appendFormat:@"%c%@", controlCharacter, value];
 	}
 }
 
-+ (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString **)textToFormat inChannel:(IRCChannel *)channel onClient:(IRCClient *)client withLineType:(TVCLogLineType)lineType
+- (void)appendToEndOf:(NSMutableString *)string
 {
-	NSParameterAssert(textToFormat != nil);
+	NSParameterAssert(string != nil);
+
+	if (self.type == IRCTextFormatterBackgroundColorEffect) {
+		return;
+	}
+
+	[string appendFormat:@"%c", self.controlCharacter];
+}
+
+@end
+
+#pragma mark -
+
+@implementation IRCTextFormatterEffects
+
++ (instancetype)effectsInAttributes:(NSDictionary<NSString *, id> *)attributes
+{
+	return [[self alloc] initWithAttributes:attributes];
+}
+
+- (instancetype)init
+{
+	return [self initWithAttributes:@{}];
+}
+
+- (instancetype)initWithAttributes:(NSDictionary<NSString *, id> *)attributes
+{
+	if ((self = [super init])) {
+		return [self _setupWithAttributes:attributes];
+	}
+
+	return nil;
+}
+
+- (instancetype)_setupWithAttributes:(NSDictionary<NSString *, id> *)attributes
+{
+	NSUInteger maximumLength = 0;
+
+	NSMutableArray *effects = [NSMutableArray arrayWithCapacity:7];
+
+	IRCTextFormatterEffect *foregroundColor = [IRCTextFormatterEffect effectWithType:IRCTextFormatterForegroundColorEffect withValue:attributes[IRCTextFormatterForegroundColorAttributeName]];
+	IRCTextFormatterEffect *backgroundColor = [IRCTextFormatterEffect effectWithType:IRCTextFormatterBackgroundColorEffect withValue:attributes[IRCTextFormatterBackgroundColorAttributeName]];
+
+	if (foregroundColor) {
+		[effects addObject:foregroundColor];
+
+		maximumLength += foregroundColor.length;
+
+		/* It's important that the background color ALWAYS follows the foreground
+		 color because the array will be enumerated in order to append the effects. */
+		/* Type of values must be the same. Can't mix and match integer color with hex. */
+		if (foregroundColor.controlCharacter ==
+			backgroundColor.controlCharacter)
+		{
+			[effects addObject:backgroundColor];
+
+			maximumLength += backgroundColor.length;
+		}
+	}
+
+	BOOL textIsBold = [attributes boolForKey:IRCTextFormatterBoldAttributeName];
+	BOOL textIsItalicized = [attributes boolForKey:IRCTextFormatterItalicAttributeName];
+	BOOL textIsMonospace = [attributes boolForKey:IRCTextFormatterMonospaceAttributeName];
+	BOOL textIsStruckthrough = [attributes boolForKey:IRCTextFormatterStrikethroughAttributeName];
+	BOOL textIsUnderlined = [attributes boolForKey:IRCTextFormatterUnderlineAttributeName];
+
+	if (textIsBold) {
+		IRCTextFormatterEffect *effect = [IRCTextFormatterEffect effectWithType:IRCTextFormatterBoldEffect];
+
+		[effects addObject:effect];
+
+		maximumLength += effect.length;
+	}
+
+	if (textIsItalicized) {
+		IRCTextFormatterEffect *effect = [IRCTextFormatterEffect effectWithType:IRCTextFormatterItalicEffect];
+
+		[effects addObject:effect];
+
+		maximumLength += effect.length;
+	}
+
+	if (textIsMonospace) {
+		IRCTextFormatterEffect *effect = [IRCTextFormatterEffect effectWithType:IRCTextFormatterMonospaceEffect];
+
+		[effects addObject:effect];
+
+		maximumLength += effect.length;
+	}
+
+	if (textIsStruckthrough) {
+		IRCTextFormatterEffect *effect = [IRCTextFormatterEffect effectWithType:IRCTextFormatterStrikethroughEffect];
+
+		[effects addObject:effect];
+
+		maximumLength += effect.length;
+	}
+
+	if (textIsUnderlined) {
+		IRCTextFormatterEffect *effect = [IRCTextFormatterEffect effectWithType:IRCTextFormatterUnderlineEffect];
+
+		[effects addObject:effect];
+
+		maximumLength += effect.length;
+	}
+
+	self.effects = effects;
+
+	self.maximumLength = maximumLength;
+
+	return self;
+}
+
+- (void)appendToStartOf:(NSMutableString *)string
+{
+	NSParameterAssert(string != nil);
+
+	for (IRCTextFormatterEffect *effect in self.effects) {
+		[effect appendToStartOf:string];
+	}
+}
+
+- (void)appendToEndOf:(NSMutableString *)string
+{
+	NSParameterAssert(string != nil);
+
+	/* Remember to use a reverse enumerator when closing because
+	 we need to close in the same order in which we opened. */
+	for (IRCTextFormatterEffect *effect in self.effects.reverseObjectEnumerator) {
+		[effect appendToEndOf:string];
+	}
+}
+
+@end
+
+#pragma mark -
+#pragma mark Text Truncation
+
+@implementation NSAttributedString (IRCTextFormatterPrivate)
+
+- (NSString *)stringFormattedForChannel:(NSString *)channelName onClient:(IRCClient *)client withLineType:(TVCLogLineType)lineType effectiveRange:(NSRange * _Nullable)effectiveRange
+{
+	NSParameterAssert(channelName != nil);
+	NSParameterAssert(client != nil);
 
 	/* ///////////////////////////////////////////////////// */
 	/*
-	 Server level truncation does not count the total number of
-	 characters in the received message alone. It also accounts for
-	 everything that precedes it including the hostmask, channel name,
-	 and any other commands.
+	 Server-side truncation does not count the total number of characters
+	 in the received message alone. It also counts everything that precedes
+	 it including hostmask, channel name, and command, and newline.
 
-	 Example: :<nickname>!<username>@<address> PRIVMSG #<channel> :<message>
+	 Example: ":<nickname>!<username>@<address> PRIVMSG #<channel> :<message>\r\n"
 
-	 The following math takes into account this information. The static
-	 number of fourteen that we add to the math also accounts for the
-	 PRIVMSG command, :, and additional spaces as part of the data we
-	 are sending. We add an extra two as a buffer just to be safe.
+	 The following math takes into account this information.
 
-	 This truncation engine also supports NOTICE and ACTION lines, but
-	 that is it. Textual should only care about regular text.
+	 Do not extend this method to support anything more than plain text
+	 messages such as PRIVMSG, ACTION, and NOTICE.
 	 */
 	/* ///////////////////////////////////////////////////// */
 
-#define	_textTruncationPRIVMSGCommandConstant				14
-#define	_textTruncationACTIONCommandConstant				30
-#define _textTruncationNOTICECommandConstant				14
+#define	_textTruncationPRIVMSGCommandConstant			9  // "PRIVMSG" + surrounding spaces
+#define	_textTruncationACTIONCommandConstant			17 // "PRIVMSG" + surrounding spaces + 0x01 + "ACTION" + 0x01
+#define _textTruncationNOTICECommandConstant			8  // "NOTICE" + surrounding spaces
 
-#define _textTruncationHostmaskConstant						15 // Used if local user host is unknown
+#define _textTruncationHostmaskConstant					60 // Used if local hostmask is unknown
 
-#define	_textTruncationSpacePositionMaxDifferential			10
+	/* Maximum distance from end of string that we will
+	 locate a character to perform wrapping on. */
+#define	_textTruncationWrapMaxDistance			25
 
-	if (client == nil || channel == nil) {
-		NSString *resultString = (*textToFormat).attributedStringToASCIIFormatting;
+	/* Add length of colon (":") */
+	NSUInteger minimumLength = 1;
 
-		[*textToFormat deleteCharactersInRange:(*textToFormat).range];
-
-		return resultString;
-	}
-
-	/* Calculate the length of the channel name, the user's hostmask, 
-	 and the command being sent part of this message. */
-	NSString *channelName = channel.name;
-
+	/* Add length of hostmask */
 	NSString *userHostmask = client.userHostmask;
 
-	NSUInteger baseMath = channelName.length; // Start with the channel name's length
-
 	if (userHostmask == nil) {
-		baseMath += _textTruncationHostmaskConstant; // It's better to have something rather than nothing
+		minimumLength += _textTruncationHostmaskConstant; // It's better to have something rather than nothing
 	} else {
-		baseMath += userHostmask.length;
+		minimumLength += userHostmask.length;
 	}
 
+	/* Add length of command */
 	if (lineType == TVCLogLinePrivateMessageType || lineType == TVCLogLinePrivateMessageNoHighlightType) {
-		baseMath += _textTruncationPRIVMSGCommandConstant;
+		minimumLength += _textTruncationPRIVMSGCommandConstant;
 	} else if (lineType == TVCLogLineActionType || lineType == TVCLogLineActionNoHighlightType) {
-		baseMath += _textTruncationACTIONCommandConstant;
+		minimumLength += _textTruncationACTIONCommandConstant;
 	} else if (lineType == TVCLogLineNoticeType) {
-		baseMath += _textTruncationNOTICECommandConstant;
+		minimumLength += _textTruncationNOTICECommandConstant;
 	} else {
-		return (*textToFormat).attributedStringToASCIIFormatting;
+		NSAssert(NO, @"Line type not supported");
 	}
 
-	/* Begin computing the truncated string. */
-	NSMutableAttributedString *base = [*textToFormat copy];
+	/* Add length of channel name */
+	minimumLength += channelName.length;
 
-	NSMutableString *result = [NSMutableString string];
+	/* Add length of space trailing channel name and colon (" :") */
+	minimumLength += 2;
 
-	/* Write out status. */
-	NSUInteger totalCalculatedLength = baseMath;
+	/* Add length of trailing \r\n */
+	minimumLength += 2;
 
-	NSUInteger stringDeletionLength  = 0;
-
+	/* Calculate maximum length */
 	NSUInteger maximumLength = TXMaximumIRCBodyLength;
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-	NSUInteger encryptionEstimate = [client lengthOfEncryptedMessageDirectedAt:channel.name thatFitsWithinBounds:(maximumLength - baseMath)];
+	NSUInteger encryptionEstimate = [client lengthOfEncryptedMessageDirectedAt:channelName thatFitsWithinBounds:(maximumLength - minimumLength)];
 
 	if (encryptionEstimate > 0) {
 		maximumLength = encryptionEstimate;
 	}
 #endif
 
-	/* Begin actual work. */
-	NSUInteger startCharacterCount = 0;
-	NSUInteger stopCharacterCount = 0;
+	/* Perform truncation */
+	NSString *string = self.string;
 
-	NSRange effectiveRange;
+	NSStringEncoding encoding = client.config.primaryEncoding;
 
-	NSRange limitRange = NSMakeRange(0, base.length);
+	NSMutableString *result = [NSMutableString string];
 
-	while (limitRange.length > 0) {
-		BOOL breakLoopAfterAppend = NO;
+	// Length of result with formatters
+	__block NSUInteger resultLength = minimumLength;
 
-		startCharacterCount = 0;
-		stopCharacterCount = 0;
+	// Length of result without formatters
+	__block NSUInteger deletionLength  = 0;
 
+	[self enumerateAttributesInRange:self.range
+							 options:0
+						  usingBlock:^(NSDictionary<NSString *, id> *attributes, NSRange segmentRange, BOOL *stop)
+	{
 		/* ///////////////////////////////////////////////////// */
-		/* Gather information about the attributes present and calculate the total
-		 number of invisible characters necessary to support them. This count will
-		 then be added into our math to determine the length of our string without
-		 any formatting attached. */
-		/* ///////////////////////////////////////////////////// */
-
-		NSDictionary *attributes = [base attributesAtIndex:limitRange.location
-									 longestEffectiveRange:&effectiveRange
-												   inRange:limitRange];
-
-		UniChar colorControlCharacter = 0;
-
-		NSString *foregroundColor = nil;
-		NSString *backgroundColor = nil;
-
-		[NSAttributedString IRCColorComponentsInAttributes:attributes
-										  controlCharacter:&colorControlCharacter
-										   foregroundColor:&foregroundColor
-										   backgroundColor:&backgroundColor];
-
-		BOOL textIsBold = [attributes boolForKey:IRCTextFormatterBoldAttributeName];
-		BOOL textIsItalicized = [attributes boolForKey:IRCTextFormatterItalicAttributeName];
-		BOOL textIsMonospace = [attributes boolForKey:IRCTextFormatterMonospaceAttributeName];
-		BOOL textIsStruckthrough = [attributes boolForKey:IRCTextFormatterStrikethroughAttributeName];
-		BOOL textIsUnderlined = [attributes boolForKey:IRCTextFormatterUnderlineAttributeName];
-
-		if (textIsBold) {
-			startCharacterCount += 1; // control character
-			stopCharacterCount += 1; // control character
-		}
-
-		if (textIsItalicized) {
-			startCharacterCount += 1; // control character
-			stopCharacterCount += 1; // control character
-		}
-
-		if (textIsMonospace) {
-			startCharacterCount += 1; // control character
-			stopCharacterCount += 1; // control character
-		}
-
-		if (textIsStruckthrough) {
-			startCharacterCount += 1; // control character
-			stopCharacterCount += 1; // control character
-		}
-
-		if (textIsUnderlined) {
-			startCharacterCount += 1; // control character
-			stopCharacterCount += 1; // control character
-		}
-
-		if (foregroundColor != nil) {
-			startCharacterCount += (1 + foregroundColor.length); // control character plus value
-			stopCharacterCount += 1; // control character
-		}
-
-		if (backgroundColor != nil) {
-			startCharacterCount += (1 + backgroundColor.length); // comma character plus value
-		}
-
-		NSUInteger formattingCharacterCount = (startCharacterCount + stopCharacterCount);
-
-		/* ///////////////////////////////////////////////////// */
-		/* Now that we know the length of our message prefix and the total number
-		 of characters required to support formatting we can start building up our
-		 formatted string value containing our ASCII characters. */
+		/* Gather information about the formatters and calculate
+		 the total number of bytes necessary to support them. */
 		/* ///////////////////////////////////////////////////// */
 
-		NSUInteger newLength = 0;
+		IRCTextFormatterEffects *formatters = [IRCTextFormatterEffects effectsInAttributes:attributes];
+
+		NSUInteger formattersLength = formatters.maximumLength;
+
+		/* ///////////////////////////////////////////////////// */
+		/* Now that we know the minimum length and number of bytes
+		 for the formatters, we can start building the result. */
+		/* ///////////////////////////////////////////////////// */
 
 		/* At this point we do not care what the actaul length of this segment is.
-		 The math below only checks two things. Whether the formatting characters
-		 found above will fit into this segment as well as at least one unicode
-		 character with a length of two. If neither of those can fit, then this
-		 piece of formatted segment is junk and we can break from it. */
+		 The math only checks two things: Whether the formatter bytes found above
+		 will fit into this segment as well as at least one unicode character with
+		 a length of two. If neither of those can fit, then this segment is junk
+		 and we can break from it. */
 
-		/* If the starting location of our location is at 0, then we should not
-		 have to worry about checking the length yet. Since the formatting
-		 characters will occupy at maximum 13 entries at location 0, we can
-		 do our append until the next, middle or end segment. */
+		/* If the location of this segment is 0, then we don't have to worry
+		 about checking the length yet. Since the formatter bytes will occupy
+		 at maximum X entries at location 0, we can do our append until the
+		 next, middle, or end segment. */
 
-		if (effectiveRange.location > 0) { // Length calculations for the middle of our string.
+		if (segmentRange.location > 0) {   // Length calculations for the middle of our string.
 										   // Sally sold seashells down by the seashore.
 										   //        |----------------------| <--- section we have to find
 
-			newLength = (baseMath					+ // The base length. Beginning of string.
-						 totalCalculatedLength		+ // Length of what we have already formatted.
-						 formattingCharacterCount	+ // The formatting characters for this segment.
-						 2);						  // The sad little two. A single unicode character.
+			NSUInteger
+			newLength = (resultLength			+ // Length of what we have already formatted.
+						 formattersLength		+ // The formatter bytes for this segment.
+						 2);					  // The sad little two. A single unicode character.
 
 			/* Will this new segment exceed the maximum size? */
 			if (newLength > maximumLength) {
-				break;
+				return;
 			}
 		}
 
-		/* Add the formatting characters to the final math before append. */
-		totalCalculatedLength += formattingCharacterCount;
+		/* Update math */
+		resultLength += formattersLength;
 
-		/* Now is the point at which we begin to append. */
-		/* Append the actual formatting. This uses the same technology used
-		 in the above defined -attributedStringToASCIIFormatting method. */
-		if (textIsUnderlined) {
-			[result appendFormat:@"%c", IRCTextFormatterUnderlineEffectCharacter];
-		}
+		/* Append formatter openers */
+		[formatters appendToStartOf:result];
 
-		if (textIsStruckthrough) {
-			[result appendFormat:@"%c", IRCTextFormatterStrikethroughEffectCharacter];
-		}
+		/* We now go character by character and append that. We keep appending until
+		 the segment is completed or we run out  of space. When that happens, we break.
+		 We have already added the formatter bytes into the math so any math checked in
+		 the loop will only be count towards the appended characters. */
+		for (NSUInteger i = 0; i < segmentRange.length;) {
+			NSUInteger characterIndex = (segmentRange.location + i);
 
-		if (textIsMonospace) {
-			[result appendFormat:@"%c", IRCTextFormatterMonospaceEffectCharacter];
-		}
+			/* While an emoji looks like only one character, it can be multiple bytes.
+			 We use -rangeOfComposedCharacterSequenceAtIndex: to know the true length
+			 of the character we are about to append. */
+			NSRange characterRange = [string rangeOfComposedCharacterSequenceAtIndex:characterIndex];
 
-		if (textIsItalicized) {
-			[result appendFormat:@"%c", IRCTextFormatterItalicEffectCharacter];
-		}
-
-		if (textIsBold) {
-			[result appendFormat:@"%c", IRCTextFormatterBoldEffectCharacter];
-		}
-
-		if (foregroundColor != nil) {
-			[result appendFormat:@"%c%@", colorControlCharacter, foregroundColor];
-
-			if (backgroundColor != nil) {
-				[result appendFormat:@",%@", backgroundColor];
-			}
-		}
-
-		/* Okay, at this point we know two things. The the formatting characters above and below
-		 the following append will fit within this segment plus at least one unicode character with
-		 a length of two. Now here is where it gets tricky... we will go character by character in
-		 our segment and append that. Any character below 0x7f will count against only one towards
-		 the final result. Anything above it, is equal to two. We keep adding until the segment
-		 is completed or we run out of space. At that point, we break. We have already added
-		 the formatting characters into the math so any math checked against in the loop will
-		 only be counted towards the actual characters. */
-
-		for (NSUInteger i = 0; i < effectiveRange.length;) {
-			NSUInteger characterIndex = (effectiveRange.location + i);
-
-			NSRange characterRange = [base.string rangeOfComposedCharacterSequenceAtIndex:characterIndex];
-
-			NSString *character = [base.string substringWithRange:characterRange];
+			NSString *character = [string substringWithRange:characterRange];
 
 			/* Update math */
-			NSInteger characterSize = [character lengthOfBytesUsingEncoding:client.config.primaryEncoding];
+			NSInteger characterSize = [character lengthOfBytesUsingEncoding:encoding];
 
 			if (characterSize == 0) {
 				characterSize = characterRange.length; // Just incase...
 			}
 
-			totalCalculatedLength += characterSize;
+			resultLength += characterSize;
 
-			/* Would this character go over the max body length? */
-			if (totalCalculatedLength > maximumLength) {
-				breakLoopAfterAppend = YES;
+			/* Would this character go over the max length? */
+			if (resultLength > maximumLength) {
+				/* Look for best character to wrap on */
+				NSUInteger indexDifference = [result wrapIRCTextFormatterResultWith:segmentRange.location maxDistance:_textTruncationWrapMaxDistance];
 
-				/* Looking for spaces. */
-				/* Now this is where the append gets a little technical. We want clean
-				 truncation. Not half-assed ones. Therefore, if we have a space character
-				 and it is within a certain range of the end of the line, then we will stop
-				 append at that instead of breaking inside of a word. */
-				NSUInteger minimumIndex = ((result.length - 1) - _textTruncationSpacePositionMaxDifferential);
-
-				NSRange searchRange = NSMakeRange(minimumIndex, _textTruncationSpacePositionMaxDifferential);
-
-				NSRange spaceRange = [result rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]
-															 options:NSBackwardsSearch
-															   range:searchRange];
-
-				if (spaceRange.location != NSNotFound) {
-					if (spaceRange.location < effectiveRange.location) {
-						/* If the space is out of our segment, we don't want to use it. */
-					} else {
-						NSInteger indexDifference = (result.length - spaceRange.location);
-
-						[result deleteCharactersInRange:NSMakeRange(spaceRange.location, indexDifference)];
-
-						stringDeletionLength -= indexDifference;
-					}
+				if (indexDifference != NSNotFound) {
+					deletionLength -= indexDifference;
 				}
 
-				break; // Stop here if it goes out of bounds
+				/* Nothing more to append */
+				*stop = YES;
+
+				break; // Break instead of return so that we can close formatters
 			}
 
 			/* Only update if we aren't at max */
-			stringDeletionLength += characterRange.length;
+			deletionLength += characterRange.length;
 
 			i += characterRange.length;
 
@@ -387,50 +555,18 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 			[result appendString:character];
 		}
 
-		if (foregroundColor != nil) {
-			[result appendFormat:@"%c", colorControlCharacter];
-		}
+		/* Close formatters */
+		[formatters appendToEndOf:result];
+	}]; // attribute enumeration
 
-		if (textIsBold) {
-			[result appendFormat:@"%c", IRCTextFormatterBoldEffectCharacter];
-		}
-
-		if (textIsItalicized) {
-			[result appendFormat:@"%c", IRCTextFormatterItalicEffectCharacter];
-		}
-
-		if (textIsMonospace) {
-			[result appendFormat:@"%c", IRCTextFormatterMonospaceEffectCharacter];
-		}
-
-		if (textIsStruckthrough) {
-			[result appendFormat:@"%c", IRCTextFormatterStrikethroughEffectCharacter];
-		}
-
-		if (textIsUnderlined) {
-			[result appendFormat:@"%c", IRCTextFormatterUnderlineEffectCharacter];
-		}
-
-		if (breakLoopAfterAppend) {
-			break;
-		}
-
-		NSUInteger effectiveRangeNewLength = (base.length - stringDeletionLength);
-
-		if (effectiveRangeNewLength <= 0) {
-			break;
-		}
-
-		effectiveRange.location = stringDeletionLength;
-
-		effectiveRange.length = effectiveRangeNewLength;
-
-		limitRange = effectiveRange;
+	/* Return length that can be deleted to occupy the result */
+	if ( effectiveRange) {
+		*effectiveRange = NSMakeRange(0, deletionLength);
 	}
 
-	/* Return our attributed string to caller with our formatted line
-	 so that the next one can be served up. */
-	[*textToFormat deleteCharactersInRange:NSMakeRange(0, stringDeletionLength)];
+	/* Debug information */
+	LogToConsoleDebug("Minimum length: %ld; Final length: %ld; Difference: %ld;",
+		 minimumLength, resultLength, (maximumLength - resultLength));
 
 #undef _textTruncationPRIVMSGCommandConstant
 #undef _textTruncationACTIONCommandConstant
@@ -438,7 +574,27 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 #undef _textTruncationHostmaskConstant
 
-#undef _textTruncationSpacePositionMaxDifferential
+#undef _textTruncationWrapMaxDistance
+
+	return result;
+}
+
+@end
+
+#pragma mark -
+
+@implementation NSMutableAttributedString (IRCTextFormatterPrivate)
+
+- (NSString *)stringFormattedForChannel:(NSString *)channelName onClient:(IRCClient *)client withLineType:(TVCLogLineType)lineType
+{
+	NSParameterAssert(channelName != nil);
+	NSParameterAssert(client != nil);
+
+	NSRange effectiveRange;
+
+	NSString *result = [self stringFormattedForChannel:channelName onClient:client withLineType:lineType effectiveRange:&effectiveRange];
+
+	[self deleteCharactersInRange:effectiveRange];
 
 	return result;
 }
@@ -454,7 +610,14 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 - (NSString *)attributedStringToASCIIFormatting
 {
-	NSString *realBody = self.string;
+	TEXTUAL_DEPRECATED_WARNING
+
+	return self.stringFormattedForIRC;
+}
+
+- (NSString *)stringFormattedForIRC
+{
+	NSString *string = self.string;
 
 	NSMutableString *result = [NSMutableString string];
 
@@ -462,75 +625,15 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 							 options:0
 						  usingBlock:^(NSDictionary *attributes, NSRange effectiveRange, BOOL *stop)
 	 {
-		 UniChar colorControlCharacter = 0;
+		 IRCTextFormatterEffects *effects = [IRCTextFormatterEffects effectsInAttributes:attributes];
 
-		 NSString *foregroundColor = nil;
-		 NSString *backgroundColor = nil;
+		 [effects appendToStartOf:result];
 
-		 [NSAttributedString IRCColorComponentsInAttributes:attributes
-										   controlCharacter:&colorControlCharacter
-											foregroundColor:&foregroundColor
-											backgroundColor:&backgroundColor];
+		 NSString *segment = [string substringWithRange:effectiveRange];
 
-		 BOOL textIsBold = [attributes boolForKey:IRCTextFormatterBoldAttributeName];
-		 BOOL textIsItalicized = [attributes boolForKey:IRCTextFormatterItalicAttributeName];
-		 BOOL textIsMonospace = [attributes boolForKey:IRCTextFormatterMonospaceAttributeName];
-		 BOOL textIsStruckthrough = [attributes boolForKey:IRCTextFormatterStrikethroughAttributeName];
-		 BOOL textIsUnderlined = [attributes boolForKey:IRCTextFormatterUnderlineAttributeName];
+		 [result appendString:segment];
 
-		 if (textIsUnderlined) {
-			 [result appendFormat:@"%c", IRCTextFormatterUnderlineEffectCharacter];
-		 }
-
-		 if (textIsStruckthrough) {
-			 [result appendFormat:@"%c", IRCTextFormatterStrikethroughEffectCharacter];
-		 }
-
-		 if (textIsMonospace) {
-			 [result appendFormat:@"%c", IRCTextFormatterMonospaceEffectCharacter];
-		 }
-
-		 if (textIsItalicized) {
-			 [result appendFormat:@"%c", IRCTextFormatterItalicEffectCharacter];
-		 }
-
-		 if (textIsBold) {
-			 [result appendFormat:@"%c", IRCTextFormatterBoldEffectCharacter];
-		 }
-
-		 if (foregroundColor != nil) {
-			 [result appendFormat:@"%c%@", colorControlCharacter, foregroundColor];
-
-			 if (backgroundColor != nil) {
-				 [result appendFormat:@",%@", backgroundColor];
-			 }
-		 }
-
-		 [result appendString:[realBody substringWithRange:effectiveRange]];
-
-		 if (foregroundColor != nil) {
-			 [result appendFormat:@"%c", colorControlCharacter];
-		 }
-
-		 if (textIsBold) {
-			 [result appendFormat:@"%c", IRCTextFormatterBoldEffectCharacter];
-		 }
-
-		 if (textIsItalicized) {
-			 [result appendFormat:@"%c", IRCTextFormatterItalicEffectCharacter];
-		 }
-
-		 if (textIsMonospace) {
-			 [result appendFormat:@"%c", IRCTextFormatterMonospaceEffectCharacter];
-		 }
-
-		 if (textIsStruckthrough) {
-			 [result appendFormat:@"%c", IRCTextFormatterStrikethroughEffectCharacter];
-		 }
-
-		 if (textIsUnderlined) {
-			 [result appendFormat:@"%c", IRCTextFormatterUnderlineEffectCharacter];
-		 }
+		 [effects appendToEndOf:result];
 	 }];
 
 	return result;
@@ -912,6 +1015,51 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 			 }
 		 }
 	 }];
+}
+
+@end
+
+#pragma mark -
+#pragma mark Truncation Helpers
+
+@implementation NSMutableString (IRCTextFormatterPrivate)
+
+/* Look for best character to wrap on */
+/* Now this is where the append gets a little technical. We want clean
+ truncation. Not half-assed ones. Therefore, if we have space character
+ and it is within a certain range of the end of the line, then we will
+ stop append at that instead of breaking inside of a word. */
+/* Returns number of characters deleted from self or NSNotFound if none. */
+/* minimumIndex is index we can't pass so that we always wrap within our
+ own segment and not within another. */
+/* maxDistance is how far back we search backwards from the end.
+ While similiar, this value is different compared to minimumIndex.
+ maxDistance is a suggestion whereas minimumIndex is a must. */
+- (NSUInteger)wrapIRCTextFormatterResultWith:(NSUInteger)minimumIndex maxDistance:(NSUInteger)maxDistance
+{
+	NSParameterAssert(maxDistance > 0);
+
+	NSUInteger selfLength = self.length;
+
+	NSUInteger searchIndex = ((self.length - 1) - maxDistance);
+
+	NSRange searchRange = NSMakeRange(searchIndex, maxDistance);
+
+	NSRange spaceRange = [self rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]
+											   options:NSBackwardsSearch
+												 range:searchRange];
+
+	if (spaceRange.location == NSNotFound ||
+		spaceRange.location < minimumIndex)
+	{
+		return NSNotFound;
+	}
+
+	NSInteger indexDifference = (selfLength - spaceRange.location);
+
+	[self deleteCharactersInRange:NSMakeRange(spaceRange.location, indexDifference)];
+
+	return indexDifference;
 }
 
 @end
