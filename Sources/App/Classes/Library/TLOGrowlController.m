@@ -473,7 +473,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 		NSString *clientId = context[@"clientId"];
 		NSString *channelId = context[@"channelId"];
 
-		if (clientId == nil && channelId == nil) {
+		if (clientId == nil) {
 			return;
 		}
 

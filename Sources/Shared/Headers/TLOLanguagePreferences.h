@@ -51,4 +51,13 @@ TEXTUAL_EXTERN NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString
 + (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle table:(NSString *)table arguments:(va_list)arguments;
 @end
 
+/* This function exists so that static analzyer doesn't warn
+ certain static strings aren't localized. Some strings wont
+ be localized because it is inappropriate (e.g. a number) */
+__attribute__((annotate("returns_localized_nsstring")))
+static inline NSString *TXLocalizationNotNeeded(NSString *string)
+{
+	return string;
+}
+
 NS_ASSUME_NONNULL_END

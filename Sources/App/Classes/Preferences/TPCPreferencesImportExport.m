@@ -352,7 +352,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	d.canCreateDirectories = YES;
 
-	d.nameFieldStringValue = @"TextualPreferences.plist";
+	d.nameFieldStringValue = TXLocalizationNotNeeded(@"TextualPreferences.plist");
 
 	[d beginWithCompletionHandler:^(NSInteger returnCode) {
 		if (returnCode == NSModalResponseOK) {

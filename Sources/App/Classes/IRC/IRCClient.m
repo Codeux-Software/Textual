@@ -462,16 +462,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	IRCClientConfig *currentConfig = self.config;
 
-	if (currentConfig) {
-		if ([currentConfig isEqual:config]) {
-			return;
-		}
+	if ([currentConfig isEqual:config]) {
+		return;
+	}
 
-		if ([currentConfig.uniqueIdentifier isEqualToString:config.uniqueIdentifier] == NO) {
-			LogToConsoleError("Tried to load configuration for incorrect client");
+	if ([currentConfig.uniqueIdentifier isEqualToString:config.uniqueIdentifier] == NO) {
+		LogToConsoleError("Tried to load configuration for incorrect client");
 
-			return;
-		}
+		return;
 	}
 
 	/* Populate new configuration */
@@ -1346,7 +1344,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return self.channelCount;
 }
 
-- (id)childAtIndex:(NSUInteger)index
+- (nullable id)childAtIndex:(NSUInteger)index
 {
 	return self.channelList[index];
 }
@@ -10407,13 +10405,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSString *nickname = [m paramAt:1];
 			NSString *hostmask = [m paramAt:2];
 
+			NSString *message = TXTLS(@"IRC[3yj-in]", nickname, hostmask);
+
 			IRCChannel *channel = nil;
 
 			if ([TPCPreferences locationToSendNotices] == TXNoticeSendSelectedChannelType) {
 				channel = [mainWindow() selectedChannelOn:self];
 			}
 
-			[self printDebugInformation:TXTLS(@"IRC[3yj-in]", nickname, hostmask) inChannel:channel];
+			if (channel) {
+				[self printDebugInformation:message inChannel:channel];
+			} else {
+				[self printDebugInformationToConsole:message];
+			}
 
 			break;
 		}

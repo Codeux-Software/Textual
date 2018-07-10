@@ -252,7 +252,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		/* If the line does not have a sender, then we use the 
 		 server address as the sender. If that isn't known, then
 		 we use the the address the user has configured. */
-		NSString *serverAddress = client.serverAddress;
+		/* -serverAddress is only nil when the client isn't
+		 connected anywhere. We are parsing messages when
+		 connected somewehre so it's safe to cast it as
+		 as non-nil at least here. */
+		NSString * _Nonnull serverAddress = (NSString * _Nonnull)client.serverAddress;
 
 		IRCPrefixMutable *sender = [IRCPrefixMutable new];
 

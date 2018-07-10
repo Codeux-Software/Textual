@@ -1288,11 +1288,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (useSSL) {
 		if (serverPort == 6667) {
-			self.serverPortTextField.stringValue = @"6697";
+			self.serverPortTextField.stringValue = TXLocalizationNotNeeded(@"6697");
 		}
 	} else {
 		if (serverPort == 6697) {
-			self.serverPortTextField.stringValue = @"6667";
+			self.serverPortTextField.stringValue = TXLocalizationNotNeeded(@"6667");
 		}
 	}
 

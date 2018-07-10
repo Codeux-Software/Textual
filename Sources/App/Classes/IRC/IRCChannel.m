@@ -135,19 +135,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	IRCChannelConfig *currentConfig = self.config;
 
-	if (currentConfig) {
-		if ([config isEqual:currentConfig]) {
-			return;
-		}
+	if ([config isEqual:currentConfig]) {
+		return;
+	}
 
-		if (currentConfig.type != config.type ||
-			[currentConfig.channelName isEqualToString:config.channelName] == NO ||
-			[currentConfig.uniqueIdentifier isEqualToString:config.uniqueIdentifier] == NO)
-		{
-			LogToConsoleError("Tried to load configuration for incorrect channel");
+	if (currentConfig.type != config.type ||
+		[currentConfig.channelName isEqualToString:config.channelName] == NO ||
+		[currentConfig.uniqueIdentifier isEqualToString:config.uniqueIdentifier] == NO)
+	{
+		LogToConsoleError("Tried to load configuration for incorrect channel");
 
-			return;
-		}
+		return;
 	}
 
 	self.config = config;
@@ -1297,7 +1295,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return 0;
 }
 
-- (id)childAtIndex:(NSUInteger)index
+- (nullable id)childAtIndex:(NSUInteger)index
 {
 	return nil;
 }

@@ -51,7 +51,8 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 - (void)_performActionForContent:(NSString *)contentIdentifier type:(ICMTwitchLiveContentType)contentType
 {
 	NSParameterAssert(contentIdentifier != nil);
-	NSParameterAssert(contentType != ICMTwitchLiveUnknownType);
+	NSParameterAssert(contentType == ICMTwitchLiveChannelType ||
+					  contentType == ICMTwitchLiveVideoType);
 
 	NSString *contentArgument = nil;
 

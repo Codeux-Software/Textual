@@ -49,7 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)resetState;
 
 @property (readonly) NSUInteger numberOfChildren;
-- (IRCTreeItem *)childAtIndex:(NSUInteger)index;
+- (nullable IRCTreeItem *)childAtIndex:(NSUInteger)index;
 @end
 
 NS_ASSUME_NONNULL_END

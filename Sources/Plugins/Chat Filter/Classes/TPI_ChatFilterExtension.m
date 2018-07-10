@@ -296,7 +296,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	saveDialog.canCreateDirectories = YES;
 
-	saveDialog.nameFieldStringValue = @"filter.plist";
+	saveDialog.nameFieldStringValue = TXLocalizationNotNeeded(@"filter.plist");
 
 	[saveDialog beginSheetModalForWindow:[NSApp keyWindow] completionHandler:^(NSInteger returnCode) {
 		if (returnCode != NSModalResponseOK) {

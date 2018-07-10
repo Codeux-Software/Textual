@@ -144,7 +144,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 	return [self isHostmaskAddressOn:nil];
 }
 
-- (BOOL)isHostmaskAddressOn:(IRCClient *)client
+- (BOOL)isHostmaskAddressOn:(nullable IRCClient *)client
 {
 	return (self.length > 0 &&
 			[self containsCharacters:@"\x021\x040\x000\x020\x00d\x00a"] == NO);
@@ -155,7 +155,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 	return [self isHostmaskUsernameOn:nil];
 }
 
-- (BOOL)isHostmaskUsernameOn:(IRCClient *)client
+- (BOOL)isHostmaskUsernameOn:(nullable IRCClient *)client
 {
 	return (self.length > 0 &&
 			self.length <= TXMaximumIRCUsernameLength &&
@@ -167,7 +167,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 	return [self isHostmaskNicknameOn:nil];
 }
 
-- (BOOL)isHostmaskNicknameOn:(IRCClient *)client
+- (BOOL)isHostmaskNicknameOn:(nullable IRCClient *)client
 {
 	NSUInteger maximumLength = TXMaximumIRCNicknameLength;
 
