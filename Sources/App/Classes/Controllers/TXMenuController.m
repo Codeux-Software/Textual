@@ -317,6 +317,10 @@ NS_ASSUME_NONNULL_BEGIN
 			case MTMMAppCheckForUpdates: // "Check for updates…"
 			case MTMMHelpAdvancedMenuEnableDeveloperMode: // "Enable Developer Mode"
 			case MTMMHelpAdvancedMenuHiddenPreferences: // "Hidden Preferences…"
+			case MTMMFileDisableAllNotifications: // "Disable All Notifications"
+			case MTMMFileDisableAllNotificationSounds: // "Disable All Notification Sounds"
+			case MTDockMenuDisableAllNotifications: // "Disable All Notifications"
+			case MTDockMenuDisableAllNotificationSounds: // "Disable All Notification Sounds"
 			{
 				validationResult = YES;
 
