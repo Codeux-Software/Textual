@@ -208,7 +208,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if ([target respondsToSelector:@selector(validateMenuItem:)]) {
-		(void)[target performSelector:@selector(validateMenuItem:) withObject:menuItem];
+		[target performSelector:@selector(validateMenuItem:) withObject:menuItem];
 	}
 }
 
@@ -2396,7 +2396,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		for (NSString *nickname in nicknames) {
 			for (NSURL *path in openPanel.URLs) {
-				(void)[self.fileTransferController addSenderForClient:u nickname:nickname path:path.path autoOpen:YES];
+				[self.fileTransferController addSenderForClient:u nickname:nickname path:path.path autoOpen:YES];
 			}
 		}
 
@@ -2452,7 +2452,7 @@ NS_ASSUME_NONNULL_BEGIN
 			continue;
 		}
 
-		(void)[self.fileTransferController addSenderForClient:u nickname:nickname path:file autoOpen:YES];
+		[self.fileTransferController addSenderForClient:u nickname:nickname path:file autoOpen:YES];
 	}
 
 	[self.fileTransferController.fileTransferTable endUpdates];
@@ -2470,7 +2470,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if ([RZFileManager() fileExistsAtURL:path]) {
-		(void)[RZWorkspace() openURL:path];
+		[RZWorkspace() openURL:path];
 
 		return;
 	}
@@ -2497,7 +2497,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if ([RZFileManager() fileExistsAtURL:path]) {
-		(void)[RZWorkspace() openURL:path];
+		[RZWorkspace() openURL:path];
 
 		return;
 	}
@@ -2515,7 +2515,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSString *AcknowledgementsPath = [RZMainBundle() pathForResource:@"Acknowledgements" ofType:@"pdf" inDirectory:@"Documentation"];
 
-	(void)[RZWorkspace() openFile:AcknowledgementsPath];
+	[RZWorkspace() openFile:AcknowledgementsPath];
 }
 
 - (void)openHelpMenuItem:(id)sender

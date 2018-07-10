@@ -509,11 +509,11 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 #endif
 
 	if (installerURL) {
-		(void)[RZWorkspace() openURLs:@[installerURL]
-			  withAppBundleIdentifier:@"com.apple.installer"
-							  options:NSWorkspaceLaunchDefault
-	   additionalEventParamDescriptor:nil
-					launchIdentifiers:NULL];
+		[RZWorkspace() openURLs:@[installerURL]
+		withAppBundleIdentifier:@"com.apple.installer"
+						options:NSWorkspaceLaunchDefault
+ additionalEventParamDescriptor:nil
+			  launchIdentifiers:NULL];
 	}
 }
 

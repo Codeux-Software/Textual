@@ -178,7 +178,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 	[self updateAppearance];
 
-	(void)[self reloadLoadingScreen];
+	[self reloadLoadingScreen];
 
 	[self makeMainWindow];
 
@@ -1860,17 +1860,17 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 - (void)licenseManagerActivatedLicense:(NSNotification *)notification
 {
-	(void)[self reloadLoadingScreen];
+	[self reloadLoadingScreen];
 }
 
 - (void)licenseManagerDeactivatedLicense:(NSNotification *)notification
 {
-	(void)[self reloadLoadingScreen];
+	[self reloadLoadingScreen];
 }
 
 - (void)licenseManagerTrialExpired:(NSNotification *)notification
 {
-	(void)[self reloadLoadingScreen];
+	[self reloadLoadingScreen];
 }
 #endif
 

@@ -189,7 +189,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)prepareInitialState
 {
-	(void)[RZMainBundle() loadNibNamed:@"TDCChannelPropertiesSheet" owner:self topLevelObjects:nil];
+	[RZMainBundle() loadNibNamed:@"TDCChannelPropertiesSheet" owner:self topLevelObjects:nil];
 
 	self.navigationTree = @[
 		//		view								first responder

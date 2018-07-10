@@ -615,7 +615,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	(void)[RZWorkspace() openFile:path];
+	[RZWorkspace() openFile:path];
 }
 
 + (void)openApplicationUbiquitousContainer

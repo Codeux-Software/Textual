@@ -82,7 +82,7 @@ typedef NS_ENUM(NSUInteger, TVCAlertType) {
 
 - (void)prepareInitialState
 {
-	(void)[RZMainBundle() loadNibNamed:@"TVCAlert" owner:self topLevelObjects:nil];
+	[RZMainBundle() loadNibNamed:@"TVCAlert" owner:self topLevelObjects:nil];
 
 	self.buttonsInt = [NSMutableArray array];
 

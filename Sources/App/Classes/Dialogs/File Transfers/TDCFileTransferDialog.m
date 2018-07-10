@@ -90,7 +90,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
-	(void)[RZMainBundle() loadNibNamed:@"TDCFileTransferDialog" owner:self topLevelObjects:nil];
+	[RZMainBundle() loadNibNamed:@"TDCFileTransferDialog" owner:self topLevelObjects:nil];
 
 	self.maintenanceTimer =
 	[TLOTimer timerWithActionBlock:^(TLOTimer *sender) {
@@ -495,7 +495,7 @@ NS_ASSUME_NONNULL_BEGIN
 			return;
 		}
 
-		(void)[RZWorkspace() openFile:fileTransfer.filePath];
+		[RZWorkspace() openFile:fileTransfer.filePath];
 	}];
 }
 
@@ -506,7 +506,7 @@ NS_ASSUME_NONNULL_BEGIN
 			return;
 		}
 
-		(void)[RZWorkspace() selectFile:fileTransfer.filePath inFileViewerRootedAtPath:@""];
+		[RZWorkspace() selectFile:fileTransfer.filePath inFileViewerRootedAtPath:@""];
 	}];
 }
 

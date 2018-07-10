@@ -103,7 +103,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	else if ([action isEqualToString:@"application-support-folder"])
 	{
-		(void)[RZWorkspace() openFile:[TPCPathInfo groupContainerApplicationSupport]];
+		[RZWorkspace() openFile:[TPCPathInfo groupContainerApplicationSupport]];
 	}
 	else if ([action isEqualToString:@"contributors"])
 	{
@@ -113,7 +113,7 @@ NS_ASSUME_NONNULL_BEGIN
 			 [action isEqualToString:@"unsupervised-script-folder"] ||
 			 [action isEqualToString:@"unsupervised-scripts-folder"])
 	{
-		(void)[RZWorkspace() openFile:[TPCPathInfo customScripts]];
+		[RZWorkspace() openFile:[TPCPathInfo customScripts]];
 	}
 	else if ([action isEqualToString:@"custom-style-folder"] ||
 			 [action isEqualToString:@"custom-styles-folder"])
@@ -122,8 +122,8 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	else if ([action isEqualToString:@"diagnostic-reports-folder"])
 	{
-		(void)[RZWorkspace() openFile:[TPCPathInfo userDiagnosticReports]];
-		(void)[RZWorkspace() openFile:[TPCPathInfo systemDiagnosticReports]];
+		[RZWorkspace() openFile:[TPCPathInfo userDiagnosticReports]];
+		[RZWorkspace() openFile:[TPCPathInfo systemDiagnosticReports]];
 	}
 	else if ([action isEqualToString:@"goto"])
 	{

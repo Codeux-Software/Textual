@@ -81,7 +81,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)prepareInitialState
 {
-	(void)[RZMainBundle() loadNibNamed:@"TDCLicenseUpgradeDialog" owner:self topLevelObjects:nil];
+	[RZMainBundle() loadNibNamed:@"TDCLicenseUpgradeDialog" owner:self topLevelObjects:nil];
 
 	self.eligibility = TLOLicenseUpgradeEligibilityUnknown;
 }

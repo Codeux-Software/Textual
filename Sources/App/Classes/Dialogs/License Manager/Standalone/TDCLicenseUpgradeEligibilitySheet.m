@@ -90,7 +90,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)prepareInitialState
 {
-	(void)[RZMainBundle() loadNibNamed:@"TDCLicenseUpgradeEligibilitySheet" owner:self topLevelObjects:nil];
+	[RZMainBundle() loadNibNamed:@"TDCLicenseUpgradeEligibilitySheet" owner:self topLevelObjects:nil];
 
 	self.eligibility = TLOLicenseUpgradeEligibilityUnknown;
 }

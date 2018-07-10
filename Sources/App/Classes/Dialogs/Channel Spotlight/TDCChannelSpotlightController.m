@@ -86,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
-	(void)[RZMainBundle() loadNibNamed:@"TDCChannelSpotlightController" owner:self topLevelObjects:nil];
+	[RZMainBundle() loadNibNamed:@"TDCChannelSpotlightController" owner:self topLevelObjects:nil];
 
 	self.searchResultsTable.doubleAction = @selector(delegatePostSelectChannelForDoubleClickedRow:);
 

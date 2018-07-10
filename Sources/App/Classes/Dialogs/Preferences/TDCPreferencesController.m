@@ -218,7 +218,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
-	(void)[RZMainBundle() loadNibNamed:@"TDCPreferences" owner:self topLevelObjects:nil];
+	[RZMainBundle() loadNibNamed:@"TDCPreferences" owner:self topLevelObjects:nil];
 }
 
 - (void)awakeFromNib

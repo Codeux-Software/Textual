@@ -152,7 +152,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[TPCPreferences initPreferences];
 
 	/* Call shared instance to warm it */
-	(void)[TXSharedApplication sharedAppearance];
+	[TXSharedApplication sharedAppearance];
 
 	/* We wait until -awakeFromNib to wake the window so that the menu
 	 controller created by the main nib has time to load. */

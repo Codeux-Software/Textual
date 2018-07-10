@@ -411,7 +411,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 {
 	NSString *themeName = [TPCPreferences themeName];
 
-	(void)[self resetPreferencesForThemeNamed:themeName];
+	[self resetPreferencesForThemeNamed:themeName];
 }
 
 - (BOOL)resetPreferencesForActiveTheme
@@ -828,7 +828,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 		{
 			LogToConsoleInfo("The contents of the configured theme was deleted. Validation and reload will now occur.");
 
-			(void)[themeController validateThemeAndReloadIfNecessary];
+			[themeController validateThemeAndReloadIfNecessary];
 		}
 		else if (activeThemeContentsWereModified)
 		{
@@ -1026,7 +1026,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 
 		/* Once the operation is completed, we can try to delete the temporary folder. */
 		/* As the folder is only a temporary one, we don't care if this process errors out. */
-		(void)[RZFileManager() removeItemAtURL:fakeDestinationURL error:NULL];
+		[RZFileManager() removeItemAtURL:fakeDestinationURL error:NULL];
 	}
 	else
 	{
@@ -1109,7 +1109,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 {
 	/* Maybe open new path of theme */
 	if (self.openThemeWhenCopied) {
-		(void)[RZWorkspace() openFile:self.pathBeingCopiedTo];
+		[RZWorkspace() openFile:self.pathBeingCopiedTo];
 	}
 
 	/* Maybe reload new theme */
