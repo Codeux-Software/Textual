@@ -76,35 +76,6 @@ final class Connection: NSObject, ConnectionSocketDelegate
 		/// unableToSecure are errors returned when the connection
 		/// cannot be secured for some reason. e.g. handshake failure
 		case unableToSecure(failureReason: String)
-
-		/* socketError is not mapped to a domain or code because
-		 we preserve the values of the underlying NSError. */
-		/* IRCConnection.m and IRCClient.m the in main project
-		 currently hard codes same values presented below.
-		 Keep them in sync with changes made here. */
-		/* TODO: Share values between projects. (July 2, 2018) */
-		var domain: String?
-		{
-			if case .socket(_) = self {
-				return nil
-			}
-
-			return "Textual.ConnectionError"
-		}
-
-		var code: Int
-		{
-			switch self {
-				case .other(_):
-					return 1000
-				case .badCertificate(_):
-					return 1001
-				case .unableToSecure(_):
-					return 1002
-				default:
-					return 0
-			}
-		}
 	} // ConnectionError
 
 	// MARK: - Initialization
@@ -399,7 +370,7 @@ final class Connection: NSObject, ConnectionSocketDelegate
 	{
 		resetState()
 
-		remoteObjectProxy.ircConnectionDidDisconnectWithError(error.toNSError())
+		remoteObjectProxy.ircConnectionDidDisconnectWithError(error as NSError)
 	}
 
 	final func connection(_ connection: ConnectionSocket, received data: Data)
@@ -424,21 +395,62 @@ final class Connection: NSObject, ConnectionSocketDelegate
 
 typealias ConnectionError = Connection.ConnectionError
 
-extension ConnectionError
+extension ConnectionError: CustomNSError
 {
-	func toNSError() -> NSError?
+	/* IRCConnection.m and IRCClient.m the in main project
+	 currently hard codes same values presented below.
+	 Keep them in sync with changes made here. */
+	/* TODO: Share values between projects. (July 2, 2018) */
+	static let errorDomain = "Textual.ConnectionError"
+
+	var errorCode: Int
+	{
+		switch self {
+			case .socket(_):
+				return 999
+			case .other(_):
+				return 1000
+			case .badCertificate(_):
+				return 1001
+			case .unableToSecure(_):
+				return 1002
+		}
+	}
+
+	var errorUserInfo: [String : Any]
+	{
+		var userInfo: [String : Any] = [:]
+
+		if let errorDescription = errorDescription {
+			userInfo[NSLocalizedDescriptionKey] = errorDescription
+		}
+
+		// While we don't make us of it right now, pass the original
+		// error object inside the user info dictionary because at
+		// a later time, we may be interested in its contents.
+		if case let .socket(error) = self {
+			userInfo["UnderlyingSocketError"] = error
+		}
+
+		return userInfo
+	}
+}
+
+extension ConnectionError: LocalizedError
+{
+	public var errorDescription: String?
 	{
 		switch self {
 			case .socket(let error):
-				return error as NSError
+				/* The underlying socket error is almost always an NSError
+				 which means we can just ask for its localized description. */
+				return error.localizedDescription
 			case .other(let message),
 				 .badCertificate(let message),
 				 .unableToSecure(let message):
-				return NSError(domain: domain,
-							   code: code,
-							   userInfo: [ NSLocalizedDescriptionKey : message ])
+				return message
 		}
-	} // toNSError()
+	}
 }
 
 extension ConnectionSocket
