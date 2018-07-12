@@ -43,7 +43,7 @@
 #import "TPCPreferencesLocal.h"
 #import "TPCPreferencesUserDefaults.h"
 #import "TLOLicenseManagerPrivate.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TVCMainWindowPrivate.h"
 #import "TDCInAppPurchaseDialogPrivate.h"
 #import "TDCLicenseManagerDialogPrivate.h"

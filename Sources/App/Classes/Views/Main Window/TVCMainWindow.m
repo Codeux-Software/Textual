@@ -74,7 +74,7 @@
 #import "TLOGrowlControllerPrivate.h"
 #import "TLOKeyEventHandler.h"
 #import "TLOInputHistoryPrivate.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TLOLicenseManagerPrivate.h"
 #import "TLONicknameCompletionStatusPrivate.h"
 #import "TLOSpeechSynthesizerPrivate.h"

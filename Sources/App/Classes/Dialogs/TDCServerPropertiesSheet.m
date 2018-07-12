@@ -45,7 +45,7 @@
 #import "IRCHighlightMatchCondition.h"
 #import "IRCNetworkList.h"
 #import "IRCServer.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TPCPreferencesLocal.h"
 #import "TPCPreferencesUserDefaults.h"
 #import "TVCBasicTableView.h"

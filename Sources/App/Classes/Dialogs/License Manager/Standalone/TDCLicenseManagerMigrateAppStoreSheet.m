@@ -38,7 +38,7 @@
 #import <CoreServices/CoreServices.h>
 
 #import "TPCPathInfo.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TVCValidatedTextField.h"
 #import "TDCLicenseManagerMigrateAppStoreSheetPrivate.h"
 

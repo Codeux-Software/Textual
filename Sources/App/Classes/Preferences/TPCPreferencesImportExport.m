@@ -41,7 +41,7 @@
 #import "IRCWorldPrivateCloudExtension.h"
 #import "TXMasterController.h"
 #import "TDCAlert.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TPCPreferencesLocalPrivate.h"
 #import "TPCPreferencesReload.h"
 #import "TPCPreferencesUserDefaultsLocal.h"

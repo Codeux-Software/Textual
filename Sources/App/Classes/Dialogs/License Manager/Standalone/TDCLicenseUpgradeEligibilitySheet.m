@@ -38,7 +38,7 @@
 #import "NSObjectHelperPrivate.h"
 #import "NSStringHelper.h"
 #import "TXGlobalModels.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TLOLicenseManagerPrivate.h"
 #import "TLOLicenseManagerDownloaderPrivate.h"
 #import "TDCAlert.h"

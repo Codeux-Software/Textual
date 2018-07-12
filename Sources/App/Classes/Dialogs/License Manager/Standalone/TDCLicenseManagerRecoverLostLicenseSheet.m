@@ -35,7 +35,7 @@
  *
  *********************************************************************** */
 
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TVCValidatedTextField.h"
 #import "TDCLicenseManagerRecoverLostLicenseSheetPrivate.h"
 

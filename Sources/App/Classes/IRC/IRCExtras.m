@@ -41,7 +41,7 @@
 #import "TXMenuControllerPrivate.h"
 #import "TDCAlert.h"
 #import "TPCPathInfo.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TLOpenLink.h"
 #import "TVCMainWindow.h"
 #import "IRCClientConfig.h"

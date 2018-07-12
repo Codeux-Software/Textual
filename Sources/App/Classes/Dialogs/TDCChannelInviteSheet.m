@@ -37,7 +37,7 @@
  *********************************************************************** */
 
 #import "IRCClient.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TDCChannelInviteSheetPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN

@@ -38,7 +38,7 @@
 #import "TDCAlert.h"
 #import "TPCApplicationInfo.h"
 #import "TPCPathInfo.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TPCResourceManagerPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN

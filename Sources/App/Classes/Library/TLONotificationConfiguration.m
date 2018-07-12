@@ -36,7 +36,7 @@
  *********************************************************************** */
 
 #import "NSObjectHelperPrivate.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TLONotificationConfigurationPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN

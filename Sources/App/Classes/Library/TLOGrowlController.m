@@ -43,7 +43,7 @@
 #import "TPCApplicationInfo.h"
 #import "TPCPathInfo.h"
 #import "TPCPreferencesLocal.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TDCFileTransferDialogPrivate.h"
 #import "TDCFileTransferDialogTransferControllerPrivate.h"
 #import "IRCClientPrivate.h"

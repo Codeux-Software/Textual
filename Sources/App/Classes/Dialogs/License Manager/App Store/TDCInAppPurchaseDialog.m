@@ -44,7 +44,7 @@
 #import "TXGlobalModels.h"
 #import "TPCPreferencesUserDefaults.h"
 #import "TLOAppStoreManagerPrivate.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TLOTimer.h"
 #import "TDCProgressIndicatorSheetPrivate.h"
 #import "TDCAlert.h"

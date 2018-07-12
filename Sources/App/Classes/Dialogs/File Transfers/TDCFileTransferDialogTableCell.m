@@ -37,7 +37,7 @@
  *********************************************************************** */
 
 #import "TXGlobalModels.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TDCFileTransferDialogTransferControllerPrivate.h"
 #import "TDCFileTransferDialogTableCellPrivate.h"
 

@@ -36,7 +36,7 @@
  *********************************************************************** */
 
 #import "TPCPathInfo.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TLOLicenseManagerDownloaderPrivate.h"
 #import "TDCAlert.h"
 #import "TDCProgressIndicatorSheetPrivate.h"

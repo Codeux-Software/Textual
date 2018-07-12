@@ -38,7 +38,7 @@
 
 #import "NSViewHelperPrivate.h"
 #import "TXGlobalModels.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TPCPreferencesLocal.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"

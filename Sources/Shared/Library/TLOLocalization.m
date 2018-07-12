@@ -35,29 +35,53 @@
  *
  *********************************************************************** */
 
+#import "TLOLocalization.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-TEXTUAL_EXTERN NSString *TXTLS(NSString *key, ...);
-
-TEXTUAL_EXTERN NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list arguments) TEXTUAL_SYMBOL_USED;
-TEXTUAL_EXTERN NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...) TEXTUAL_SYMBOL_USED;
-
-@interface TLOLanguagePreferences : NSObject 
-+ (NSString *)localizedStringWithKey:(NSString *)key;
-+ (NSString *)localizedStringWithKey:(NSString *)key table:(NSString *)table;
-+ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle;
-+ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle arguments:(va_list)arguments;
-+ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle table:(NSString *)table;
-+ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle table:(NSString *)table arguments:(va_list)arguments;
+/* Extension declared by TLOLocalization.swift */
+@interface NSString (LocalizationPrivate)
++ (NSString *)_swift_localizedKey:(NSString *)string bundle:(NSBundle *)bundle;
 @end
 
-/* This function exists so that static analzyer doesn't warn
- certain static strings aren't localized. Some strings wont
- be localized because it is inappropriate (e.g. a number) */
-__attribute__((annotate("returns_localized_nsstring")))
-static inline NSString *TXLocalizationNotNeeded(NSString *string)
+NSString *TXTLS(NSString *key, ...)
 {
-	return string;
+	NSCParameterAssert(key != nil);
+
+	va_list arguments;
+	va_start(arguments, key);
+
+	NSString *result = TXLocalizedString(RZMainBundle(), key, arguments);
+
+	va_end(arguments);
+
+	return result;
+}
+
+NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list arguments)
+{
+	NSCParameterAssert(bundle != nil);
+	NSCParameterAssert(key != nil);
+	NSCParameterAssert(arguments != NULL);
+
+	NSString *localValue = [NSString _swift_localizedKey:key bundle:bundle];
+
+	return [[NSString alloc] initWithFormat:localValue arguments:arguments];
+}
+
+NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...)
+{
+	NSCParameterAssert(bundle != nil);
+	NSCParameterAssert(key != nil);
+
+	va_list arguments;
+	va_start(arguments, key);
+
+	NSString *result = TXLocalizedString(bundle, key, arguments);
+
+	va_end(arguments);
+
+	return result;
 }
 
 NS_ASSUME_NONNULL_END

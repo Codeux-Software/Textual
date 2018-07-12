@@ -37,7 +37,7 @@
 
 #import "NSObjectHelperPrivate.h"
 #import "NSStringHelper.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TVCValidatedTextField.h"
 #import "TDCAddressBookSheetPrivate.h"
 

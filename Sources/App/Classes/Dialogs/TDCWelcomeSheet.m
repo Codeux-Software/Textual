@@ -41,7 +41,7 @@
 #import "IRCClientConfig.h"
 #import "IRCNetworkList.h"
 #import "IRCServer.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TPCPreferencesLocal.h"
 #import "TVCBasicTableView.h"
 #import "TVCValidatedComboBox.h"

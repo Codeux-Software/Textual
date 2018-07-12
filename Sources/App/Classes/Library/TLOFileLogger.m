@@ -39,7 +39,7 @@
 #import "NSObjectHelperPrivate.h"
 #import "TXGlobalModels.h"
 #import "TDCAlert.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TLOTimer.h"
 #import "TPCPathInfoPrivate.h"
 #import "TPCPreferencesLocal.h"

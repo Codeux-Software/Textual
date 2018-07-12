@@ -5,7 +5,7 @@
  *                   | |  __/>  <| |_| |_| | (_| | |
  *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
  *
- * Copyright (c) 2017, 2018 Codeux Software, LLC & respective contributors.
+ * Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
  *       Please see Acknowledgements.pdf for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,22 +35,20 @@
  *
  *********************************************************************** */
 
-#import <CocoaExtensions/CocoaExtensions.h>
+NS_ASSUME_NONNULL_BEGIN
 
-#import <Security/Security.h>
+TEXTUAL_EXTERN NSString *TXTLS(NSString *key, ...);
 
-#import <SystemConfiguration/SystemConfiguration.h>
+TEXTUAL_EXTERN NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list arguments) TEXTUAL_SYMBOL_USED;
+TEXTUAL_EXTERN NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...) TEXTUAL_SYMBOL_USED;
 
-#import "StaticDefinitions.h"
-#import "GCDAsyncSocket.h"
-#import "GCDAsyncSocketExtensions.h"
-#import "RCMSecureTransport.h"
-#import "RCMTrustPanel.h"
-#import "NSObjectHelperPrivate.h"
-#import "TLOLocalization.h"
-#import "TLOTimer.h"
-#import "IRCConnectionConfig.h"
-#import "IRCConnectionPrivate.h"
-#import "RCMConnectionManagerProtocol.h"
-#import "RCMProcessDelegatePrivate.h"
-#import "RCMProcessMainPrivate.h"
+/* This function exists so that static analzyer doesn't warn
+ certain static strings aren't localized. Some strings wont
+ be localized because it is inappropriate (e.g. a number) */
+__attribute__((annotate("returns_localized_nsstring")))
+static inline NSString *TXLocalizationNotNeeded(NSString *string)
+{
+	return string;
+}
+
+NS_ASSUME_NONNULL_END

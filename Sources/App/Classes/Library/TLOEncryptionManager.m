@@ -38,7 +38,7 @@
 #import "TXMasterController.h"
 #import "TXMenuController.h"
 #import "TDCAlert.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TVCMainWindow.h"
 #import "TVCMainWindowTitlebarAccessoryViewPrivate.h"
 #import "TVCLogRenderer.h"

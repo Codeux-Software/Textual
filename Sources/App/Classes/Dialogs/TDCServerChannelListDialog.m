@@ -41,7 +41,7 @@
 #import "NSStringHelper.h"
 #import "TXGlobalModels.h"
 #import "NSTableVIewHelperPrivate.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "IRCClient.h"
 #import "TVCBasicTableView.h"
 #import "TDCServerChannelListDialogPrivate.h"

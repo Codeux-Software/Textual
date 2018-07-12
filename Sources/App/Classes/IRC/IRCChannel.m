@@ -53,7 +53,7 @@
 #import "TLOEncryptionManagerPrivate.h"
 #import "TLOFileLoggerPrivate.h"
 #import "TLOInputHistoryPrivate.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "IRCClientPrivate.h"
 #import "IRCChannelConfigPrivate.h"
 #import "IRCChannelModePrivate.h"
