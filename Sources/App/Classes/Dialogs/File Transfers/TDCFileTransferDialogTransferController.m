@@ -42,7 +42,7 @@
 #import "IRCClientPrivate.h"
 #import "TPCPreferencesLocal.h"
 #import "TLOEncryptionManagerPrivate.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TDCFileTransferDialogTableCellPrivate.h"
 #import "TDCFileTransferDialogTransferControllerPrivate.h"
 #import "TDCFileTransferDialogInternal.h"

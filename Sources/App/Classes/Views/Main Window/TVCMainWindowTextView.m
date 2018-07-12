@@ -37,7 +37,7 @@
 
 #import "NSViewHelperPrivate.h"
 #import "IRCColorFormat.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TPCPreferencesLocalPrivate.h"
 #import "TPCPreferencesUserDefaults.h"
 #import "TVCMainWindow.h"

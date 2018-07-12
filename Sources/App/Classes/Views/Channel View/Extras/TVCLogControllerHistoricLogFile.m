@@ -41,7 +41,7 @@
 #import "IRCTreeItem.h"
 #import "IRCWorld.h"
 #import "TDCAlert.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TPCPathInfo.h"
 #import "TPCPreferencesLocalPrivate.h"
 #import "TPCPreferencesUserDefaults.h"

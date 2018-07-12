@@ -25,6 +25,8 @@
 		4C46A07420EC68C000094EA4 /* IRCConnectionSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C46A00020EC626E00094EA4 /* IRCConnectionSocket.swift */; };
 		4C46A07520EC68C000094EA4 /* IRCConnectionSocketClassic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C469FFE20EC626E00094EA4 /* IRCConnectionSocketClassic.swift */; };
 		4C46A07620EC68C000094EA4 /* IRCConnectionSocketNWF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C469FFD20EC626E00094EA4 /* IRCConnectionSocketNWF.swift */; };
+		4CACDB5820F747710075AFB5 /* TLOLocalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CACDB5720F747710075AFB5 /* TLOLocalization.m */; };
+		4CACDB5B20F7496D0075AFB5 /* TLOLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CACDB5A20F7496D0075AFB5 /* TLOLocalization.swift */; };
 		4CE144EB20EC04F1000E01C9 /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C72D21F1208F200ED72DB /* CocoaExtensions.framework */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +67,9 @@
 		4CAC2A071F12AFFB00D06046 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4CAC2A081F12AFFB00D06046 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
 		4CAC2A0B1F12B01700D06046 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4CACDB5720F747710075AFB5 /* TLOLocalization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLOLocalization.m; sourceTree = "<group>"; };
+		4CACDB5920F747850075AFB5 /* TLOLocalization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TLOLocalization.h; sourceTree = "<group>"; };
+		4CACDB5A20F7496D0075AFB5 /* TLOLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLOLocalization.swift; sourceTree = "<group>"; };
 		4CE143F920EBF5DB000E01C9 /* Textual.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
 		4CE143FC20EBF5DB000E01C9 /* XPC Services.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "XPC Services.xcconfig"; sourceTree = "<group>"; };
 		4CE143FE20EBF5DB000E01C9 /* Enabled Features.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Enabled Features.xcconfig"; sourceTree = "<group>"; };
@@ -242,8 +247,10 @@
 			isa = PBXGroup;
 			children = (
 				4C46A02D20EC67E300094EA4 /* External Libraries */,
-				4C46A03220EC67E300094EA4 /* TLOTimer.m */,
 				4C46A03420EC67E300094EA4 /* RCMSecureTransport.m */,
+				4CACDB5720F747710075AFB5 /* TLOLocalization.m */,
+				4CACDB5A20F7496D0075AFB5 /* TLOLocalization.swift */,
+				4C46A03220EC67E300094EA4 /* TLOTimer.m */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -273,6 +280,7 @@
 				4C46A04320EC67E300094EA4 /* Private */,
 				4C46A04C20EC67E300094EA4 /* Services */,
 				4C46A03C20EC67E300094EA4 /* IRCConnectionConfig.h */,
+				4CACDB5920F747850075AFB5 /* TLOLocalization.h */,
 				4C46A03920EC67E300094EA4 /* RCMSecureTransport.h */,
 				4C46A04A20EC67E300094EA4 /* RCMTrustPanel.h */,
 				4C46A04B20EC67E300094EA4 /* TLOTimer.h */,
@@ -509,6 +517,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C46A07320EC68C000094EA4 /* IRCConnection.swift in Sources */,
+				4CACDB5820F747710075AFB5 /* TLOLocalization.m in Sources */,
 				4C46A07420EC68C000094EA4 /* IRCConnectionSocket.swift in Sources */,
 				4C46A07520EC68C000094EA4 /* IRCConnectionSocketClassic.swift in Sources */,
 				4C46A07620EC68C000094EA4 /* IRCConnectionSocketNWF.swift in Sources */,
@@ -519,6 +528,7 @@
 				4C46A06C20EC68B800094EA4 /* GCDAsyncSocketExtensions.m in Sources */,
 				4C46A06D20EC68B800094EA4 /* TLOTimer.m in Sources */,
 				4C46A06F20EC68B800094EA4 /* RCMSecureTransport.m in Sources */,
+				4CACDB5B20F7496D0075AFB5 /* TLOLocalization.swift in Sources */,
 				4C46A07020EC68B800094EA4 /* main.m in Sources */,
 				4C46A07120EC68B800094EA4 /* RCMProcessDelegate.m in Sources */,
 				4C46A07220EC68B800094EA4 /* RCMProcessMain.m in Sources */,

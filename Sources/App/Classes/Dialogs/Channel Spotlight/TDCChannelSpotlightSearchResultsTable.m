@@ -37,7 +37,7 @@
 
 #import "TXGlobalModels.h"
 #import "NSViewHelper.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"
 #import "TDCChannelSpotlightAppearancePrivate.h"

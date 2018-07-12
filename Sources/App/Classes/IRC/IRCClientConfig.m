@@ -45,7 +45,7 @@
 #import "IRCNetworkList.h"
 #import "IRCServerPrivate.h"
 #import "TPCPreferencesLocal.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "IRCClientConfigInternal.h"
 
 NS_ASSUME_NONNULL_BEGIN

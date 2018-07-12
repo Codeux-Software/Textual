@@ -38,7 +38,7 @@
 
 #import "TXGlobalModels.h"
 #import "TDCAlert.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TPCApplicationInfo.h"
 #import "TPCPathInfo.h"
 #import "TPCPreferencesUserDefaults.h"

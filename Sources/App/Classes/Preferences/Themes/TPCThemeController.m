@@ -42,7 +42,7 @@
 #import "TXMenuController.h"
 #import "TDCAlert.h"
 #import "TDCProgressIndicatorSheetPrivate.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TPCPathInfo.h"
 #import "TPCPreferencesCloudSync.h"
 #import "TPCPreferencesLocalPrivate.h"

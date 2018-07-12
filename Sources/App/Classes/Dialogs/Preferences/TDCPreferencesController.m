@@ -54,7 +54,7 @@
 #import "IRCWorld.h"
 #import "TLOAppStoreManagerPrivate.h"
 #import "TLOEncryptionManagerPrivate.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TVCMainWindowPrivate.h"
 #import "TVCNotificationConfigurationViewControllerPrivate.h"
 #import "TDCAlert.h"

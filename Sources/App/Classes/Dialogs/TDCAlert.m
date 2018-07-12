@@ -35,7 +35,7 @@
  *
  *********************************************************************** */
 
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TPCPreferencesUserDefaults.h"
 #import "TDCAlert.h"
 

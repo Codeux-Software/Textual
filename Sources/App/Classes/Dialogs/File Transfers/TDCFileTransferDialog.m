@@ -41,7 +41,7 @@
 #import "TPCPreferencesLocal.h"
 #import "TPCPreferencesUserDefaults.h"
 #import "TLOInternetAddressLookup.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TLOTimer.h"
 #import "IRCWorld.h"
 #import "TVCBasicTableView.h"

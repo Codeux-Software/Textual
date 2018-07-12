@@ -49,10 +49,10 @@
 #import "TDCLicenseUpgradeEligibilitySheetPrivate.h"
 #import "TDCProgressIndicatorSheetPrivate.h"
 #import "TLOTimer.h"
-#import "TLOLanguagePreferences.h"
 #import "TLOLicenseManagerDownloaderPrivate.h"
 #import "TLOLicenseManagerLastGenPrivate.h"
 #import "TLOLicenseManagerPrivate.h"
+#import "TLOLocalization.h"
 #import "TDCAlert.h"
 #import "TDCLicenseManagerDialogPrivate.h"
 

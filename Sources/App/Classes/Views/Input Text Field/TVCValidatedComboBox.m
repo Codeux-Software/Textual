@@ -35,7 +35,7 @@
  *
  *********************************************************************** */
 
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TVCErrorMessagePopoverControllerPrivate.h"
 #import "TVCValidatedComboBox.h"
 

@@ -44,7 +44,7 @@
 #import "GCDAsyncSocketExtensions.h"
 #import "RCMSecureTransport.h"
 #import "RCMTrustPanel.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TPCPreferencesLocal.h"
 #import "IRCClient.h"
 #import "IRCConnectionConfig.h"

@@ -42,7 +42,7 @@
 #import "IRCChannel.h"
 #import "IRCISupportInfo.h"
 #import "TPCPreferencesLocal.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TVCNotificationConfigurationViewControllerPrivate.h"
 #import "TVCValidatedTextField.h"
 #import "TDCAlert.h"

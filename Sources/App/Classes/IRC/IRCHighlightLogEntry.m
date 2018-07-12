@@ -43,7 +43,7 @@
 #import "IRCChannel.h"
 #import "IRCWorld.h"
 #import "TLOGrowlControllerPrivate.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TVCLogLinePrivate.h"
 #import "IRCHighlightLogEntryInternal.h"
 

@@ -40,7 +40,7 @@
 #import "TXMenuController.h"
 #import "TDCAlert.h"
 #import "TPCApplicationInfo.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TLOLicenseManagerDownloaderPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN

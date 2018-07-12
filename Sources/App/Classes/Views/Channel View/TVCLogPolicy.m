@@ -40,7 +40,7 @@
 #import "TXMenuControllerPrivate.h"
 #import "IRCChannel.h"
 #import "TDCAlert.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TLOpenLink.h"
 #import "TPCPreferencesLocal.h"
 #import "TPCThemeController.h"

@@ -37,7 +37,7 @@
 
 #import <Growl/Growl.h>
 
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TLONotificationConfigurationPrivate.h"
 #import "TLOSoundPlayer.h"
 #import "TVCNotificationConfigurationViewControllerPrivate.h"

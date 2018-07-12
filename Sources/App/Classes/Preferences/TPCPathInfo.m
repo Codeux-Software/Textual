@@ -38,7 +38,7 @@
 #import "BuildConfig.h"
 
 #import "TDCAlert.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TPCPreferencesLocal.h"
 #import "TPCPreferencesCloudSyncPrivate.h"
 #import "TPCPreferencesUserDefaults.h"

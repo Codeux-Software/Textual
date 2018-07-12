@@ -38,7 +38,7 @@
 #import "NSStringHelper.h"
 #import "NSTableVIewHelperPrivate.h"
 #import "NSViewHelperPrivate.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TPCPreferencesLocal.h"
 #import "IRCChannelUser.h"
 #import "IRCUser.h"

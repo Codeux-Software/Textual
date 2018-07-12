@@ -99,7 +99,7 @@
 #import "TLOGrowlControllerPrivate.h"
 #import "TLOFileLoggerPrivate.h"
 #import "TLOInputHistoryPrivate.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "TLOpenLink.h"
 #import "TLOSoundPlayer.h"
 #import "TLOSpeechSynthesizerPrivate.h"

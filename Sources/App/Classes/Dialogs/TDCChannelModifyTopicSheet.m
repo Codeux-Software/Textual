@@ -37,7 +37,7 @@
  *********************************************************************** */
 
 #import "NSObjectHelperPrivate.h"
-#import "TLOLanguagePreferences.h"
+#import "TLOLocalization.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"
 #import "IRCISupportInfo.h"
