@@ -3973,7 +3973,6 @@
 				4C31512820EB673E00448776 /* IRCChannel.m */,
 				4C31512420EB673E00448776 /* IRCChannelConfig.m */,
 				4C31514020EB673E00448776 /* IRCChannelMode.m */,
-				4C31513D20EB673E00448776 /* IRCChannelUser.m */,
 				4C31513B20EB673E00448776 /* IRCClient.m */,
 				4C31513C20EB673E00448776 /* IRCClientConfig.m */,
 				4C31513820EB673E00448776 /* IRCClientRequestedCommands.m */,
@@ -4003,6 +4002,7 @@
 		4C31513220EB673E00448776 /* Users */ = {
 			isa = PBXGroup;
 			children = (
+				4C31513D20EB673E00448776 /* IRCChannelUser.m */,
 				4C31513320EB673E00448776 /* IRCUserRelations.m */,
 				4C31513420EB673E00448776 /* IRCUser.m */,
 				4C31513520EB673E00448776 /* IRCUserNicknameColorStyleGenerator.m */,
