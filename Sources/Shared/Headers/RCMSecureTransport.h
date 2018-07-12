@@ -32,7 +32,8 @@ typedef NS_ENUM(NSUInteger, RCMCipherSuiteCollection) {
 
 + (BOOL)isTLSError:(NSError *)error;
 + (nullable NSString *)descriptionForError:(NSError *)error;
-+ (nullable NSString *)descriptionForErrorCode:(NSInteger)errorCode;
+/* -descriptionForErrorCode: returns "Unknown" for out of range error codes */
++ (NSString *)descriptionForErrorCode:(NSInteger)errorCode;
 + (nullable NSString *)descriptionForBadCertificateError:(NSError *)error;
 + (nullable NSString *)descriptionForBadCertificateErrorCode:(NSInteger)errorCode;
 + (BOOL)isBadCertificateError:(NSError *)error;
@@ -45,3 +46,4 @@ typedef NS_ENUM(NSUInteger, RCMCipherSuiteCollection) {
 @end
 
 NS_ASSUME_NONNULL_END
+

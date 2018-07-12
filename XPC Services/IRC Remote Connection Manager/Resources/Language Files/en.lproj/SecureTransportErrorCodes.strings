@@ -103,3 +103,6 @@
 "-9863" = "Certificate required"; // errSSLCertificateRequired
 "-9864" = "Unknown PSK identity"; // errSSLUnknownPSKIdentity
 "-9865" = "Unknown or unrecognized name"; // errSSLUnrecognizedName
+
+/* errSSLUnknownError is defined by our own library. Not Secure Transport. */
+"-9999" = "Unknown"; // errSSLUnknownError
