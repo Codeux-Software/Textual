@@ -58,6 +58,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+static OSStatus errSSLUnknownError = -9999;
+
 static const int kAEADMACValue = 7;
 
 static const int kTLS13KeyExchangeValue = 31;
@@ -561,10 +563,10 @@ static const char * _Nonnull kMacNames[] = {
 	return [self descriptionForErrorCode:error.code];
 }
 
-+ (nullable NSString *)descriptionForErrorCode:(NSInteger)errorCode
++ (NSString *)descriptionForErrorCode:(NSInteger)errorCode
 {
 	if (errorCode > (-9800) || errorCode < (-9865)) {
-		return nil;
+		errorCode = errSSLUnknownError;
 	}
 
 	/* Request the heading for the formatted error message. */

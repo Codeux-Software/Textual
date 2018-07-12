@@ -208,19 +208,18 @@ extension ConnectionError
 		self.init(tlsError: error.code)
 	}
 
-	init? (tlsError errorCode: Int)
+	/// init(tlsError:) returns .unableToSecure("Unknown") for out of range error codes
+	init (tlsError errorCode: Int)
 	{
 		if let certError = RCMSecureTransport.description(forBadCertificateErrorCode: errorCode) {
 			self = .badCertificate(failureReason: certError)
 
 			return
-		} else if let tlsError = RCMSecureTransport.description(forErrorCode: errorCode) {
-			self = .unableToSecure(failureReason: tlsError)
-
-			return
 		}
 
-		return nil
+		let tlsError = RCMSecureTransport.description(forErrorCode: errorCode)
+
+		self = .unableToSecure(failureReason: tlsError)
 	}
 }
 
