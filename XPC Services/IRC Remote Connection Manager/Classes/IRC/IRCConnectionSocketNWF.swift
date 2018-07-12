@@ -491,29 +491,127 @@ final class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 	fileprivate func translateError(_ error: NWError) -> ConnectionError
 	{
 		switch error {
+			case .dns(let errorCode):
+				return ConnectionError(nwDNSError: errorCode)
 			case .posix(let errorCode):
-				let posixErrorCode = errorCode.rawValue
-
-				if let posixError = strerror(posixErrorCode) {
-					let posixErrorString = String(cString: posixError)
-
-					let nsError = NSError(domain: "NWErrorDomainPOSIX",
-										  code: Int(posixErrorCode),
-										  userInfo: [ NSLocalizedDescriptionKey : posixErrorString ])
-
-					return ConnectionError(socketError: nsError)
-				}
+				return ConnectionError(nwPOSIXError: errorCode.rawValue)
 			case .tls(let errorCode):
-				let tlsErrorCode = Int(errorCode)
-
-				if let tlsError = ConnectionError(tlsError: tlsErrorCode) {
-					return tlsError
-				}
-			default:
-				break
+				return ConnectionError(nwTLSError: errorCode)
 		}
-
-		return ConnectionError(socketError: error)
 	}
 }
+
+fileprivate extension ConnectionError
+{
+	init (nwDNSError: DNSServiceErrorType)
+	{
+		let errorCode = Int(nwDNSError)
+
+		let errorReason: String
+
+		switch errorCode {
+			case kDNSServiceErr_NoError:
+				errorReason = "No error"
+			case kDNSServiceErr_NoSuchName:
+				errorReason = "No such name"
+			case kDNSServiceErr_NoMemory:
+				errorReason = "No memory"
+			case kDNSServiceErr_BadParam:
+				errorReason = "Bad paramater"
+			case kDNSServiceErr_BadReference:
+				errorReason = "Bad reference"
+			case kDNSServiceErr_BadState:
+				errorReason = "Bad state"
+			case kDNSServiceErr_BadFlags:
+				errorReason = "Bad flags"
+			case kDNSServiceErr_Unsupported:
+				errorReason = "Unsupported"
+			case kDNSServiceErr_NotInitialized:
+				errorReason = "Not initialized"
+			case kDNSServiceErr_AlreadyRegistered:
+				errorReason = "Already registered"
+			case kDNSServiceErr_NameConflict:
+				errorReason = "Name conflict"
+			case kDNSServiceErr_Invalid:
+				errorReason = "Invalid"
+			case kDNSServiceErr_Firewall:
+				errorReason = "Firewall"
+			case kDNSServiceErr_Incompatible: /* client library incompatible with daemon */
+				errorReason = "Incompatible"
+			case kDNSServiceErr_BadInterfaceIndex:
+				errorReason = "Bad interface index"
+			case kDNSServiceErr_Refused:
+				errorReason = "Refused"
+			case kDNSServiceErr_NoSuchRecord:
+				errorReason = "No such record"
+			case kDNSServiceErr_NoAuth:
+				errorReason = "No authentication"
+			case kDNSServiceErr_NoSuchKey:
+				errorReason = "No such key"
+			case kDNSServiceErr_NATTraversal:
+				errorReason = "NAT traversal"
+			case kDNSServiceErr_DoubleNAT:
+				errorReason = "Double NAT"
+			case kDNSServiceErr_BadTime: /* Codes up to here existed in Tiger */
+				errorReason = "Bad time"
+			case kDNSServiceErr_BadSig:
+				errorReason = "Bad signature"
+			case kDNSServiceErr_BadKey:
+				errorReason = "Bad key"
+			case kDNSServiceErr_Transient:
+				errorReason = "Transient"
+			case kDNSServiceErr_ServiceNotRunning: /* Background daemon not running */
+				errorReason = "Service not running"
+			case kDNSServiceErr_NATPortMappingUnsupported: /* NAT doesn't support PCP, NAT-PMP or UPnP */
+				errorReason = "NAT port mapping unsupported"
+			case kDNSServiceErr_NATPortMappingDisabled: /* NAT supports PCP, NAT-PMP or UPnP, but it's disabled by the administrator */
+				errorReason = "NAT port mapping disabled"
+			case kDNSServiceErr_NoRouter: /* No router currently configured (probably no network connectivity) */
+				errorReason = "No router"
+			case kDNSServiceErr_PollingMode:
+				errorReason = "Polling mode"
+			case kDNSServiceErr_Timeout:
+				errorReason = "Timeout"
+			default:
+				errorReason = "Unknown"
+		}
+
+		let errorMessage = LocalizedString("DNS Error: %@ (%ld)", errorReason, errorCode, table: "ConnectionErrors")
+
+		let nsError = NSError(domain: "NWErrorDomainDNS",
+							  code: errorCode,
+							  userInfo: [ NSLocalizedDescriptionKey : errorMessage ])
+
+		self.init(socketError: nsError)
+	}
+
+	init (nwPOSIXError: Int32)
+	{
+		let errorCode = Int(nwPOSIXError)
+
+		let errorReason: String
+
+		if let errorReasonC = strerror(nwPOSIXError) {
+			errorReason = String(cString: errorReasonC)
+		} else {
+			errorReason = "Unknown"
+		}
+
+		let errorMessage = LocalizedString("POSIX Error: %@ (%ld)", errorReason, errorCode, table: "ConnectionErrors")
+
+		let nsError = NSError(domain: "NWErrorDomainPOSIX",
+							  code: errorCode,
+							  userInfo: [ NSLocalizedDescriptionKey : errorMessage ])
+
+		self.init(socketError: nsError)
+	}
+
+	init (nwTLSError: OSStatus)
+	{
+		let errorCode = Int(nwTLSError)
+
+		self.init(tlsError: errorCode)
+	}
+}
+
 #endif

@@ -25,6 +25,7 @@
 		4C46A07420EC68C000094EA4 /* IRCConnectionSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C46A00020EC626E00094EA4 /* IRCConnectionSocket.swift */; };
 		4C46A07520EC68C000094EA4 /* IRCConnectionSocketClassic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C469FFE20EC626E00094EA4 /* IRCConnectionSocketClassic.swift */; };
 		4C46A07620EC68C000094EA4 /* IRCConnectionSocketNWF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C469FFD20EC626E00094EA4 /* IRCConnectionSocketNWF.swift */; };
+		4C5274DC20F7D49000B18F9D /* ConnectionErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C5274DA20F7D49000B18F9D /* ConnectionErrors.strings */; };
 		4CACDB5820F747710075AFB5 /* TLOLocalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CACDB5720F747710075AFB5 /* TLOLocalization.m */; };
 		4CACDB5B20F7496D0075AFB5 /* TLOLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CACDB5A20F7496D0075AFB5 /* TLOLocalization.swift */; };
 		4CE144EB20EC04F1000E01C9 /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C72D21F1208F200ED72DB /* CocoaExtensions.framework */; };
@@ -63,6 +64,7 @@
 		4C46A05120EC67E300094EA4 /* RCMTrustPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCMTrustPanel.m; sourceTree = "<group>"; };
 		4C46A05720EC67E300094EA4 /* NSObjectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectHelper.m; sourceTree = "<group>"; };
 		4C46A06720EC687500094EA4 /* RCMConnectionManagerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RCMConnectionManagerProtocol.h; path = Classes/Headers/Private/RCMConnectionManagerProtocol.h; sourceTree = SOURCE_ROOT; };
+		4C5274DB20F7D49000B18F9D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ConnectionErrors.strings; sourceTree = "<group>"; };
 		4C8C72D21F1208F200ED72DB /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "../../.tmp/SharedBuildProducts-Frameworks/CocoaExtensions.framework"; sourceTree = SOURCE_ROOT; };
 		4CAC2A071F12AFFB00D06046 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4CAC2A081F12AFFB00D06046 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
@@ -209,6 +211,7 @@
 		4C46A01C20EC677B00094EA4 /* Language Files */ = {
 			isa = PBXGroup;
 			children = (
+				4C5274DA20F7D49000B18F9D /* ConnectionErrors.strings */,
 				4C36AACF20F27BDA007CA939 /* SecureTransportErrorCodes.strings */,
 			);
 			path = "Language Files";
@@ -505,6 +508,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C5274DC20F7D49000B18F9D /* ConnectionErrors.strings in Resources */,
 				4C36AAD120F27BDA007CA939 /* SecureTransportErrorCodes.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -544,6 +548,14 @@
 				4C36AAD020F27BDA007CA939 /* en */,
 			);
 			name = SecureTransportErrorCodes.strings;
+			sourceTree = "<group>";
+		};
+		4C5274DA20F7D49000B18F9D /* ConnectionErrors.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C5274DB20F7D49000B18F9D /* en */,
+			);
+			name = ConnectionErrors.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
