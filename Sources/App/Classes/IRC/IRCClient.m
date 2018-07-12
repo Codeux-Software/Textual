@@ -5805,8 +5805,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		IRCClientDisconnectMode disconnectType = self.disconnectType;
 
 		if (disconnectError) {
-			// TODO: Don't hardcode the error domain
-			if ([disconnectError.domain isEqualToString:@"Textual.ConnectionError.badCertificate"]) {
+			// TODO: Don't hardcode the error domain and code
+			if (disconnectError.code == 1001 && [disconnectError.domain isEqualToString:@"Textual.ConnectionError"]) {
 				disconnectType = IRCClientDisconnectBadCertificateMode;
 			}
 
