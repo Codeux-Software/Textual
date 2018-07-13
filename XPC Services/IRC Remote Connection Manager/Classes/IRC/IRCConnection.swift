@@ -468,13 +468,3 @@ extension ConnectionSocket
 		return ConnectionSocketClassic(with: config)
 	}
 }
-
-#if !swift(>=4.2)
-public extension Array where Element == Data
-{
-	func firstIndex(of element: Element) -> Int?
-	{
-		return index(of: element)
-	}
-}
-#endif
