@@ -5,7 +5,7 @@
  *                   | |  __/>  <| |_| |_| | (_| | |
  *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
  *
- * Copyright (c) 2017, 2018 Codeux Software, LLC & respective contributors.
+ * Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
  *       Please see Acknowledgements.pdf for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,23 +35,10 @@
  *
  *********************************************************************** */
 
-#import <CocoaExtensions/CocoaExtensions.h>
-
-#import <Security/Security.h>
-
-#import <SystemConfiguration/SystemConfiguration.h>
-
-#import "StaticDefinitions.h"
-#import "GCDAsyncSocket.h"
-#import "GCDAsyncSocketExtensions.h"
-#import "RCMSecureTransport.h"
-#import "RCMTrustPanel.h"
-#import "NSObjectHelperPrivate.h"
-#import "TLOLocalization.h"
-#import "TLOTimer.h"
-#import "IRCConnectionConfig.h"
 #import "IRCConnectionErrors.h"
-#import "IRCConnectionPrivate.h"
-#import "RCMConnectionManagerProtocol.h"
-#import "RCMProcessDelegatePrivate.h"
-#import "RCMProcessMainPrivate.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
+NSString * const IRCConnectionErrorDomain = @"Textual.ConnectionError";
+
+NS_ASSUME_NONNULL_END

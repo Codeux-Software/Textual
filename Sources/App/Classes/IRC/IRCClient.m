@@ -138,6 +138,7 @@
 #import "IRCColorFormatPrivate.h"
 #import "IRCConnectionPrivate.h"
 #import "IRCConnectionConfig.h"
+#import "IRCConnectionErrors.h"
 #import "IRCExtrasPrivate.h"
 #import "IRCHighlightLogEntryPrivate.h"
 #import "IRCHighlightMatchCondition.h"
@@ -5806,7 +5807,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		if (disconnectError) {
 			// TODO: Don't hardcode the error domain and code
-			if (disconnectError.code == 1001 && [disconnectError.domain isEqualToString:@"Textual.ConnectionError"]) {
+			if ( disconnectError.code == IRCConnectionErrorCodeBadCertificate &&
+				[disconnectError.domain isEqualToString:IRCConnectionErrorDomain])
+			{
 				disconnectType = IRCClientDisconnectBadCertificateMode;
 			}
 

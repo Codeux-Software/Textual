@@ -56,6 +56,7 @@
 	#import "IRCCommandIndex.h"
 	#import "IRCConnection.h"
 	#import "IRCConnectionConfig.h"
+	#import "IRCConnectionErrors.h"
 	#import "IRCHighlightLogEntry.h"
 	#import "IRCHighlightMatchCondition.h"
 	#import "IRCISupportInfo.h"

@@ -48,6 +48,7 @@
 #import "TPCPreferencesLocal.h"
 #import "IRCClient.h"
 #import "IRCConnectionConfig.h"
+#import "IRCConnectionErrors.h"
 #import "IRCConnectionPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -172,9 +173,8 @@ ClassWithDesignatedInitializerInitMethod
 	{
 		NSString *errorMessage = TXTLS(@"IRC[vdy-jk]");
 
-		// TODO: Don't hardcode the error domain and code
-		NSError *error = [NSError errorWithDomain:@"Textual.ConnectionError"
-											 code:1000
+		NSError *error = [NSError errorWithDomain:IRCConnectionErrorDomain
+											 code:IRCConnectionErrorCodeOther
 										 userInfo:@{ NSLocalizedDescriptionKey : errorMessage }];
 
 		[self _ircConnectionDidDisconnectWithError:error];
