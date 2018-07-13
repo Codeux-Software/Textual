@@ -57,6 +57,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)recalculateTextViewSize;
 - (void)recalculateTextViewSizeForced;
+
+- (void)resetSpellingIgnores;
 @end
 
 @interface TVCMainWindowTextViewBackground : NSView

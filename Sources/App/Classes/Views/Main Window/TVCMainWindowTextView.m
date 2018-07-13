@@ -38,6 +38,7 @@
 #import "NSViewHelperPrivate.h"
 #import "IRCColorFormat.h"
 #import "TLOLocalization.h"
+#import "TPCResourceManagerPrivate.h"
 #import "TPCPreferencesLocalPrivate.h"
 #import "TPCPreferencesUserDefaults.h"
 #import "TVCMainWindow.h"
@@ -67,6 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet TVCMainWindowSegmentedController *segmentedController;
 @property (nonatomic, weak) IBOutlet TVCMainWindowSegmentedControllerCell *segmentedControllerCell;
 @property (nonatomic, strong) TVCMainWindowTextViewAppearance *userInterfaceObjects;
+@property (readonly) NSArray<NSString *> *defaultSpellingIgnores;
 @end
 
 @interface TVCMainWindowTextViewBackground ()
@@ -183,6 +185,36 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateSegmentedController
 {
 	[self.segmentedController updateSegmentedController];
+}
+
+#pragma mark -
+#pragma mark Spelling
+
+- (void)resetSpellingIgnores
+{
+	/* When performing nickname completion, completions are
+	 added to the ignore list. The main window then resets
+	 the entire spelling ignore list, by calling this method
+	 when the selection changes. */
+	/* Because the main window will eventually call this for us,
+	 we allow it to happen lazily, instead of in awake from nib. */
+	[RZSpellChecker() setIgnoredWords:self.defaultSpellingIgnores inSpellDocumentWithTag:self.spellCheckerDocumentTag];
+}
+
+- (NSArray<NSString *> *)defaultSpellingIgnores
+{
+	static NSArray<NSString *> *cachedValue = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		NSDictionary *staticValues =
+		[TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
+
+		cachedValue = [staticValues arrayForKey:@"Spelling Ignores"];
+	});
+
+	return cachedValue;
 }
 
 #pragma mark -

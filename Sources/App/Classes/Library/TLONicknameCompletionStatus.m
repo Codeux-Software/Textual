@@ -398,8 +398,6 @@ ClassWithDesignatedInitializerInitMethod
 	TVCMainWindowTextView *textView = self.window.inputTextField;
 
 	[RZSpellChecker() ignoreWord:self.completedValue inSpellDocumentWithTag:textView.spellCheckerDocumentTag];
-
-	textView.hasModifiedSpellingDictionary = YES;
 }
 
 - (void)performCompletion_step3

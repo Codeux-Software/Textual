@@ -1781,11 +1781,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	[self.inputHistoryManager moveFocusTo:itemChangedTo];
 
 	/* Reset spelling for text field */
-	if (self.inputTextField.hasModifiedSpellingDictionary) {
-		self.inputTextField.hasModifiedSpellingDictionary = NO;
-
-		[RZSpellChecker() setIgnoredWords:@[] inSpellDocumentWithTag:self.inputTextField.spellCheckerDocumentTag];
-	}
+	[self.inputTextField resetSpellingIgnores];
 
 	/* Update splitter view depending on selection */
 	if (isChannel) {

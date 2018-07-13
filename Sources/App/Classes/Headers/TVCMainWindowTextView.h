@@ -40,7 +40,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCMainWindowTextView : TVCTextViewWithIRCFormatter
-@property (nonatomic, assign) BOOL hasModifiedSpellingDictionary;
 @end
 
 NS_ASSUME_NONNULL_END
