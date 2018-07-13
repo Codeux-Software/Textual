@@ -165,18 +165,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Segmented Controller
 
-- (void)updateConstraints
-{
-	[super updateConstraints];
-
-	[self recalculateTextViewSizeForced];
-}
-
 - (void)reloadOriginPointsAndRecalculateSize
 {
 	[self reloadOriginPoints];
 
-	self.needsUpdateConstraints = YES;
+	/* Reload size on next go around to allow constraint layout to occur before so */
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[self recalculateTextViewSizeForced];
+	});
 }
 
 - (void)reloadOriginPoints
