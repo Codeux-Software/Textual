@@ -2553,6 +2553,14 @@
 		4C51327A20F76E980033B703 /* TLOLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C51327720F76E980033B703 /* TLOLocalization.swift */; };
 		4C51327B20F76E980033B703 /* TLOLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C51327720F76E980033B703 /* TLOLocalization.swift */; };
 		4C52379415C18F6700414852 /* Style Default Templates in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379215C18F6700414852 /* Style Default Templates */; };
+		4C5274E120F8D78800B18F9D /* IRCConnectionErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5274E020F8D78700B18F9D /* IRCConnectionErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C5274E220F8D78800B18F9D /* IRCConnectionErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5274E020F8D78700B18F9D /* IRCConnectionErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C5274E320F8D78800B18F9D /* IRCConnectionErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5274E020F8D78700B18F9D /* IRCConnectionErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C5274E420F8D78800B18F9D /* IRCConnectionErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5274E020F8D78700B18F9D /* IRCConnectionErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C5274E620F8D7CD00B18F9D /* IRCConnectionErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5274E520F8D7CD00B18F9D /* IRCConnectionErrors.m */; };
+		4C5274E720F8D7CD00B18F9D /* IRCConnectionErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5274E520F8D7CD00B18F9D /* IRCConnectionErrors.m */; };
+		4C5274E820F8D7CD00B18F9D /* IRCConnectionErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5274E520F8D7CD00B18F9D /* IRCConnectionErrors.m */; };
+		4C5274E920F8D7CD00B18F9D /* IRCConnectionErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5274E520F8D7CD00B18F9D /* IRCConnectionErrors.m */; };
 		4C58B572186011B900834882 /* Acknowledgements.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgements.pdf */; };
 		4C58B573186011BE00834882 /* Acknowledgements.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgements.pdf */; };
 		4C5BA3CB16F1302F00A96CA2 /* Style Default Templates in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379215C18F6700414852 /* Style Default Templates */; };
@@ -3529,6 +3537,8 @@
 		4C4A0D6D1C973E9000064A23 /* InfoAppStore.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = InfoAppStore.plist; path = "Application Properties/InfoAppStore.plist"; sourceTree = "<group>"; };
 		4C51327720F76E980033B703 /* TLOLocalization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TLOLocalization.swift; path = ../../../Shared/Library/TLOLocalization.swift; sourceTree = "<group>"; };
 		4C52379215C18F6700414852 /* Style Default Templates */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Style Default Templates"; path = "Resources/Styling/Style Default Templates"; sourceTree = SOURCE_ROOT; };
+		4C5274E020F8D78700B18F9D /* IRCConnectionErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnectionErrors.h; path = ../../../Shared/Headers/IRCConnectionErrors.h; sourceTree = "<group>"; };
+		4C5274E520F8D7CD00B18F9D /* IRCConnectionErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnectionErrors.m; path = ../../../Shared/IRC/IRCConnectionErrors.m; sourceTree = "<group>"; };
 		4C58B570186011AC00834882 /* Acknowledgements.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Acknowledgements.pdf; path = ../../Acknowledgements.pdf; sourceTree = SOURCE_ROOT; };
 		4C5BA4E616F1302F00A96CA2 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C761BAE1E155CB100A505B7 /* BuildServices.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = BuildServices.sh; path = "Build Scripts/BuildServices.sh"; sourceTree = "<group>"; };
@@ -3984,6 +3994,7 @@
 				4C31513720EB673E00448776 /* IRCCommandIndex.m */,
 				4C31512E20EB673E00448776 /* IRCConnection.m */,
 				4C06E29C20EC4F880055D09A /* IRCConnectionConfig.m */,
+				4C5274E520F8D7CD00B18F9D /* IRCConnectionErrors.m */,
 				4C31513120EB673E00448776 /* IRCExtras.m */,
 				4C31512620EB673E00448776 /* IRCHighlightLogEntry.m */,
 				4C31512A20EB673E00448776 /* IRCHighlightMatchCondition.m */,
@@ -4121,6 +4132,7 @@
 				4C31517120EB673E00448776 /* IRCCommandIndex.h */,
 				4C31526020EB673E00448776 /* IRCConnection.h */,
 				4C06E24720EC4B970055D09A /* IRCConnectionConfig.h */,
+				4C5274E020F8D78700B18F9D /* IRCConnectionErrors.h */,
 				4C3151A120EB673E00448776 /* IRCHighlightLogEntry.h */,
 				4C31524720EB673E00448776 /* IRCHighlightMatchCondition.h */,
 				4C31519820EB673E00448776 /* IRCISupportInfo.h */,
@@ -5477,6 +5489,7 @@
 				4C31581020EB6D0700448776 /* IRCChannelPrivate.h in Headers */,
 				4C06E3B820EC51380055D09A /* RCMSecureTransport.h in Headers */,
 				4C31583E20EB6D0700448776 /* TDCInAppPurchaseDialogPrivate.h in Headers */,
+				4C5274E120F8D78800B18F9D /* IRCConnectionErrors.h in Headers */,
 				4C31585C20EB6D0700448776 /* TLOFileLoggerPrivate.h in Headers */,
 				4C3154FA20EB6CB300448776 /* IRCChannelMode.h in Headers */,
 				4C469E3720EC580B00094EA4 /* TLOLicenseManagerDownloaderPrivate.h in Headers */,
@@ -5741,6 +5754,7 @@
 				4C3156C720EB6D0500448776 /* TVCMainWindowAppearancePrivate.h in Headers */,
 				4C06E27F20EC4E870055D09A /* TPCPreferencesUserDefaults.h in Headers */,
 				4C31566120EB6D0400448776 /* IRCISupportInfoPrivate.h in Headers */,
+				4C5274E420F8D78800B18F9D /* IRCConnectionErrors.h in Headers */,
 				4C06E27B20EC4E870055D09A /* TLOTimer.h in Headers */,
 				4C31560020EB6CB400448776 /* IRCChannelUser.h in Headers */,
 				4C3156D620EB6D0500448776 /* TVCServerListAppearancePrivate.h in Headers */,
@@ -6010,6 +6024,7 @@
 				4C3157ED20EB6D0600448776 /* TVCMainWindowAppearancePrivate.h in Headers */,
 				4C06E27D20EC4E870055D09A /* TPCPreferencesUserDefaults.h in Headers */,
 				4C31578720EB6D0600448776 /* IRCISupportInfoPrivate.h in Headers */,
+				4C5274E220F8D78800B18F9D /* IRCConnectionErrors.h in Headers */,
 				4C06E27920EC4E870055D09A /* TLOTimer.h in Headers */,
 				4C31555220EB6CB300448776 /* IRCChannelUser.h in Headers */,
 				4C3157FC20EB6D0600448776 /* TVCServerListAppearancePrivate.h in Headers */,
@@ -6279,6 +6294,7 @@
 				4C31575A20EB6D0500448776 /* TVCMainWindowAppearancePrivate.h in Headers */,
 				4C06E27E20EC4E870055D09A /* TPCPreferencesUserDefaults.h in Headers */,
 				4C3156F420EB6D0500448776 /* IRCISupportInfoPrivate.h in Headers */,
+				4C5274E320F8D78800B18F9D /* IRCConnectionErrors.h in Headers */,
 				4C06E27A20EC4E870055D09A /* TLOTimer.h in Headers */,
 				4C3155A920EB6CB400448776 /* IRCChannelUser.h in Headers */,
 				4C31576920EB6D0500448776 /* TVCServerListAppearancePrivate.h in Headers */,
@@ -7607,6 +7623,7 @@
 				4C06E62B20EC553A0055D09A /* TVCMainWindowTitlebarAccessoryView.m in Sources */,
 				4C06E62C20EC553A0055D09A /* TVCNotificationConfigurationViewController.m in Sources */,
 				4C06E62D20EC553A0055D09A /* TVCServerList.m in Sources */,
+				4C5274E720F8D7CD00B18F9D /* IRCConnectionErrors.m in Sources */,
 				4C06E62E20EC553A0055D09A /* TVCServerListAppearance.m in Sources */,
 				4C06E62F20EC553A0055D09A /* TVCServerListCell.m in Sources */,
 				4C06E63020EC553A0055D09A /* TVCMemberList.m in Sources */,
@@ -7683,6 +7700,7 @@
 				4C06E50720EC551C0055D09A /* THOUnicodeHelper.m in Sources */,
 				4C06E50820EC551C0055D09A /* IRCAddressBook.m in Sources */,
 				4C06E50920EC551C0055D09A /* IRCAddressBookMatchCache.m in Sources */,
+				4C5274E620F8D7CD00B18F9D /* IRCConnectionErrors.m in Sources */,
 				4C06E50A20EC551C0055D09A /* IRCAddressBookUserTracking.m in Sources */,
 				4C06E50B20EC551C0055D09A /* IRCChannel.m in Sources */,
 				4C06E50C20EC551D0055D09A /* IRCChannelConfig.m in Sources */,
@@ -7973,6 +7991,7 @@
 				4C06E6E420EC55B90055D09A /* TVCMainWindowTitlebarAccessoryView.m in Sources */,
 				4C06E6E520EC55B90055D09A /* TVCNotificationConfigurationViewController.m in Sources */,
 				4C06E6E620EC55B90055D09A /* TVCServerList.m in Sources */,
+				4C5274E820F8D7CD00B18F9D /* IRCConnectionErrors.m in Sources */,
 				4C06E6E720EC55B90055D09A /* TVCServerListAppearance.m in Sources */,
 				4C06E6E820EC55B90055D09A /* TVCServerListCell.m in Sources */,
 				4C06E6E920EC55B90055D09A /* TVCMemberList.m in Sources */,
@@ -8157,6 +8176,7 @@
 				4C06E79D20EC55DB0055D09A /* TVCMainWindowTitlebarAccessoryView.m in Sources */,
 				4C06E79E20EC55DB0055D09A /* TVCNotificationConfigurationViewController.m in Sources */,
 				4C06E79F20EC55DB0055D09A /* TVCServerList.m in Sources */,
+				4C5274E920F8D7CD00B18F9D /* IRCConnectionErrors.m in Sources */,
 				4C06E7A020EC55DB0055D09A /* TVCServerListAppearance.m in Sources */,
 				4C06E7A120EC55DB0055D09A /* TVCServerListCell.m in Sources */,
 				4C06E7A220EC55DB0055D09A /* TVCMemberList.m in Sources */,

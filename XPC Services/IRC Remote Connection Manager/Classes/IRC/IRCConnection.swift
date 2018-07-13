@@ -397,24 +397,25 @@ typealias ConnectionError = Connection.ConnectionError
 
 extension ConnectionError: CustomNSError
 {
-	/* IRCConnection.m and IRCClient.m the in main project
-	 currently hard codes same values presented below.
-	 Keep them in sync with changes made here. */
-	/* TODO: Share values between projects. (July 2, 2018) */
-	static let errorDomain = "Textual.ConnectionError"
+	/* Error domain and codes are defined in IRCConnectionErrors.h/m */
+	static let errorDomain = ConnectionErrorDomain
 
 	var errorCode: Int
 	{
+		let errorCode: ConnectionErrorCode
+
 		switch self {
 			case .socket(_):
-				return 999
+				errorCode = .socket
 			case .other(_):
-				return 1000
+				errorCode = .other
 			case .badCertificate(_):
-				return 1001
+				errorCode = .badCertificate
 			case .unableToSecure(_):
-				return 1002
+				errorCode = .unableToSecure
 		}
+
+		return Int(errorCode.rawValue)
 	}
 
 	var errorUserInfo: [String : Any]
