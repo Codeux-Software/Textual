@@ -224,5 +224,9 @@
 		<key>com.codeux.app-extensions.textual-WikiStyleLinkParser</key>
 		<string>1.0.6</string>
 	</dict>
+	<key>Spelling Ignores</key>
+	<array>
+		<string>deop</string>
+	</array>
 </dict>
 </plist>
