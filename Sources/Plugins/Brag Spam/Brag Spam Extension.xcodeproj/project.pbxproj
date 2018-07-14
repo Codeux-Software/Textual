@@ -29,7 +29,6 @@
 		4C1D0F9020EBF1D000E72D80 /* Textual.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
 		4C1D0F9120EBF1D000E72D80 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Textual Extensions.xcconfig"; sourceTree = "<group>"; };
 		4C1D0F9520EBF1D000E72D80 /* Enabled Features.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Enabled Features.xcconfig"; sourceTree = "<group>"; };
-		4C1D0F9720EBF1D100E72D80 /* Inherited.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Inherited.entitlements; sourceTree = "<group>"; };
 		4C36AAF920F27EE6007CA939 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/BasicLanguage.strings; sourceTree = "<group>"; };
 		4C46A0D820EC6BDF00094EA4 /* TPIBragSpam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPIBragSpam.m; sourceTree = "<group>"; };
 		4C46A0D920EC6BDF00094EA4 /* TPIBragSpam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPIBragSpam.h; sourceTree = "<group>"; };
@@ -148,14 +147,6 @@
 			path = Debug;
 			sourceTree = "<group>";
 		};
-		4C1D0F9620EBF1D100E72D80 /* Sandbox */ = {
-			isa = PBXGroup;
-			children = (
-				4C1D0F9720EBF1D100E72D80 /* Inherited.entitlements */,
-			);
-			path = Sandbox;
-			sourceTree = "<group>";
-		};
 		4C46A0D720EC6BDF00094EA4 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,7 +176,6 @@
 			isa = PBXGroup;
 			children = (
 				4C1D0F6420EBF1D000E72D80 /* Build */,
-				4C1D0F9620EBF1D100E72D80 /* Sandbox */,
 			);
 			name = Configurations;
 			path = ../../../Configurations;

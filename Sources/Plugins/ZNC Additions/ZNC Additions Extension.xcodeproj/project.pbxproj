@@ -31,7 +31,6 @@
 		4C1D105020EBF29F00E72D80 /* Textual.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
 		4C1D105120EBF29F00E72D80 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Textual Extensions.xcconfig"; sourceTree = "<group>"; };
 		4C1D105520EBF29F00E72D80 /* Enabled Features.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Enabled Features.xcconfig"; sourceTree = "<group>"; };
-		4C1D105720EBF29F00E72D80 /* Inherited.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Inherited.entitlements; sourceTree = "<group>"; };
 		4C36AAC720F27AB4007CA939 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/BasicLanguage.strings; sourceTree = "<group>"; };
 		4C46A07A20EC6A5000094EA4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4C46A07E20EC6A8200094EA4 /* TPI_ZNCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_ZNCAdditions.h; sourceTree = "<group>"; };
@@ -156,14 +155,6 @@
 			path = Debug;
 			sourceTree = "<group>";
 		};
-		4C1D105620EBF29F00E72D80 /* Sandbox */ = {
-			isa = PBXGroup;
-			children = (
-				4C1D105720EBF29F00E72D80 /* Inherited.entitlements */,
-			);
-			path = Sandbox;
-			sourceTree = "<group>";
-		};
 		4C46A07720EC6A5000094EA4 /* Language Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,7 +184,6 @@
 			isa = PBXGroup;
 			children = (
 				4C1D102420EBF29F00E72D80 /* Build */,
-				4C1D105620EBF29F00E72D80 /* Sandbox */,
 			);
 			name = Configurations;
 			path = ../../../Configurations;

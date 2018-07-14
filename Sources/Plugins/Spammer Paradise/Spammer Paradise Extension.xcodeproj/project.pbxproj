@@ -35,7 +35,6 @@
 		4CE1436120EBF4F3000E01C9 /* Textual.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
 		4CE1436220EBF4F3000E01C9 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Textual Extensions.xcconfig"; sourceTree = "<group>"; };
 		4CE1436620EBF4F3000E01C9 /* Enabled Features.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Enabled Features.xcconfig"; sourceTree = "<group>"; };
-		4CE1436820EBF4F3000E01C9 /* Inherited.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Inherited.entitlements; sourceTree = "<group>"; };
 		8D576316048677EA00EA77CD /* SpammerParadise.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpammerParadise.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -117,7 +116,6 @@
 			isa = PBXGroup;
 			children = (
 				4CE1433520EBF4F3000E01C9 /* Build */,
-				4CE1436720EBF4F3000E01C9 /* Sandbox */,
 			);
 			name = Configurations;
 			path = ../../../Configurations;
@@ -185,14 +183,6 @@
 				4CE1436120EBF4F3000E01C9 /* Textual.xcconfig */,
 			);
 			path = Debug;
-			sourceTree = "<group>";
-		};
-		4CE1436720EBF4F3000E01C9 /* Sandbox */ = {
-			isa = PBXGroup;
-			children = (
-				4CE1436820EBF4F3000E01C9 /* Inherited.entitlements */,
-			);
-			path = Sandbox;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
