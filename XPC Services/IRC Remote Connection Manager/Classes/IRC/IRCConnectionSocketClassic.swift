@@ -915,10 +915,9 @@ final class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol,
 			return nil
 		}
 
-		/* Thanks Alex */
-		let resolvedAddress4: Data? = resolvedAddresses.filter {
+		let resolvedAddress4 = resolvedAddresses.first {
 			GCDAsyncSocket.isIPv4Address($0)
-		}[0]
+		}
 
 		if (resolvedAddress4 == nil) {
 			return nil
