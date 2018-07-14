@@ -207,7 +207,7 @@ final class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 		 *** Terminating app due to uncaught exception 'NSRangeException', reason: '*** -[NSConcreteMutableData subdataWithRange:]: range {12945, 87} exceeds data length 7282'
 
 		 TODO: Maybe this should be revisited at a later time. */
-		var newBuffer: Data?
+		var newBuffer: Data
 
 		if let oldBuffer = readInBuffer {
 			newBuffer = oldBuffer
@@ -215,7 +215,7 @@ final class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 			newBuffer = Data()
 		}
 
-		newBuffer?.append(data)
+		newBuffer.append(data)
 
 		/* Regardless of the result, we need to update the
 		 saved buffer with the updated buffer, but we prefer
@@ -225,7 +225,7 @@ final class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 		}
 
 		/* Split the data */
-		guard let (lines, remainingData) = newBuffer?.splitNetworkLines() else {
+		guard let (lines, remainingData) = newBuffer.splitNetworkLines() else {
 			return
 		}
 
@@ -240,7 +240,7 @@ final class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 			 storage. Retaining the collection’s storage can be a useful
 			 optimization when you’re planning to grow the collection again." */
 
-			newBuffer?.removeAll(keepingCapacity: true)
+			newBuffer.removeAll(keepingCapacity: true)
 		}
 	}
 
