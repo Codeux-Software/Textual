@@ -48,8 +48,8 @@ final class Connection: NSObject, ConnectionSocketDelegate
 
 	fileprivate lazy var floodControlTimer: TLOTimer =
 	{
-		return TLOTimer(actionBlock: { _ in
-			self.onFloodControlTimer()
+		return TLOTimer(actionBlock: { [weak self] _ in
+			self?.onFloodControlTimer()
 		}, on: DispatchQueue.global(priority: .default))
 	}()
 

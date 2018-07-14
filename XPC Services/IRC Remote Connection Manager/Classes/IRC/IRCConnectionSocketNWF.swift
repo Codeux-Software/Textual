@@ -114,8 +114,8 @@ final class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 
 		sec_protocol_options_set_tls_min_version(secOptions, .tlsProtocol1)
 
-		sec_protocol_options_set_verify_block(secOptions, { (_, trust, completionBlock) in
-			self.tlsVerifySecProtocol(trust, response: completionBlock)
+		sec_protocol_options_set_verify_block(secOptions, { [weak self] (_, trust, completionBlock) in
+			self?.tlsVerifySecProtocol(trust, response: completionBlock)
 		}, socketDelegateQueue!)
 
 		return tlsOptions
