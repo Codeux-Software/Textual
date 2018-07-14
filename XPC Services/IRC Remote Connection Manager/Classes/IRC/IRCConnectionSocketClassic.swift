@@ -274,9 +274,9 @@ final class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol,
 	{
 		secured = true
 
-		let protocolVersion = connection?.tlsNegotiatedProtocol ?? SSLProtocol.sslProtocolUnknown
+		let protocolVersion = tlsNegotiatedProtocol ?? SSLProtocol.sslProtocolUnknown
 
-		let cipherSuite = connection?.tlsNegotiatedCipherSuite ?? SSL_NO_SUCH_CIPHERSUITE
+		let cipherSuite = tlsNegotiatedCipherSuite ?? SSL_NO_SUCH_CIPHERSUITE
 
 		delegate?.connection(self, securedWith: protocolVersion, cipherSuite: cipherSuite)
 	}
