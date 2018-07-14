@@ -6914,7 +6914,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			}
 
 			// Send password
-			if ([self.serverAddress hasSuffix:@"dal.net"])
+			if ([self.serverAddress hasSuffix:@".dal.net"])
 			{
 				NSString *message = [NSString stringWithFormat:@"IDENTIFY %@", nicknamePassword];
 
