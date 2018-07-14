@@ -35,6 +35,7 @@
  *
  *********************************************************************** */
 
+#import "ICLHelpers.h"
 #import "ICMCommonInlineVideos.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -65,14 +66,14 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL hasFileExtension = [self.validFileExtensions containsObject:urlPathExtension];
 
 	if (hasFileExtension) {
-		if ([urlHost isEqualToString:@"video.nest.com"]) {
+		if ([urlHost isDomain:@"video.nest.com"]) {
 			/* Processed below */
 		} else {
 			return url.absoluteString;
 		}
 	}
 
-	if ([urlHost hasSuffix:@"video.nest.com"])
+	if ([urlHost isDomain:@"video.nest.com"])
 	{
 		if ([urlPath hasPrefix:@"/clip/"] == NO) {
 			return nil;

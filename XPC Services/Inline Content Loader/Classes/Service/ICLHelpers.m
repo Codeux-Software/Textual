@@ -210,4 +210,25 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+#pragma mark -
+#pragma mark Strings
+
+@implementation NSString (ICLHelpers)
+
+- (BOOL)isDomain:(NSString *)domain
+{
+	NSParameterAssert(domain != nil);
+
+	return [self isEqualToString:domain];
+}
+
+- (BOOL)isDomainOrSubdomain:(NSString *)domain
+{
+	NSParameterAssert(domain != nil);
+
+	return ([self isEqualToString:domain] || [self hasSuffix:[@"." stringByAppendingString:domain]]);
+}
+
+@end
+
 NS_ASSUME_NONNULL_END

@@ -35,6 +35,7 @@
  *
  *********************************************************************** */
 
+#import "ICLHelpers.h"
 #import "ICMYouTube.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -106,8 +107,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		videoIdentifier = [urlPath substringFromIndex:1];
 	}
-	else if ([urlHost isEqualToString:@"youtube.com"] ||
-			 [urlHost hasSuffix:@".youtube.com"])
+	else if ([urlHost isDomainOrSubdomain:@"youtube.com"])
 	{
 		NSString *urlPath = url.path.percentEncodedURLPath;
 

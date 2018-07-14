@@ -36,6 +36,7 @@
  *********************************************************************** */
 
 #import "TPCPreferences.h"
+#import "ICLHelpers.h"
 #import "ICMCommonInlineImages.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -66,13 +67,13 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL hasFileExtension = [self.validFileExtensions containsObject:urlPathExtension];
 
 	if (hasFileExtension) {
-		if ([urlHost hasSuffix:@"wikipedia.org"]) {
+		if ([urlHost isDomainOrSubdomain:@"wikipedia.org"]) {
 			/* Wikipedia URLs end with a file extension but tend to be a web page.
 			 There was no easy way hotlink these images at the time this exception
 			 was added. This should be revisted at a later time... */
 
 			return nil;
-		} else if ([urlHost hasSuffix:@"dropbox.com"]) {
+		} else if ([urlHost isDomainOrSubdomain:@"dropbox.com"]) {
 			/* Processed below */
 		} else {
 			return url.absoluteString;
@@ -88,13 +89,13 @@ NS_ASSUME_NONNULL_BEGIN
 		urlPathCombined = [urlPathCombined stringByAppendingFormat:@"?%@", urlQuery];
 	}
 
-	if ([urlHost hasSuffix:@"dropbox.com"])
+	if ([urlHost isDomainOrSubdomain:@"dropbox.com"])
 	{
 		if ([urlPathCombined hasPrefix:@"/s/"] && hasFileExtension) {
 			return [@"https://dl.dropboxusercontent.com" stringByAppendingString:urlPathCombined];
 		}
 	}
-	else if ([urlHost hasSuffix:@"instacod.es"])
+	else if ([urlHost isDomainOrSubdomain:@"instacod.es"])
 	{
 		if (urlPath.length == 0) {
 			return nil;
@@ -106,7 +107,7 @@ NS_ASSUME_NONNULL_BEGIN
 			return [@"http://instacod.es/file/" stringByAppendingString:s];
 		}
 	}
-	else if ([urlHost isEqualToString:@"pbs.twimg.com"])
+	else if ([urlHost isDomain:@"pbs.twimg.com"])
 	{
 		if (urlPath.length == 0) {
 			return nil;
@@ -120,7 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		return [NSString stringWithFormat:@"https://pbs.twimg.com%@:orig", urlPath];
 	}
-	else if ([urlHost isEqualToString:@"docs.google.com"])
+	else if ([urlHost isDomain:@"docs.google.com"])
 	{
 		if ([urlPath hasPrefix:@"/file/d/"] == NO) {
 			return nil;
@@ -144,7 +145,7 @@ NS_ASSUME_NONNULL_BEGIN
 			return [@"https://docs.google.com/uc?id=" stringByAppendingString:photoId];
 		}
 	}
-	else if ([urlHost hasSuffix:@"twitpic.com"])
+	else if ([urlHost isDomainOrSubdomain:@"twitpic.com"])
 	{
 		if (urlPath.length == 0) {
 			return nil;
@@ -160,7 +161,7 @@ NS_ASSUME_NONNULL_BEGIN
 			return [NSString stringWithFormat:@"http://twitpic.com/show/large/%@", s];
 		}
 	}
-	else if ([urlHost hasSuffix:@"cl.ly"])
+	else if ([urlHost isDomainOrSubdomain:@"cl.ly"])
 	{
 		if (urlPath.length == 0) {
 			return nil;
@@ -181,8 +182,8 @@ NS_ASSUME_NONNULL_BEGIN
 			return [NSString stringWithFormat:@"http://cl.ly/%@/content", p2];
 		}
 	}
-	else if ([urlHost hasSuffix:@"instagram.com"] ||
-			 [urlHost hasSuffix:@"instagr.am"])
+	else if ([urlHost isDomainOrSubdomain:@"instagram.com"] ||
+			 [urlHost isDomainOrSubdomain:@"instagr.am"])
 	{
 		if ([urlPath hasPrefix:@"/p/"] == NO) {
 			return nil;
@@ -194,21 +195,21 @@ NS_ASSUME_NONNULL_BEGIN
 			return [NSString stringWithFormat:@"https://www.instagram.com/p/%@/media/?size=l", s];
 		}
 	}
-	else if ([urlHost hasSuffix:@"leetfil.es"] ||
-			 [urlHost hasSuffix:@"lfil.es"] ||
-			 [urlHost hasSuffix:@"i.leetfil.es"])
+	else if ([urlHost isDomainOrSubdomain:@"leetfil.es"] ||
+			 [urlHost isDomainOrSubdomain:@"lfil.es"] ||
+			 [urlHost isDomainOrSubdomain:@"i.leetfil.es"])
 	{
 		if (urlPath.length == 0) {
 			return nil;
 		}
 
-		if ([urlHost hasSuffix:@"i.leetfil.es"]) {
+		if ([urlHost isDomainOrSubdomain:@"i.leetfil.es"]) {
 			NSString *s = [urlPath substringFromIndex:1];
 
 			if (s.alphabeticNumericOnly) {
 				return [NSString stringWithFormat:@"https://i.leetfil.es/%@", s];
 			}
-		} else if ([urlHost hasSuffix:@"lfil.es"]) {
+		} else if ([urlHost isDomainOrSubdomain:@"lfil.es"]) {
 			if ([urlPath hasPrefix:@"/i/"]) {
 				NSString *s = [urlPath substringFromIndex:3];
 
@@ -238,21 +239,21 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 		}
 	}
-	else if ([urlHost hasSuffix:@"arxius.io"] ||
-			 [urlHost hasSuffix:@"i.arxius.io"] ||
-			 [urlHost hasSuffix:@"v.arxius.io"])
+	else if ([urlHost isDomainOrSubdomain:@"arxius.io"] ||
+			 [urlHost isDomainOrSubdomain:@"i.arxius.io"] ||
+			 [urlHost isDomainOrSubdomain:@"v.arxius.io"])
 	{
 		if (urlPath.length == 0) {
 			return nil;
 		}
 
-		if ([urlHost hasSuffix:@"i.arxius.io"]) {
+		if ([urlHost isDomainOrSubdomain:@"i.arxius.io"]) {
 			NSString *s = [urlPath substringFromIndex:1];
 
 			if (s.alphabeticNumericOnly) {
 				return [NSString stringWithFormat:@"https://i.arxius.io/%@", s];
 			}
-		} else if ([urlHost hasSuffix:@"v.arxius.io"]) {
+		} else if ([urlHost isDomainOrSubdomain:@"v.arxius.io"]) {
 			NSString *v = [urlPath substringFromIndex:1];
 
 			if (v.alphabeticNumericOnly) {
@@ -274,7 +275,7 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 		}
 	}
-	else if ([urlHost hasSuffix:@"i.4cdn.org"])
+	else if ([urlHost isDomainOrSubdomain:@"i.4cdn.org"])
 	{
 		if ([urlPath hasSuffix:@".webm"] == NO) {
 			return nil;
@@ -284,7 +285,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		return [NSString stringWithFormat:@"%@://%@%@s.jpg", urlScheme, urlHost, filenameWithoutExtension];
 	}
-	else if ([urlHost hasSuffix:@"8ch.net"])
+	else if ([urlHost isDomainOrSubdomain:@"8ch.net"])
 	{
 		if ([urlPath hasSuffix:@".webm"] == NO) {
 			return nil;
@@ -296,7 +297,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		return [NSString stringWithFormat:@"%@://%@/webm/thumb/%@.jpg", urlScheme, urlHost, filenameWithoutExtension];
 	}
-	else if ([urlHost hasSuffix:@"movapic.com"])
+	else if ([urlHost isDomainOrSubdomain:@"movapic.com"])
 	{
 		if ([urlPath hasPrefix:@"/pic/"] == NO) {
 			return nil;
@@ -308,7 +309,7 @@ NS_ASSUME_NONNULL_BEGIN
 			return [NSString stringWithFormat:@"http://image.movapic.com/pic/m_%@.jpeg", s];
 		}
 	}
-	else if ([urlHost hasSuffix:@"f.hatena.ne.jp"])
+	else if ([urlHost isDomainOrSubdomain:@"f.hatena.ne.jp"])
 	{
 		NSArray *components = [urlPath componentsSeparatedByString:@"/"];
 
@@ -332,7 +333,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		return [NSString stringWithFormat:@"http://img.f.hatena.ne.jp/images/fotolife/%@/%@/%@/%@.jpg", userIdHead, userId, photoIdHead, photoId];
 	}
-	else if ([urlHost isEqualToString:@"puu.sh"])
+	else if ([urlHost isDomain:@"puu.sh"])
 	{
 		if (urlPath.length == 0) {
 			return nil;
@@ -344,7 +345,7 @@ NS_ASSUME_NONNULL_BEGIN
 			return [NSString stringWithFormat:@"http://puu.sh/%@.jpg", s];
 		}
 	}
-	else if ([urlHost hasSuffix:@"d.pr"])
+	else if ([urlHost isDomainOrSubdomain:@"d.pr"])
 	{
 		if ([urlPath hasPrefix:@"/i/"] == NO) {
 			return nil;
@@ -356,8 +357,8 @@ NS_ASSUME_NONNULL_BEGIN
 			return [NSString stringWithFormat:@"http://d.pr/i/%@.png", s];
 		}
 	}
-	else if ([urlHost hasSuffix:@"nicovideo.jp"] ||
-			 [urlHost isEqualToString:@"nico.ms"])
+	else if ([urlHost isDomainOrSubdomain:@"nicovideo.jp"] ||
+			 [urlHost isDomain:@"nico.ms"])
 	{
 		if (urlPath.length == 0) {
 			return nil;
@@ -367,7 +368,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		NSString *s = nil;
 
-		if ([urlHost isEqualToString:@"nico.ms"]) {
+		if ([urlHost isDomain:@"nico.ms"]) {
 			s = [urlPath substringFromIndex:1];
 		} else if ([urlPath hasPrefix:@"/watch/"]) {
 			s = [urlPath substringFromIndex:7];
@@ -385,7 +386,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		return [NSString stringWithFormat:@"http://tn-skr%lli.smilevideo.jp/smile?i=%lli", ((videoNumber % 4) + 1), videoNumber];
 	}
-	else if ([urlHost isEqualToString:@"i.reddituploads.com"])
+	else if ([urlHost isDomain:@"i.reddituploads.com"])
 	{
 		if (urlPath.length == 0) {
 			return nil;
@@ -397,8 +398,8 @@ NS_ASSUME_NONNULL_BEGIN
 			return url.absoluteString;
 		}
 	}
-	else if ([urlHost hasSuffix:@"youtube.com"] ||
-			 [urlHost isEqualToString:@"youtu.be"])
+	else if ([urlHost isDomainOrSubdomain:@"youtube.com"] ||
+			 [urlHost isDomain:@"youtu.be"])
 	{
 		/* If we aren't allowed to embed YouTube,
 		 at least show show the thumbnail for the video. */
@@ -412,7 +413,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		NSString *videoId = nil;
 
-		if ([urlHost isEqualToString:@"youtu.be"]) {
+		if ([urlHost isDomain:@"youtu.be"]) {
 			videoId = [urlPath substringFromIndex:1];
 		} else {
 			NSDictionary *queryItems = urlQuery.URLQueryItems;

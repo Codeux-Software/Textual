@@ -53,4 +53,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, readonly, class) NSError *genericValidationFailedError;
 @end
 
+@interface NSString (ICLHelpers)
+/* Given "youtube.com" as input, returns if string is
+ equal to "youtube.com" or has suffix ".youtube.com" */
+- (BOOL)isDomain:(NSString *)domain;
+- (BOOL)isDomainOrSubdomain:(NSString *)domain;
+@end
+
 NS_ASSUME_NONNULL_END
