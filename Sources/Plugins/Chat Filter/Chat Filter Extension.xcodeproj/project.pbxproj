@@ -37,7 +37,6 @@
 		4C1D10B020EBF3C000E72D80 /* Textual.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
 		4C1D10B120EBF3C000E72D80 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Textual Extensions.xcconfig"; sourceTree = "<group>"; };
 		4C1D10B520EBF3C000E72D80 /* Enabled Features.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Enabled Features.xcconfig"; sourceTree = "<group>"; };
-		4C1D10B720EBF3C000E72D80 /* Inherited.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Inherited.entitlements; sourceTree = "<group>"; };
 		4C36AAE420F27E05007CA939 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TPI_ChatFilterEditFilterSheet.strings; sourceTree = "<group>"; };
 		4C36AAE620F27E05007CA939 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TPI_ChatFilterLogic.strings; sourceTree = "<group>"; };
 		4C36AAE820F27E05007CA939 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TPI_ChatFilterExtension.strings; sourceTree = "<group>"; };
@@ -170,14 +169,6 @@
 			path = Debug;
 			sourceTree = "<group>";
 		};
-		4C1D10B620EBF3C000E72D80 /* Sandbox */ = {
-			isa = PBXGroup;
-			children = (
-				4C1D10B720EBF3C000E72D80 /* Inherited.entitlements */,
-			);
-			path = Sandbox;
-			sourceTree = "<group>";
-		};
 		4C46A0A220EC6B5A00094EA4 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -227,7 +218,6 @@
 			isa = PBXGroup;
 			children = (
 				4C1D108420EBF3C000E72D80 /* Build */,
-				4C1D10B620EBF3C000E72D80 /* Sandbox */,
 			);
 			name = Configurations;
 			path = ../../../Configurations;
