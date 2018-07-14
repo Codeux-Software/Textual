@@ -431,6 +431,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 		return [NSString stringWithFormat:@"http://i.ytimg.com/vi/%@/mqdefault.jpg", videoId];
 	}
+	else if ([urlHost isDomainOrSubdomain:@"speedtest.net"])
+	{
+		NSArray *components = [urlPath componentsSeparatedByString:@"/"];
+
+		if (components.count < 3) {
+			return nil;
+		}
+
+		if ([components[1] isEqualToString:@"result"] == NO) {
+			return nil;
+		}
+
+		NSString *resultId = components[2];
+
+		if (resultId.numericOnly == NO) {
+			return nil;
+		}
+
+		return [NSString stringWithFormat:@"http://www.speedtest.net/result/%@.png", resultId];
+	}
 	else if ([urlPath hasPrefix:@"/image/"])
 	{
 		/* Try our best to regonize cl.ly custom domains. */
