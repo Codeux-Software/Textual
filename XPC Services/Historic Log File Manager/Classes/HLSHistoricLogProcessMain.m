@@ -566,8 +566,8 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 	NSPersistentStoreCoordinator *persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
 
 	NSDictionary *pragmaOptions = @{
-		@"synchronous" : @"FULL",
-		@"journal_mode" : @"DELETE"
+		@"synchronous" : @"NORMAL",
+		@"journal_mode" : @"WAL"
 	};
 
 	NSDictionary *persistentStoreOptions = @{
