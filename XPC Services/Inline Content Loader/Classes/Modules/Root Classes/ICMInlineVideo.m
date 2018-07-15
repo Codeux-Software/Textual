@@ -107,6 +107,8 @@ NS_ASSUME_NONNULL_BEGIN
 							 [self _safeToLoadVideo];
 						 } else {
 							 [self _unsafeToLoadVideo];
+
+							 [ICLMediaAssessor logError:error];
 						 }
 
 						 self.videoCheck = nil;

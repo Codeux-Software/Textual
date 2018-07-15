@@ -106,6 +106,8 @@ NS_ASSUME_NONNULL_BEGIN
 							 [self _safeToLoadImage];
 						 } else {
 							 [self _unsafeToLoadImage];
+
+							 [ICLMediaAssessor logError:error];
 						 }
 
 						 self.imageCheck = nil;
