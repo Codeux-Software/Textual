@@ -114,6 +114,10 @@
 	<string>MacBook Pro (13-inch, Retina, Touch Bar, Mid-2017)</string>
 	<key>MacBookPro14,3</key>
 	<string>MacBook Pro (15-inch, Retina, Touch Bar, Mid-2017)</string>
+	<key>MacBookPro15,1</key>
+	<string>MacBook Pro (15-inch, Retina, Touch Bar, Mid-2018)</string>
+	<key>MacBookPro15,2</key>
+	<string>MacBook Pro (13-inch, Retina, Touch Bar, Mid-2018)</string>
 	<key>MacPro1,1*</key>
 	<string>Mac Pro (Original)</string>
 	<key>MacPro2,1</key>
