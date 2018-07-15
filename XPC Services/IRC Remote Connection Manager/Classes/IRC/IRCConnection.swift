@@ -439,7 +439,7 @@ extension ConnectionError: CustomNSError
 
 extension ConnectionError: LocalizedError
 {
-	public var errorDescription: String?
+	var errorDescription: String?
 	{
 		switch self {
 			case .socket(let error):
@@ -454,7 +454,7 @@ extension ConnectionError: LocalizedError
 	}
 }
 
-extension ConnectionSocket
+fileprivate extension ConnectionSocket
 {
 	static func socket(with config: IRCConnectionConfig) -> ConnectionSocket & ConnectionSocketProtocol
 	{
