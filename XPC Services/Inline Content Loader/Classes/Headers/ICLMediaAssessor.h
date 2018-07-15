@@ -69,6 +69,40 @@ typedef void (^ICLMediaAssessorCompletionBlock)(ICLMediaAssessment * _Nullable a
 
 /* Resume assessment */
 - (void)resume;
+
+/* Logging */
++ (void)logError:(NSError *)error;
 @end
+
+/* Error codes */
+typedef NS_ENUM(NSUInteger, ICLMediaAssessorErrorCode)
+{
+	/* Catch all */
+	ICLMediaAssessorErrorCodeAssessmentFailed = 0,
+
+	/* Endpoint did not respond with OK (200) */
+	ICLMediaAssessorErrorCodeUnexpectedStatusCode = 1001,
+
+	/* Content-Type header is improperly formatted */
+	ICLMediaAssessorErrorCodeMalformedContentType = 1002,
+
+	/* Content-Length header is improperly formatted */
+	ICLMediaAssessorErrorCodeMalformedContentLength = 1003,
+
+	/* Unexpected media type */
+	ICLMediaAssessorErrorCodeUnexpectedType = 1004,
+
+	/* Unexpected response type (not HTTP) */
+	ICLMediaAssessorErrorCodeUnexpectedResponse = 1005,
+
+	/* Maximum response size exceeded */
+	ICLMediaAssessorErrorCodeContentLengthExceeded = 1006,
+
+	/* Image validation: Maximum width exceeded */
+	ICLMediaAssessorErrorCodeMaximumWidthExceeded = 1007,
+
+	/* Image validation: Maximum height exceeded */
+	ICLMediaAssessorErrorCodeMaximumHeightExceeded = 1008,
+};
 
 NS_ASSUME_NONNULL_END
