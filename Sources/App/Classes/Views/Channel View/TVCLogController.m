@@ -588,9 +588,9 @@ ClassWithDesignatedInitializerInitMethod
 	self.reloadingHistory = YES;
 
 	void (^reloadBlock)(NSArray *) = ^(NSArray<TVCLogLine *> *objects) {
-		NSString *newestLineNumber = objects.lastObject.uniqueIdentifier;
-
 		if (firstTimeLoadingHistory) {
+			NSString *newestLineNumber = objects.lastObject.uniqueIdentifier;
+
 			self.newestLineNumberFromPreviousSession = newestLineNumber;
 		}
 
