@@ -42,6 +42,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class IRCChannelMode, IRCChannelUser;
+@class TVCLogLine;
 
 typedef NS_ENUM(NSUInteger, IRCChannelStatus) {
 	IRCChannelStatusParted = 0,
