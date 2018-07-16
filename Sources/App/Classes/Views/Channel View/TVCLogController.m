@@ -91,6 +91,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable, readwrite) NSString *newestLineNumberFromPreviousSession;
 @property (nonatomic, copy, nullable, readwrite) NSString *oldestLineNumber;
 @property (nonatomic, copy, nullable, readwrite) NSString *newestLineNumber;
+@property (nonatomic, strong, nullable) TVCLogLine *lastLine;
 @property (nonatomic, strong) NSMutableArray<NSString *> *highlightedLineNumbers;
 @property (nonatomic, strong) NSCache *jumpToLineCallbacks;
 @property (nonatomic, strong, readwrite) TVCLogView *backingView;
@@ -1001,6 +1002,8 @@ ClassWithDesignatedInitializerInitMethod
 	self.oldestLineNumber = nil;
 	self.newestLineNumber = nil;
 
+	self.lastLine = nil;
+
 	self.loaded = NO;
 
 	self.reloadingHistory = NO;
@@ -1215,6 +1218,8 @@ ClassWithDesignatedInitializerInitMethod
 	if ([logLine isKindOfClass:[TVCLogLineMutable class]]) {
 		logLine = [logLine copy];
 	}
+
+	self.lastLine = logLine;
 
 	TVCLogControllerPrintingBlock printBlock = ^(id operation) {
 		NSDictionary<NSString *, id> *resultInfo = nil;

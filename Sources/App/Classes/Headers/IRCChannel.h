@@ -70,6 +70,7 @@ TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 @property (readonly, copy, nullable) NSString *secretKey;
 @property (readonly, copy, nullable) NSURL *logFilePath;
 @property (readonly) NSUInteger logFileSessionCount; // Number of lines sent to channel log file for session (from connect to disconnect)
+@property (readonly, weak) TVCLogLine *lastLine; // Last line in the channel. There is no guarantee it's visible to the user when accessed.
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 @property (readonly) BOOL encryptionStateIsEncrypted;
