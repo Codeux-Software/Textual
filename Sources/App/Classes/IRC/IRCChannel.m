@@ -592,8 +592,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[self.viewController print:logLine completionBlock:completionBlock];
 
-	self.lastLine = nil;
-
 	[self writeToLogLineToLogFile:logLine];
 }
 
