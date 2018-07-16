@@ -5507,6 +5507,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	logLine.messageBody = messageBody;
 
+	/* Has the date changed */
+	TVCLogLine *lastLine = ((channel) ? channel.lastLine : self.lastLine);
+
+	if (lastLine == nil) {
+		logLine.isFirstForDay = YES;
+	} else {
+		logLine.isFirstForDay = [receivedAt isInSameDayAsDate:lastLine.receivedAt];
+	}
+
 	logLine.receivedAt = receivedAt;
 
 	/* Print to server console if there is no channel */
