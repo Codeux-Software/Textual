@@ -92,7 +92,7 @@ fileprivate extension String
 			let openBracket = string.firstIndex(of: "["),
 			let closeBracket = string.firstIndex(of: "]") else
 		{
-			self = NSLocalizedString(string, tableName: table, bundle: bundle, value: "", comment: "")
+			self = bundle.localizedString(forKey: string, value: nil, table: table)
 
 			return
 		}
@@ -121,9 +121,9 @@ fileprivate extension String
 		// If a dash is present, then we use the original input string as key.
 		//
 		if (tableKey.contains("-")) {
-			self = NSLocalizedString(tableKey, tableName: tableName, bundle: bundle, value: "", comment: "")
+			self = bundle.localizedString(forKey: tableKey, value: nil, table: tableName)
 		} else {
-			self = NSLocalizedString(string, tableName: tableName, bundle: bundle, value: "", comment: "")
+			self = bundle.localizedString(forKey: string, value: nil, table: tableName)
 		}
 	}
 }
