@@ -161,6 +161,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	self->_rendererAttributes = [aDecoder decodeDictionaryForKey:@"rendererAttributes"];
 
 	self->_isEncrypted = [aDecoder decodeBoolForKey:@"isEncrypted"];
+	self->_isFirstForDay = [aDecoder decodeBoolForKey:@"isFirstForDay"];
 
 	self->_command = [aDecoder decodeStringForKey:@"command"];
 	self->_messageBody = [aDecoder decodeStringForKey:@"messageBody"];
@@ -218,6 +219,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	[aCoder maybeEncodeObject:self.nickname forKey:@"nickname"];
 
 	[aCoder encodeBool:self.isEncrypted forKey:@"isEncrypted"];
+	[aCoder encodeBool:self.isFirstForDay forKey:@"isFirstForDay"];
 
 	[aCoder encodeObject:self.receivedAt forKey:@"receivedAt"];
 
@@ -449,6 +451,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	object->_uniqueIdentifier = self->_uniqueIdentifier;
 
 	object->_isEncrypted = self->_isEncrypted;
+	object->_isFirstForDay = self->_isFirstForDay;
 
 	object->_excludeKeywords = self->_excludeKeywords;
 	object->_highlightKeywords = self->_highlightKeywords;
@@ -498,6 +501,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 @dynamic highlightKeywords;
 @dynamic rendererAttributes;
 @dynamic isEncrypted;
+@dynamic isFirstForDay;
 @dynamic lineType;
 @dynamic memberType;
 @dynamic messageBody;
@@ -515,6 +519,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 		self->_isEncrypted = isEncrypted;
 	}
 }
+
+- (void)setIsFirstForDay:(BOOL)isFirstForDay
+{
+	if (self->_isFirstForDay != isFirstForDay) {
+		self->_isFirstForDay = isFirstForDay;
+	}
+}
+
 
 - (void)setExcludeKeywords:(nullable NSArray<NSString *> *)excludeKeywords
 {
