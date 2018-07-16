@@ -76,7 +76,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 @property (nonatomic, copy, readwrite) IRCChannelConfig *config;
 @property (nonatomic, assign, readwrite) NSTimeInterval channelJoinTime;
 @property (nonatomic, strong, readwrite, nullable) IRCChannelMode *modeInfo;
-@property (nonatomic, strong) TLOFileLogger *logFile;
+@property (nonatomic, strong, nullable) TLOFileLogger *logFile;
 @property (nonatomic, assign, readwrite) NSUInteger logFileSessionCount;
 
 /* memberListStandardSortedContainer is a copy of the member list sorted by the channel
@@ -267,6 +267,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	return [NSURL fileURLWithPath:writePath];
+}
+
+- (nullable TVCLogLine *)lastLine
+{
+	return self.viewController.lastLine;
 }
 
 #pragma mark -
@@ -586,6 +591,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(logLine != nil);
 
 	[self.viewController print:logLine completionBlock:completionBlock];
+
+	self.lastLine = nil;
 
 	[self writeToLogLineToLogFile:logLine];
 }

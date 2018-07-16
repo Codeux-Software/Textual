@@ -1002,6 +1002,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			[TPCPreferences trackUserAwayStatusMaximumChannelSize] > 0);
 }
 
+- (nullable TVCLogLine *)lastLine
+{
+	return self.viewController.lastLine;
+}
+
 #pragma mark -
 #pragma mark Standalone Utilities
 
