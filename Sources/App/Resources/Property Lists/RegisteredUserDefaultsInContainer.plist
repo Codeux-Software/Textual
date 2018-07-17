@@ -66,6 +66,8 @@
 	<false/>
 	<key>DisplayDockBadges</key>
 	<true/>
+	<key>DisplayEventInLogView -&gt; Date Changes</key>
+	<true/>
 	<key>DisplayEventInLogView -&gt; Inline Media</key>
 	<false/>
 	<key>DisplayEventInLogView -&gt; Join, Part, Quit</key>

@@ -107,6 +107,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if ([keys containsObject:@"AutomaticallyFilterUnicodeTextSpam"] ||
 		[keys containsObject:@"ConversationTrackingIncludesUserModeSymbol"] ||
 		[keys containsObject:@"DisableRemoteNicknameColorHashing"] ||
+		[keys containsObject:@"DisplayEventInLogView -> Date Changes"] ||
 		[keys containsObject:@"DisplayEventInLogView -> Inline Media"] ||
 		[keys containsObject:@"DisplayEventInLogView -> Join, Part, Quit"] ||
 		[keys containsObject:@"Theme -> Nickname Format"] ||
