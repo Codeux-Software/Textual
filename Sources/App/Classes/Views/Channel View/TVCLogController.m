@@ -589,8 +589,17 @@ ClassWithDesignatedInitializerInitMethod
 	self.reloadingHistory = YES;
 
 	void (^reloadBlock)(NSArray *) = ^(NSArray<TVCLogLine *> *objects) {
+		TVCLogLine *lastLine = objects.lastObject;
+
+		/* Only assign lastLine to self if there is none because
+		 if we do it when there is some, then there will be a big
+		 cluster fuck of incorrect date changes. */
+		if (self.lastLine == nil) {
+			self.lastLine = lastLine;
+		}
+
 		if (firstTimeLoadingHistory) {
-			NSString *newestLineNumber = objects.lastObject.uniqueIdentifier;
+			NSString *newestLineNumber = lastLine.uniqueIdentifier;
 
 			self.newestLineNumberFromPreviousSession = newestLineNumber;
 		}
