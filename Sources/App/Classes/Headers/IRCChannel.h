@@ -85,6 +85,8 @@ TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 /* It is safe to call -memberExists: and -findMember: immediately after 
  changing a member because those methods do not require the member to 
  be present in the member list to produce a result. */
+- (void)addUser:(IRCUser *)user;
+
 - (void)addMember:(IRCChannelUser *)member;
 
 - (void)removeMember:(IRCChannelUser *)member;
