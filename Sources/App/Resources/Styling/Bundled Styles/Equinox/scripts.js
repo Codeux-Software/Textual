@@ -5,15 +5,8 @@
 
 /* Theme-wide preferences, as per milky's request */
 var Equinox = {
-  dateFormat: {
-    day: 'numeric',
-    month: 'long',
-    weekday: 'long',
-    year: 'numeric'
-  },
   fadeNicks: true,            // fade out nicknames when they appear multiple times in a row
   fadeNicksFreq: 10,          // how frequently to display a nick if they have fadeNickCounts lines in a row
-  showDateChanges: true,      // show date changes
   squashModes: true,          // if a duplicate mode gets posted to the channel, squash it
   squashTopics: true          // if a duplicate topic gets posted to the channel, squash it
 };
@@ -22,11 +15,6 @@ var Equinox = {
 var mappedSelectedUsers = [];
 var rs                  = { // room state
   channelJoined: false,
-  date: {
-    year: 0,
-    month: 0,
-    day: 0
-  },
   enableHistoryView: false,  // this doesn't get enabled until the history has finished loading
   mode: {
     mode: undefined
@@ -182,67 +170,6 @@ function toggleHistoryIfScrolled() {
     rs.history.style.display = 'none';
     if (topic) { topic.style.visibility = 'visible'; }
   }
-}
-
-/* Insert a date, if the date has changed from the previous message */
-function dateChange(e) {
-  'use strict';
-  var timestamp, datetime, year, month, day, id, ltype;
-  var MAXTIMEOFFSET = 30000;  // 30 seconds
-
-  // Only show date changes if the option is enabled
-  if (!Equinox.showDateChanges) {
-    return;
-  }
-
-  timestamp = parseFloat(e.dataset.timestamp) * 1000;
-  datetime = new Date(timestamp);
-
-  year = datetime.getFullYear();
-  month = datetime.getMonth();
-  day = datetime.getDate();
-  id = 'date-' + String(year) + '-' + String(month + 1) + '-' + String(day);
-
-  // Occasionally when replaying, Textual will post messages in the future, and then jump backwards
-  // As such, we'll ignore all joins, modes, and topics, if they're more than MAXTIMEOFFSET milliseconds
-  // from the current time
-  ltype = e.dataset.lineType;
-  if (ltype !== 'privmsg') {
-    if (Date.now() - timestamp > MAXTIMEOFFSET) {
-      return;
-    }
-  }
-
-  // If the date is the same, then there's nothing to do here
-  if (year === rs.date.year && month === rs.date.month && day === rs.date.day) {
-    return;
-  }
-
-  // Create the date element: <div class="date"><hr /><span>...</span><hr /></div>
-  var div = document.createElement('div');
-  var span = document.createElement('span');
-  div.className = 'date';
-  div.id = id;
-  div.appendChild(document.createElement('hr'));
-  div.appendChild(span);
-  div.appendChild(document.createElement('hr'));
-
-  // Set the span's content to the current date (Friday, October 14th)
-  span.textContent = datetime.toLocaleDateString('default', Equinox.dateFormat);
-
-  // Insert the date before the newly posted message
-  e.parentElement.insertBefore(div, e);
-
-  // Update the previous state
-  rs.date = {
-    year: year,
-    month: month,
-    day: day
-  };
-
-  // Reset the nick count back to 1, so the nick always shows up after a date change
-  rs.nick.count = 1;
-  rs.nick.nick = undefined;
 }
 
 /* When you join a channel, delete all the old disconnected messages */
@@ -414,11 +341,6 @@ Textual.messageAddedToView = function (line, fromBuffer) {
     MessageBuffer.noteMessageRemovedFromBuffer();
     
     return;
-  }
-
-  // call the dateChange() function, for any message with a timestamp that's not a debug message
-  if (message.dataset.timestamp) {
-    dateChange(message);
   }
 
   getEmbeddedImages = message.querySelectorAll('img');
