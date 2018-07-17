@@ -1502,7 +1502,7 @@ ClassWithDesignatedInitializerInitMethod
 	// ************************************************************************** /
 
 	if ( resultInfo) {
-		*resultInfo = resultInfoTemp;
+		*resultInfo = [resultInfoTemp copy];
 	}
 
 	// ************************************************************************** /
