@@ -658,9 +658,13 @@ ClassWithDesignatedInitializerInitMethod
 	self.reloadingTheme = NO;
 }
 
+- (NSString *)dateIndicatorWithDate:(NSDate *)date
 {
+	NSParameterAssert(date != nil);
 
+	NSString *dateString = TXFormatDate(date, NSDateFormatterLongStyle, NSDateFormatterNoStyle, NO);
 
+	return dateString;
 }
 
 #pragma mark -
@@ -1362,6 +1366,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSString *lineNumber = logLine.uniqueIdentifier;
 
+	NSDate *receivedAt = logLine.receivedAt;
+
 	// ************************************************************************** /
 
 	NSMutableDictionary<NSString *, id> *pathAttributes = [NSMutableDictionary new];
@@ -1374,11 +1380,11 @@ ClassWithDesignatedInitializerInitMethod
 
 	// ---- //
 
-	templateAttributes[@"timestamp"] = @(logLine.receivedAt.timeIntervalSince1970);
+	templateAttributes[@"timestamp"] = @(receivedAt.timeIntervalSince1970);
 
 	templateAttributes[@"formattedTimestamp"] = logLine.formattedTimestamp;
 
-	templateAttributes[@"localizedTimestamp"] = TXFormatDateLongStyle(logLine.receivedAt, NO);
+	templateAttributes[@"localizedTimestamp"] = TXFormatDateLongStyle(receivedAt, NO);
 
 	// ---- //
 
@@ -1461,6 +1467,12 @@ ClassWithDesignatedInitializerInitMethod
 
 	// ---- //
 
+	if (logLine.isFirstForDay) {
+		templateAttributes[@"showDateIndicator"] = @(YES);
+
+		templateAttributes[@"dateIndicatorMessage"] = [self dateIndicatorWithDate:receivedAt];
+	}
+
 	if ([lineNumber isEqualToString:self.newestLineNumberFromPreviousSession]) {
 		templateAttributes[@"showSessionIndicator"] = @(YES);
 
@@ -1485,7 +1497,7 @@ ClassWithDesignatedInitializerInitMethod
 
 			pluginConcreteObject.senderNickname = logLine.nickname;
 
-			pluginConcreteObject.receivedAt = logLine.receivedAt;
+			pluginConcreteObject.receivedAt = receivedAt;
 
 			pluginConcreteObject.lineNumber = lineNumber;
 

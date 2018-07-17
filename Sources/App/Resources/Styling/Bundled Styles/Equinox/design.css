@@ -250,12 +250,14 @@ body[dir=ltr] div[data-line-type=action] .sender:before {
 }
 
 /* Message buffer session indicator */
+.date_indicator ,
 .session_indicator {
   display: flex;
   display: -webkit-flex;
   padding: .5em 0;
 }
 
+.date_indicator > hr,
 .session_indicator > hr {
   background: #444;
   border: 0;
@@ -265,11 +267,13 @@ body[dir=ltr] div[data-line-type=action] .sender:before {
   -webkit-flex: 1;
 }
 
+.date_indicator > span,
 .session_indicator > span {
   font-style: oblique;
   margin: 0 1em;
 }
 
+.date_indicator + #mark,
 .session_indicator + #mark {
   display: none;
 }
