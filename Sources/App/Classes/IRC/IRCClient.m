@@ -5513,7 +5513,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	if (lastLine == nil) {
 		logLine.isFirstForDay = YES;
 	} else {
-		logLine.isFirstForDay = [receivedAt isInSameDayAsDate:lastLine.receivedAt];
+		logLine.isFirstForDay = ([receivedAt isInSameDayAsDate:lastLine.receivedAt] == NO);
 	}
 
 	logLine.receivedAt = receivedAt;
