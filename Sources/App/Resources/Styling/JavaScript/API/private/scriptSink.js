@@ -370,17 +370,24 @@ app.serverIsConnected = function(callbackFunction)
 	}
 };
 
-app.channelIsJoined = function(callbackFunction)
+app.channelIsActive = function(callbackFunction)
 {
 	var promiseIndex = appInternal.makePromise(callbackFunction);
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
 	if (app.isWebKit2()) {
-		window.webkit.messageHandlers.channelIsJoined.postMessage(dataValue);
+		window.webkit.messageHandlers.channelIsActive.postMessage(dataValue);
 	} else {
-		TextualScriptSink.channelIsJoined(dataValue);
+		TextualScriptSink.channelIsActive(dataValue);
 	}
+};
+
+app.channelIsJoined = function(callbackFunction)
+{
+	console.warn("app.channelIsJoined() is deprecated. Use app.channelIsActive() instead.");
+
+	app.channelIsActive(callbackFunction);
 };
 
 app.channelName = function(callbackFunction)

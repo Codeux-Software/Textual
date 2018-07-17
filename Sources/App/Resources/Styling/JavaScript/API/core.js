@@ -12,14 +12,14 @@
  * modification, are permitted provided that the following conditions
  * are met:
  *
- *	* Redistributions of source code must retain the above copyright
- *	  notice, this list of conditions and the following disclaimer.
- *	* Redistributions in binary form must reproduce the above copyright
- *	  notice, this list of conditions and the following disclaimer in the
- *	  documentation and/or other materials provided with the distribution.
- *  * Neither the name of Textual and/or Codeux Software, nor the names of
- *    its contributors may be used to endorse or promote products derived
- * 	  from this software without specific prior written permission.
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *  * Neither the name of Textual, "Codeux Software, LLC", nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -40,25 +40,31 @@
 var Textual = {};
 
 /* *********************************************************************** */
-/*						View Callbacks									   */
+/*                              View Callbacks                             */
 /* *********************************************************************** */
 
-/*	Callbacks for each WebView in Textual. — Self explanatory. */
+/*	Callbacks for each WebView in Textual. */
 
 /*	These callbacks are limited to the context of this view. The view can represent either
-	the console, a channel, or a private message. See viewInitiated() for information about
-	determining which view this view represents. */
+	a server console, a channel, or a private message. See viewInitiated() for information 
+	about determining which type of view this is. */
+
+/*	In the context of these callbacks, "client" or "associated client" is an abstract concept.
+	When you create a new connection in Textual, you set it up by entering where to connect to
+	and what your identity will be (nickname, username, etc.). You also choose channels to join.
+	You may configure it other ways as well. Client is an encapsulation of this. 
+	Client is the stateful part of the connection that keeps track of everything. */
 
 /*
 	viewInitiated():
 
-	@viewType:		Type of view being represented. Server console, channel, query, etc.
-					Possible values: server, channel, query. — query = private message.
-	@serverHash:	A unique identifier to differentiate between each server a view may represent.
-	@channelHash:	A unique identifier to differentiate between each channel a view may represent.
-	@channelName:	Name of the view. Actual channel name, nickname for a private message, or blank for console.
+	@viewType:		Type of view: Server console, channel, or private message.
+					Possible values: "server", "channel", "query" — query = private message.
+	@clientHash:	A unique identifier for the client.
+	@viewHash:	    A unique identifier for the view. null for server console (use clientHash for that).
+	@viewName:      Name of view: Channel name, nickname for a private message, or null for server console.
 */
-Textual.viewInitiated 					= function(viewType, serverHash, channelHash, channelName) {};
+Textual.viewInitiated 					= function(viewType, clientHash, viewHash, viewName) {};
 
 Textual.messageAddedToView 				= function(lineNumber, fromBuffer) {};
 Textual.messageRemovedFromView 			= function(lineNumber) {};
@@ -77,65 +83,60 @@ Textual.viewPositionMovedToHistoryIndicator 	= function() {};
 Textual.viewPositionMovedToLine 				= function(lineNumber) {};
 Textual.viewPositionMovedToTop 					= function() {};
 
-/*	This function is called when two conditions are met:
-	1. The day has changed by reaching midnight
-	2. The system clock has changed
+/*	This function is called when one of two conditions are met:
+	1. The day has changed by reaching midnight (00:00)
+	2. The system clock changes
 
-	For the first case (#1), the timer that handles the observation of
-	midnight understands Daylight Saving Time (DST) and other oddities.
+	For the second condition, Textual does not make an effort 
+	to compare if the day has in-fact changed. It merely passes
+	the change down to the style to let it know.  */
+Textual.dateChanged						= function(dayYear, dayMonth, dayDay) {};
 
-	For the second case (#2), Textual does not make an effort to compare
-	if the day has in-fact changed. It is merely passing the change down
-	to the style to inform it that the system clock changed.  */
-Textual.dateChanged								= function(dayYear, dayMonth, dayDay) {};
-
-/*	This function is not called by Textual itself, but by WebKit. It is appended
-	to <body> as the function to call during onload phase. It is used by the newer
-	templates to replace viewDidFinishLoading as the function responsible for
-	fading out the loading screen. It is defined here so style's that do not
-	implement it do not error out. */
-Textual.viewBodyDidLoad						= function() {};
+/*	This function is not called by Textual itself, but by WebKit. 
+	It is appended to <body> as the function to call during onload phase. 
+	It is used by the newer templates to replace viewDidFinishLoading() 
+	as the function responsible for fading out the loading screen. */
+Textual.viewBodyDidLoad					= function() {};
 
 /* *********************************************************************** */
-/*						Textual Specific Preferences					   */
+/*						         Appearance								   */
 /* *********************************************************************** */
 
-/*	No key is supplied to preferencesDidChange() because it is preferred that the style
-    maintain a cached state of any values that they wish to monitor and update accordingly. */
-/*	A boolean entry with key name "Post Textual.preferencesDidChange() Notifications" must
-    be added to styleSettings.plist in order to enable the use of this callback. */
-/*	This callback is rate-limit at one call per-second, per-view. */
-Textual.preferencesDidChange						= function() {};
+/*  app.appearance() can be used to determine the current appearance of Textual.
+    The return value is a string. For example: "light" or "dark" */
+/*  Textual.appearanceDidChange() can be used to observe changes to the appearance. */
+// app.appearance(callbackFunction);
+
+/*	A boolean entry named "Post Textual.appearanceDidChange() Notifications" must be 
+	added to the styleSettings.plist file in order to enable use of this callback. */
+Textual.appearanceDidChange					= function(changedTo) {};
 
 /* *********************************************************************** */
-/*						Event Handling									   */
+/*                             Event Handling                              */
 /* *********************************************************************** */
 
 /*
-	handleEvent allows a style to receive status information about several
-	actions going on behind the scenes. The following event tokens are
-	currently supported.
+	handleEvent() allows a style to receive status information about 
+	several actions going on behind the scenes. The following event 
+	tokens are currently supported:
 
-	serverConnected                 - Server associated with this view has connected.
-	serverConnecting                - Server associated with this view is connecting.
-	serverDisconnected              - Server associated with this view has disconnected.
-	serverDisconnecting             - Server associated with this view is disconnecting.
-	channelJoined                   - Channel associated with this view has been joined.
-	channelParted                   — Channel associated with this view has been parted.
-	channelMemberAdded              — Member added to the channel associated with this view.
-	channelMemberRemoved            — Member removed from the channel associated with this view.
-	nicknameChanged					— Nickname of local user changed
+	serverConnecting                - Connecting to IRC
+	serverConnected                 - Connected to IRC
+	serverDisconnecting             - Disconnecting from IRC
+	serverDisconnected              - Disconnected from IRC
+	channelJoined                   - Channel joined
+	channelParted                   — Channel parted
+	channelMemberAdded              — Member added to the channel (joined)
+	channelMemberRemoved            — Member removed from the channel (parted)
+	nicknameChanged					— Nickname of local user (you) changed
 
-	THESE EVENTS ARE PUSHED WHEN THEY OCCUR. When a style is reloaded by Textual or
-	the end user, these events are not sent again. It is recommended to use a feature
-	of WebKit known as sessionStorage if these events are required to be known between
-	reloads. When a reload occurs to a style, the entire HTML and JavaScript is replaced
-	so the previous style will actually have no knowledge of the new one unless it is
-	stored in a local database.
+	THESE EVENTS ARE PUSHED WHEN THEY OCCUR. When a style is reloaded, 
+	these events are not sent again. Use sessionStorage or some other
+	means to saeve hem if they are important.
 */
 
-/*	A boolean entry with key name "Post Textual.handleEvent() Notifications" must be 
-	added to styleSettings.plist in order to enable the use of this callback. */
+/*	A boolean entry named "Post Textual.handleEvent() Notifications" must be
+	added to the styleSettings.plist file in order to enable use of this callback. */
 Textual.handleEvent                            = function(eventToken) {};
 
 /* *********************************************************************** */
@@ -143,12 +144,14 @@ Textual.handleEvent                            = function(eventToken) {};
 /* *********************************************************************** */
 
 /* 
-	The "app" object provides a communication channel between the style and Textual. Functions
-	defined by this object may require a callback function to receive return values. If a callback
-	function is required, then the callback function should have one argument which is a variable
-	defining the return value.
+	The "app" object provides a communication channel between the style and Textual.
 
-	For example:
+	Functions are performed asynchronously which means a callback function is required
+	to receive return values. If a callback function is required, then the callback 
+	function should take one argument, which is a variable defining the return value.
+	The type of the return value will vary depending on what the function does.
+
+	Example:
 		app.inlineMediaEnabledForView(
 			function(returnValue) {
 				console.log(returnValue);
@@ -156,101 +159,143 @@ Textual.handleEvent                            = function(eventToken) {};
 		)
 */
 
-/* Checks whether inline media are enabled for this particular view. Inline media can be enabled on
-   a per-view basis so querying preferences alone for the value will only give the global value. */
-// app.inlineMediaEnabledForView(callbackFunction)
+/* 
+	app.inlineMediaEnabledForView(callbackFunction)
 
-// app.serverIsConnected(callbackFunction)		- true if associated server is connected.
-// app.channelIsJoined(callbackFunction)		— true if associated channel is joined.
-// app.channelMemberCount(callbackFunction)		— Number of members on the channel associated with this view.
+	Is inline media enabled?
 
-// app.serverChannelCount(callbackFunction)		— Number of channels part of the server associated with this view.
-//												  This number does not count against the status of the channels.
-//												  They can be joined or all parted. It is only a raw count.
+	Return: boolean
+*/
 
-// app.channelName(callbackFunction)		— Channel name of associated channel. Can be an actual channel name,
-//											  a nickname for a private message, or blank for the console.
+/* 
+	app.serverIsConnected(callbackFunction)
 
-// app.networkName(callbackFunction)		— Returns the name of the client related to this view. If the actual network
-//											  ame of the connected server is known (e.g. "freenode IRC network"), then
-//											  that is returned. Otherwise, the user configured name is returned.
+	Is the client connected?
 
-// app.serverAddress(callbackFunction)		— Actual server address (e.g. verne.freenode.net) of the associated
-//											  server. This value is not available until raw numeric 005 is posted.
+	Return: boolean
+*/
 
-// app.localUserNickname(callbackFunction)		— Nickname of the local user.
-// app.localUserHostmask(callbackFunction)		— Hostmask of the local user obtained during join.
+/* 
+	app.channelIsActive(callbackFunction)
+
+	Is the channel or private message active?
+
+	For channel: 			Is the channel joined?
+	For private message: 	Is the user online?
+
+	Return: boolean
+*/
+
+/*
+	app.serverChannelCount(callbackFunction)
+
+	Number of channels associated with the client.
+
+	Notice: This number includes private messages.
+
+	Return: integer
+*/
+
+/*
+	app.channelName(callbackFunction)
+	
+	Name of the channel, nickname for a private message, or null for server console.
+
+	Return: nullable string
+*/
+
+/* 
+	app.networkName(callbackFunction)
+
+	Name of the network connected to.
+
+	User configurable connection name is returned if the client isn't connected.
+
+	Example: "freenode IRC Network" or "My Connection"
+
+	Return: string
+*/
+
+/*
+	app.serverAddress(callbackFunction)
+
+	Address of the server connected to.
+
+	User configurable server address is returned if the client isn't connected.
+
+	Example: "chat.freenode.net"
+
+	Return: string
+*/
+
+/*
+	app.localUserNickname(callbackFunction)
+
+	Nickname of the local user (you).
+
+	Return: string
+*/
+
+/* 
+	app.localUserHostmask(callbackFunction)
+	
+	Hostmask of the local user (you).
+	
+	Notice: Hostmask is not available until at least one channel is joined.
+	
+	Return: nullable string
+*/
 
 /* *********************************************************************** */
-/*						         Appearance								   */
+/*	                         Print Debug Messages                          */
 /* *********************************************************************** */
 
-/*  app.appearance() can be used to determine the current appearance of the main window.
-    The return value is a string. For example: "light" or "dark" */
-/*  Textual.appearanceDidChange() can be used to observe changes to the appearance. */
-// app.appearance(callbackFunction);
+// app.logToConsole(<input>)		- Log a message to the macOS system-wide console.
 
-/*	A boolean entry with key name "Post Textual.appearanceDidChange() Notifications" must be
- added to styleSettings.plist in order to enable the use of this callback. */
-Textual.appearanceDidChange					= function(changedTo) {};
-
-/* *********************************************************************** */
-/*						Print Debug Messages							   */
-/* *********************************************************************** */
-
-// app.logToConsole(<input>)		- Log a message to the OS X system-wide console.
-
-/*	The app.printDebugInformation* calls documented below also call messageAddedToView() which means calling
-	them from within messageAddedToView() will create an infinite loop. If needed inside messageAddedToView(),
-	then check the line type of the new message and do not respond to line types with the value "debug" */
+/*	The app.printDebugInformation* functions documented below also call messageAddedToView() 
+	which means calling them from within it will create an infinite loop. */
 
 // app.printDebugInformationToConsole(message)		— Show a debug message to the user in the server console.
-// app.printDebugInformation(message)				— Show a debug message to the user in the associated channel.
+// app.printDebugInformation(message)				— Show a debug message to the user in this view.
 
 /* *********************************************************************** */
-
-/* *********************************************************************** */
-/*						Style Settings									   */
+/*	                            Style Settings                             */
 /* *********************************************************************** */
 
 /*
-	Textual provides the ability to store values within a key-value store which is shared
-	amongst all views. The values stored within this key-value store are maintained within
-	the preferences file of Textual within its sandbox and will exist even if the style is
-	renamed, removed, or replaced.
+	Textual provides styles the ability to store values within a key-value store 
+	which is shared amongst all views. This store is saved in Textual's preference
+	file and will persist even if the style is renamed, removed, or replaced.
 
-	To opt-in to using a key-value store, add a string value to the styleSettings.plist file
-	of a style with the name of it being "Key-value Store Name" — the value of this key should
-	be whatever the name the key-value stored should be saved under. Preferably, it would be
-	named whatever the style is, but a different one can be picked so that multiple variants
-	of a style can share the same values.
+	- Enabling:
+	   A string entry named "Key-value Store Name" must be added to the
+	   styleSettings.plist file in order to enable use of this feature.
+	
+	   The value of this entry is the name to save the store under. 
 
-	When setting a value of null, the specified key is removed from the store.
-	Any other value is automatically converted by WebKit to match the following data types:
+	   Preferably, this will be the name of the style, but a different name can
+	   be entered so that multiple variants of a style can share the same store.
 
-		JavaScript				ObjC
-		----------				----------
-		array			=>		NSArray
-		boolean			=>		BOOL
-		number			=>		NSNumber
-		object			=>		NSDictionary
-		string			=>		NSString
-
-		ObjC					JavaScript
-		----					----------
-		NSArray			=>		array
-		BOOL			=>		boolean
-		NSNumber		=>		number
-		NSDictionary	=>		object
-		NSString		=>		string
-		NSURL           =>      string
-
-	When the value of a setting is retrieved, null will be returned if key is not found.
+	- Notice:
+	   • null (not undefined) is returned when a value does not exist for a key.
+	   • To remove the value of a key from the store, set null as its value.
  */
 
 // app.styleSettingsRetrieveValue(key, callbackFunction)	— Retrieve value of /key/ from the key-value store.
 // app.styleSettingsSetValue(key, value, callbackFunction)	— Set /value/ to /key/ in the key-value store.
 
-/*	This function is invoked when a style setting has changed. It is invoked on all WebViews
-	including the one that was responsible for changing the original value. */
+/*	This function is performed when a style setting changed. It is performed on 
+	all views, including the one that was responsible for changing the value. */
 Textual.styleSettingDidChange                       = function(changedKey) {};
+
+/* *********************************************************************** */
+/*                          Textual Preferences                            */
+/* *********************************************************************** */
+
+/*	A boolean entry named "Post Textual.preferencesDidChange() Notifications" must be
+    added to the styleSettings.plist file in order to enable use of this callback. */
+/*	This callback is rate-limit at one call per-second, per-view. */
+/*	This callback exists for extremely specific use cases. In general, if you need
+	something that doesn't exist above, then it's better to ask for it to be added
+	and not rely on this callback. */
+Textual.preferencesDidChange			= function() {};

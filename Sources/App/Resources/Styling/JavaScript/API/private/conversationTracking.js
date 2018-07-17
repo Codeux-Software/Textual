@@ -83,23 +83,25 @@ ConversationTracking.updateNicknameWithNewMessage = function(lineElement)
 	var elementType = lineElement.dataset.lineType;
 
 	/* We only want to target plain text messages */
-	if (elementType === "privmsg" ||
-		elementType === "action" ||
-		elementType === "notice") 
+	if (elementType !== "privmsg" &&
+		elementType !== "action" &&
+		elementType !== "notice") 
 	{
-		var senderElement = lineElement.querySelector(".sender");
+		return;
+	}
 
-		if (senderElement) {
-			/* Is this a tracked nickname? */
-			var nickname = senderElement.dataset.nickname;
+	var senderElement = lineElement.querySelector(".sender");
 
-			if (ConversationTracking.isNicknameTracked(nickname) === false) {
-				return;
-			}
+	if (senderElement) {
+		/* Is this a tracked nickname? */
+		var nickname = senderElement.dataset.nickname;
 
-			/* Toggle status on for new message */
-			ConversationTracking.toggleSelectionStatusForSenderElement(senderElement);
+		if (ConversationTracking.isNicknameTracked(nickname) === false) {
+			return;
 		}
+
+		/* Toggle status on for new message */
+		ConversationTracking.toggleSelectionStatusForSenderElement(senderElement);
 	}
 };
 
