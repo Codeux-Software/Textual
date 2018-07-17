@@ -500,13 +500,6 @@ ClassWithDesignatedInitializerInitMethod
 
 		[lineNumbers addObject:lineNumber];
 
-		/* Add "Current Session" message */
-		if ([lineNumber isEqualToString:self.newestLineNumberFromPreviousSession]) {
-			NSString *html = [self messageBufferSessionIndicatorWithMessage:TXTLS(@"TVCMainWindow[4yo-mk]")];
-
-			[patchedAppend appendString:html];
-		}
-
 		/* Add reference to plugin concrete object */
 		THOPluginDidPostNewMessageConcreteObject *pluginObject = resultInfo[@"pluginConcreteObject"];
 
@@ -665,15 +658,9 @@ ClassWithDesignatedInitializerInitMethod
 	self.reloadingTheme = NO;
 }
 
-- (NSString *)messageBufferSessionIndicatorWithMessage:(NSString *)message
 {
-	NSParameterAssert(message != nil);
 
-	NSDictionary *templateAttributes = @{
-		@"message" : message
-	};
 
-	return [TVCLogRenderer renderTemplateNamed:@"messageBufferSessionIndicator" attributes:templateAttributes];
 }
 
 #pragma mark -
@@ -1176,15 +1163,6 @@ ClassWithDesignatedInitializerInitMethod
 			@"timestamp" : @(logLine.receivedAt.timeIntervalSince1970)
 		}];
 
-		/* Add "Current Session" message */
-		if ([lineNumber isEqualToString:self.newestLineNumberFromPreviousSession]) {
-			NSString *html = [self messageBufferSessionIndicatorWithMessage:TXTLS(@"TVCMainWindow[4yo-mk]")];
-
-			[renderedLogLines addObject:@{
-				  @"html" : html
-			}];
-		}
-
 		/* Add reference to plugin concrete object */
 		THOPluginDidPostNewMessageConcreteObject *pluginObject = resultInfo[@"pluginConcreteObject"];
 
@@ -1382,6 +1360,8 @@ ClassWithDesignatedInitializerInitMethod
 		(self.inlineMediaEnabledForView &&
 		 (lineType == TVCLogLinePrivateMessageType || lineType == TVCLogLineActionType));
 
+	NSString *lineNumber = logLine.uniqueIdentifier;
+
 	// ************************************************************************** /
 
 	NSMutableDictionary<NSString *, id> *pathAttributes = [NSMutableDictionary new];
@@ -1478,9 +1458,17 @@ ClassWithDesignatedInitializerInitMethod
 
 	templateAttributes[@"inlineMediaEnabled"] = @(inlineMedia);
 
-	templateAttributes[@"lineNumber"] = logLine.uniqueIdentifier;
+	templateAttributes[@"lineNumber"] = lineNumber;
 
 	templateAttributes[@"lineRenderTime"] = @([NSDate timeIntervalSince1970]);
+
+	// ---- //
+
+	if ([lineNumber isEqualToString:self.newestLineNumberFromPreviousSession]) {
+		templateAttributes[@"showSessionIndicator"] = @(YES);
+
+		templateAttributes[@"sessionIndicatorMessage"] = TXTLS(@"TVCMainWindow[4yo-mk]");
+	}
 
 	// ************************************************************************** /
 
@@ -1502,7 +1490,7 @@ ClassWithDesignatedInitializerInitMethod
 
 			pluginConcreteObject.receivedAt = logLine.receivedAt;
 
-			pluginConcreteObject.lineNumber = logLine.uniqueIdentifier;
+			pluginConcreteObject.lineNumber = lineNumber;
 
 			pluginConcreteObject.messageContents = rendererResults[TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute];
 

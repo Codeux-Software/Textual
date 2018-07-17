@@ -229,13 +229,13 @@ a:hover {
 
 /* Message buffer session indicator */
 
-.message_buffer_session_indicator {
+.session_indicator {
 	display: flex;
 	display: -webkit-flex;
 	padding: 0.5em 0;
 }
 
-.message_buffer_session_indicator > hr {
+.session_indicator > hr {
 	background: #dbdbdb;
 	border: 0;
 	height: 1px;
@@ -244,13 +244,13 @@ a:hover {
 	-webkit-flex: 1;
 }
 
-.message_buffer_session_indicator > span {
+.session_indicator > span {
 	font-style: oblique;
 	margin: 0 1em;
 	color: #a6a6a6;
 }
 
-.message_buffer_session_indicator + #mark {
+.session_indicator + #mark {
 	display: none;
 }
 
