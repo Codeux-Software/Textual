@@ -338,12 +338,14 @@ body[data-custom-scroller="true"]::-webkit-scrollbar-thumb:hover {
 }
 
 /* Message buffer session indicator */
+.date_indicator ,
 .session_indicator {
 	display: flex;
 	display: -webkit-flex;
 	padding: 0.5em 0;
 }
 
+.date_indicator > hr,
 .session_indicator > hr {
 	background: #444;
 	border: 0;
@@ -353,12 +355,14 @@ body[data-custom-scroller="true"]::-webkit-scrollbar-thumb:hover {
 	-webkit-flex: 1;
 }
 
+.date_indicator > span,
 .session_indicator > span {
 	font-style: oblique;
 	margin: 0 1em;
 	color: #919191;
 }
 
+.date_indicator + #mark,
 .session_indicator + #mark {
 	display: none;
 }
