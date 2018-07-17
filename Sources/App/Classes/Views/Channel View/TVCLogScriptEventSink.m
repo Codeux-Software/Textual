@@ -436,12 +436,12 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark Private Implementation
 
-- (void)channelIsJoined:(id)inputData inWebView:(id)webView
+- (void)channelIsActive:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
-				 forCaller:@"app.channelIsJoined()"
+				 forCaller:@"app.channelIsActive()"
 				 inWebView:webView
-			  withSelector:@selector(_channelIsJoined:)];
+			  withSelector:@selector(_channelIsActive:)];
 }
 
 - (void)channelMemberCount:(id)inputData inWebView:(id)webView
@@ -930,14 +930,24 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark Private Implementation
 
-- (void)_channelIsJoined:(TVCLogScriptEventSinkContext *)context
+- (void)_channelIsActive:(TVCLogScriptEventSinkContext *)context
 {
 	context.completionBlock( @(context.associatedChannel.isActive) );
 }
 
 - (void)_channelMemberCount:(TVCLogScriptEventSinkContext *)context
 {
-	context.completionBlock( @(context.associatedChannel.numberOfMembers) );
+	IRCChannel *channel = context.associatedChannel;
+
+	if (channel == nil || channel.isChannel == NO) {
+		[self.class throwJavaScriptException:@"View is not a channel"
+								   forCaller:context.caller
+								   inWebView:context.webView];
+
+		return;
+	}
+
+	context.completionBlock( @(channel.numberOfMembers) );
 }
 
 - (void)_channelName:(TVCLogScriptEventSinkContext *)context

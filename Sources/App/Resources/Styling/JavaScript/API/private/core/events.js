@@ -98,7 +98,7 @@ _Textual.viewBodyDidLoad = function() /* PRIVATE */
 	 small delay between the view being created and the background process laying out
 	 its contents. To work around this, Textual presents an overlay view that matches
 	 the background color of the style. We then request an animation frame that calls
-	 app.finishedLayingOutView), instructing Textual that it can destroy the overlay view. */
+	 app.finishedLayingOutView, instructing Textual that it can destroy the overlay view. */
 
 	if (app.isWebKit2()) {
 		_Textual._viewBodyDidLoadAnimationFrame =
@@ -132,11 +132,7 @@ _Textual.viewFinishedLoading = function(configuration) /* PRIVATE */
 	if (isVisible) {
 		_Textual.notifyDidBecomeVisible();
 
-		if (isSelected) {
-			_Textual.notifySelectionChanged(true);
-		} else {
-			_Textual.notifySelectionChanged(false);
-		}
+		_Textual.notifySelectionChanged(isSelected);
 	} else {
 		_Textual.notifyDidBecomeHidden();
 	}
