@@ -193,6 +193,7 @@ typedef NS_ENUM(NSUInteger, TXPreferredAppearanceType)
 + (BOOL)preferModernSockets;
 
 + (BOOL)autoAddScrollbackMark;
++ (BOOL)showDateChanges;
 + (BOOL)showInlineImages TEXTUAL_DEPRECATED("Use -showInlineMedia instead");
 + (BOOL)showInlineMedia;
 + (BOOL)showJoinLeave;

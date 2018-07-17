@@ -381,6 +381,11 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	return [RZUserDefaults() boolForKey:@"OpenClickedLinksInBackgroundBrowser"];
 }
 
++ (BOOL)showDateChanges
+{
+	return [RZUserDefaults() boolForKey:@"DisplayEventInLogView -> Date Changes"];
+}
+
 + (BOOL)showInlineImages
 {
 	return [self showInlineMedia];

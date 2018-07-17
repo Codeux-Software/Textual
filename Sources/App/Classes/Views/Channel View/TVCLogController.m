@@ -1467,7 +1467,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	// ---- //
 
-	if (logLine.isFirstForDay) {
+	if (logLine.isFirstForDay && [TPCPreferences showDateChanges]) {
 		templateAttributes[@"showDateIndicator"] = @(YES);
 
 		templateAttributes[@"dateIndicatorMessage"] = [self dateIndicatorWithDate:receivedAt];
