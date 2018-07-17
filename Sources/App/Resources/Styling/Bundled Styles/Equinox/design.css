@@ -608,31 +608,6 @@ body div.line[data-line-type=action][data-highlight=true] {
   background-color: #30473a;
 }
 
-/* Date changes */
-body div.date {
-  display: flex;
-  display: -webkit-flex;
-  padding: .5em 0;
-}
-
-body div.date > hr {
-  background: #444;
-  border: 0;
-  flex: 1;
-  height: 1px;
-  margin-top: .6em;
-  -webkit-flex: 1;
-}
-
-body div.date > span {
-  font-style: oblique;
-  margin: 0 1em;
-}
-
-body div.date + div#mark {
-  display: none;
-}
-
 /* Shamelessly steal the background colors from Tomorrow Night */
 .effect[data-foreground-color='0'] {
   color: #EAEAEA !important;
