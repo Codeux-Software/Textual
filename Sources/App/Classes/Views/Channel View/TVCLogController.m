@@ -1441,9 +1441,6 @@ ClassWithDesignatedInitializerInitMethod
 
 	if (logLine.isEncrypted) {
 		templateAttributes[@"isEncrypted"] = @(YES);
-
-		templateAttributes[@"encryptedMessageLockTemplate"] =
-		[TVCLogRenderer renderTemplateNamed:@"encryptedMessageLock" attributes:pathAttributes];
 	}
 
 	// ---- //

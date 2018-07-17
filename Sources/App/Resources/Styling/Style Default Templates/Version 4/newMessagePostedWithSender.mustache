@@ -26,7 +26,7 @@
 		{{/ isEmpty(localizedTimestamp) }}>{{formattedTimestamp}} </span>
 
 {{#isEncrypted}}
-	{{{encryptedMessageLockTemplate}}}
+	{{> encryptedMessageLock}}
 {{/isEncrypted}}
 
 		<span class="message">
