@@ -393,15 +393,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *modeSymbol = cellItem.mark;
 
-	IRCUserRank userRankToDraw = IRCUserNoRank;
+	IRCUserRank userRankToDraw = IRCUserRankNone;
 
 	if ([TPCPreferences memberListSortFavorsServerStaff]) {
 		if (cellItem.user.isIRCop) {
-			userRankToDraw = IRCUserIRCopByModeRank;
+			userRankToDraw = IRCUserRankIRCopByMode;
 		}
 	}
 
-	if (userRankToDraw == IRCUserNoRank) {
+	if (userRankToDraw == IRCUserRankNone) {
 		userRankToDraw = cellItem.rank;
 	}
 
@@ -458,17 +458,17 @@ NS_ASSUME_NONNULL_BEGIN
 		} else {
 			backgroundColor = appearance.markBadgeSelectedBackgroundColorInactiveWindow;
 		} // isWindowActive
-	} else if (userRank == IRCUserIRCopByModeRank) {
+	} else if (userRank == IRCUserRankIRCopByMode) {
 		backgroundColor = appearance.markBadgeBackgroundColor_Y;
-	} else if (userRank == IRCUserChannelOwnerRank) {
+	} else if (userRank == IRCUserRankChannelOwner) {
 		backgroundColor = appearance.markBadgeBackgroundColor_Q;
-	} else if (userRank == IRCUserSuperOperatorRank) {
+	} else if (userRank == IRCUserRankSuperOperator) {
 		backgroundColor = appearance.markBadgeBackgroundColor_A;
-	} else if (userRank == IRCUserNormalOperatorRank) {
+	} else if (userRank == IRCUserRankNonermalOperator) {
 		backgroundColor = appearance.markBadgeBackgroundColor_O;
-	} else if (userRank == IRCUserHalfOperatorRank) {
+	} else if (userRank == IRCUserRankHalfOperator) {
 		backgroundColor = appearance.markBadgeBackgroundColor_H;
-	} else if (userRank == IRCUserVoicedRank) {
+	} else if (userRank == IRCUserRankVoiced) {
 		backgroundColor = appearance.markBadgeBackgroundColor_V;
 	} else {
 		NSColor *customColor = appearance.markBadgeBackgroundColorByUser;
@@ -676,22 +676,22 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCUserRank userRank = cellItem.rank;
 
 	if (cellItem.user.isIRCop) {
-		userRank = IRCUserIRCopByModeRank;
+		userRank = IRCUserRankIRCopByMode;
 	}
 
 	NSString *userPrivileges = nil;
 
-	if (userRank == IRCUserIRCopByModeRank) {
+	if (userRank == IRCUserRankIRCopByMode) {
 		userPrivileges = TXTLS(@"TVCMainWindow[i8t-vb]");
-	} else if (userRank == IRCUserChannelOwnerRank) {
+	} else if (userRank == IRCUserRankChannelOwner) {
 		userPrivileges = TXTLS(@"TVCMainWindow[p1z-sc]");
-	} else if (userRank == IRCUserSuperOperatorRank) {
+	} else if (userRank == IRCUserRankSuperOperator) {
 		userPrivileges = TXTLS(@"TVCMainWindow[som-zo]");
-	} else if (userRank == IRCUserNormalOperatorRank) {
+	} else if (userRank == IRCUserRankNonermalOperator) {
 		userPrivileges = TXTLS(@"TVCMainWindow[0kn-s5]");
-	} else if (userRank == IRCUserHalfOperatorRank) {
+	} else if (userRank == IRCUserRankHalfOperator) {
 		userPrivileges = TXTLS(@"TVCMainWindow[0nn-te]");
-	} else if (userRank == IRCUserVoicedRank) {
+	} else if (userRank == IRCUserRankVoiced) {
 		userPrivileges = TXTLS(@"TVCMainWindow[ya1-sk]");
 	} else {
 		userPrivileges = TXTLS(@"TVCMainWindow[tjj-z2]");

@@ -209,17 +209,17 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (BOOL)isChannel
 {
-	return (self.config.type == IRCChannelChannelType);
+	return (self.config.type == IRCChannelTypeChannel);
 }
 
 - (BOOL)isPrivateMessage
 {
-	return (self.config.type == IRCChannelPrivateMessageType);
+	return (self.config.type == IRCChannelTypePrivateMessage);
 }
 
 - (BOOL)isUtility
 {
-	return (self.config.type == IRCChannelUtilityType);
+	return (self.config.type == IRCChannelTypeUtility);
 }
 
 - (BOOL)isPrivateMessageForZNCUser
@@ -241,15 +241,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (NSString *)channelTypeString
 {
 	switch (self.config.type) {
-		case IRCChannelChannelType:
+		case IRCChannelTypeChannel:
 		{
 			return @"channel";
 		}
-		case IRCChannelPrivateMessageType:
+		case IRCChannelTypePrivateMessage:
 		{
 			return @"query";
 		}
-		case IRCChannelUtilityType:
+		case IRCChannelTypeUtility:
 		{
 			return @"utility";
 		}
@@ -738,7 +738,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)addMember:(IRCChannelUser *)member
 {
-	/* checkForDuplicates defaults to NO because to avoid extra work */
+	/* checkForDuplicates defaults to NO to avoid extra work */
 
 	[self addMember:member checkForDuplicates:NO];
 }

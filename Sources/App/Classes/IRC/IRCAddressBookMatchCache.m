@@ -89,16 +89,16 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	IRCAddressBookEntry *match = [self findAddressBookEntryForHostmask:hostmask];
 	
-	if (match && match.entryType == IRCAddressBookIgnoreEntryType) {
+	if (match && match.entryType == IRCAddressBookEntryTypeIgnore) {
 		return @[match];
 	}
 
-	if (match && match.entryType == IRCAddressBookMixedEntryType) {
+	if (match && match.entryType == IRCAddressBookEntryTypeMixed) {
 		NSArray *parentEntries = match.parentEntries;
 		
 		return
 		[parentEntries filteredArrayUsingPredicate:
-		 [NSPredicate predicateWithFormat:@"entryType == %d", IRCAddressBookIgnoreEntryType]];
+		 [NSPredicate predicateWithFormat:@"entryType == %d", IRCAddressBookEntryTypeIgnore]];
 	}
 	
 	return @[];
@@ -153,7 +153,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (matchedEntries) {
 		IRCAddressBookEntryMutable *mixedEntry = [IRCAddressBookEntryMutable new];
 		
-		mixedEntry.entryType = IRCAddressBookMixedEntryType;
+		mixedEntry.entryType = IRCAddressBookEntryTypeMixed;
 		
 		mixedEntry.parentEntries = matchedEntries;
 

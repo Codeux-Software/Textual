@@ -43,26 +43,26 @@ NS_ASSUME_NONNULL_BEGIN
 @class IRCClient, TDCFileTransferDialogTransferController, TVCBasicTableView;
 
 typedef NS_ENUM(NSUInteger, TDCFileTransferDialogTransferStatus) {
-	TDCFileTransferDialogTransferCompleteStatus,
-	TDCFileTransferDialogTransferConnectingStatus,
-	TDCFileTransferDialogTransferFatalErrorStatus,
-	TDCFileTransferDialogTransferInitializingStatus,
-	TDCFileTransferDialogTransferIsListeningAsReceiverStatus,
-	TDCFileTransferDialogTransferIsListeningAsSenderStatus,
-	TDCFileTransferDialogTransferMappingListeningPortStatus,
-	TDCFileTransferDialogTransferReceivingStatus,
-	TDCFileTransferDialogTransferRecoverableErrorStatus,
-	TDCFileTransferDialogTransferSendingStatus,
-	TDCFileTransferDialogTransferStoppedStatus,
-	TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus,
-	TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus,
-	TDCFileTransferDialogTransferWaitingForResumeAcceptStatus
+	TDCFileTransferDialogTransferStatusComplete,
+	TDCFileTransferDialogTransferStatusConnecting,
+	TDCFileTransferDialogTransferStatusFatalError,
+	TDCFileTransferDialogTransferStatusInitializing,
+	TDCFileTransferDialogTransferStatusIsListeningAsReceiver,
+	TDCFileTransferDialogTransferStatusIsListeningAsSender,
+	TDCFileTransferDialogTransferStatusMappingListeningPort,
+	TDCFileTransferDialogTransferStatusReceiving,
+	TDCFileTransferDialogTransferStatusRecoverableError,
+	TDCFileTransferDialogTransferStatusSending,
+	TDCFileTransferDialogTransferStatusStopped,
+	TDCFileTransferDialogTransferStatusWaitingForLocalIPAddress,
+	TDCFileTransferDialogTransferStatusWaitingForReceiverToAccept,
+	TDCFileTransferDialogTransferStatusWaitingForResumeAccept
 };
 
-typedef NS_ENUM(NSUInteger, TDCFileTransferDialogNavigationSelectedTab) {
-	TDCFileTransferDialogNavigationAllSelectedTab			= 0,
-	TDCFileTransferDialogNavigationSendingSelectedTab		= 1,
-	TDCFileTransferDialogNavigationReceivingSelectedTab		= 2
+typedef NS_ENUM(NSUInteger, TDCFileTransferDialogSelection) {
+	TDCFileTransferDialogSelectionAll			= 0,
+	TDCFileTransferDialogSelectionSending		= 1,
+	TDCFileTransferDialogSelectionReceiving		= 2
 };
 
 @class TDCFileTransferDialogTransferController;

@@ -100,7 +100,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeThemeNameNotification = @"TPCPr
 
 	[TPCPreferences setThemeName:remoteValue]; // Will reset the BOOL
 
-	[TPCPreferences performReloadAction:TPCPreferencesReloadStyleAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionStyle];
 
 	[RZNotificationCenter() postNotificationName:TPCPreferencesCloudSyncDidChangeThemeNameNotification object:nil];
 }
@@ -127,7 +127,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeThemeNameNotification = @"TPCPr
 
 	[TPCPreferences setThemeChannelViewFontName:remoteValue]; // Will remove the BOOL
 
-	[TPCPreferences performReloadAction:TPCPreferencesReloadStyleAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionStyle];
 
 	[RZNotificationCenter() postNotificationName:TPCPreferencesCloudSyncDidChangeThemeFontNotification object:nil];
 }

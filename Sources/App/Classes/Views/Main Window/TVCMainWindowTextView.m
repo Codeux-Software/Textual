@@ -302,8 +302,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	TVCMainWindowTextViewFontSize preferredFontSize = self.userInterfaceObjects.textViewPreferredFontSize;
 
-	if (preferredFontSize == TVCMainWindowTextViewFontNormalSize ||
-		preferredFontSize == TVCMainWindowTextViewFontLargeSize)
+	if (preferredFontSize == TVCMainWindowTextViewFontSizeNormal ||
+		preferredFontSize == TVCMainWindowTextViewFontSizeLarge)
 	{
 		selectedRect.origin.y -= 1;
 	}

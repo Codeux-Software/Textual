@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class THOPluginOutputSuppressionRule;
 
-TEXTUAL_EXTERN NSString * const THOPluginManagerFinishedLoadingPluginsNotification;
+TEXTUAL_EXTERN NSNotificationName const THOPluginManagerFinishedLoadingPluginsNotification;
 
 @interface THOPluginManager : NSObject
 - (void)loadPlugins;
@@ -62,7 +62,7 @@ TEXTUAL_EXTERN NSString * const THOPluginManagerFinishedLoadingPluginsNotificati
 @property (readonly, copy) NSArray<THOPluginOutputSuppressionRule *> *pluginOutputSuppressionRules;
 
 /* Returns YES if at least one loaded plugin supports the feature */
-- (BOOL)supportsFeature:(THOPluginItemSupportedFeatures)feature;
+- (BOOL)supportsFeature:(THOPluginItemSupportedFeature)feature;
 
 - (void)findHandlerForOutgoingCommand:(NSString *)command
 								 path:(NSString * _Nullable * _Nullable)path

@@ -266,7 +266,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 	}
 
 #define _isAutoConnecting		(afterWakeUp == NO && u.config.autoConnect)
-#define _isWakingFromSleep		(afterWakeUp	   && u.config.autoSleepModeDisconnect && u.disconnectType == IRCClientDisconnectComputerSleepMode)
+#define _isWakingFromSleep		(afterWakeUp	   && u.config.autoSleepModeDisconnect && u.disconnectType == IRCClientDisconnectModeComputerSleep)
 
 	for (IRCClient *u in self.clientList) {
 		if (_isWakingFromSleep == NO && _isAutoConnecting == NO) {
@@ -293,7 +293,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 			continue;
 		}
 
-		u.disconnectType = IRCClientDisconnectComputerSleepMode;
+		u.disconnectType = IRCClientDisconnectModeComputerSleep;
 
 		[u quit];
 	}
@@ -601,15 +601,15 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 
 - (IRCChannel *)createPrivateMessage:(NSString *)nickname onClient:(IRCClient *)client
 {
-	return [self createPrivateMessage:nickname onClient:client asType:IRCChannelPrivateMessageType];
+	return [self createPrivateMessage:nickname onClient:client asType:IRCChannelTypePrivateMessage];
 }
 
 - (IRCChannel *)createPrivateMessage:(NSString *)nickname onClient:(IRCClient *)client asType:(IRCChannelType)type
 {
 	NSParameterAssert(nickname != nil);
 	NSParameterAssert(client != nil);
-	NSParameterAssert(type == IRCChannelPrivateMessageType ||
-					  type == IRCChannelUtilityType);
+	NSParameterAssert(type == IRCChannelTypePrivateMessage ||
+					  type == IRCChannelTypeUtility);
 
 	IRCChannelConfigMutable *config = [IRCChannelConfigMutable new];
 

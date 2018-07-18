@@ -511,7 +511,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[[TVCContentNavigationOutlineViewItem alloc] initWithLabel:TXTLS(_label_) identifier:0 view:nil firstResponder:nil children:(_children_)]
 
 #define _childItem(_label_, _identifier_) 	\
-	[[TVCContentNavigationOutlineViewItem alloc] initWithLabel:TXTLS(_label_) identifier:TDCServerPropertiesSheet ##_identifier_## Selection view:self.contentView ##_identifier_ firstResponder:nil]
+	[[TVCContentNavigationOutlineViewItem alloc] initWithLabel:TXTLS(_label_) identifier:TDCServerPropertiesSheetSelection ##_identifier_ view:self.contentView ##_identifier_ firstResponder:nil]
 
 	NSArray *generalSectionChildren = @[
 		_childItem(@"TDCServerPropertiesSheet[8zc-6y]", AddressBook),
@@ -633,17 +633,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)start
 {
-	[self startWithSelection:TDCServerPropertiesSheetDefaultSelection context:nil];
+	[self startWithSelection:TDCServerPropertiesSheetSelectionDefault context:nil];
 }
 
-- (void)startWithSelection:(TDCServerPropertiesSheetNavigationSelection)selection context:(nullable id)context
+- (void)startWithSelection:(TDCServerPropertiesSheetSelection)selection context:(nullable id)context
 {
 	[self startSheet];
 
 	[self navigateToSelection:selection];
 
 	switch (selection) {
-		case TDCServerPropertiesSheetNewIgnoreEntrySelection:
+		case TDCServerPropertiesSheetSelectionNewIgnoreEntry:
 		{
 			if ([context isKindOfClass:[NSString class]]) {
 				[self addIgnoreAddressBookEntryWithHostmask:context];
@@ -660,12 +660,12 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (void)navigateToSelection:(TDCServerPropertiesSheetNavigationSelection)selection
+- (void)navigateToSelection:(TDCServerPropertiesSheetSelection)selection
 {
-	if (selection == TDCServerPropertiesSheetDefaultSelection) {
-		selection = TDCServerPropertiesSheetGeneralSelection;
-	} else if (selection == TDCServerPropertiesSheetNewIgnoreEntrySelection) {
-		selection = TDCServerPropertiesSheetAddressBookSelection;
+	if (selection == TDCServerPropertiesSheetSelectionDefault) {
+		selection = TDCServerPropertiesSheetSelectionGeneral;
+	} else if (selection == TDCServerPropertiesSheetSelectionNewIgnoreEntry) {
+		selection = TDCServerPropertiesSheetSelectionAddressBook;
 	}
 
 	[self.navigationOutlineView navigateToItemWithIdentifier:selection];
@@ -719,7 +719,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)okOrError
 {
-	TDCServerPropertiesSheetNavigationSelection selection = self.navigationOutlineView.selectedItem.identifier;
+	TDCServerPropertiesSheetSelection selection = self.navigationOutlineView.selectedItem.identifier;
 
 	if ([self okOrErrorForSelection:selection] == NO) {
 		return NO;
@@ -731,10 +731,10 @@ NS_ASSUME_NONNULL_BEGIN
 	 view, remove that from array, then enumerate the rest. */
 	NSMutableArray *remainingSelections =
 	[@[
-	   @(TDCServerPropertiesSheetGeneralSelection),
-	   @(TDCServerPropertiesSheetIdentitySelection),
-	   @(TDCServerPropertiesSheetDisconnectMessagesSelection),
-	   @(TDCServerPropertiesSheetProxyServerSelection),
+	   @(TDCServerPropertiesSheetSelectionGeneral),
+	   @(TDCServerPropertiesSheetSelectionIdentity),
+	   @(TDCServerPropertiesSheetSelectionDisconnectMessages),
+	   @(TDCServerPropertiesSheetSelectionProxyServer),
 	   ] mutableCopy];
 
 	[remainingSelections removeObject:@(selection)];
@@ -748,10 +748,10 @@ NS_ASSUME_NONNULL_BEGIN
 	return YES;
 }
 
-- (BOOL)okOrErrorForSelection:(TDCServerPropertiesSheetNavigationSelection)selection
+- (BOOL)okOrErrorForSelection:(TDCServerPropertiesSheetSelection)selection
 {
 	switch (selection) {
-		case TDCServerPropertiesSheetGeneralSelection:
+		case TDCServerPropertiesSheetSelectionGeneral:
 		{
 			if ([self okOrErrorForTextField:self.connectionNameTextField inSelection:selection] == NO) {
 				return NO;
@@ -764,7 +764,7 @@ NS_ASSUME_NONNULL_BEGIN
 			break;
 		}
 
-		case TDCServerPropertiesSheetIdentitySelection:
+		case TDCServerPropertiesSheetSelectionIdentity:
 		{
 			if ([self okOrErrorForTextField:self.nicknameTextField inSelection:selection] == NO) {
 				return NO;
@@ -781,7 +781,7 @@ NS_ASSUME_NONNULL_BEGIN
 			break;
 		}
 
-		case TDCServerPropertiesSheetDisconnectMessagesSelection:
+		case TDCServerPropertiesSheetSelectionDisconnectMessages:
 		{
 			if ([self okOrErrorForTextField:self.normalLeavingCommentTextField inSelection:selection] == NO) {
 				return NO;
@@ -792,7 +792,7 @@ NS_ASSUME_NONNULL_BEGIN
 			break;
 		}
 
-		case TDCServerPropertiesSheetProxyServerSelection:
+		case TDCServerPropertiesSheetSelectionProxyServer:
 		{
 			if ([self okOrErrorForTextField:self.proxyAddressTextField inSelection:selection] == NO) {
 				return NO;
@@ -811,7 +811,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return YES;
 }
 
-- (BOOL)okOrErrorForComboBox:(TVCValidatedComboBox *)comboBox inSelection:(TDCServerPropertiesSheetNavigationSelection)selection
+- (BOOL)okOrErrorForComboBox:(TVCValidatedComboBox *)comboBox inSelection:(TDCServerPropertiesSheetSelection)selection
 {
 	if (comboBox.valueIsValid) {
 		return YES;
@@ -826,7 +826,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return NO;
 }
 
-- (BOOL)okOrErrorForTextField:(TVCValidatedTextField *)textField inSelection:(TDCServerPropertiesSheetNavigationSelection)selection
+- (BOOL)okOrErrorForTextField:(TVCValidatedTextField *)textField inSelection:(TDCServerPropertiesSheetSelection)selection
 {
 	if (textField.valueIsValid) {
 		return YES;
@@ -881,7 +881,7 @@ NS_ASSUME_NONNULL_BEGIN
 				   alternateButton:TXTLS(@"Prompts[99q-gg]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
-					   if (buttonClicked != TDCAlertResponseDefaultButton) {
+					   if (buttonClicked != TDCAlertResponseDefault) {
 						   return;
 					   }
 					   
@@ -1484,7 +1484,7 @@ NS_ASSUME_NONNULL_BEGIN
 					   alternateButton:TXTLS(@"Prompts[99q-gg]")
 						   otherButton:nil
 					   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
-						   if (buttonClicked == TDCAlertResponseAlternateButton) {
+						   if (buttonClicked == TDCAlertResponseAlternate) {
 							   self.requestRemovalFromCloudOnClose = NO;
 						   } else {
 							   self.requestRemovalFromCloudOnClose = YES;
@@ -2021,7 +2021,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 		sheet = [[TDCAddressBookSheet alloc] initWithConfig:config];
 	} else {
-		sheet = [[TDCAddressBookSheet alloc] initWithEntryType:IRCAddressBookIgnoreEntryType];
+		sheet = [[TDCAddressBookSheet alloc] initWithEntryType:IRCAddressBookEntryTypeIgnore];
 	}
 
 	sheet.delegate = self;
@@ -2036,7 +2036,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 - (void)addUserTrackingAddressBookEntry
 {
 	TDCAddressBookSheet *sheet =
-	[[TDCAddressBookSheet alloc] initWithEntryType:IRCAddressBookUserTrackingEntryType];
+	[[TDCAddressBookSheet alloc] initWithEntryType:IRCAddressBookEntryTypeUserTracking];
 
 	sheet.delegate = self;
 
@@ -2208,7 +2208,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		}
 		else if ([columnId isEqualToString:@"type"])
 		{
-			if (config.entryType == IRCAddressBookIgnoreEntryType) {
+			if (config.entryType == IRCAddressBookEntryTypeIgnore) {
 				return TXTLS(@"TDCServerPropertiesSheet[f7o-x4]");
 			} else {
 				return TXTLS(@"TDCServerPropertiesSheet[b0g-0x]");

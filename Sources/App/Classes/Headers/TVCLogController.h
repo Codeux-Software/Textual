@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class IRCClient, IRCChannel;
 @class TVCLogLine, TVCLogView, TVCMainWindow;
 
-TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
+TEXTUAL_EXTERN NSNotificationName const TVCLogControllerViewFinishedLoadingNotification;
 
 @interface TVCLogController : NSObject
 @property (readonly) TVCLogView *backingView;

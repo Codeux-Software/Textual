@@ -216,42 +216,42 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)textIsBold
 {
-	return [self propertyIsSet:IRCTextFormatterBoldEffect];
+	return [self propertyIsSet:IRCTextFormatterEffectBold];
 }
 
 - (BOOL)textIsItalicized
 {
-	return [self propertyIsSet:IRCTextFormatterItalicEffect];
+	return [self propertyIsSet:IRCTextFormatterEffectItalic];
 }
 
 - (BOOL)textIsMonospace
 {
-	return [self propertyIsSet:IRCTextFormatterMonospaceEffect];
+	return [self propertyIsSet:IRCTextFormatterEffectMonospace];
 }
 
 - (BOOL)textIsStruckthrough
 {
-	return [self propertyIsSet:IRCTextFormatterStrikethroughEffect];
+	return [self propertyIsSet:IRCTextFormatterEffectStrikethrough];
 }
 
 - (BOOL)textIsUnderlined
 {
-	return [self propertyIsSet:IRCTextFormatterUnderlineEffect];
+	return [self propertyIsSet:IRCTextFormatterEffectUnderline];
 }
 
 - (BOOL)textHasForegroundColor
 {
-	return [self propertyIsSet:IRCTextFormatterForegroundColorEffect];
+	return [self propertyIsSet:IRCTextFormatterEffectForegroundColor];
 }
 
 - (BOOL)textHasBackgroundColor
 {
-	return [self propertyIsSet:IRCTextFormatterBackgroundColorEffect];
+	return [self propertyIsSet:IRCTextFormatterEffectBackgroundColor];
 }
 
 - (BOOL)textHasSpoiler
 {
-	return [self propertyIsSet:IRCTextFormatterSpoilerEffect];
+	return [self propertyIsSet:IRCTextFormatterEffectSpoiler];
 }
 
 #pragma mark -
@@ -270,13 +270,13 @@ NS_ASSUME_NONNULL_BEGIN
 	[self applyAttributedStringToTextBox:stringMutableCopy inRange:limitRange];
 
 	if (value == nil &&
-		(formatterEffect == IRCTextFormatterForegroundColorEffect ||
-		 formatterEffect == IRCTextFormatterSpoilerEffect))
+		(formatterEffect == IRCTextFormatterEffectForegroundColor ||
+		 formatterEffect == IRCTextFormatterEffectSpoiler))
 	{
 		[self.textField resetFontColorInRange:limitRange];
 	}
 
-	if (formatterEffect == IRCTextFormatterMonospaceEffect && value == nil) {
+	if (formatterEffect == IRCTextFormatterEffectMonospace && value == nil) {
 		[self.textField resetFontInRange:limitRange];
 	}
 }
@@ -326,35 +326,35 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterBoldEffect withValue:@(YES) inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectBold withValue:@(YES) inRange:selectedTextRange];
 }
 
 - (void)insertItalicCharIntoTextBox:(id)sender
 {
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterItalicEffect withValue:@(YES) inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectItalic withValue:@(YES) inRange:selectedTextRange];
 }
 
 - (void)insertMonospaceCharIntoTextBox:(id)sender
 {
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterMonospaceEffect withValue:@(YES) inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectMonospace withValue:@(YES) inRange:selectedTextRange];
 }
 
 - (void)insertStrikethroughCharIntoTextBox:(id)sender
 {
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterStrikethroughEffect withValue:@(YES) inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectStrikethrough withValue:@(YES) inRange:selectedTextRange];
 }
 
 - (void)insertUnderlineCharIntoTextBox:(id)sender
 {
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterUnderlineEffect withValue:@(YES) inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectUnderline withValue:@(YES) inRange:selectedTextRange];
 }
 
 - (void)insertForegroundColorCharIntoTextBox:(id)sender
@@ -378,7 +378,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterForegroundColorEffect withValue:@([sender tag]) inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectForegroundColor withValue:@([sender tag]) inRange:selectedTextRange];
 }
 
 - (void)insertBackgroundColorCharIntoTextBox:(id)sender
@@ -403,7 +403,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterBackgroundColorEffect withValue:@([sender tag]) inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectBackgroundColor withValue:@([sender tag]) inRange:selectedTextRange];
 }
 
 - (void)insertRainbowColorCharInfoTextBox:(id)sender asForegroundColor:(BOOL)asForegroundColor
@@ -432,9 +432,9 @@ NS_ASSUME_NONNULL_BEGIN
 		NSRange currentCharacterRange = NSMakeRange(charCountIndex, 1);
 
 		if (asForegroundColor) {
-			[self applyEffect:IRCTextFormatterForegroundColorEffect withValue:@(currentColorCode) inRange:currentCharacterRange toMutableString:mutableStringCopy];
+			[self applyEffect:IRCTextFormatterEffectForegroundColor withValue:@(currentColorCode) inRange:currentCharacterRange toMutableString:mutableStringCopy];
 		} else {
-			[self applyEffect:IRCTextFormatterBackgroundColorEffect withValue:@(currentColorCode) inRange:currentCharacterRange toMutableString:mutableStringCopy];
+			[self applyEffect:IRCTextFormatterEffectBackgroundColor withValue:@(currentColorCode) inRange:currentCharacterRange toMutableString:mutableStringCopy];
 		}
 
 		rainbowArrayIndex += 1;
@@ -449,24 +449,24 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterForegroundColorEffect withValue:sender.color inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectForegroundColor withValue:sender.color inRange:selectedTextRange];
 }
 
 - (void)backgroundColorPanelColorChanged:(NSColorPanel *)sender
 {
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterBackgroundColorEffect withValue:sender.color inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectBackgroundColor withValue:sender.color inRange:selectedTextRange];
 }
 
 - (void)insertSpoilerCharIntoTextBox:(id)sender
 {
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterSpoilerEffect withValue:@(YES) inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectSpoiler withValue:@(YES) inRange:selectedTextRange];
 
-	[self applyEffectToTextBox:IRCTextFormatterForegroundColorEffect withValue:@(14) inRange:selectedTextRange];
-	[self applyEffectToTextBox:IRCTextFormatterBackgroundColorEffect withValue:@(14) inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectForegroundColor withValue:@(14) inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectBackgroundColor withValue:@(14) inRange:selectedTextRange];
 }
 
 #pragma mark -
@@ -476,59 +476,59 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterBoldEffect withValue:nil inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectBold withValue:nil inRange:selectedTextRange];
 }
 
 - (void)removeItalicCharFromTextBox:(id)sender
 {
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterItalicEffect withValue:nil inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectItalic withValue:nil inRange:selectedTextRange];
 }
 
 - (void)removeMonospaceCharFromTextBox:(id)sender
 {
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterMonospaceEffect withValue:nil inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectMonospace withValue:nil inRange:selectedTextRange];
 }
 
 - (void)removeStrikethroughCharFromTextBox:(id)sender
 {
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterStrikethroughEffect withValue:nil inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectStrikethrough withValue:nil inRange:selectedTextRange];
 }
 
 - (void)removeUnderlineCharFromTextBox:(id)sender
 {
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterUnderlineEffect withValue:nil inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectUnderline withValue:nil inRange:selectedTextRange];
 }
 
 - (void)removeForegroundColorCharFromTextBox:(id)sender
 {
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterForegroundColorEffect withValue:nil inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectForegroundColor withValue:nil inRange:selectedTextRange];
 }
 
 - (void)removeBackgroundColorCharFromTextBox:(id)sender
 {
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterBackgroundColorEffect withValue:nil inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectBackgroundColor withValue:nil inRange:selectedTextRange];
 }
 
 - (void)removeSpoilerCharFromTextBox:(id)sender
 {
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterForegroundColorEffect withValue:nil inRange:selectedTextRange];
-	[self applyEffectToTextBox:IRCTextFormatterBackgroundColorEffect withValue:nil inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectForegroundColor withValue:nil inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectBackgroundColor withValue:nil inRange:selectedTextRange];
 
-	[self applyEffectToTextBox:IRCTextFormatterSpoilerEffect withValue:nil inRange:selectedTextRange];
+	[self applyEffectToTextBox:IRCTextFormatterEffectSpoiler withValue:nil inRange:selectedTextRange];
 }
 
 @end

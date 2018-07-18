@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface THOPluginItem ()
 @property (nonatomic, strong, readwrite, nullable) NSBundle *bundle;
 @property (nonatomic, strong, readwrite, nullable) id primaryClass;
-@property (nonatomic, assign, readwrite) THOPluginItemSupportedFeatures supportedFeatures;
+@property (nonatomic, assign, readwrite) THOPluginItemSupportedFeature supportedFeatures;
 @property (nonatomic, copy, readwrite, nullable) NSArray<NSString *> *supportedUserInputCommands;
 @property (nonatomic, copy, readwrite, nullable) NSArray<NSString *> *supportedServerInputCommands;
 @property (nonatomic, copy, readwrite, nullable) NSArray<THOPluginOutputSuppressionRule *> *outputSuppressionRules;
@@ -74,7 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Build list of supported features */
-	THOPluginItemSupportedFeatures supportedFeatures = 0;
+	THOPluginItemSupportedFeature supportedFeatures = 0;
 
 	/* Process server output suppression rules */
 	if ([primaryClass respondsToSelector:@selector(pluginOutputSuppressionRules)])
@@ -94,7 +94,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			self.outputSuppressionRules = sharedRules;
 
-			supportedFeatures |= THOPluginItemSupportsOutputSuppressionRules;
+			supportedFeatures |= THOPluginItemSupportedFeatureOutputSuppressionRules;
 		}
 	}
 
@@ -109,7 +109,7 @@ NS_ASSUME_NONNULL_BEGIN
 			self.pluginPreferencesPaneMenuItemTitle = itemTitle;
 			self.pluginPreferencesPaneView = itemView;
 
-			supportedFeatures |= THOPluginItemSupportsPreferencePane;
+			supportedFeatures |= THOPluginItemSupportedFeaturePreferencePane;
 		}
 	}
 
@@ -132,7 +132,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			self.supportedUserInputCommands = supportedCommands;
 
-			supportedFeatures |= THOPluginItemSupportsSubscribedUserInputCommands;
+			supportedFeatures |= THOPluginItemSupportedFeatureSubscribedUserInputCommands;
 		}
 	}
 
@@ -155,7 +155,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			self.supportedServerInputCommands = supportedCommands;
 
-			supportedFeatures |= THOPluginItemSupportsSubscribedServerInputCommands;
+			supportedFeatures |= THOPluginItemSupportedFeatureSubscribedServerInputCommands;
 		}
 	}
 
@@ -164,32 +164,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Renderer events */
 	if ([primaryClass respondsToSelector:@selector(didPostNewMessage:forViewController:)]) {
-		supportedFeatures |= THOPluginItemSupportsNewMessagePostedEvent;
+		supportedFeatures |= THOPluginItemSupportedFeatureNewMessagePostedEvent;
 	}
 
 	if ([primaryClass respondsToSelector:@selector(willRenderMessage:forViewController:lineType:memberType:)]) {
-		supportedFeatures |= THOPluginItemSupportsWillRenderMessageEvent;
+		supportedFeatures |= THOPluginItemSupportedFeatureWillRenderMessageEvent;
 	}
 
 	if ([primaryClass respondsToSelector:@selector(didReceiveJavaScriptPayload:fromViewController:)]) {
-		supportedFeatures |= THOPluginItemSupportsWebViewJavaScriptPayloads;
+		supportedFeatures |= THOPluginItemSupportedFeatureWebViewJavaScriptPayloads;
 	}
 
 	/* Data interception */
 	if ([primaryClass respondsToSelector:@selector(interceptServerInput:for:)]) {
-		supportedFeatures |= THOPluginItemSupportsServerInputDataInterception;
+		supportedFeatures |= THOPluginItemSupportedFeatureServerInputDataInterception;
 	}
 
 	if ([primaryClass respondsToSelector:@selector(interceptUserInput:command:)]) {
-		supportedFeatures |= THOPluginItemSupportsUserInputDataInterception;
+		supportedFeatures |= THOPluginItemSupportedFeatureUserInputDataInterception;
 	}
 
 	if ([primaryClass respondsToSelector:@selector(receivedText:authoredBy:destinedFor:asLineType:onClient:receivedAt:wasEncrypted:)]) {
-		supportedFeatures |= THOPluginItemSupportsDidReceivePlainTextMessageEvent;
+		supportedFeatures |= THOPluginItemSupportedFeatureDidReceivePlainTextMessageEvent;
 	}
 
 	if ([primaryClass respondsToSelector:@selector(receivedCommand:withText:authoredBy:destinedFor:onClient:receivedAt:referenceMessage:)]) {
-		supportedFeatures |= THOPluginItemSupportsDidReceiveCommandEvent;
+		supportedFeatures |= THOPluginItemSupportedFeatureDidReceiveCommandEvent;
 	}
 
 	/* Deprecated and removed */
@@ -228,7 +228,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.bundle = nil;
 }
 
-- (BOOL)supportsFeature:(THOPluginItemSupportedFeatures)feature
+- (BOOL)supportsFeature:(THOPluginItemSupportedFeature)feature
 {
 	return ((self->_supportedFeatures & feature) == feature);
 }

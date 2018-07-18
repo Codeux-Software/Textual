@@ -99,11 +99,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 				IRCUserRank myRanks = myself.ranks;
 
-				BOOL IHaveModeQ = ((myRanks & IRCUserChannelOwnerRank) == IRCUserChannelOwnerRank);
-				BOOL IHaveModeA = ((myRanks & IRCUserSuperOperatorRank) == IRCUserSuperOperatorRank);
-				BOOL IHaveModeO = ((myRanks & IRCUserNormalOperatorRank) == IRCUserNormalOperatorRank);
-				BOOL IHaveModeH = ((myRanks & IRCUserHalfOperatorRank) == IRCUserHalfOperatorRank);
-				BOOL IHaveModeV = ((myRanks & IRCUserVoicedRank) == IRCUserVoicedRank);
+				BOOL IHaveModeQ = ((myRanks & IRCUserRankChannelOwner) == IRCUserRankChannelOwner);
+				BOOL IHaveModeA = ((myRanks & IRCUserRankSuperOperator) == IRCUserRankSuperOperator);
+				BOOL IHaveModeO = ((myRanks & IRCUserRankNonermalOperator) == IRCUserRankNonermalOperator);
+				BOOL IHaveModeH = ((myRanks & IRCUserRankHalfOperator) == IRCUserRankHalfOperator);
+				BOOL IHaveModeV = ((myRanks & IRCUserRankVoiced) == IRCUserRankVoiced);
 
 				if (IHaveModeQ || IHaveModeA || IHaveModeO) {
 					channelOpCount++;
@@ -122,10 +122,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 					IRCUserRank userRanks = member.ranks;
 
-					BOOL UserHasModeQ = ((userRanks & IRCUserChannelOwnerRank) == IRCUserChannelOwnerRank);
-					BOOL UserHasModeA = ((userRanks & IRCUserSuperOperatorRank) == IRCUserSuperOperatorRank);
-					BOOL UserHasModeO = ((userRanks & IRCUserNormalOperatorRank) == IRCUserNormalOperatorRank);
-					BOOL UserHasModeH = ((userRanks & IRCUserHalfOperatorRank) == IRCUserHalfOperatorRank);
+					BOOL UserHasModeQ = ((userRanks & IRCUserRankChannelOwner) == IRCUserRankChannelOwner);
+					BOOL UserHasModeA = ((userRanks & IRCUserRankSuperOperator) == IRCUserRankSuperOperator);
+					BOOL UserHasModeO = ((userRanks & IRCUserRankNonermalOperator) == IRCUserRankNonermalOperator);
+					BOOL UserHasModeH = ((userRanks & IRCUserRankHalfOperator) == IRCUserRankHalfOperator);
 
 					if (client.userIsIRCop && member.user.isIRCop == NO) {
 						addUser = YES;

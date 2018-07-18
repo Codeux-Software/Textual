@@ -392,7 +392,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	for (NSDictionary<NSString *, id> *e in channelListIn) {
 		IRCChannelConfig *c = [[IRCChannelConfig alloc] initWithDictionary:e];
 
-		if (c.type == IRCChannelPrivateMessageType) {
+		if (c.type == IRCChannelTypePrivateMessage) {
 			if (ignorePrivateMessages == NO) {
 				[channelListOut addObject:c];
 			}

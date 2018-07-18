@@ -65,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)memberSendDroppedFiles:(NSArray<NSString *> *)files row:(NSUInteger)row;
 - (void)memberSendDroppedFilesToSelectedChannel:(NSArray<NSString *> *)files; // Only works if -selectedChannel is a private message
 
-- (void)showServerPropertiesSheetForClient:(IRCClient *)client withSelection:(TDCServerPropertiesSheetNavigationSelection)selection context:(nullable id)context;
+- (void)showServerPropertiesSheetForClient:(IRCClient *)client withSelection:(TDCServerPropertiesSheetSelection)selection context:(nullable id)context;
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 - (void)manageLicense:(id)sender activateLicenseKeyWithURL:(NSURL *)licenseKeyURL;

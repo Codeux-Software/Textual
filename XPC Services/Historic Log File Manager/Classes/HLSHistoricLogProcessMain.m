@@ -39,8 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 {
-	HLSHistoricLogReturnEntriesBeforeUniqueIdentifierType,
-	HLSHistoricLogReturnEntriesAfterUniqueIdentifierType
+	HLSHistoricLogReturnEntriesUniqueIdentifierTypeBefore,
+	HLSHistoricLogReturnEntriesUniqueIdentifierTypeAfter
 };
 
 @interface HLSHistoricLogProcessMain ()
@@ -238,7 +238,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 {
 	return [self fetchEntriesForView:viewId
 				withUniqueIdentifier:uniqueId
-						   fetchType:HLSHistoricLogReturnEntriesBeforeUniqueIdentifierType
+						   fetchType:HLSHistoricLogReturnEntriesUniqueIdentifierTypeBefore
 						  fetchLimit:fetchLimit
 						 limitToDate:limitToDate
 				 withCompletionBlock:completionBlock];
@@ -252,7 +252,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 {
 	return [self fetchEntriesForView:viewId
 				withUniqueIdentifier:uniqueId
-						   fetchType:HLSHistoricLogReturnEntriesAfterUniqueIdentifierType
+						   fetchType:HLSHistoricLogReturnEntriesUniqueIdentifierTypeAfter
 						  fetchLimit:fetchLimit
 						 limitToDate:limitToDate
 				 withCompletionBlock:completionBlock];
@@ -411,7 +411,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 		NSInteger highestEntryId = 0;
 
 		switch (fetchType) {
-			case HLSHistoricLogReturnEntriesBeforeUniqueIdentifierType:
+			case HLSHistoricLogReturnEntriesUniqueIdentifierTypeBefore:
 			{
 				/* 1 is subtracted so we can still return fetchLimit
 				 while accounting for the fact that firstEntryId is
@@ -422,7 +422,7 @@ typedef NS_ENUM(NSUInteger, HLSHistoricLogUniqueIdentifierFetchType)
 
 				break;
 			}
-			case HLSHistoricLogReturnEntriesAfterUniqueIdentifierType:
+			case HLSHistoricLogReturnEntriesUniqueIdentifierTypeAfter:
 			{
 				lowestEntryId = (firstEntryId + 1);
 

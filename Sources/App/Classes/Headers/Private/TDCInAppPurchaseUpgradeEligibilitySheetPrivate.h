@@ -42,10 +42,10 @@ NS_ASSUME_NONNULL_BEGIN
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 typedef NS_ENUM(NSUInteger, TLOInAppPurchaseUpgradeEligibility) {
 	TLOInAppPurchaseUpgradeEligibilityUnknown = LONG_MAX,
-	TLOInAppPurchaseUpgradeNotEligible = 0,
-	TLOInAppPurchaseUpgradeEligibleDiscount = 1,
-	TLOInAppPurchaseUpgradeEligibleFree = 3,
-	TLOInAppPurchaseUpgradeAlreadyUpgraded = 2,
+	TLOInAppPurchaseUpgradeEligibilityNot = 0,
+	TLOInAppPurchaseUpgradeEligibilityDiscount = 1,
+	TLOInAppPurchaseUpgradeEligibilityFree = 3,
+	TLOInAppPurchaseUpgradeEligibilityAlreadyUpgraded = 2,
 };
 
 @protocol TDCInAppPurchaseUpgradeEligibilitySheetDelegate;

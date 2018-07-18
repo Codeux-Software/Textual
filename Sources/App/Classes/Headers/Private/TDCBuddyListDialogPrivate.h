@@ -39,10 +39,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, TDCBuddyListDialogNavigationSelectedTab) {
-	TDCBuddyListDialogNavigationAllSelectedTab			= 0,
-	TDCBuddyListDialogNavigationOnlineSelectedTab		= 1,
-	TDCBuddyListDialogNavigationOfflineSelectedTab		= 2
+typedef NS_ENUM(NSUInteger, TDCBuddyListDialogNavigationSelection) {
+	TDCBuddyListDialogNavigationSelectionAll			= 0,
+	TDCBuddyListDialogNavigationSelectionOnline			= 1,
+	TDCBuddyListDialogNavigationSelectionOffline		= 2
 };
 
 @protocol TDCBuddyListDialogDelegate;

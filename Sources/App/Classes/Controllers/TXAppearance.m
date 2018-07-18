@@ -114,35 +114,35 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 + (nullable NSString *)appearanceNameForType:(TXAppearanceType)type
 {
 	switch (type) {
-		case TXAppearanceMavericksAquaLightType:
+		case TXAppearanceTypeMavericksAquaLight:
 		{
 			return @"MavericksLightAqua";
 		}
-		case TXAppearanceMavericksAquaDarkType:
+		case TXAppearanceTypeMavericksAquaDark:
 		{
 			return @"MavericksDarkAqua";
 		}
-		case TXAppearanceMavericksGraphiteLightType:
+		case TXAppearanceTypeMavericksGraphiteLight:
 		{
 			return @"MavericksLightGraphite";
 		}
-		case TXAppearanceMavericksGraphiteDarkType:
+		case TXAppearanceTypeMavericksGraphiteDark:
 		{
 			return @"MavericksDarkGraphite";
 		}
-		case TXAppearanceYosemiteLightType:
+		case TXAppearanceTypeYosemiteLight:
 		{
 			return @"YosemiteLight";
 		}
-		case TXAppearanceYosemiteDarkType:
+		case TXAppearanceTypeYosemiteDark:
 		{
 			return @"YosemiteDark";
 		}
-		case TXAppearanceMojaveLightType:
+		case TXAppearanceTypeMojaveLight:
 		{
 			return @"MojaveLight";
 		}
-		case TXAppearanceMojaveDarkType:
+		case TXAppearanceTypeMojaveDark:
 		{
 			return @"MojaveDark";
 		}
@@ -201,11 +201,11 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 	BOOL isAppearanceDark = NO;
 	BOOL isAppearanceModern = YES; // good default
 
-	TXPreferredAppearanceType preferredAppearance = [TPCPreferences appearance];
+	TXPreferredAppearance preferredAppearance = [TPCPreferences appearance];
 
 	/* Determine user's preference */
 	switch (preferredAppearance) {
-		case TXPreferredAppearanceInheritedType:
+		case TXPreferredAppearanceInherited:
 		{
 			if (onMojave)
 			{
@@ -217,7 +217,7 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 
 			break;
 		}
-		case TXPreferredAppearanceDarkType:
+		case TXPreferredAppearanceDark:
 		{
 			isAppearanceDark = YES;
 
@@ -235,9 +235,9 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 	if (onMojave)
 	{
 		if (isAppearanceDark) {
-			appearanceType = TXAppearanceMojaveDarkType;
+			appearanceType = TXAppearanceTypeMojaveDark;
 		} else {
-			appearanceType = TXAppearanceMojaveLightType;
+			appearanceType = TXAppearanceTypeMojaveLight;
 		} // isAppearanceDark
 
 		/* On Mojave, if the user doesn't select a specific appearance,
@@ -247,16 +247,16 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 		 visual effect views have correct inheritance as of Mojave
 		 which means they don't need to set the object on individual
 		 views, unlike earlier versions of macOS. */
-		if (preferredAppearance != TXPreferredAppearanceInheritedType) {
+		if (preferredAppearance != TXPreferredAppearanceInherited) {
 			appKitAppearanceTarget = TXAppKitAppearanceTargetWindow;
 		}
 	}
 	else if (onYosemite)
 	{
 		if (isAppearanceDark) {
-			appearanceType = TXAppearanceYosemiteDarkType;
+			appearanceType = TXAppearanceTypeYosemiteDark;
 		} else {
-			appearanceType = TXAppearanceYosemiteLightType;
+			appearanceType = TXAppearanceTypeYosemiteLight;
 		} // isAppearanceDark
 
 		/* On Yosemite through to High Sierra, we set the NSAppearance
@@ -270,15 +270,15 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 
 		if ([NSColor currentControlTint] == NSGraphiteControlTint) {
 			if (isAppearanceDark) {
-				appearanceType = TXAppearanceMavericksGraphiteDarkType;
+				appearanceType = TXAppearanceTypeMavericksGraphiteDark;
 			} else {
-				appearanceType = TXAppearanceMavericksGraphiteLightType;
+				appearanceType = TXAppearanceTypeMavericksGraphiteLight;
 			} // isAppearanceDark
 		} else {
 			if (isAppearanceDark) {
-				appearanceType = TXAppearanceMavericksAquaDarkType;
+				appearanceType = TXAppearanceTypeMavericksAquaDark;
 			} else {
-				appearanceType = TXAppearanceMavericksAquaLightType;
+				appearanceType = TXAppearanceTypeMavericksAquaLight;
 			} // isAppearanceDark
 		} // Graphite
 

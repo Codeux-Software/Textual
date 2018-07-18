@@ -268,10 +268,10 @@ ClassWithDesignatedInitializerInitMethod
 	/* Using some random value in place of mode if there is none
 	 is easier than creating a mutable array with four if statements. */
 	return @[
-		 /* ban */			 	(([supportInfo modeSymbolForList:IRCISupportInfoBanListType]) ?: @"not supported: b"),
-		 /* ban exception */	(([supportInfo modeSymbolForList:IRCISupportInfoBanExceptionListType]) ?: @"not supported: e"),
-		 /* invite exception */	(([supportInfo modeSymbolForList:IRCISupportInfoInviteExceptionListType]) ?: @"not supported: I"),
-		 /* quiet */			(([supportInfo modeSymbolForList:IRCISupportInfoQuietListType]) ?: @"not supported: q")
+		 /* ban */			 	(([supportInfo modeSymbolForList:IRCISupportInfoListTypeBan]) ?: @"not supported: b"),
+		 /* ban exception */	(([supportInfo modeSymbolForList:IRCISupportInfoListTypeBanException]) ?: @"not supported: e"),
+		 /* invite exception */	(([supportInfo modeSymbolForList:IRCISupportInfoListTypeInviteException]) ?: @"not supported: I"),
+		 /* quiet */			(([supportInfo modeSymbolForList:IRCISupportInfoListTypeQuiet]) ?: @"not supported: q")
 	];
 }
 

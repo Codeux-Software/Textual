@@ -107,13 +107,13 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSString *headerTitle = nil;
 
-	if (self.entryType == TDCChannelBanListSheetBanEntryType) {
+	if (self.entryType == TDCChannelBanListSheetEntryTypeBan) {
 		headerTitle = TXTLS(@"TDCChannelBanListSheet[rhc-ke]", self.channel.name);
-	} else if (self.entryType == TDCChannelBanListSheetBanExceptionEntryType) {
+	} else if (self.entryType == TDCChannelBanListSheetEntryTypeBanException) {
 		headerTitle = TXTLS(@"TDCChannelBanListSheet[gbi-wn]", self.channel.name);
-	} else if (self.entryType == TDCChannelBanListSheetInviteExceptionEntryType) {
+	} else if (self.entryType == TDCChannelBanListSheetEntryTypeInviteException) {
 		headerTitle = TXTLS(@"TDCChannelBanListSheet[ylc-6e]", self.channel.name);
-	} else if (self.entryType == TDCChannelBanListSheetQuietEntryType) {
+	} else if (self.entryType == TDCChannelBanListSheetEntryTypeQuiet) {
 		headerTitle = TXTLS(@"TDCChannelBanListSheet[g4r-t6]", self.channel.name);
 	}
 

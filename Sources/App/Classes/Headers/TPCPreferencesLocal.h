@@ -51,74 +51,73 @@ TEXTUAL_EXTERN NSString * const TPCPreferencesThemeFontNameMissingLocallyDefault
 TEXTUAL_EXTERN NSUInteger const TPCPreferencesDictionaryVersion;
 
 typedef NS_ENUM(NSUInteger, TXNicknameHighlightMatchType) {
-	TXNicknameHighlightPartialMatchType = 0,
-	TXNicknameHighlightExactMatchType,
-    TXNicknameHighlightRegularExpressionMatchType,
+	TXNicknameHighlightMatchTypePartial = 0,
+	TXNicknameHighlightMatchTypeExact,
+    TXNicknameHighlightMatchTypeRegularExpression,
 };
 
 typedef NS_ENUM(NSUInteger, TXTabKeyAction) {
-	TXTabKeyNicknameCompleteAction = 0,
-	TXTabKeyUnreadChannelAction,
-	TXTabKeyNoneTypeAction = 100,
+	TXTabKeyActionNicknameComplete = 0,
+	TXTabKeyActionUnreadChannel,
+	TXTabKeyActionNone = 100,
 };
 
 typedef NS_ENUM(NSUInteger, TXUserDoubleClickAction) {
-	TXUserDoubleClickWhoisAction = 100,
-	TXUserDoubleClickPrivateMessageAction = 200,
-	TXUserDoubleClickInsertTextFieldAction = 300,
+	TXUserDoubleClickActionWhois = 100,
+	TXUserDoubleClickActionPrivateMessage = 200,
+	TXUserDoubleClickActionInsertTextField = 300,
 };
 
-typedef NS_ENUM(NSUInteger, TXNoticeSendLocationType) {
-	TXNoticeSendServerConsoleType = 0,
-	TXNoticeSendSelectedChannelType = 1,
-	TXNoticeSendToQueryDestinationType = 2,
+typedef NS_ENUM(NSUInteger, TXNoticeSendLocation) {
+	TXNoticeSendLocationServerConsole = 0,
+	TXNoticeSendLocationSelectedChannel = 1,
+	TXNoticeSendLocationQuery = 2,
 };
 
 typedef NS_ENUM(NSUInteger, TXCommandWKeyAction) {
-	TXCommandWKeyCloseWindowAction = 0,
-	TXCommandWKeyPartChannelAction = 1,
-	TXCommandWKeyDisconnectAction = 2,
-	TXCommandWKeyTerminateAction = 3,
+	TXCommandWKeyActionCloseWindow = 0,
+	TXCommandWKeyActionPartChannel = 1,
+	TXCommandWKeyActionDisconnect = 2,
+	TXCommandWKeyActionTerminate = 3,
 };
 
 typedef NS_ENUM(NSUInteger, TXHostmaskBanFormat) {
-	TXHostmaskBanWHNINFormat  = 0, // With Hostmask, No Username/Nickname
-	TXHostmaskBanWHAINNFormat = 1, // With Hostmask and Username, No Nickname
-	TXHostmaskBanWHANNIFormat = 2, // With Hostmask and Nickname, No Username
-	TXHostmaskBanExactFormat  = 3, // Exact Match
+	TXHostmaskBanFormatWHNIN  = 0, // With Hostmask, No Username/Nickname
+	TXHostmaskBanFormatWHAINN = 1, // With Hostmask and Username, No Nickname
+	TXHostmaskBanFormatWHANNI = 2, // With Hostmask and Nickname, No Username
+	TXHostmaskBanFormatExact  = 3, // Exact Match
 };
 
 typedef NS_ENUM(NSUInteger, TVCMainWindowTextViewFontSize) {
-	TVCMainWindowTextViewFontNormalSize			= 1,
-	TVCMainWindowTextViewFontLargeSize			= 2,
-	TVCMainWindowTextViewFontExtraLargeSize		= 3,
-	TVCMainWindowTextViewFontHumongousSize		= 4,
+	TVCMainWindowTextViewFontSizeNormal			= 1,
+	TVCMainWindowTextViewFontSizeLarge			= 2,
+	TVCMainWindowTextViewFontSizeExtraLarge		= 3,
+	TVCMainWindowTextViewFontSizeHumongous		= 4,
 };
 
-typedef NS_ENUM(NSUInteger, TXFileTransferRequestReplyAction) {
-	TXFileTransferRequestReplyIgnoreAction						= 1,
-	TXFileTransferRequestReplyOpenDialogAction					= 2,
-	TXFileTransferRequestReplyAutomaticallyDownloadAction		= 3,
+typedef NS_ENUM(NSUInteger, TXFileTransferRequestReply) {
+	TXFileTransferRequestReplyIgnore					= 1,
+	TXFileTransferRequestReplyOpenDialog				= 2,
+	TXFileTransferRequestReplyAutomaticallyDownload		= 3,
 };
 
-typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
+typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressMethodDetection) {
 	/* integers are out of order to preserve existing preferences */
-	TXFileTransferIPAddressRouterOnlyMethod				= 3,
-	TXFileTransferIPAddressRouterAndFirstPartyMethod	= 1,
-	TXFileTransferIPAddressRouterAndThirdPartyMethod	= 4,
-	TXFileTransferIPAddressManualDetectionMethod		= 2,
+	TXFileTransferIPAddressMethodRouterOnly 			NS_SWIFT_NAME(routerOnly)			= 3,
+	TXFileTransferIPAddressMethodRouterAndFirstParty 	NS_SWIFT_NAME(routerAndFirstParty)	= 1,
+	TXFileTransferIPAddressMethodRouterAndThirdParty	NS_SWIFT_NAME(routerAndThirdParty)	= 4,
+	TXFileTransferIPAddressMethodManual					NS_SWIFT_NAME(manual)				= 2,
 };
 
 typedef NS_ENUM(NSUInteger, TXChannelViewArrangement) {
-	TXChannelViewArrangedHorizontally		= 0,
-	TXChannelViewArrangedVertically 		= 1
+	TXChannelViewArrangedHorizontally	NS_SWIFT_NAME(horizontal) 	= 0,
+	TXChannelViewArrangedVertically 	NS_SWIFT_NAME(vertical)		= 1
 };
 
-typedef NS_ENUM(NSUInteger, TXPreferredAppearanceType)
-{
-	TXPreferredAppearanceInheritedType 	= 0,
-	TXPreferredAppearanceLightType 	= 1,
-	TXPreferredAppearanceDarkType		= 2
+typedef NS_ENUM(NSUInteger, TXPreferredAppearance) {
+	TXPreferredAppearanceInherited 	= 0,
+	TXPreferredAppearanceLight 		= 1,
+	TXPreferredAppearanceDark		= 2
 };
 
 @interface TPCPreferences (TPCPreferencesLocal)
@@ -179,7 +178,7 @@ typedef NS_ENUM(NSUInteger, TXPreferredAppearanceType)
 + (BOOL)memberListUpdatesUserInfoPopoverOnScroll;
 + (BOOL)memberListDisplayNoModeSymbol;
 
-+ (TXNoticeSendLocationType)locationToSendNotices;
++ (TXNoticeSendLocation)locationToSendNotices;
 
 + (BOOL)disableNicknameColorHashing;
 
@@ -204,7 +203,7 @@ typedef NS_ENUM(NSUInteger, TXPreferredAppearanceType)
 + (NSUInteger)trackUserAwayStatusMaximumChannelSize;
 
 + (BOOL)invertSidebarColors TEXTUAL_DEPRECATED("Use -appearance instead");
-+ (TXPreferredAppearanceType)appearance;
++ (TXPreferredAppearance)appearance;
 
 + (BOOL)disableSidebarTranslucency;
 + (BOOL)hideMainWindowSegmentedController;
@@ -293,8 +292,8 @@ typedef NS_ENUM(NSUInteger, TXPreferredAppearanceType)
 + (BOOL)fileTransferRequestsAreReversed;
 + (BOOL)fileTransfersPreventIdleSystemSleep;
 
-+ (TXFileTransferRequestReplyAction)fileTransferRequestReplyAction;
-+ (TXFileTransferIPAddressDetectionMethod)fileTransferIPAddressDetectionMethod;
++ (TXFileTransferRequestReply)fileTransferRequestReplyAction;
++ (TXFileTransferIPAddressMethodDetection)fileTransferIPAddressDetectionMethod;
 
 + (uint16_t)fileTransferPortRangeStart;
 + (uint16_t)fileTransferPortRangeEnd;

@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self->_defaults = @{
 	  @"autoJoin" : @(YES),
-	  @"channelType" : @(IRCChannelChannelType),
+	  @"channelType" : @(IRCChannelTypeChannel),
 	  @"ignoreGeneralEventMessages"	: @(NO),
 	  @"ignoreHighlights" : @(NO),
 	  @"inlineMediaEnabled" : @(NO),
@@ -160,7 +160,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[defaultsMutable assignUnsignedIntegerTo:&self->_type forKey:@"channelType"];
 
-	if (self->_type != IRCChannelChannelType) {
+	if (self->_type != IRCChannelTypeChannel) {
 		return;
 	}
 
@@ -246,7 +246,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic setBool:self.pushNotifications	forKey:@"pushNotifications"];
 	[dic setBool:self.showTreeBadgeCount forKey:@"showTreeBadgeCount"];
 
-	if (self.type == IRCChannelChannelType) {
+	if (self.type == IRCChannelTypeChannel) {
 		[dic maybeSetObject:self.defaultModes forKey:@"defaultMode"];
 		[dic maybeSetObject:self.defaultTopic forKey:@"defaultTopic"];
 		[dic maybeSetObject:self.notifications forKey:@"notifications"];

@@ -37,7 +37,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern NSString * const IRCConnectionErrorDomain NS_SWIFT_NAME(ConnectionErrorDomain);
+extern NSErrorDomain const IRCConnectionErrorDomain NS_SWIFT_NAME(ConnectionErrorDomain);
 
 typedef NS_ENUM(NSUInteger, IRCConnectionErrorCode)
 {

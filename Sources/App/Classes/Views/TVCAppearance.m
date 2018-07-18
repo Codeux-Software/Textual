@@ -42,14 +42,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, TVCListAppearanceColorType)
 {
-	TVCListAppearanceColorCalibratedWhiteType = 1, // <white value> [alpha]
-	TVCListAppearanceColorRGBType = 2, // <r> <g> <b> [alpha]
-	TVCListAppearanceColorSystemType = 3, // selector
+	TVCListAppearanceColorTypeCalibratedWhite = 1, // <white value> [alpha]
+	TVCListAppearanceColorTypeRGB = 2, // <r> <g> <b> [alpha]
+	TVCListAppearanceColorTypeSystem = 3, // selector
 };
 
 typedef NS_ENUM(NSUInteger, TVCListAppearanceImageType)
 {
-	TVCListAppearanceImageAssetType = 1,
+	TVCListAppearanceImageTypeAsset = 1,
 };
 
 @interface TVCAppearance ()
@@ -337,7 +337,7 @@ ClassWithDesignatedInitializerInitMethod
 	TVCListAppearanceColorType colorType = [colorProperties unsignedIntegerForKey:@"type"];
 
 	switch (colorType) {
-		case TVCListAppearanceColorCalibratedWhiteType:
+		case TVCListAppearanceColorTypeCalibratedWhite:
 		{
 			NSArray *components = [colorValue componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
@@ -355,7 +355,7 @@ ClassWithDesignatedInitializerInitMethod
 
 			return [NSColor colorWithCalibratedWhite:white alpha:alpha];
 		}
-		case TVCListAppearanceColorRGBType:
+		case TVCListAppearanceColorTypeRGB:
 		{
 			NSArray *components = [colorValue componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
@@ -375,7 +375,7 @@ ClassWithDesignatedInitializerInitMethod
 
 			return [NSColor calibratedColorWithRed:red green:green blue:blue alpha:alpha];
 		}
-		case TVCListAppearanceColorSystemType:
+		case TVCListAppearanceColorTypeSystem:
 		{
 			SEL selector = NSSelectorFromString(colorValue);
 
@@ -684,7 +684,7 @@ ClassWithDesignatedInitializerInitMethod
 	TVCListAppearanceImageType imageType = [imageProperties unsignedIntegerForKey:@"type"];
 
 	switch (imageType) {
-		case TVCListAppearanceImageAssetType:
+		case TVCListAppearanceImageTypeAsset:
 		{
 			return [NSImage imageNamed:imageValue];
 		}

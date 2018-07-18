@@ -1087,9 +1087,9 @@ ClassWithDesignatedInitializerInitMethod
 	TPCThemeSettingsNicknameColorStyle colorStyleEnum;
 
 	if ([colorStyle isEqualToString:@"HSL-dark"]) {
-		colorStyleEnum = TPCThemeSettingsNicknameColorHashHueDarkStyle;
+		colorStyleEnum = TPCThemeSettingsNicknameColorStyleHashHueDark;
 	} else if ([colorStyle isEqualToString:@"HSL-light"]) {
-		colorStyleEnum = TPCThemeSettingsNicknameColorHashHueLightStyle;
+		colorStyleEnum = TPCThemeSettingsNicknameColorStyleHashHueLight;
 	} else {
 		[self.class throwJavaScriptException:@"Invalid style"
 								   forCaller:context.caller
@@ -1398,7 +1398,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)_sendPluginPayload:(TVCLogScriptEventSinkContext *)context
 {
-	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsWebViewJavaScriptPayloads] == NO) {
+	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportedFeatureWebViewJavaScriptPayloads] == NO) {
 		[self.class throwJavaScriptException:@"There are no plugins loaded that support JavaScritp payloads"
 								   forCaller:context.caller
 								   inWebView:context.webView];

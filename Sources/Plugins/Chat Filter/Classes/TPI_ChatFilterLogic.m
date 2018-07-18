@@ -74,7 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
 	 know that there is a filter that will need it. */
 	TPI_ChatFilterLimitToValue filterLimitedToValue = filter.filterLimitedToValue;
 
-	if (filterLimitedToValue != TPI_ChatFilterLimitToNoLimitValue || filter.filterIgnoreOperators) {
+	if (filterLimitedToValue != TPI_ChatFilterLimitToValueNoLimit || filter.filterIgnoreOperators) {
 		if (textDestination == nil && textAuthor.isServer == NO) {
 			LogToConsoleDebug("textDestination == nil — Returning input instead of continuing with filter");
 
@@ -82,21 +82,21 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	}
 
-	if (filterLimitedToValue == TPI_ChatFilterLimitToChannelsValue) {
+	if (filterLimitedToValue == TPI_ChatFilterLimitToValueChannels) {
 		if (textDestination.isChannel == NO) {
 			/* Filter is limited to a channel but the destination
 			 is not a channel. */
 
 			return NO;
 		}
-	} else if (filterLimitedToValue == TPI_ChatFilterLimitToPrivateMessagesValue) {
+	} else if (filterLimitedToValue == TPI_ChatFilterLimitToValuePrivateMessages) {
 		if (textDestination.isPrivateMessage == NO) {
 			/* Filter is limited to a private message but the destination
 			 is not a private message. */
 
 			return NO;
 		}
-	} else if (filterLimitedToValue == TPI_ChatFilterLimitToSpecificItemsValue) {
+	} else if (filterLimitedToValue == TPI_ChatFilterLimitToValueSpecificItems) {
 		NSArray *filterLimitedToClientsIDs = filter.filterLimitedToClientsIDs;
 		NSArray *filterLimitedToChannelsIDs = filter.filterLimitedToChannelsIDs;
 
@@ -227,7 +227,7 @@ NS_ASSUME_NONNULL_BEGIN
 				[client print:message
 						   by:nil
 					inChannel:destinationChannel
-					   asType:TVCLogLineDebugType
+					   asType:TVCLogLineTypeDebug
 					  command:TVCLogLineDefaultCommandValue
 				   receivedAt:receivedAt
 				  isEncrypted:NO
@@ -261,14 +261,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 	for (TPI_ChatFilter *filter in filters) {
 		@autoreleasepool {
-			if (((lineType == TVCLogLinePrivateMessageType || lineType == TVCLogLinePrivateMessageNoHighlightType) &&
-				 [filter isEventTypeEnabled:TPI_ChatFilterPlainTextMessageEventType] == NO) ||
+			if (((lineType == TVCLogLineTypePrivateMessage || lineType == TVCLogLineTypePrivateMessageNoHighlight) &&
+				 [filter isEventTypeEnabled:TPI_ChatFilterEventTypePlainTextMessage] == NO) ||
 
-				((lineType == TVCLogLineActionType || lineType == TVCLogLineActionNoHighlightType) &&
-				 [filter isEventTypeEnabled:TPI_ChatFilterActionMessageEventType] == NO) ||
+				((lineType == TVCLogLineTypeAction || lineType == TVCLogLineTypeActionNoHighlight) &&
+				 [filter isEventTypeEnabled:TPI_ChatFilterEventTypeActionMessage] == NO) ||
 
-				(lineType == TVCLogLineNoticeType &&
-				 [filter isEventTypeEnabled:TPI_ChatFilterNoticeMessageEventType] == NO))
+				(lineType == TVCLogLineTypeNotice &&
+				 [filter isEventTypeEnabled:TPI_ChatFilterEventTypeNoticeMessage] == NO))
 			{
 				/* Continue to next filter. This filter is not interested
 				 in the line type of the input. */
@@ -327,13 +327,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 				NSString *fakeMessageCommand = nil;
 
-				if (lineType == TVCLogLinePrivateMessageType ||
-					lineType == TVCLogLinePrivateMessageNoHighlightType ||
-					lineType == TVCLogLineActionType ||
-					lineType == TVCLogLineActionNoHighlightType)
+				if (lineType == TVCLogLineTypePrivateMessage ||
+					lineType == TVCLogLineTypePrivateMessageNoHighlight ||
+					lineType == TVCLogLineTypeAction ||
+					lineType == TVCLogLineTypeActionNoHighlight)
 				{
 					fakeMessageCommand = @"PRIVMSG";
-				} else if (lineType == TVCLogLineNoticeType) {
+				} else if (lineType == TVCLogLineTypeNotice) {
 					fakeMessageCommand = @"NOTICE";
 				}
 
@@ -346,7 +346,7 @@ NS_ASSUME_NONNULL_BEGIN
 				  isEncrypted:wasEncrypted
 			 referenceMessage:nil
 				 completionBlock:^(TVCLogControllerPrintOperationContext *context) {
-					 if (lineType == TVCLogLineNoticeType) {
+					 if (lineType == TVCLogLineTypeNotice) {
 						 [client setUnreadStateForChannel:destinationChannel];
 					 } else {
 						 BOOL isHighlight = context.highlight;
@@ -460,7 +460,7 @@ NS_ASSUME_NONNULL_BEGIN
 		[client print:formattedMessage
 				   by:nil
 			inChannel:filterActionReportQuery
-			   asType:TVCLogLinePrivateMessageType
+			   asType:TVCLogLineTypePrivateMessage
 			  command:@"PRIVMSG"];
 
 		[client setUnreadStateForChannel:filterActionReportQuery];

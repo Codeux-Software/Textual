@@ -103,7 +103,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *messageBody = nil;
 
-	if (logLine.lineType == TVCLogLineActionType) {
+	if (logLine.lineType == TVCLogLineTypeAction) {
 		/* Actions are presented in the format "• <nickname>: <message" in the Highlight List. */
 		nicknameBody = logLine.nickname;
 

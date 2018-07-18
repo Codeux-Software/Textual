@@ -39,14 +39,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, TXAppearanceType)
 {
-	TXAppearanceMavericksAquaLightType,
-	TXAppearanceMavericksAquaDarkType,
-	TXAppearanceMavericksGraphiteLightType,
-	TXAppearanceMavericksGraphiteDarkType,
-	TXAppearanceYosemiteLightType,
-	TXAppearanceYosemiteDarkType,
-	TXAppearanceMojaveLightType,
-	TXAppearanceMojaveDarkType,
+	TXAppearanceTypeMavericksAquaLight,
+	TXAppearanceTypeMavericksAquaDark,
+	TXAppearanceTypeMavericksGraphiteLight,
+	TXAppearanceTypeMavericksGraphiteDark,
+	TXAppearanceTypeYosemiteLight,
+	TXAppearanceTypeYosemiteDark,
+	TXAppearanceTypeMojaveLight,
+	TXAppearanceTypeMojaveDark,
 };
 
 /* TXAppKitAppearanceTarget defines which items the NSAppearance
@@ -95,8 +95,8 @@ typedef NS_ENUM(NSUInteger, TXAppKitAppearanceTarget)
 @property (readonly, strong) TXAppearancePropertyCollection *properties;
 @end
 
-TEXTUAL_EXTERN NSString * const TXApplicationAppearanceChangedNotification;
-TEXTUAL_EXTERN NSString * const TXSystemAppearanceChangedNotification;
+TEXTUAL_EXTERN NSNotificationName const TXApplicationAppearanceChangedNotification;
+TEXTUAL_EXTERN NSNotificationName const TXSystemAppearanceChangedNotification;
 
 NS_ASSUME_NONNULL_END
 

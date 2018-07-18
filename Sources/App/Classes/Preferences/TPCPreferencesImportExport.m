@@ -71,7 +71,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)importPreflight:(TDCAlertResponse)buttonPressed
 {
-	if (buttonPressed != TDCAlertResponseDefaultButton) {
+	if (buttonPressed != TDCAlertResponseDefault) {
 		return;
 	}
 
@@ -344,7 +344,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)exportPreflight:(TDCAlertResponse)buttonPressed
 {
-	if (buttonPressed != TDCAlertResponseDefaultButton) {
+	if (buttonPressed != TDCAlertResponseDefault) {
 		return;
 	}
 

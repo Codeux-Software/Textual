@@ -40,15 +40,15 @@ NS_ASSUME_NONNULL_BEGIN
 /* TVCAlert acts as a non-blocking substitute to NSAlert
  which can be used to show messages that aren't important. */
 
-typedef NS_ENUM(NSUInteger, TVCAlertResponse) {
-	TVCAlertResponseFirstButton = 1000,
-	TVCAlertResponseSecondButton = 1001,
-	TVCAlertResponseThirdButton = 1002
+typedef NS_ENUM(NSUInteger, TVCAlertResponseButton) {
+	TVCAlertResponseButtonFirst = 1000,
+	TVCAlertResponseButtonSecond = 1001,
+	TVCAlertResponseButtonThird = 1002
 };
 
 @class TVCAlert;
 
-typedef void (^TVCAlertCompletionBlock)(TVCAlert *sender, TVCAlertResponse buttonClicked);
+typedef void (^TVCAlertCompletionBlock)(TVCAlert *sender, TVCAlertResponseButton buttonClicked);
 
 @interface TVCAlert : NSObject
 /* All properties are immutable once alert is visible */
@@ -75,7 +75,7 @@ typedef void (^TVCAlertCompletionBlock)(TVCAlert *sender, TVCAlertResponse butto
 - (void)showAlertInWindow:(NSWindow *)window;
 - (void)showAlertInWindow:(NSWindow *)window withCompletionBlock:(nullable TVCAlertCompletionBlock)completionBlock;
 
-- (TVCAlertResponse)runModal;
+- (TVCAlertResponseButton)runModal;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -149,27 +149,27 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (BOOL)q
 {
-	return ((self.ranks & IRCUserChannelOwnerRank) == IRCUserChannelOwnerRank);
+	return ((self.ranks & IRCUserRankChannelOwner) == IRCUserRankChannelOwner);
 }
 
 - (BOOL)a
 {
-	return ((self.ranks & IRCUserSuperOperatorRank) == IRCUserSuperOperatorRank);
+	return ((self.ranks & IRCUserRankSuperOperator) == IRCUserRankSuperOperator);
 }
 
 - (BOOL)o
 {
-	return ((self.ranks & IRCUserNormalOperatorRank) == IRCUserNormalOperatorRank);
+	return ((self.ranks & IRCUserRankNonermalOperator) == IRCUserRankNonermalOperator);
 }
 
 - (BOOL)h
 {
-	return ((self.ranks & IRCUserHalfOperatorRank) == IRCUserHalfOperatorRank);
+	return ((self.ranks & IRCUserRankHalfOperator) == IRCUserRankHalfOperator);
 }
 
 - (BOOL)v
 {
-	return ((self.ranks & IRCUserVoicedRank) == IRCUserVoicedRank);
+	return ((self.ranks & IRCUserRankVoiced) == IRCUserRankVoiced);
 }
 
 - (IRCUserRank)rank
@@ -190,13 +190,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 		IRCUserRank rank = [self rankForModeSymbol:mode];
 
-		if (rank != IRCUserNoRank) {
+		if (rank != IRCUserRankNone) {
 			ranks |= rank;
 		}
 	}
 
 	if (ranks == 0) {
-		ranks |= IRCUserNoRank;
+		ranks |= IRCUserRankNone;
 	}
 
 	return ranks;
@@ -205,29 +205,29 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (IRCUserRank)rankForModeSymbol:(nullable NSString *)modeSymbol
 {
 	if (modeSymbol == nil) {
-		return IRCUserNoRank;
+		return IRCUserRankNone;
 	}
 
 	if ([modeSymbol isEqualToString:@"y"] ||
 		[modeSymbol isEqualToString:@"Y"])
 	{
-		return IRCUserIRCopByModeRank;
+		return IRCUserRankIRCopByMode;
 	}
 	else if ([modeSymbol isEqualToString:@"q"] ||
 			 [modeSymbol isEqualToString:@"O"])
 	{
-		return IRCUserChannelOwnerRank;
+		return IRCUserRankChannelOwner;
 	} else if ([modeSymbol isEqualToString:@"a"]) {
-		return IRCUserSuperOperatorRank;
+		return IRCUserRankSuperOperator;
 	} else if ([modeSymbol isEqualToString:@"o"]) {
-		return IRCUserNormalOperatorRank;
+		return IRCUserRankNonermalOperator;
 	} else if ([modeSymbol isEqualToString:@"h"]) {
-		return IRCUserHalfOperatorRank;
+		return IRCUserRankHalfOperator;
 	} else if ([modeSymbol isEqualToString:@"v"]) {
-		return IRCUserVoicedRank;
+		return IRCUserRankVoiced;
 	}
 
-	return IRCUserNoRank;
+	return IRCUserRankNone;
 }
 
 - (double)totalWeight

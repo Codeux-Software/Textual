@@ -46,10 +46,10 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Private Implementation
 
-NSString * const TLOAppStoreIAPFreeTrialProductIdentifier			= @"com.codeux.iap.textual_free_trial";
-NSString * const TLOAppStoreIAPStandardEditionProductIdentifier		= @"com.codeux.iap.textual_standard_edition";
-NSString * const TLOAppStoreIAPUpgradeFromV6ProductIdentifier		= @"com.codeux.iap.textual_upgrade_v6";
-NSString * const TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier	= @"com.codeux.iap.textual_upgrade_v6_free";
+NSString * const TLOAppStoreIAPProductIdentifierFreeTrial			= @"com.codeux.iap.textual_free_trial";
+NSString * const TLOAppStoreIAPProductIdentifierStandardEdition		= @"com.codeux.iap.textual_standard_edition";
+NSString * const TLOAppStoreIAPProductIdentifierUpgradeFromV6		= @"com.codeux.iap.textual_upgrade_v6";
+NSString * const TLOAppStoreIAPProductIdentifierUpgradeFromV6Free	= @"com.codeux.iap.textual_upgrade_v6_free";
 
 NSInteger const TLOAppStoreTrialModeMaximumLifespan = (-2592000); // 30 days in seconds
 
@@ -163,17 +163,17 @@ TLOAppStoreIAPProduct TLOAppStoreProductFromProductIdentifier(NSString *productI
 {
 	NSCParameterAssert(productIdentifier != nil);
 
-	if ([productIdentifier isEqualToString:TLOAppStoreIAPFreeTrialProductIdentifier]) {
-		return TLOAppStoreIAPFreeTrialProduct;
-	} else if ([productIdentifier isEqualToString:TLOAppStoreIAPStandardEditionProductIdentifier]) {
-		return TLOAppStoreIAPStandardEditionProduct;
-	} else if ([productIdentifier isEqualToString:TLOAppStoreIAPUpgradeFromV6ProductIdentifier]) {
-		return TLOAppStoreIAPUpgradeFromV6Product;
-	} else if ([productIdentifier isEqualToString:TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier]) {
-		return TLOAppStoreIAPUpgradeFromV6FreeProduct;
+	if ([productIdentifier isEqualToString:TLOAppStoreIAPProductIdentifierFreeTrial]) {
+		return TLOAppStoreIAPProductFreeTrial;
+	} else if ([productIdentifier isEqualToString:TLOAppStoreIAPProductIdentifierStandardEdition]) {
+		return TLOAppStoreIAPProductStandardEdition;
+	} else if ([productIdentifier isEqualToString:TLOAppStoreIAPProductIdentifierUpgradeFromV6]) {
+		return TLOAppStoreIAPProductUpgradeFromV6;
+	} else if ([productIdentifier isEqualToString:TLOAppStoreIAPProductIdentifierUpgradeFromV6Free]) {
+		return TLOAppStoreIAPProductUpgradeFromV6Free;
 	}
 
-	return TLOAppStoreIAPUnknownProduct;
+	return TLOAppStoreIAPProductUnknown;
 }
 
 #pragma mark -
@@ -184,9 +184,9 @@ BOOL TLOAppStoreTextualIsRegistered(void)
 	BOOL purchased =
 	TLOAppStoreIsOneProductPurchased(
 		 @[
-			   TLOAppStoreIAPStandardEditionProductIdentifier,
-			   TLOAppStoreIAPUpgradeFromV6ProductIdentifier,
-			   TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier
+			   TLOAppStoreIAPProductIdentifierStandardEdition,
+			   TLOAppStoreIAPProductIdentifierUpgradeFromV6,
+			   TLOAppStoreIAPProductIdentifierUpgradeFromV6Free
 		   ]
 	);
 
@@ -196,7 +196,7 @@ BOOL TLOAppStoreTextualIsRegistered(void)
 BOOL TLOAppStoreIsTrialPurchased(void)
 {
 	BOOL purchased =
-	TLOAppStoreIsProductPurchased(TLOAppStoreIAPFreeTrialProductIdentifier);
+	TLOAppStoreIsProductPurchased(TLOAppStoreIAPProductIdentifierFreeTrial);
 
 	return purchased;
 }
@@ -214,7 +214,7 @@ BOOL TLOAppStoreIsTrialExpired(void)
 
 NSTimeInterval TLOAppStoreTimeReaminingInTrial(void)
 {
-	ARLInAppPurchaseContents *purchaseDetails = TLOAppStorePurchasedProductDetails(TLOAppStoreIAPFreeTrialProductIdentifier);
+	ARLInAppPurchaseContents *purchaseDetails = TLOAppStorePurchasedProductDetails(TLOAppStoreIAPProductIdentifierFreeTrial);
 
 	if (purchaseDetails == nil) {
 		return 0;

@@ -57,7 +57,7 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 @interface THOPluginManager ()
 @property (nonatomic, assign, readwrite) BOOL pluginsLoaded;
 @property (nonatomic, copy, readwrite) NSArray<THOPluginItem *> *loadedPlugins;
-@property (nonatomic, assign) THOPluginItemSupportedFeatures supportedFeatures;
+@property (nonatomic, assign) THOPluginItemSupportedFeature supportedFeatures;
 @end
 
 @implementation THOPluginManager
@@ -395,7 +395,7 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 				suppressionKey:suppressionKey
 			   suppressionText:nil
 			   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id  _Nullable underlyingAlert) {
-				   if (buttonClicked != TDCAlertResponseAlternateButton) {
+				   if (buttonClicked != TDCAlertResponseAlternate) {
 					   return;
 				   }
 
@@ -528,23 +528,23 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 								self->_supportedFeatures |= (_feature);														\
 							}
 
-	_ef(THOPluginItemSupportsDidReceiveCommandEvent)
-	_ef(THOPluginItemSupportsDidReceivePlainTextMessageEvent)
-//	_ef(THOPluginItemSupportsInlineMediaManipulation)
-	_ef(THOPluginItemSupportsNewMessagePostedEvent)
-	_ef(THOPluginItemSupportsOutputSuppressionRules)
-	_ef(THOPluginItemSupportsPreferencePane)
-	_ef(THOPluginItemSupportsServerInputDataInterception)
-	_ef(THOPluginItemSupportsSubscribedServerInputCommands)
-	_ef(THOPluginItemSupportsSubscribedUserInputCommands)
-	_ef(THOPluginItemSupportsUserInputDataInterception)
-	_ef(THOPluginItemSupportsWebViewJavaScriptPayloads)
-	_ef(THOPluginItemSupportsWillRenderMessageEvent)
+	_ef(THOPluginItemSupportedFeatureDidReceiveCommandEvent)
+	_ef(THOPluginItemSupportedFeatureDidReceivePlainTextMessageEvent)
+//	_ef(THOPluginItemSupportedFeatureInlineMediaManipulation)
+	_ef(THOPluginItemSupportedFeatureNewMessagePostedEvent)
+	_ef(THOPluginItemSupportedFeatureOutputSuppressionRules)
+	_ef(THOPluginItemSupportedFeaturePreferencePane)
+	_ef(THOPluginItemSupportedFeatureServerInputDataInterception)
+	_ef(THOPluginItemSupportedFeatureSubscribedServerInputCommands)
+	_ef(THOPluginItemSupportedFeatureSubscribedUserInputCommands)
+	_ef(THOPluginItemSupportedFeatureUserInputDataInterception)
+	_ef(THOPluginItemSupportedFeatureWebViewJavaScriptPayloads)
+	_ef(THOPluginItemSupportedFeatureWillRenderMessageEvent)
 
 #undef _ef
 }
 
-- (BOOL)supportsFeature:(THOPluginItemSupportedFeatures)feature
+- (BOOL)supportsFeature:(THOPluginItemSupportedFeature)feature
 {
 	return ((self->_supportedFeatures & feature) == feature);
 }
@@ -559,7 +559,7 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 		NSMutableArray<THOPluginOutputSuppressionRule *> *allRules = [NSMutableArray array];
 
 		for (THOPluginItem *plugin in self.loadedPlugins) {
-			if ([plugin supportsFeature:THOPluginItemSupportsOutputSuppressionRules] == NO) {
+			if ([plugin supportsFeature:THOPluginItemSupportedFeatureOutputSuppressionRules] == NO) {
 				continue;
 			}
 
@@ -586,7 +586,7 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 		NSMutableArray<NSString *> *allCommands = [NSMutableArray array];
 
 		for (THOPluginItem *plugin in self.loadedPlugins) {
-			if ([plugin supportsFeature:THOPluginItemSupportsSubscribedUserInputCommands] == NO) {
+			if ([plugin supportsFeature:THOPluginItemSupportedFeatureSubscribedUserInputCommands] == NO) {
 				continue;
 			}
 
@@ -615,7 +615,7 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 		NSMutableArray<NSString *> *allCommands = [NSMutableArray array];
 
 		for (THOPluginItem *plugin in self.loadedPlugins) {
-			if ([plugin supportsFeature:THOPluginItemSupportsSubscribedServerInputCommands] == NO) {
+			if ([plugin supportsFeature:THOPluginItemSupportedFeatureSubscribedServerInputCommands] == NO) {
 				continue;
 			}
 
@@ -644,7 +644,7 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 		NSMutableArray<THOPluginItem *> *allExtensions = [NSMutableArray array];
 
 		for (THOPluginItem *plugin in self.loadedPlugins) {
-			if ([plugin supportsFeature:THOPluginItemSupportsPreferencePane] == NO) {
+			if ([plugin supportsFeature:THOPluginItemSupportedFeaturePreferencePane] == NO) {
 				continue;
 			}
 

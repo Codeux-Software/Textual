@@ -298,13 +298,13 @@ enum {
 					suppressionKey:@"trial_is_expired_mas"
 				   suppressionText:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
-					   if (buttonClicked == TDCAlertResponseOtherButton) {
+					   if (buttonClicked == TDCAlertResponseOther) {
 						   return;
 					   }
 
 					   [self show];
 
-					   if (buttonClicked == TDCAlertResponseAlternateButton) {
+					   if (buttonClicked == TDCAlertResponseAlternate) {
 						   [self restoreTransactionsByClick];
 					   }
 				   }];
@@ -323,13 +323,13 @@ enum {
 					suppressionKey:@"trial_is_expired_mas"
 				   suppressionText:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
-					   if (buttonClicked == TDCAlertResponseOtherButton) {
+					   if (buttonClicked == TDCAlertResponseOther) {
 						   return;
 					   }
 
 					   [self show];
 
-					   if (buttonClicked == TDCAlertResponseAlternateButton) {
+					   if (buttonClicked == TDCAlertResponseAlternate) {
 						   [self restoreTransactionsByClick];
 					   }
 				   }];
@@ -589,7 +589,7 @@ enum {
 	[self addTrialToProductsTableContents];
 
 	[self.productsTableController addObject:
-	 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPStandardEditionProductIdentifier]];
+	 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPProductIdentifierStandardEdition]];
 
 	TDCInAppPurchaseProductsTableEntry *discountEntry = [self productsTableUpgradeEligibilityEntry];
 
@@ -605,7 +605,7 @@ enum {
 	}
 	
 	[self.productsTableController addObject:
-	 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPFreeTrialProductIdentifier]];
+	 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPProductIdentifierFreeTrial]];
 }
 
 - (void)updateSelectedPane
@@ -729,7 +729,7 @@ enum {
 	LogToConsoleDebug("Eligibility changed to %lu", sender.eligibility);
 
 	if (sender.eligibility == TLOInAppPurchaseUpgradeEligibilityUnknown ||
-		sender.eligibility == TLOInAppPurchaseUpgradeNotEligible)
+		sender.eligibility == TLOInAppPurchaseUpgradeEligibilityNot)
 	{
 		return;
 	}
@@ -738,16 +738,16 @@ enum {
 
 	[self addTrialToProductsTableContents];
 
-	if (sender.eligibility == TLOInAppPurchaseUpgradeEligibleDiscount)
+	if (sender.eligibility == TLOInAppPurchaseUpgradeEligibilityDiscount)
 	{
 		[self.productsTableController addObject:
-		 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPUpgradeFromV6ProductIdentifier]];
+		 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPProductIdentifierUpgradeFromV6]];
 	}
-	else if (sender.eligibility == TLOInAppPurchaseUpgradeEligibleFree ||
-			 sender.eligibility == TLOInAppPurchaseUpgradeAlreadyUpgraded)
+	else if (sender.eligibility == TLOInAppPurchaseUpgradeEligibilityFree ||
+			 sender.eligibility == TLOInAppPurchaseUpgradeEligibilityAlreadyUpgraded)
 	{
 		[self.productsTableController addObject:
-		 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier]];
+		 [self productsTableEntryForProductIdentifier:TLOAppStoreIAPProductIdentifierUpgradeFromV6Free]];
 	}
 }
 
@@ -792,9 +792,9 @@ enum {
 
 	TDCInAppPurchaseProductsTableEntry *entryItem = self.productsTableController.arrangedObjects[row];
 
-	if (entryItem.entryType == TDCInAppPurchaseProductsTableEntryProductType) {
+	if (entryItem.entryType == TDCInAppPurchaseProductsTableEntryTypeProduct) {
 		newView = [tableView makeViewWithIdentifier:@"productType" owner:self];
-	} else if (entryItem.entryType == TDCInAppPurchaseProductsTableEntryOtherType) {
+	} else if (entryItem.entryType == TDCInAppPurchaseProductsTableEntryTypeOther) {
 		newView = [tableView makeViewWithIdentifier:@"otherType" owner:self];
 	}
 
@@ -858,8 +858,8 @@ enum {
 - (nullable TDCInAppPurchaseProductsTableEntry *)productsTableUpgradeEligibilityEntry
 {
 	/* Do not offer upgrade if one of these two are disabled (missing) */
-	if ([self.products containsKey:TLOAppStoreIAPUpgradeFromV6ProductIdentifier] == NO ||
-		[self.products containsKey:TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier] == NO)
+	if ([self.products containsKey:TLOAppStoreIAPProductIdentifierUpgradeFromV6] == NO ||
+		[self.products containsKey:TLOAppStoreIAPProductIdentifierUpgradeFromV6Free] == NO)
 	{
 		return nil;
 	}
@@ -867,7 +867,7 @@ enum {
 	/* Create entry */
 	TDCInAppPurchaseProductsTableEntry *tableEntry = [TDCInAppPurchaseProductsTableEntry new];
 
-	tableEntry.entryType = TDCInAppPurchaseProductsTableEntryOtherType;
+	tableEntry.entryType = TDCInAppPurchaseProductsTableEntryTypeOther;
 
 	tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[gaw-8q]");
 	tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[e1e-6i]");
@@ -898,9 +898,9 @@ enum {
 	tableEntry.action = @selector(payForProductsTableEntry:);
 
 	switch (productType) {
-		case TLOAppStoreIAPFreeTrialProduct:
+		case TLOAppStoreIAPProductFreeTrial:
 		{
-			tableEntry.entryType = TDCInAppPurchaseProductsTableEntryOtherType;
+			tableEntry.entryType = TDCInAppPurchaseProductsTableEntryTypeOther;
 
 			tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[20h-oi]");
 			tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[4ad-nr]");
@@ -908,9 +908,9 @@ enum {
 
 			break;
 		}
-		case TLOAppStoreIAPStandardEditionProduct:
+		case TLOAppStoreIAPProductStandardEdition:
 		{
-			tableEntry.entryType = TDCInAppPurchaseProductsTableEntryProductType;
+			tableEntry.entryType = TDCInAppPurchaseProductsTableEntryTypeProduct;
 
 			tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[yrh-s6]");
 			tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[2xq-43]");
@@ -918,12 +918,12 @@ enum {
 
 			break;
 		}
-		case TLOAppStoreIAPUpgradeFromV6Product:
-		case TLOAppStoreIAPUpgradeFromV6FreeProduct:
+		case TLOAppStoreIAPProductUpgradeFromV6:
+		case TLOAppStoreIAPProductUpgradeFromV6Free:
 		{
-			tableEntry.entryType = TDCInAppPurchaseProductsTableEntryProductType;
+			tableEntry.entryType = TDCInAppPurchaseProductsTableEntryTypeProduct;
 
-			SKProduct *standardEdition = self.products[TLOAppStoreIAPStandardEditionProductIdentifier];
+			SKProduct *standardEdition = self.products[TLOAppStoreIAPProductIdentifierStandardEdition];
 
 			if (standardEdition == nil) {
 				NSAssert(NO, @"The 'Standard Edition' product is missing");
@@ -931,13 +931,13 @@ enum {
 
 			tableEntry.productPriceDiscounted = standardEdition.price;
 
-			if (productType == TLOAppStoreIAPUpgradeFromV6Product)
+			if (productType == TLOAppStoreIAPProductUpgradeFromV6)
 			{
 				tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[ako-hb]");
 				tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[pnz-0z]");
 				tableEntry.actionButtonTitle = TXTLS(@"TDCInAppPurchaseDialog[xdz-gd]");
 			}
-			else if (productType == TLOAppStoreIAPUpgradeFromV6FreeProduct)
+			else if (productType == TLOAppStoreIAPProductUpgradeFromV6Free)
 			{
 				tableEntry.entryTitle = TXTLS(@"TDCInAppPurchaseDialog[7g1-nd]");
 				tableEntry.entryDescription = TXTLS(@"TDCInAppPurchaseDialog[877-q1]");
@@ -984,25 +984,25 @@ enum {
 	NSString *productTitle = nil;
 
 	switch (productType) {
-		case TLOAppStoreIAPFreeTrialProduct:
+		case TLOAppStoreIAPProductFreeTrial:
 		{
 			productTitle = TXTLS(@"TDCInAppPurchaseDialog[20h-oi]");
 
 			break;
 		}
-		case TLOAppStoreIAPStandardEditionProduct:
+		case TLOAppStoreIAPProductStandardEdition:
 		{
 			productTitle = TXTLS(@"TDCInAppPurchaseDialog[yrh-s6]");
 
 			break;
 		}
-		case TLOAppStoreIAPUpgradeFromV6Product:
+		case TLOAppStoreIAPProductUpgradeFromV6:
 		{
 			productTitle = TXTLS(@"TDCInAppPurchaseDialog[ako-hb]");
 
 			break;
 		}
-		case TLOAppStoreIAPUpgradeFromV6FreeProduct:
+		case TLOAppStoreIAPProductUpgradeFromV6Free:
 		{
 			productTitle = TXTLS(@"TDCInAppPurchaseDialog[7g1-nd]");
 
@@ -1218,7 +1218,7 @@ enum {
 				   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[ywm-0b]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
-					   if (buttonClicked == TDCAlertResponseAlternateButton) {
+					   if (buttonClicked == TDCAlertResponseAlternate) {
 						   [self contactSupport];
 					   }
 
@@ -1326,10 +1326,10 @@ enum {
 	NSSet *productIdentifiers =
 	[NSSet setWithArray:
 	 @[
-		TLOAppStoreIAPFreeTrialProductIdentifier,
-		TLOAppStoreIAPStandardEditionProductIdentifier,
-		TLOAppStoreIAPUpgradeFromV6ProductIdentifier,
-		TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier
+		TLOAppStoreIAPProductIdentifierFreeTrial,
+		TLOAppStoreIAPProductIdentifierStandardEdition,
+		TLOAppStoreIAPProductIdentifierUpgradeFromV6,
+		TLOAppStoreIAPProductIdentifierUpgradeFromV6Free
 	  ]
 	];
 
@@ -1373,7 +1373,7 @@ enum {
 				   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[iot-5w]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
-					   if (buttonClicked == TDCAlertResponseAlternateButton) {
+					   if (buttonClicked == TDCAlertResponseAlternate) {
 						   [self contactSupport];
 					   }
 					   

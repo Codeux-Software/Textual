@@ -89,7 +89,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 - (instancetype)init
 {
-	return [self initWithEffect:IRCTextFormatterNoEffect withValue:nil];
+	return [self initWithEffect:IRCTextFormatterEffectNone withValue:nil];
 }
 
 - (nullable instancetype)initWithEffect:(IRCTextFormatterEffectType)type
@@ -115,62 +115,62 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 	NSString *valueOut = nil;
 
 	switch (type) {
-		case IRCTextFormatterNoEffect:
+		case IRCTextFormatterEffectNone:
 		{
 			break;
 		}
-		case IRCTextFormatterBoldEffect:
+		case IRCTextFormatterEffectBold:
 		{
-			controlCharacter = IRCTextFormatterBoldEffectCharacter;
+			controlCharacter = IRCTextFormatterEffectBoldCharacter;
 
 			valueLength = 2; // opening and closing
 
 			break;
 		}
-		case IRCTextFormatterItalicEffect:
+		case IRCTextFormatterEffectItalic:
 		{
-			controlCharacter = IRCTextFormatterItalicEffectCharacter;
+			controlCharacter = IRCTextFormatterEffectItalicCharacter;
 
 			valueLength = 2; // opening and closing
 
 			break;
 		}
-		case IRCTextFormatterMonospaceEffect:
+		case IRCTextFormatterEffectMonospace:
 		{
-			controlCharacter = IRCTextFormatterMonospaceEffectCharacter;
+			controlCharacter = IRCTextFormatterEffectMonospaceCharacter;
 
 			valueLength = 2; // opening and closing
 
 			break;
 		}
-		case IRCTextFormatterStrikethroughEffect:
+		case IRCTextFormatterEffectStrikethrough:
 		{
-			controlCharacter = IRCTextFormatterStrikethroughEffectCharacter;
+			controlCharacter = IRCTextFormatterEffectStrikethroughCharacter;
 
 			valueLength = 2; // opening and closing
 
 			break;
 		}
-		case IRCTextFormatterUnderlineEffect:
+		case IRCTextFormatterEffectUnderline:
 		{
-			controlCharacter = IRCTextFormatterUnderlineEffectCharacter;
+			controlCharacter = IRCTextFormatterEffectUnderlineCharacter;
 
 			valueLength = 2; // opening and closing
 
 			break;
 		}
-		case IRCTextFormatterForegroundColorEffect:
-		case IRCTextFormatterBackgroundColorEffect:
+		case IRCTextFormatterEffectForegroundColor:
+		case IRCTextFormatterEffectBackgroundColor:
 		{
 			if ([value isKindOfClass:[NSColor class]])
 			{
-				controlCharacter = IRCTextFormatterColorAsHexEffectCharacter;
+				controlCharacter = IRCTextFormatterEffectColorAsHexCharacter;
 
 				valueOut = [[value hexadecimalValue] substringFromIndex:1]; // Remove leading #
 			}
 			else if ([value isKindOfClass:[NSNumber class]])
 			{
-				controlCharacter = IRCTextFormatterColorAsDigitEffectCharacter;
+				controlCharacter = IRCTextFormatterEffectColorAsDigitCharacter;
 
 				valueOut = [value integerStringValueWithLeadingZero];
 			}
@@ -179,7 +179,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 				return nil;
 			}
 
-			if (type == IRCTextFormatterForegroundColorEffect) {
+			if (type == IRCTextFormatterEffectForegroundColor) {
 				valueLength = (valueOut.length + 2); // opening and closing
 			} else {
 				valueLength = (valueOut.length + 1); // leading comma
@@ -215,7 +215,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 	NSString *value = self.value;
 
-	if (type == IRCTextFormatterBackgroundColorEffect) {
+	if (type == IRCTextFormatterEffectBackgroundColor) {
 		[string appendFormat:@",%@", value];
 
 		return;
@@ -234,7 +234,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 {
 	NSParameterAssert(string != nil);
 
-	if (self.type == IRCTextFormatterBackgroundColorEffect) {
+	if (self.type == IRCTextFormatterEffectBackgroundColor) {
 		return;
 	}
 
@@ -272,8 +272,8 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 	NSMutableArray *effects = [NSMutableArray arrayWithCapacity:7];
 
-	IRCTextFormatterEffect *foregroundColor = [IRCTextFormatterEffect effectWithType:IRCTextFormatterForegroundColorEffect withValue:attributes[IRCTextFormatterForegroundColorAttributeName]];
-	IRCTextFormatterEffect *backgroundColor = [IRCTextFormatterEffect effectWithType:IRCTextFormatterBackgroundColorEffect withValue:attributes[IRCTextFormatterBackgroundColorAttributeName]];
+	IRCTextFormatterEffect *foregroundColor = [IRCTextFormatterEffect effectWithType:IRCTextFormatterEffectForegroundColor withValue:attributes[IRCTextFormatterForegroundColorAttributeName]];
+	IRCTextFormatterEffect *backgroundColor = [IRCTextFormatterEffect effectWithType:IRCTextFormatterEffectBackgroundColor withValue:attributes[IRCTextFormatterBackgroundColorAttributeName]];
 
 	if (foregroundColor) {
 		[effects addObject:foregroundColor];
@@ -299,7 +299,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 	BOOL textIsUnderlined = [attributes boolForKey:IRCTextFormatterUnderlineAttributeName];
 
 	if (textIsBold) {
-		IRCTextFormatterEffect *effect = [IRCTextFormatterEffect effectWithType:IRCTextFormatterBoldEffect];
+		IRCTextFormatterEffect *effect = [IRCTextFormatterEffect effectWithType:IRCTextFormatterEffectBold];
 
 		[effects addObject:effect];
 
@@ -307,7 +307,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 	}
 
 	if (textIsItalicized) {
-		IRCTextFormatterEffect *effect = [IRCTextFormatterEffect effectWithType:IRCTextFormatterItalicEffect];
+		IRCTextFormatterEffect *effect = [IRCTextFormatterEffect effectWithType:IRCTextFormatterEffectItalic];
 
 		[effects addObject:effect];
 
@@ -315,7 +315,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 	}
 
 	if (textIsMonospace) {
-		IRCTextFormatterEffect *effect = [IRCTextFormatterEffect effectWithType:IRCTextFormatterMonospaceEffect];
+		IRCTextFormatterEffect *effect = [IRCTextFormatterEffect effectWithType:IRCTextFormatterEffectMonospace];
 
 		[effects addObject:effect];
 
@@ -323,7 +323,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 	}
 
 	if (textIsStruckthrough) {
-		IRCTextFormatterEffect *effect = [IRCTextFormatterEffect effectWithType:IRCTextFormatterStrikethroughEffect];
+		IRCTextFormatterEffect *effect = [IRCTextFormatterEffect effectWithType:IRCTextFormatterEffectStrikethrough];
 
 		[effects addObject:effect];
 
@@ -331,7 +331,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 	}
 
 	if (textIsUnderlined) {
-		IRCTextFormatterEffect *effect = [IRCTextFormatterEffect effectWithType:IRCTextFormatterUnderlineEffect];
+		IRCTextFormatterEffect *effect = [IRCTextFormatterEffect effectWithType:IRCTextFormatterEffectUnderline];
 
 		[effects addObject:effect];
 
@@ -415,11 +415,11 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 	}
 
 	/* Add length of command */
-	if (lineType == TVCLogLinePrivateMessageType || lineType == TVCLogLinePrivateMessageNoHighlightType) {
+	if (lineType == TVCLogLineTypePrivateMessage || lineType == TVCLogLineTypePrivateMessageNoHighlight) {
 		minimumLength += _textTruncationPRIVMSGCommandConstant;
-	} else if (lineType == TVCLogLineActionType || lineType == TVCLogLineActionNoHighlightType) {
+	} else if (lineType == TVCLogLineTypeAction || lineType == TVCLogLineTypeActionNoHighlight) {
 		minimumLength += _textTruncationACTIONCommandConstant;
-	} else if (lineType == TVCLogLineNoticeType) {
+	} else if (lineType == TVCLogLineTypeNotice) {
 		minimumLength += _textTruncationNOTICECommandConstant;
 	} else {
 		NSAssert(NO, @"Line type not supported");
@@ -649,11 +649,11 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 						  usingBlock:^(NSDictionary *attributes, NSRange effectiveRange, BOOL *stop)
 	 {
 		 switch (effect) {
-			 case IRCTextFormatterNoEffect:
+			 case IRCTextFormatterEffectNone:
 			 {
 					break;
 			 }
-			 case IRCTextFormatterBoldEffect:
+			 case IRCTextFormatterEffectBold:
 			 {
 				 if ([attributes boolForKey:IRCTextFormatterBoldAttributeName] == NO) {
 					 return;
@@ -665,7 +665,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterItalicEffect:
+			 case IRCTextFormatterEffectItalic:
 			 {
 				 if ([attributes boolForKey:IRCTextFormatterItalicAttributeName] == NO) {
 					 return;
@@ -677,7 +677,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterMonospaceEffect:
+			 case IRCTextFormatterEffectMonospace:
 			 {
 				 if ([attributes boolForKey:IRCTextFormatterMonospaceAttributeName] == NO) {
 					 return;
@@ -689,7 +689,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterUnderlineEffect:
+			 case IRCTextFormatterEffectUnderline:
 			 {
 				 if ([attributes boolForKey:IRCTextFormatterUnderlineAttributeName] == NO) {
 					 return;
@@ -701,7 +701,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterStrikethroughEffect:
+			 case IRCTextFormatterEffectStrikethrough:
 			 {
 				 if ([attributes boolForKey:IRCTextFormatterStrikethroughAttributeName] == NO) {
 					 return;
@@ -713,7 +713,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterForegroundColorEffect:
+			 case IRCTextFormatterEffectForegroundColor:
 			 {
 				 id foregroundColor = attributes[IRCTextFormatterForegroundColorAttributeName];
 
@@ -740,7 +740,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterBackgroundColorEffect:
+			 case IRCTextFormatterEffectBackgroundColor:
 			 {
 				 id backgroundColor = attributes[IRCTextFormatterBackgroundColorAttributeName];
 
@@ -767,7 +767,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterSpoilerEffect:
+			 case IRCTextFormatterEffectSpoiler:
 			 {
 				 if ([attributes boolForKey:IRCTextFormatterSpoilerAttributeName] == NO) {
 					 return;
@@ -803,11 +803,11 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 		 NSFont *baseFont = attributes[NSFontAttributeName];
 
 		 switch (effect) {
-			 case IRCTextFormatterNoEffect:
+			 case IRCTextFormatterEffectNone:
 			 {
 					break;
 			 }
-			 case IRCTextFormatterBoldEffect:
+			 case IRCTextFormatterEffectBold:
 			 {
 				 if ([baseFont fontTraitSet:NSBoldFontMask] == NO) {
 					 baseFont = [RZFontManager() convertFont:baseFont toHaveTrait:NSBoldFontMask];
@@ -821,7 +821,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterItalicEffect:
+			 case IRCTextFormatterEffectItalic:
 			 {
 				 if ([baseFont fontTraitSet:NSItalicFontMask] == NO) {
 					 baseFont = [RZFontManager() convertFont:baseFont toHaveTrait:NSItalicFontMask];
@@ -835,7 +835,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterMonospaceEffect:
+			 case IRCTextFormatterEffectMonospace:
 			 {
 				 baseFont = [RZFontManager() convertFont:baseFont toFamily:@"Menlo"];
 
@@ -845,7 +845,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterUnderlineEffect:
+			 case IRCTextFormatterEffectUnderline:
 			 {
 				 [self addAttribute:IRCTextFormatterUnderlineAttributeName value:@(YES) range:effectiveRange];
 
@@ -853,7 +853,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterStrikethroughEffect:
+			 case IRCTextFormatterEffectStrikethrough:
 			 {
 				 [self addAttribute:IRCTextFormatterStrikethroughAttributeName value:@(YES) range:effectiveRange];
 
@@ -861,7 +861,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterForegroundColorEffect:
+			 case IRCTextFormatterEffectForegroundColor:
 			 {
 				 if (value == nil) {
 					 break;
@@ -886,7 +886,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterBackgroundColorEffect:
+			 case IRCTextFormatterEffectBackgroundColor:
 			 {
 				 if (value == nil) {
 					 break;
@@ -911,7 +911,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterSpoilerEffect:
+			 case IRCTextFormatterEffectSpoiler:
 			 {
 				 [self addAttribute:IRCTextFormatterSpoilerAttributeName value:value range:effectiveRange];
 
@@ -935,11 +935,11 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 		 }
 
 		 switch (effect) {
-			 case IRCTextFormatterNoEffect:
+			 case IRCTextFormatterEffectNone:
 			 {
 				 break;
 			 }
-			 case IRCTextFormatterBoldEffect:
+			 case IRCTextFormatterEffectBold:
 			 {
 				 if ([baseFont fontTraitSet:NSBoldFontMask]) {
 					 baseFont = [RZFontManager() convertFont:baseFont toNotHaveTrait:NSBoldFontMask];
@@ -953,7 +953,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterItalicEffect:
+			 case IRCTextFormatterEffectItalic:
 			 {
 				 if ([baseFont fontTraitSet:NSItalicFontMask]) {
 					 baseFont = [RZFontManager() convertFont:baseFont toNotHaveTrait:NSItalicFontMask];
@@ -967,7 +967,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterMonospaceEffect:
+			 case IRCTextFormatterEffectMonospace:
 			 {
 				 [self removeAttribute:NSFontAttributeName range:effectiveRange];
 
@@ -975,7 +975,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterUnderlineEffect:
+			 case IRCTextFormatterEffectUnderline:
 			 {
 				 [self removeAttribute:NSUnderlineStyleAttributeName range:effectiveRange];
 
@@ -983,7 +983,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterStrikethroughEffect:
+			 case IRCTextFormatterEffectStrikethrough:
 			 {
 				 [self removeAttribute:NSStrikethroughStyleAttributeName range:effectiveRange];
 
@@ -991,7 +991,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterForegroundColorEffect:
+			 case IRCTextFormatterEffectForegroundColor:
 			 {
 				 [self removeAttribute:NSBackgroundColorAttributeName range:effectiveRange];
 
@@ -999,7 +999,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterBackgroundColorEffect:
+			 case IRCTextFormatterEffectBackgroundColor:
 			 {
 				 [self removeAttribute:NSBackgroundColorAttributeName range:effectiveRange];
 
@@ -1007,7 +1007,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 				 break;
 			 }
-			 case IRCTextFormatterSpoilerEffect:
+			 case IRCTextFormatterEffectSpoiler:
 			 {
 				 [self removeAttribute:IRCTextFormatterSpoilerAttributeName range:effectiveRange];
 

@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define themeSettings()				[themeController() customSettings]
 
-TEXTUAL_EXTERN NSString * const TXErrorDomain;
+TEXTUAL_EXTERN NSErrorDomain const TXErrorDomain;
 
 @interface TXSharedApplication : NSObject
 + (TXAppearance *)sharedAppearance;

@@ -41,13 +41,13 @@ NS_ASSUME_NONNULL_BEGIN
 @class IRCUser, IRCUserMutable;
 
 typedef NS_OPTIONS(NSUInteger, IRCUserRank) {
-	IRCUserNoRank				= 1 << 0,	// nothing
-	IRCUserIRCopByModeRank		= 1 << 1,	// +y/+Y
-	IRCUserChannelOwnerRank		= 1 << 2,	// +q
-	IRCUserSuperOperatorRank	= 1 << 3,	// +a
-	IRCUserNormalOperatorRank	= 1 << 4,	// +o
-	IRCUserHalfOperatorRank		= 1 << 5,	// +h
-	IRCUserVoicedRank			= 1 << 6	// +v
+	IRCUserRankNone				= 1 << 0,	// nothing
+	IRCUserRankIRCopByMode		= 1 << 1,	// +y/+Y
+	IRCUserRankChannelOwner		= 1 << 2,	// +q
+	IRCUserRankSuperOperator	= 1 << 3,	// +a
+	IRCUserRankNonermalOperator	= 1 << 4,	// +o
+	IRCUserRankHalfOperator		= 1 << 5,	// +h
+	IRCUserRankVoiced			= 1 << 6	// +v
 };
 
 #pragma mark -
@@ -69,7 +69,7 @@ typedef NS_OPTIONS(NSUInteger, IRCUserRank) {
 @property (getter=isOp, readonly) BOOL op;
 @property (getter=isHalfOp, readonly) BOOL halfOp;
 
-// -rank(s) returns IRCUserIRCopByModeRank if the +Y/+y modes defined
+// -rank(s) returns IRCUserRankIRCopByMode if the +Y/+y modes defined
 // by InspIRCd-2.0 for IRC operators are in use by this user. It does not
 // return this if the user is an IRC operator, but lacks these modes.
 // Use -isCop for the status of the user regardless of these modes.

@@ -310,7 +310,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSUInteger stringLength = self.stringLength;
 
 	if (stringLength == 0) {
-		return TVCTextViewCaretInOnlyLine;
+		return TVCTextViewCaretLocationOnlyLine;
 	}
 
 	NSRange selectedRange = self.selectedRange;
@@ -341,14 +341,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Process results */
 	if (inFirstLine && inLastLine) {
-		return TVCTextViewCaretInOnlyLine;
+		return TVCTextViewCaretLocationOnlyLine;
 	} else if (inFirstLine) {
-		return TVCTextViewCaretInFirstLine;
+		return TVCTextViewCaretLocationFirstLine;
 	} else if (inLastLine) {
-		return TVCTextViewCaretInLastLine;
+		return TVCTextViewCaretLocationLastLine;
 	}
 
-	return TVCTextViewCaretInMiddle;
+	return TVCTextViewCaretLocationMiddle;
 }
 
 - (CGFloat)highestHeightBelowHeight:(CGFloat)maximumHeight withPadding:(CGFloat)valuePadding

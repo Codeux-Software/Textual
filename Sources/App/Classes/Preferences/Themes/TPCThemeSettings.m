@@ -403,14 +403,14 @@ NS_ASSUME_NONNULL_BEGIN
 		id nicknameColorStyle = styleSettings[@"Nickname Color Style"];
 
 		if ([nicknameColorStyle isEqual:@"HSL-light"]) {
-			self.nicknameColorStyle = TPCThemeSettingsNicknameColorHashHueLightStyle;
+			self.nicknameColorStyle = TPCThemeSettingsNicknameColorStyleHashHueLight;
 		} else if ([nicknameColorStyle isEqual:@"HSL-dark"]) {
-			self.nicknameColorStyle = TPCThemeSettingsNicknameColorHashHueDarkStyle;
+			self.nicknameColorStyle = TPCThemeSettingsNicknameColorStyleHashHueDark;
 		} else {
 			if (self.underlyingWindowColorIsDark == NO) {
-				self.nicknameColorStyle = TPCThemeSettingsNicknameColorHashHueLightStyle;
+				self.nicknameColorStyle = TPCThemeSettingsNicknameColorStyleHashHueLight;
 			} else {
-				self.nicknameColorStyle = TPCThemeSettingsNicknameColorHashHueDarkStyle;
+				self.nicknameColorStyle = TPCThemeSettingsNicknameColorStyleHashHueDark;
 			}
 		}
 

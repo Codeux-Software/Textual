@@ -287,7 +287,7 @@ NS_ASSUME_NONNULL_BEGIN
 				   alternateButton:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[uyy-qm]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
-					   if (buttonClicked == TDCAlertResponseAlternateButton) {
+					   if (buttonClicked == TDCAlertResponseAlternate) {
 						   [self actionContactSupport:nil];
 					   }
 					   
@@ -304,7 +304,7 @@ NS_ASSUME_NONNULL_BEGIN
 				   alternateButton:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[on9-6e]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
-					   if (buttonClicked == TDCAlertResponseAlternateButton) {
+					   if (buttonClicked == TDCAlertResponseAlternate) {
 						   [self actionContactSupport:nil];
 					   }
 					   
@@ -439,10 +439,10 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Save eligibility */
 	NSUInteger eligibility = [eligibilityObject unsignedIntegerValue];
 
-	if (eligibility != TLOInAppPurchaseUpgradeEligibleDiscount &&
-		eligibility != TLOInAppPurchaseUpgradeEligibleFree &&
-		eligibility != TLOInAppPurchaseUpgradeNotEligible &&
-		eligibility != TLOInAppPurchaseUpgradeAlreadyUpgraded)
+	if (eligibility != TLOInAppPurchaseUpgradeEligibilityDiscount &&
+		eligibility != TLOInAppPurchaseUpgradeEligibilityFree &&
+		eligibility != TLOInAppPurchaseUpgradeEligibilityNot &&
+		eligibility != TLOInAppPurchaseUpgradeEligibilityAlreadyUpgraded)
 	{
 		NSString *errorMessage = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[bdh-bw]", eligibility);
 
@@ -462,12 +462,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_eligibilityDetermined
 {
-	if (self.eligibility == TLOInAppPurchaseUpgradeEligibleDiscount) {
+	if (self.eligibility == TLOInAppPurchaseUpgradeEligibilityDiscount) {
 		self.sheet = self.sheetEligibleDiscount;
-	} else if (self.eligibility == TLOInAppPurchaseUpgradeNotEligible) {
+	} else if (self.eligibility == TLOInAppPurchaseUpgradeEligibilityNot) {
 		self.sheet = self.sheetNotEligible;
-	} else if (self.eligibility == TLOInAppPurchaseUpgradeEligibleFree ||
-			   self.eligibility == TLOInAppPurchaseUpgradeAlreadyUpgraded)
+	} else if (self.eligibility == TLOInAppPurchaseUpgradeEligibilityFree ||
+			   self.eligibility == TLOInAppPurchaseUpgradeEligibilityAlreadyUpgraded)
 	{
 		self.sheet = self.sheetEligibleFree;
 	}

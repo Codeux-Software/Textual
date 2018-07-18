@@ -282,8 +282,8 @@ NS_ASSUME_NONNULL_BEGIN
 	TXAppearanceType appearanceType = self.appearanceType;
 
 	switch (appearanceType) {
-		case TXAppearanceMavericksAquaDarkType:
-		case TXAppearanceMavericksGraphiteDarkType:
+		case TXAppearanceTypeMavericksAquaDark:
+		case TXAppearanceTypeMavericksGraphiteDark:
 		{
 			if (up) {
 				if (selected) {
@@ -299,8 +299,8 @@ NS_ASSUME_NONNULL_BEGIN
 				}
 			}
 		} // Mavericks
-		case TXAppearanceYosemiteDarkType:
-		case TXAppearanceMojaveDarkType:
+		case TXAppearanceTypeYosemiteDark:
+		case TXAppearanceTypeMojaveDark:
 		{
 			if (up) {
 				return [NSImage imageNamed:@"YosemiteDarkServerListViewDisclosureUp"];
@@ -328,8 +328,8 @@ NS_ASSUME_NONNULL_BEGIN
 	TXAppearanceType appearanceType = self.appearanceType;
 
 	switch (appearanceType) {
-		case TXAppearanceMavericksAquaLightType:
-		case TXAppearanceMavericksGraphiteLightType:
+		case TXAppearanceTypeMavericksAquaLight:
+		case TXAppearanceTypeMavericksGraphiteLight:
 		{
 			if (isActive) {
 				return @"channelRoomStatusIconMavericksLightActive";
@@ -337,8 +337,8 @@ NS_ASSUME_NONNULL_BEGIN
 				return @"channelRoomStatusIconMavericksLightInactive";
 			}
 		}
-		case TXAppearanceMavericksAquaDarkType:
-		case TXAppearanceMavericksGraphiteDarkType:
+		case TXAppearanceTypeMavericksAquaDark:
+		case TXAppearanceTypeMavericksGraphiteDark:
 		{
 			if (isActive) {
 				return @"channelRoomStatusIconMavericksDarkActive";
@@ -346,8 +346,8 @@ NS_ASSUME_NONNULL_BEGIN
 				return @"channelRoomStatusIconMavericksDarkInactive";
 			}
 		} // Mavericks
-		case TXAppearanceYosemiteLightType:
-		case TXAppearanceMojaveLightType:
+		case TXAppearanceTypeYosemiteLight:
+		case TXAppearanceTypeMojaveLight:
 		{
 			/* When the window is not in focus, when this item is selected, and when we are not
 			 using vibrant dark mode; the outline view does not turn our icon to a light variant
@@ -371,8 +371,8 @@ NS_ASSUME_NONNULL_BEGIN
 				return @"channelRoomStatusIconYosemiteLightInactive";
 			}
 		} // Yosemite, Mojave
-		case TXAppearanceYosemiteDarkType:
-		case TXAppearanceMojaveDarkType:
+		case TXAppearanceTypeYosemiteDark:
+		case TXAppearanceTypeMojaveDark:
 		{
 			*treatAsTemplate = NO;
 
@@ -392,10 +392,10 @@ NS_ASSUME_NONNULL_BEGIN
 	TXAppearanceType appearanceType = self.appearanceType;
 
 	switch (appearanceType) {
-		case TXAppearanceMavericksAquaLightType:
-		case TXAppearanceMavericksAquaDarkType:
-		case TXAppearanceMavericksGraphiteLightType:
-		case TXAppearanceMavericksGraphiteDarkType:
+		case TXAppearanceTypeMavericksAquaLight:
+		case TXAppearanceTypeMavericksAquaDark:
+		case TXAppearanceTypeMavericksGraphiteLight:
+		case TXAppearanceTypeMavericksGraphiteDark:
 		{
 			if (isSelected) {
 				return @"NSUser";
@@ -407,8 +407,8 @@ NS_ASSUME_NONNULL_BEGIN
 				return @"MavericksDarkServerListViewSelectedPrivateMessageUserInactive";
 			}
 		} // Mavericks
-		case TXAppearanceYosemiteLightType:
-		case TXAppearanceMojaveLightType:
+		case TXAppearanceTypeYosemiteLight:
+		case TXAppearanceTypeMojaveLight:
 		{
 			*treatAsTemplate = YES;
 
@@ -418,8 +418,8 @@ NS_ASSUME_NONNULL_BEGIN
 				return @"VibrantLightServerListViewPrivateMessageUserIconInactive";
 			}
 		} // Yosemite, Mojave
-		case TXAppearanceYosemiteDarkType:
-		case TXAppearanceMojaveDarkType:
+		case TXAppearanceTypeYosemiteDark:
+		case TXAppearanceTypeMojaveDark:
 		{
 			*treatAsTemplate = NO;
 

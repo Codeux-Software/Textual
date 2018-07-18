@@ -60,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak, readwrite) IBOutlet TVCBasicTableView *fileTransferTable;
 @property (nonatomic, strong) IBOutlet NSArrayController *fileTransfersController;
 @property (nonatomic, strong, nullable) TLOInternetAddressLookup *IPAddressRequest;
-@property (readonly) TDCFileTransferDialogNavigationSelectedTab navigationSelection;
+@property (readonly) TDCFileTransferDialogSelection navigationSelection;
 @property (nonatomic, strong) TLOTimer *maintenanceTimer;
 @property (nonatomic, copy, nullable) NSURL *downloadDestinationURLPrivate;
 
@@ -229,7 +229,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *savePath = self.downloadDestinationURLPrivate.path;
 
-	if ([TPCPreferences fileTransferRequestReplyAction] == TXFileTransferRequestReplyAutomaticallyDownloadAction) {
+	if ([TPCPreferences fileTransferRequestReplyAction] == TXFileTransferRequestReplyAutomaticallyDownload) {
 		if (savePath == nil) {
 			savePath = [TPCPathInfo userDownloads];
 		}
@@ -326,8 +326,8 @@ NS_ASSUME_NONNULL_BEGIN
 			for (TDCFileTransferDialogTransferController *fileTransfer in selectedFileTransfers) {
 				TDCFileTransferDialogTransferStatus transferStatus = fileTransfer.transferStatus;
 
-				if (transferStatus == TDCFileTransferDialogTransferStoppedStatus ||
-					transferStatus == TDCFileTransferDialogTransferRecoverableErrorStatus)
+				if (transferStatus == TDCFileTransferDialogTransferStatusStopped ||
+					transferStatus == TDCFileTransferDialogTransferStatusRecoverableError)
 				{
 					return YES;
 				}
@@ -340,15 +340,15 @@ NS_ASSUME_NONNULL_BEGIN
 			for (TDCFileTransferDialogTransferController *fileTransfer in selectedFileTransfers) {
 				TDCFileTransferDialogTransferStatus transferStatus = fileTransfer.transferStatus;
 
-				if (transferStatus == TDCFileTransferDialogTransferConnectingStatus ||
-					transferStatus == TDCFileTransferDialogTransferReceivingStatus ||
-					transferStatus == TDCFileTransferDialogTransferIsListeningAsSenderStatus ||
-					transferStatus == TDCFileTransferDialogTransferIsListeningAsReceiverStatus ||
-					transferStatus == TDCFileTransferDialogTransferSendingStatus ||
-					transferStatus == TDCFileTransferDialogTransferMappingListeningPortStatus ||
-					transferStatus == TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus ||
-					transferStatus == TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus ||
-					transferStatus == TDCFileTransferDialogTransferWaitingForResumeAcceptStatus)
+				if (transferStatus == TDCFileTransferDialogTransferStatusConnecting ||
+					transferStatus == TDCFileTransferDialogTransferStatusReceiving ||
+					transferStatus == TDCFileTransferDialogTransferStatusIsListeningAsSender ||
+					transferStatus == TDCFileTransferDialogTransferStatusIsListeningAsReceiver ||
+					transferStatus == TDCFileTransferDialogTransferStatusSending ||
+					transferStatus == TDCFileTransferDialogTransferStatusMappingListeningPort ||
+					transferStatus == TDCFileTransferDialogTransferStatusWaitingForLocalIPAddress ||
+					transferStatus == TDCFileTransferDialogTransferStatusWaitingForReceiverToAccept ||
+					transferStatus == TDCFileTransferDialogTransferStatusWaitingForResumeAccept)
 				{
 					return YES;
 				}
@@ -369,7 +369,7 @@ NS_ASSUME_NONNULL_BEGIN
 					continue;
 				}
 
-				if (transferStatus == TDCFileTransferDialogTransferCompleteStatus) {
+				if (transferStatus == TDCFileTransferDialogTransferStatusComplete) {
 					return YES;
 				}
 			}
@@ -385,7 +385,7 @@ NS_ASSUME_NONNULL_BEGIN
 					continue;
 				}
 
-				if (transferStatus == TDCFileTransferDialogTransferCompleteStatus) {
+				if (transferStatus == TDCFileTransferDialogTransferStatusComplete) {
 					return YES;
 				}
 			}
@@ -418,8 +418,8 @@ NS_ASSUME_NONNULL_BEGIN
 	[self enumerateSelectedFileTransfers:^(TDCFileTransferDialogTransferController *fileTransfer, NSUInteger index, BOOL *stop) {
 		TDCFileTransferDialogTransferStatus transferStatus = fileTransfer.transferStatus;
 
-		if (transferStatus != TDCFileTransferDialogTransferStoppedStatus &&
-			transferStatus != TDCFileTransferDialogTransferRecoverableErrorStatus)
+		if (transferStatus != TDCFileTransferDialogTransferStatusStopped &&
+			transferStatus != TDCFileTransferDialogTransferStatusRecoverableError)
 		{
 			return;
 		}
@@ -571,7 +571,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSString *)IPAddress
 {
-	if ([TPCPreferences fileTransferIPAddressDetectionMethod] == TXFileTransferIPAddressManualDetectionMethod) {
+	if ([TPCPreferences fileTransferIPAddressDetectionMethod] == TXFileTransferIPAddressMethodManual) {
 		NSString *userAddress = [TPCPreferences fileTransferManuallyEnteredIPAddress];
 
 		if (userAddress.length == 0) {
@@ -610,7 +610,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.IPAddress = address;
 
 	[self enumerateFileTransferSenders:^(TDCFileTransferDialogTransferController *fileTransfer, BOOL *stop) {
-		if (fileTransfer.transferStatus != TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus) {
+		if (fileTransfer.transferStatus != TDCFileTransferDialogTransferStatusWaitingForLocalIPAddress) {
 			return;
 		}
 
@@ -623,7 +623,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)internetAddressLookupFailed
 {
 	[self enumerateFileTransferSenders:^(TDCFileTransferDialogTransferController *fileTransfer, BOOL *stop) {
-		if (fileTransfer.transferStatus != TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus) {
+		if (fileTransfer.transferStatus != TDCFileTransferDialogTransferStatusWaitingForLocalIPAddress) {
 			return;
 		}
 
@@ -636,20 +636,20 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Navigation
 
-- (TDCFileTransferDialogNavigationSelectedTab)navigationSelection
+- (TDCFileTransferDialogSelection)navigationSelection
 {
 	return self.navigationControllerCell.selectedSegment;
 }
 
 - (void)navigationSelectionDidChange:(id)sender
 {
-	TDCFileTransferDialogNavigationSelectedTab selection = self.navigationSelection;
+	TDCFileTransferDialogSelection selection = self.navigationSelection;
 
 	NSPredicate *filterPredicate = nil;
 
-	if (selection == TDCFileTransferDialogNavigationSendingSelectedTab) {
+	if (selection == TDCFileTransferDialogSelectionSending) {
 		filterPredicate = [NSPredicate predicateWithFormat:@"isSender == YES"];
-	} else if (selection == TDCFileTransferDialogNavigationReceivingSelectedTab) {
+	} else if (selection == TDCFileTransferDialogSelectionReceiving) {
 		filterPredicate = [NSPredicate predicateWithFormat:@"isSender == NO"];
 	}
 
@@ -675,10 +675,10 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self fileTransfersMatchingCondition:^BOOL(TDCFileTransferDialogTransferController *fileTransfer) {
 		TDCFileTransferDialogTransferStatus transferStatus = fileTransfer.transferStatus;
 
-		if (transferStatus != TDCFileTransferDialogTransferCompleteStatus &&
-			transferStatus != TDCFileTransferDialogTransferStoppedStatus &&
-			transferStatus != TDCFileTransferDialogTransferFatalErrorStatus &&
-			transferStatus != TDCFileTransferDialogTransferRecoverableErrorStatus)
+		if (transferStatus != TDCFileTransferDialogTransferStatusComplete &&
+			transferStatus != TDCFileTransferDialogTransferStatusStopped &&
+			transferStatus != TDCFileTransferDialogTransferStatusFatalError &&
+			transferStatus != TDCFileTransferDialogTransferStatusRecoverableError)
 		{
 			return NO;
 		}
@@ -692,8 +692,8 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self fileTransfersMatchingCondition:^BOOL(TDCFileTransferDialogTransferController *fileTransfer) {
 		TDCFileTransferDialogTransferStatus transferStatus = fileTransfer.transferStatus;
 
-		if (transferStatus != TDCFileTransferDialogTransferReceivingStatus &&
-			transferStatus != TDCFileTransferDialogTransferSendingStatus)
+		if (transferStatus != TDCFileTransferDialogTransferStatusReceiving &&
+			transferStatus != TDCFileTransferDialogTransferStatusSending)
 		{
 			return NO;
 		}

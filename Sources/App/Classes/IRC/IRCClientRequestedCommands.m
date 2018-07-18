@@ -39,11 +39,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, IRCClientRequestedCommandsHiddenState)
+typedef NS_ENUM(NSUInteger, IRCClientRequestedCommandVisibility)
 {
-	IRCClientRequestedCommandsUnknownHiddenState = 0,
-	IRCClientRequestedCommandsIsHiddenState,
-	IRCClientRequestedCommandsIsNotHiddenState
+	IRCClientRequestedCommandVisibilityUnknown = 0,
+	IRCClientRequestedCommandVisibilityHidden,
+	IRCClientRequestedCommandVisibilityVisible
 };
 
 @interface IRCClientRequestedCommand : NSObject
@@ -155,18 +155,18 @@ typedef NS_ENUM(NSUInteger, IRCClientRequestedCommandsHiddenState)
 	}
 }
 
-- (IRCClientRequestedCommandsHiddenState)commandHiddenState:(IRCRemoteCommand)command
+- (IRCClientRequestedCommandVisibility)commandHiddenState:(IRCRemoteCommand)command
 {
 	IRCClientRequestedCommand *commandObject = [self findCommand:command];
 
 	if (commandObject == nil) {
-		return IRCClientRequestedCommandsUnknownHiddenState;
+		return IRCClientRequestedCommandVisibilityUnknown;
 	}
 
 	if (commandObject.hiddenResponse == NO) {
-		return IRCClientRequestedCommandsIsNotHiddenState;
+		return IRCClientRequestedCommandVisibilityVisible;
 	} else {
-		return IRCClientRequestedCommandsIsHiddenState;
+		return IRCClientRequestedCommandVisibilityHidden;
 	}
 }
 
@@ -178,142 +178,142 @@ typedef NS_ENUM(NSUInteger, IRCClientRequestedCommandsHiddenState)
 
 - (BOOL)inVisibleIsonRequest
 {
-	return ([self commandHiddenState:IRCRemoteCommandIsonIndex] == IRCClientRequestedCommandsIsNotHiddenState);
+	return ([self commandHiddenState:IRCRemoteCommandIson] == IRCClientRequestedCommandVisibilityVisible);
 }
 
 - (void)recordIsonRequestOpened
 {
-	[self addCommand:IRCRemoteCommandIsonIndex hiddenResponse:YES];
+	[self addCommand:IRCRemoteCommandIson hiddenResponse:YES];
 }
 
 - (void)recordIsonRequestOpenedAsVisible
 {
-	[self addCommand:IRCRemoteCommandIsonIndex hiddenResponse:NO];
+	[self addCommand:IRCRemoteCommandIson hiddenResponse:NO];
 }
 
 - (void)recordIsonRequestClosed
 {
-	[self removeCommand:IRCRemoteCommandIsonIndex];
+	[self removeCommand:IRCRemoteCommandIson];
 }
 
 #if 0
 - (BOOL)inVisibleMonitorRequest
 {
-	return ([self commandHiddenState:IRCRemoteCommandMonitorIndex] == IRCClientRequestedCommandsIsNotHiddenState);
+	return ([self commandHiddenState:IRCRemoteCommandMonitor] == IRCClientRequestedCommandVisibilityVisible);
 }
 
 - (void)recordMonitorRequestOpened
 {
-	[self addCommand:IRCRemoteCommandMonitorIndex hiddenResponse:YES];
+	[self addCommand:IRCRemoteCommandMonitor hiddenResponse:YES];
 }
 
 - (void)recordMonitorRequestOpenedWithCount:(NSUInteger)count
 {
 	NSParameterAssert(count > 0);
 
-	[self addCommand:IRCRemoteCommandMonitorIndex withCount:count hiddenResponse:YES];
+	[self addCommand:IRCRemoteCommandMonitor withCount:count hiddenResponse:YES];
 }
 
 - (void)recordMonitorRequestOpenedAsVisibleWithCount:(NSUInteger)count
 {
 	NSParameterAssert(count > 0);
 
-	[self addCommand:IRCRemoteCommandMonitorIndex withCount:count hiddenResponse:NO];
+	[self addCommand:IRCRemoteCommandMonitor withCount:count hiddenResponse:NO];
 }
 
 - (void)recordMonitorRequestOpenedAsVisible
 {
-	[self addCommand:IRCRemoteCommandMonitorIndex hiddenResponse:NO];
+	[self addCommand:IRCRemoteCommandMonitor hiddenResponse:NO];
 }
 
 - (void)recordMonitorRequestClosedOne
 {
-	[self decrementCommandCount:IRCRemoteCommandMonitorIndex];
+	[self decrementCommandCount:IRCRemoteCommandMonitor];
 }
 
 - (void)recordMonitorRequestClosed
 {
-	[self removeCommand:IRCRemoteCommandMonitorIndex];
+	[self removeCommand:IRCRemoteCommandMonitor];
 }
 
 - (BOOL)inVisibleNamesRequest
 {
-	return ([self commandHiddenState:IRCRemoteCommandNamesIndex] == IRCClientRequestedCommandsIsNotHiddenState);
+	return ([self commandHiddenState:IRCRemoteCommandNames] == IRCClientRequestedCommandVisibilityVisible);
 }
 
 - (void)recordNamesRequestOpened
 {
-	[self addCommand:IRCRemoteCommandNamesIndex hiddenResponse:YES];
+	[self addCommand:IRCRemoteCommandNames hiddenResponse:YES];
 }
 
 - (void)recordNamesRequestOpenedAsVisible
 {
-	[self addCommand:IRCRemoteCommandNamesIndex hiddenResponse:NO];
+	[self addCommand:IRCRemoteCommandNames hiddenResponse:NO];
 }
 
 - (void)recordNamesRequestClosed
 {
-	[self removeCommand:IRCRemoteCommandNamesIndex];
+	[self removeCommand:IRCRemoteCommandNames];
 }
 
 - (BOOL)inVisibleWatchRequest
 {
-	return ([self commandHiddenState:IRCRemoteCommandWatchIndex] == IRCClientRequestedCommandsIsNotHiddenState);
+	return ([self commandHiddenState:IRCRemoteCommandWatch] == IRCClientRequestedCommandVisibilityVisible);
 }
 
 - (void)recordWatchRequestOpened
 {
-	[self addCommand:IRCRemoteCommandWatchIndex hiddenResponse:YES];
+	[self addCommand:IRCRemoteCommandWatch hiddenResponse:YES];
 }
 
 - (void)recordWatchRequestOpenedWithCount:(NSUInteger)count
 {
 	NSParameterAssert(count > 0);
 
-	[self addCommand:IRCRemoteCommandWatchIndex withCount:count hiddenResponse:YES];
+	[self addCommand:IRCRemoteCommandWatch withCount:count hiddenResponse:YES];
 }
 
 - (void)recordWatchRequestOpenedAsVisibleWithCount:(NSUInteger)count
 {
 	NSParameterAssert(count > 0);
 
-	[self addCommand:IRCRemoteCommandWatchIndex withCount:count hiddenResponse:NO];
+	[self addCommand:IRCRemoteCommandWatch withCount:count hiddenResponse:NO];
 }
 
 - (void)recordWatchRequestOpenedAsVisible
 {
-	[self addCommand:IRCRemoteCommandWatchIndex hiddenResponse:NO];
+	[self addCommand:IRCRemoteCommandWatch hiddenResponse:NO];
 }
 
 - (void)recordWatchRequestClosedOne
 {
-	[self decrementCommandCount:IRCRemoteCommandWatchIndex];
+	[self decrementCommandCount:IRCRemoteCommandWatch];
 }
 
 - (void)recordWatchRequestClosed
 {
-	[self removeCommand:IRCRemoteCommandWatchIndex];
+	[self removeCommand:IRCRemoteCommandWatch];
 }
 #endif
 
 - (BOOL)inVisibleWhoRequest
 {
-	return ([self commandHiddenState:IRCRemoteCommandWhoIndex] == IRCClientRequestedCommandsIsNotHiddenState);
+	return ([self commandHiddenState:IRCRemoteCommandWho] == IRCClientRequestedCommandVisibilityVisible);
 }
 
 - (void)recordWhoRequestOpened
 {
-	[self addCommand:IRCRemoteCommandWhoIndex hiddenResponse:YES];
+	[self addCommand:IRCRemoteCommandWho hiddenResponse:YES];
 }
 
 - (void)recordWhoRequestOpenedAsVisible
 {
-	[self addCommand:IRCRemoteCommandWhoIndex hiddenResponse:NO];
+	[self addCommand:IRCRemoteCommandWho hiddenResponse:NO];
 }
 
 - (void)recordWhoRequestClosed
 {
-	[self removeCommand:IRCRemoteCommandWhoIndex];
+	[self removeCommand:IRCRemoteCommandWho];
 }
 
 @end

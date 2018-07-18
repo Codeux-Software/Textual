@@ -101,14 +101,14 @@ NSURL * _Nullable TLOLicenseManagerLicenseFilePath(void);
 NSNumberFormatter *TLOLicenseManagerStringValueNumberFormatter(void);
 NSString *TLOLicenseManagerStringValueForObject(id object);
 
-NSString * const TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey			= @"licenseCreationDate";
-NSString * const TLOLicenseManagerLicenseDictionaryLicenseGenerationKey				= @"licenseGeneration";
-NSString * const TLOLicenseManagerLicenseDictionaryLicenseKeyKey					= @"licenseKey";
-NSString * const TLOLicenseManagerLicenseDictionaryLicenseProductNameKey			= @"licenseProductName";
-NSString * const TLOLicenseManagerLicenseDictionaryLicenseOwnerContactAddressKey	= @"licenseOwnerContactAddress";
-NSString * const TLOLicenseManagerLicenseDictionaryLicenseOwnerNameKey				= @"licenseOwnerName";
-NSString * const TLOLicenseManagerLicenseDictionaryLicenseSignatureKey				= @"licenseSignature";
-NSString * const TLOLicenseManagerLicenseDictionaryLicenseSignatureGenerationKey	= @"licenseSignatureGeneration";
+NSString * const TLOLicenseManagerLicenseDictionaryKeyCreationDate			= @"licenseCreationDate";
+NSString * const TLOLicenseManagerLicenseDictionaryKeyGeneration			= @"licenseGeneration";
+NSString * const TLOLicenseManagerLicenseDictionaryKeyLicenseKey			= @"licenseKey";
+NSString * const TLOLicenseManagerLicenseDictionaryKeyProductName			= @"licenseProductName";
+NSString * const TLOLicenseManagerLicenseDictionaryKeyOwnerContactAddress	= @"licenseOwnerContactAddress";
+NSString * const TLOLicenseManagerLicenseDictionaryKeyOwnerName				= @"licenseOwnerName";
+NSString * const TLOLicenseManagerLicenseDictionaryKeySignature				= @"licenseSignature";
+NSString * const TLOLicenseManagerLicenseDictionaryKeySignatureGeneration	= @"licenseSignatureGeneration";
 #endif
 
 #pragma mark -
@@ -388,7 +388,7 @@ BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary<NSString
 	}
 
 	/* Retrieve license signature information */
-	NSData *licenseSignature = licenseDictionary[TLOLicenseManagerLicenseDictionaryLicenseSignatureKey];
+	NSData *licenseSignature = licenseDictionary[TLOLicenseManagerLicenseDictionaryKeySignature];
 
 	if (licenseSignature == nil) {
 		LogToConsoleError("Missing license signature in license dictionary");
@@ -397,7 +397,7 @@ BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary<NSString
 	}
 
 	/* Retrieve license generation */
-	NSUInteger licenseGeneration = [licenseDictionary unsignedIntegerForKey:TLOLicenseManagerLicenseDictionaryLicenseGenerationKey];
+	NSUInteger licenseGeneration = [licenseDictionary unsignedIntegerForKey:TLOLicenseManagerLicenseDictionaryKeyGeneration];
 
 	if (licenseGeneration != TLOLicenseManagerCurrentLicenseGeneration) {
 		LogToConsoleError("Mismatched license generation in license dictionary");
@@ -411,8 +411,8 @@ BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary<NSString
 	 the license dictinoary signature because thats used for comparison. */
 	NSMutableDictionary *licenseDictionaryToCombine = [licenseDictionary mutableCopy];
 
-	[licenseDictionaryToCombine removeObjectForKey:TLOLicenseManagerLicenseDictionaryLicenseSignatureKey];
-	[licenseDictionaryToCombine removeObjectForKey:TLOLicenseManagerLicenseDictionaryLicenseSignatureGenerationKey];
+	[licenseDictionaryToCombine removeObjectForKey:TLOLicenseManagerLicenseDictionaryKeySignature];
+	[licenseDictionaryToCombine removeObjectForKey:TLOLicenseManagerLicenseDictionaryKeySignatureGeneration];
 
 	NSString *combinedLicenseDataString = TLOLicenseManagerStringValueForObject(licenseDictionaryToCombine);
 
@@ -726,7 +726,7 @@ NSString * _Nullable TLOLicenseManagerLicenseOwnerName(void)
 		return nil;
 	}
 
-	return licenseDictionary[TLOLicenseManagerLicenseDictionaryLicenseOwnerNameKey];
+	return licenseDictionary[TLOLicenseManagerLicenseDictionaryKeyOwnerName];
 }
 
 NSString * _Nullable TLOLicenseManagerLicenseOwnerContactAddress(void)
@@ -737,7 +737,7 @@ NSString * _Nullable TLOLicenseManagerLicenseOwnerContactAddress(void)
 		return nil;
 	}
 
-	return licenseDictionary[TLOLicenseManagerLicenseDictionaryLicenseOwnerContactAddressKey];
+	return licenseDictionary[TLOLicenseManagerLicenseDictionaryKeyOwnerContactAddress];
 }
 
 NSString * _Nullable TLOLicenseManagerLicenseKey(void)
@@ -748,7 +748,7 @@ NSString * _Nullable TLOLicenseManagerLicenseKey(void)
 		return nil;
 	}
 
-	return licenseDictionary[TLOLicenseManagerLicenseDictionaryLicenseKeyKey];
+	return licenseDictionary[TLOLicenseManagerLicenseDictionaryKeyLicenseKey];
 }
 
 NSUInteger TLOLicenseManagerLicenseGeneration(void)
@@ -759,7 +759,7 @@ NSUInteger TLOLicenseManagerLicenseGeneration(void)
 		return 0;
 	}
 
-	return [licenseDictionary unsignedIntegerForKey:TLOLicenseManagerLicenseDictionaryLicenseGenerationKey];
+	return [licenseDictionary unsignedIntegerForKey:TLOLicenseManagerLicenseDictionaryKeyGeneration];
 }
 
 NSString * _Nullable TLOLicenseManagerLicenseCreationDate(void)
@@ -770,7 +770,7 @@ NSString * _Nullable TLOLicenseManagerLicenseCreationDate(void)
 		return nil;
 	}
 
-	return licenseDictionary[TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey];
+	return licenseDictionary[TLOLicenseManagerLicenseDictionaryKeyCreationDate];
 }
 
 NSString * _Nullable TLOLicenseManagerLicenseCreationDateFormatted(void)

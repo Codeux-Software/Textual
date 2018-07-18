@@ -40,10 +40,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, TDCPreferencesControllerNavigationSelection) {
-	TDCPreferencesControllerDefaultNavigationSelection = 0,
-	TDCPreferencesControllerStyleNavigationSelection,
-	TDCPreferencesControllerHiddenPreferencesNavigationSelection
+typedef NS_ENUM(NSUInteger, TDCPreferencesControllerSelection) {
+	TDCPreferencesControllerSelectionDefault = 0,
+	TDCPreferencesControllerSelectionStyle,
+	TDCPreferencesControllerSelectionHiddenPreferences
 };
 
 @protocol TDCPreferencesControllerDelegate;
@@ -52,7 +52,7 @@ typedef NS_ENUM(NSUInteger, TDCPreferencesControllerNavigationSelection) {
 + (void)showTorAnonymityNetworkInlineMediaWarning;
 + (void)openProxySettingsInSystemPreferences;
 
-- (void)show:(TDCPreferencesControllerNavigationSelection)selection;
+- (void)show:(TDCPreferencesControllerSelection)selection;
 @end
 
 @protocol TDCPreferencesControllerDelegate <NSObject>

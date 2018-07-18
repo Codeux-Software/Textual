@@ -41,4 +41,4 @@
 
 #import "StaticDefinitions.h"
 
-extern NSString * const ICLInlineContentErrorDomain;
+extern NSErrorDomain const ICLInlineContentErrorDomain;

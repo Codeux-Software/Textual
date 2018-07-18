@@ -41,12 +41,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class IRCClient;
 
-TEXTUAL_EXTERN NSString * const IRCAddressBookUserTrackingStatusChangedNotification;
+TEXTUAL_EXTERN NSNotificationName const IRCAddressBookUserTrackingStatusChangedNotification;
 
-TEXTUAL_EXTERN NSString * const IRCAddressBookUserTrackingAddedTrackedUserNotification;
+TEXTUAL_EXTERN NSNotificationName const IRCAddressBookUserTrackingAddedTrackedUserNotification;
 
-TEXTUAL_EXTERN NSString * const IRCAddressBookUserTrackingRemovedTrackedUserNotification;
-TEXTUAL_EXTERN NSString * const IRCAddressBookUserTrackingRemovedAllTrackedUsersNotification;
+TEXTUAL_EXTERN NSNotificationName const IRCAddressBookUserTrackingRemovedTrackedUserNotification;
+TEXTUAL_EXTERN NSNotificationName const IRCAddressBookUserTrackingRemovedAllTrackedUsersNotification;
 
 @interface IRCAddressBookUserTrackingContainer : NSObject
 @property (readonly, weak) IRCClient *client;

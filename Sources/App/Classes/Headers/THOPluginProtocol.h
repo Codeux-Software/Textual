@@ -127,8 +127,8 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  * @param textDestination The channel that the message is destined for
  * @param lineType The line type of the message
  *
- *    Possible values: `TVCLogLinePrivateMessageType`, `TVCLogLineActionType`,
- *           `TVCLogLineNoticeType`
+ *    Possible values: `TVCLogLineTypePrivateMessage`, `TVCLogLineTypeAction`,
+ *           `TVCLogLineTypeNotice`
  * @param client The client the message was received on
  * @param receivedAt The date & time of the message. Depending on whether a custom
  *    value was specified using the server-time IRCv3 capability, this `NSDate`

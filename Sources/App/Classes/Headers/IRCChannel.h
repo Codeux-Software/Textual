@@ -51,18 +51,18 @@ typedef NS_ENUM(NSUInteger, IRCChannelStatus) {
 	IRCChannelStatusTerminated,
 };
 
-TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
+TEXTUAL_EXTERN NSNotificationName const IRCChannelConfigurationWasUpdatedNotification;
 
 @interface IRCChannel : IRCTreeItem
 @property (readonly, copy) IRCChannelConfig *config;
-@property (nonatomic, copy) NSString *name; // -setName: will do nothing if type != IRCChannelPrivateMessageType
+@property (nonatomic, copy) NSString *name; // -setName: will do nothing if type != IRCChannelTypePrivateMessage
 @property (nonatomic, copy, nullable) NSString *topic;
 @property (nonatomic, assign) BOOL autoJoin;
 @property (readonly) IRCChannelType type;
 @property (getter=isChannel, readonly) BOOL channel;
 @property (getter=isPrivateMessage, readonly) BOOL privateMessage;
 @property (getter=isPrivateMessageForZNCUser, readonly) BOOL privateMessageForZNCUser; // For example: *status, *nickserv, etc.
-@property (getter=isUtility, readonly) BOOL utility; // See IRCChannelUtilityType in IRCChannelConfig.h
+@property (getter=isUtility, readonly) BOOL utility; // See IRCChannelTypeUtility in IRCChannelConfig.h
 @property (readonly) IRCChannelStatus status;
 @property (readonly) BOOL errorOnLastJoinAttempt;
 @property (readonly) NSTimeInterval channelJoinTime;

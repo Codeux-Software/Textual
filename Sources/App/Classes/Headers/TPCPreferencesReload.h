@@ -39,43 +39,43 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, TPCPreferencesReloadActionMask) {
-	TPCPreferencesReloadAppearanceAction							= 1 << 0,
-	TPCPreferencesReloadChannelViewArrangementAction				= 1 << 1,
-	TPCPreferencesReloadDockIconBadgesAction						= 1 << 2,
-	TPCPreferencesReloadHighlightKeywordsAction						= 1 << 3,
-	TPCPreferencesReloadHighlightLoggingAction						= 1 << 4,
-	TPCPreferencesReloadIRCCommandCacheAction						= 1 << 5,
-	TPCPreferencesReloadInputHistoryScopeAction						= 1 << 6,
-	TPCPreferencesReloadLogTranscriptsAction						= 1 << 7,
-	TPCPreferencesReloadMainWindowTransparencyLevelAction			= 1 << 8,
-	TPCPreferencesReloadMemberListAction							= 1 << 9,
-	TPCPreferencesReloadMemberListSortOrderAction					= 1 << 10,
-	TPCPreferencesReloadMemberListUserBadgesAction					= 1 << 11,
-	TPCPreferencesReloadPreferencesChangedAction					= 1 << 12,
-	TPCPreferencesReloadScrollbackSaveLimitAction					= 1 << 13,
-	TPCPreferencesReloadScrollbackVisibleLimitAction				= 1 << 14,
-	TPCPreferencesReloadServerListAction							= 1 << 15,
-	TPCPreferencesReloadServerListUnreadBadgesAction				= 1 << 16,
-	TPCPreferencesReloadStyleAction									= 1 << 17,
-//	TPCPreferencesReloadStyleWithTableViewsAction					= 1 << 18,
-	TPCPreferencesReloadTextDirectionAction							= 1 << 19,
-	TPCPreferencesReloadTextFieldFontSizeAction						= 1 << 20,
-	TPCPreferencesReloadTextFieldSegmentedControllerOriginAction	= 1 << 21,
+typedef NS_OPTIONS(NSUInteger, TPCPreferencesReloadAction) {
+	TPCPreferencesReloadActionAppearance							= 1 << 0,
+	TPCPreferencesReloadActionChannelViewArrangement				= 1 << 1,
+	TPCPreferencesReloadActionDockIconBadges						= 1 << 2,
+	TPCPreferencesReloadActionHighlightKeywords						= 1 << 3,
+	TPCPreferencesReloadActionHighlightLogging						= 1 << 4,
+	TPCPreferencesReloadActionIRCCommandCache						= 1 << 5,
+	TPCPreferencesReloadActionInputHistoryScope						= 1 << 6,
+	TPCPreferencesReloadActionLogTranscripts						= 1 << 7,
+	TPCPreferencesReloadActionMainWindowTransparencyLevel			= 1 << 8,
+	TPCPreferencesReloadActionMemberList							= 1 << 9,
+	TPCPreferencesReloadActionMemberListSortOrder					= 1 << 10,
+	TPCPreferencesReloadActionMemberListUserBadges					= 1 << 11,
+	TPCPreferencesReloadActionPreferencesChanged					= 1 << 12,
+	TPCPreferencesReloadActionScrollbackSaveLimit					= 1 << 13,
+	TPCPreferencesReloadActionScrollbackVisibleLimit				= 1 << 14,
+	TPCPreferencesReloadActionServerList							= 1 << 15,
+	TPCPreferencesReloadActionServerListUnreadBadges				= 1 << 16,
+	TPCPreferencesReloadActionStyle									= 1 << 17,
+//	TPCPreferencesReloadActionStyleWithTableViews					= 1 << 18,
+	TPCPreferencesReloadActionTextDirection							= 1 << 19,
+	TPCPreferencesReloadActionTextFieldFontSize						= 1 << 20,
+	TPCPreferencesReloadActionTextFieldSegmentedControllerOrigin	= 1 << 21,
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-	TPCPreferencesReloadEncryptionPolicyAction						= 1 << 22,
+	TPCPreferencesReloadActionEncryptionPolicy						= 1 << 22,
 #endif
 
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	TPCPreferencesReloadSparkleFrameworkFeedURLAction				= 1 << 23,
+	TPCPreferencesReloadActionSparkleFrameworkFeedURL				= 1 << 23,
 #endif
 };
 
 @interface TPCPreferences (TPCPreferencesReload)
 + (void)performReloadActionForKeys:(NSArray<NSString *> *)keys;
-+ (void)performReloadAction:(TPCPreferencesReloadActionMask)reloadAction;
-+ (void)performReloadAction:(TPCPreferencesReloadActionMask)reloadAction forKey:(nullable NSString *)key; // key is only used for context
++ (void)performReloadAction:(TPCPreferencesReloadAction)reloadAction;
++ (void)performReloadAction:(TPCPreferencesReloadAction)reloadAction forKey:(nullable NSString *)key; // key is only used for context
 @end
 
 NS_ASSUME_NONNULL_END
