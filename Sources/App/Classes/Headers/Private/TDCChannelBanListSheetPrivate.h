@@ -44,10 +44,10 @@ NS_ASSUME_NONNULL_BEGIN
 @class IRCChannel;
 
 typedef NS_ENUM(NSUInteger, TDCChannelBanListSheetEntryType) {
-	TDCChannelBanListSheetBanEntryType = IRCISupportInfoBanListType,
-	TDCChannelBanListSheetBanExceptionEntryType = IRCISupportInfoBanExceptionListType,
-	TDCChannelBanListSheetInviteExceptionEntryType = IRCISupportInfoInviteExceptionListType,
-	TDCChannelBanListSheetQuietEntryType = IRCISupportInfoQuietListType
+	TDCChannelBanListSheetEntryTypeBan = IRCISupportInfoListTypeBan,
+	TDCChannelBanListSheetEntryTypeBanException = IRCISupportInfoListTypeBanException,
+	TDCChannelBanListSheetEntryTypeInviteException = IRCISupportInfoListTypeInviteException,
+	TDCChannelBanListSheetEntryTypeQuiet = IRCISupportInfoListTypeQuiet
 };
 
 @interface TDCChannelBanListSheet : TDCSheetBase <TDCChannelPrototype>

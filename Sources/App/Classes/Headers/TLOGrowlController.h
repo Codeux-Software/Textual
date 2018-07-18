@@ -41,25 +41,25 @@ NS_ASSUME_NONNULL_BEGIN
 @class IRCChannel;
 
 typedef NS_ENUM(NSUInteger, TXNotificationType) {
-	TXNotificationHighlightType							= 1000,
-	TXNotificationNewPrivateMessageType					= 1001,
-	TXNotificationChannelMessageType					= 1002,
-	TXNotificationChannelNoticeType						= 1003,
-	TXNotificationPrivateMessageType					= 1004,
-	TXNotificationPrivateNoticeType						= 1005,
-	TXNotificationKickType								= 1006,
-	TXNotificationInviteType							= 1007,
-	TXNotificationConnectType							= 1008,
-	TXNotificationDisconnectType						= 1009,
-	TXNotificationAddressBookMatchType					= 1010,
-	TXNotificationFileTransferSendSuccessfulType		= 1011,
-	TXNotificationFileTransferReceiveSuccessfulType		= 1012,
-	TXNotificationFileTransferSendFailedType			= 1013,
-	TXNotificationFileTransferReceiveFailedType			= 1014,
-	TXNotificationFileTransferReceiveRequestedType		= 1015,
-	TXNotificationUserJoinedType						= 1016,
-	TXNotificationUserPartedType						= 1017,
-	TXNotificationUserDisconnectedType					= 1018
+	TXNotificationTypeHighlight							= 1000,
+	TXNotificationTypeNewPrivateMessage					= 1001,
+	TXNotificationTypeChannelMessage					= 1002,
+	TXNotificationTypeChannelNotice						= 1003,
+	TXNotificationTypePrivateMessage					= 1004,
+	TXNotificationTypePrivateNotice						= 1005,
+	TXNotificationTypeKick								= 1006,
+	TXNotificationTypeInvite							= 1007,
+	TXNotificationTypeConnect							= 1008,
+	TXNotificationTypeDisconnect						= 1009,
+	TXNotificationTypeAddressBookMatch					= 1010,
+	TXNotificationTypeFileTransferSendSuccessful		= 1011,
+	TXNotificationTypeFileTransferReceiveSuccessful		= 1012,
+	TXNotificationTypeFileTransferSendFailed			= 1013,
+	TXNotificationTypeFileTransferReceiveFailed			= 1014,
+	TXNotificationTypeFileTransferReceiveRequested		= 1015,
+	TXNotificationTypeUserJoined						= 1016,
+	TXNotificationTypeUserParted						= 1017,
+	TXNotificationTypeUserDisconnected					= 1018
 };
 
 @interface TLOGrowlController : NSObject

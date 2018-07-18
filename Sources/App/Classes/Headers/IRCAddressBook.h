@@ -38,22 +38,22 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, IRCAddressBookEntryType) {
-	IRCAddressBookIgnoreEntryType = 0,
-	IRCAddressBookUserTrackingEntryType,
+	IRCAddressBookEntryTypeIgnore = 0,
+	IRCAddressBookEntryTypeUserTracking,
 	
 	/* Entry type used when multiple instances of IRCAddressBookEntry
 	 are combined into a single object which represents all. */
-	IRCAddressBookMixedEntryType,
+	IRCAddressBookEntryTypeMixed
 };
 
 typedef NS_ENUM(NSUInteger, IRCAddressBookUserTrackingStatus) {
-	IRCAddressBookUserTrackingUnknownStatus = 0,
-	IRCAddressBookUserTrackingSignedOffStatus,
-	IRCAddressBookUserTrackingSignedOnStatus,
-	IRCAddressBookUserTrackingIsAvailalbeStatus,
-	IRCAddressBookUserTrackingIsNotAvailalbeStatus,
-	IRCAddressBookUserTrackingIsAwayStatus,
-	IRCAddressBookUserTrackingIsNotAwayStatus
+	IRCAddressBookUserTrackingStatusUnknown = 0,
+	IRCAddressBookUserTrackingStatusSignedOff,
+	IRCAddressBookUserTrackingStatusSignedOn,
+	IRCAddressBookUserTrackingStatusAvailalbe,
+	IRCAddressBookUserTrackingStatusNotAvailalbe,
+	IRCAddressBookUserTrackingStatusAway,
+	IRCAddressBookUserTrackingStatusNotAway
 };
 
 #pragma mark -
@@ -77,7 +77,7 @@ typedef NS_ENUM(NSUInteger, IRCAddressBookUserTrackingStatus) {
 @property (readonly) BOOL ignoreMessagesContainingMatch;
 @property (readonly) BOOL trackUserActivity;
 
-/* When IRCAddressBookMixedEntryType is mixed, this array holds
+/* When IRCAddressBookEntryTypeMixed is mixed, this array holds
  a reference to each entry that is mixed into the current object. */
 @property (readonly, copy, nullable) NSArray<IRCAddressBookEntry *> *parentEntries;
 

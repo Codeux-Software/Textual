@@ -133,7 +133,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 		if (character < 0x20) {
 			switch (character) {
-				case IRCTextFormatterBoldEffectCharacter:
+				case IRCTextFormatterEffectBoldCharacter:
 				{
 					if (characterPosition > 0 && [bodyWithAttributes isAttributeSet:TVCLogRendererFormattingBoldTextAttribute atIndex:characterPosition]) {
 						[bodyWithAttributes removeAttribute:TVCLogRendererFormattingBoldTextAttribute startingAt:characterPosition];
@@ -147,8 +147,8 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 					continue;
 				}
-				case IRCTextFormatterColorAsDigitEffectCharacter:
-				case IRCTextFormatterColorAsHexEffectCharacter:
+				case IRCTextFormatterEffectColorAsDigitCharacter:
+				case IRCTextFormatterEffectColorAsHexCharacter:
 				{
 					id foregroundColor = nil;
 					id backgroundColor = nil;
@@ -192,8 +192,8 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 					continue;
 				}
-				case IRCTextFormatterItalicEffectCharacter:
-				case IRCTextFormatterItalicEffectCharacterOld:
+				case IRCTextFormatterEffectItalicCharacter:
+				case IRCTextFormatterEffectItalicCharacterOld:
 				{
 					if (characterPosition > 0 && [bodyWithAttributes isAttributeSet:TVCLogRendererFormattingItalicTextAttribute atIndex:characterPosition]) {
 						[bodyWithAttributes removeAttribute:TVCLogRendererFormattingItalicTextAttribute startingAt:characterPosition];
@@ -207,7 +207,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 					continue;
 				}
-				case IRCTextFormatterMonospaceEffectCharacter:
+				case IRCTextFormatterEffectMonospaceCharacter:
 				{
 					if (characterPosition > 0 && [bodyWithAttributes isAttributeSet:TVCLogRendererFormattingMonospaceTextAttribute atIndex:characterPosition]) {
 						[bodyWithAttributes removeAttribute:TVCLogRendererFormattingMonospaceTextAttribute startingAt:characterPosition];
@@ -221,7 +221,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 					continue;
 				}
-				case IRCTextFormatterStrikethroughEffectCharacter:
+				case IRCTextFormatterEffectStrikethroughCharacter:
 				{
 					if (characterPosition > 0 && [bodyWithAttributes isAttributeSet:TVCLogRendererFormattingStrikethroughTextAttribute atIndex:characterPosition]) {
 						[bodyWithAttributes removeAttribute:TVCLogRendererFormattingStrikethroughTextAttribute startingAt:characterPosition];
@@ -235,7 +235,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 					continue;
 				}
-				case IRCTextFormatterUnderlineEffectCharacter:
+				case IRCTextFormatterEffectUnderlineCharacter:
 				{
 					if (characterPosition > 0 && [bodyWithAttributes isAttributeSet:TVCLogRendererFormattingUnderlineTextAttribute atIndex:characterPosition]) {
 						[bodyWithAttributes removeAttribute:TVCLogRendererFormattingUnderlineTextAttribute startingAt:characterPosition];
@@ -266,17 +266,17 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 - (BOOL)isRenderingPRIVMSG
 {
-	return (self->_lineType == TVCLogLinePrivateMessageType || self->_lineType == TVCLogLineActionType);
+	return (self->_lineType == TVCLogLineTypePrivateMessage || self->_lineType == TVCLogLineTypeAction);
 }
 
 - (BOOL)isRenderingPRIVMSG_or_NOTICE
 {
-	return (self->_lineType == TVCLogLinePrivateMessageType || self->_lineType == TVCLogLineActionType || self->_lineType == TVCLogLineNoticeType);
+	return (self->_lineType == TVCLogLineTypePrivateMessage || self->_lineType == TVCLogLineTypeAction || self->_lineType == TVCLogLineTypeNotice);
 }
 
 - (BOOL)scanForKeywords
 {
-	return ([self isRenderingPRIVMSG] && self->_memberType == TVCLogLineMemberNormalType);
+	return ([self isRenderingPRIVMSG] && self->_memberType == TVCLogLineMemberTypeNormal);
 }
 
 - (void)stripDangerousUnicodeCharactersFromBody
@@ -285,14 +285,14 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 		return;
 	}
 
-	if (self->_lineType != TVCLogLineActionType			&&
-		self->_lineType != TVCLogLineCTCPType			&&
-		self->_lineType != TVCLogLineCTCPQueryType		&&
-		self->_lineType != TVCLogLineCTCPReplyType		&&
-		self->_lineType != TVCLogLineDCCFileTransferType	&&
-		self->_lineType != TVCLogLineNoticeType			&&
-		self->_lineType != TVCLogLinePrivateMessageType	&&
-		self->_lineType != TVCLogLineTopicType)
+	if (self->_lineType != TVCLogLineTypeAction			&&
+		self->_lineType != TVCLogLineTypeCTCP			&&
+		self->_lineType != TVCLogLineTypeCTCPQuery		&&
+		self->_lineType != TVCLogLineTypeCTCPReply		&&
+		self->_lineType != TVCLogLineTypeDCCFileTransfer	&&
+		self->_lineType != TVCLogLineTypeNotice			&&
+		self->_lineType != TVCLogLineTypePrivateMessage	&&
+		self->_lineType != TVCLogLineTypeTopic)
 	{
 		return;
 	}
@@ -357,14 +357,14 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 	BOOL foundKeyword = NO;
 
 	switch ([TPCPreferences highlightMatchingMethod]) {
-		case TXNicknameHighlightExactMatchType:
-		case TXNicknameHighlightPartialMatchType:
+		case TXNicknameHighlightMatchTypeExact:
+		case TXNicknameHighlightMatchTypePartial:
 		{
 			foundKeyword = [self matchKeywordsUsingNormalMatching:highlightKeywords excludedRanges:excludeRanges];
 
 			break;
 		}
-		case TXNicknameHighlightRegularExpressionMatchType:
+		case TXNicknameHighlightMatchTypeRegularExpression:
 		{
 			foundKeyword = [self matchKeywordsUsingRegularExpression:highlightKeywords excludedRanges:excludeRanges];
 
@@ -392,7 +392,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 				}
 			}
 
-			if ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightExactMatchType) {
+			if ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightMatchTypeExact) {
 				if ([self sectionOfBodyIsSurroundedByNonAlphabeticals:range] == NO) {
 					return;
 				}

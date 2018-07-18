@@ -421,7 +421,7 @@ NS_ASSUME_NONNULL_BEGIN
 		{
 			TXCommandWKeyAction keyAction = [TPCPreferences commandWKeyAction];
 
-			if (keyAction == TXCommandWKeyCloseWindowAction || mainWindow().keyWindow == NO) {
+			if (keyAction == TXCommandWKeyActionCloseWindow || mainWindow().keyWindow == NO) {
 				menuItem.title = TXTLS(@"BasicLanguage[1f6-bg]");
 
 				return YES;
@@ -432,7 +432,7 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 
 			switch (keyAction) {
-				case TXCommandWKeyPartChannelAction:
+				case TXCommandWKeyActionPartChannel:
 				{
 					if (c == nil) {
 						menuItem.title = TXTLS(@"BasicLanguage[1f6-bg]");
@@ -454,7 +454,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 					break;
 				}
-				case TXCommandWKeyDisconnectAction:
+				case TXCommandWKeyActionDisconnect:
 				{
 					menuItem.title = TXTLS(@"BasicLanguage[w3a-je]", u.networkNameAlt);
 
@@ -464,7 +464,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 					break;
 				}
-				case TXCommandWKeyTerminateAction:
+				case TXCommandWKeyActionTerminate:
 				{
 					menuItem.title = TXTLS(@"BasicLanguage[x97-ro]");
 
@@ -680,19 +680,19 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 		case MTMMChannelListOfBanExceptions: // "List of Ban Exceptions"
 		{
-			menuItem.hidden = ([u.supportInfo isListSupported:IRCISupportInfoBanExceptionListType] == NO);
+			menuItem.hidden = ([u.supportInfo isListSupported:IRCISupportInfoListTypeBanException] == NO);
 
 			return (u.isLoggedIn && c.isActive);
 		}
 		case MTMMChannelListOfInviteExceptions: // "List of Invite Exceptions"
 		{
-			menuItem.hidden = ([u.supportInfo isListSupported:IRCISupportInfoInviteExceptionListType] == NO);
+			menuItem.hidden = ([u.supportInfo isListSupported:IRCISupportInfoListTypeInviteException] == NO);
 
 			return (u.isLoggedIn && c.isActive);
 		}
 		case MTMMChannelListOfQuiets: // "List of Quiets"
 		{
-			menuItem.hidden = ([u.supportInfo isListSupported:IRCISupportInfoQuietListType] == NO);
+			menuItem.hidden = ([u.supportInfo isListSupported:IRCISupportInfoListTypeQuiet] == NO);
 
 			return (u.isLoggedIn && c.isActive);
 		}
@@ -918,9 +918,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 				IRCUserRank userRanks = user.ranks;
 
-				BOOL UserHasModeO = ((userRanks & IRCUserNormalOperatorRank) == IRCUserNormalOperatorRank);
+				BOOL UserHasModeO = ((userRanks & IRCUserRankNonermalOperator) == IRCUserRankNonermalOperator);
 				BOOL UserHasModeH = NO;
-				BOOL UserHasModeV = ((userRanks & IRCUserVoicedRank) == IRCUserVoicedRank);
+				BOOL UserHasModeV = ((userRanks & IRCUserRankVoiced) == IRCUserRankVoiced);
 
 				_setHidden(MTUserControlsGiveOp, UserHasModeO);
 				_setHidden(MTUserControlsGiveVoice, UserHasModeV);
@@ -933,7 +933,7 @@ NS_ASSUME_NONNULL_BEGIN
 					_setHidden(MTUserControlsGiveHalfop, YES);
 					_setHidden(MTUserControlsTakeHalfop, YES);
 				} else {
-					UserHasModeH = ((userRanks & IRCUserHalfOperatorRank) == IRCUserHalfOperatorRank);
+					UserHasModeH = ((userRanks & IRCUserRankHalfOperator) == IRCUserRankHalfOperator);
 
 					_setHidden(MTUserControlsGiveHalfop, UserHasModeH);
 					_setHidden(MTUserControlsTakeHalfop, (UserHasModeH == NO));
@@ -1318,7 +1318,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *resultString = nil;
 
-	TVCAlertResponse response =
+	TVCAlertResponseButton response =
 	[TDCInputPrompt promptWithMessage:TXTLS(@"Prompts[d2w-4o]")
 								title:TXTLS(@"Prompts[akr-eh]")
 						defaultButton:TXTLS(@"Prompts[q5h-xx]")
@@ -1326,7 +1326,7 @@ NS_ASSUME_NONNULL_BEGIN
 						prefillString:self.currentSearchPhrase
 						 resultString:&resultString];
 
-	if (response == TVCAlertResponseFirstButton) {
+	if (response == TVCAlertResponseButtonFirst) {
 		promptCompletionBlock(resultString);
 	}
 }
@@ -1561,7 +1561,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	[u connect:IRCClientConnectNormalMode bypassProxy:YES];
+	[u connect:IRCClientConnectModeNormal bypassProxy:YES];
 
 	[mainWindow() expandClient:u];
 }
@@ -1612,7 +1612,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	sheet.window = mainWindow();
 
-	[sheet startWithSelection:TDCServerPropertiesSheetDefaultSelection context:nil];
+	[sheet startWithSelection:TDCServerPropertiesSheetSelectionDefault context:nil];
 
 	[windowController() addWindowToWindowList:sheet];
 }
@@ -1908,11 +1908,11 @@ NS_ASSUME_NONNULL_BEGIN
 	 the address book instead of a specific ignore. */
 	if (userIgnores.count == 1) {
 		[self showServerPropertiesSheetForClient:u
-								   withSelection:TDCServerPropertiesSheetNewIgnoreEntrySelection
+								   withSelection:TDCServerPropertiesSheetSelectionNewIgnoreEntry
 										 context:userIgnores[0]];
 	} else {
 		[self showServerPropertiesSheetForClient:u
-								   withSelection:TDCServerPropertiesSheetAddressBookSelection
+								   withSelection:TDCServerPropertiesSheetSelectionAddressBook
 										 context:nil];
 	}
 }
@@ -1930,11 +1930,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	TXUserDoubleClickAction action = [TPCPreferences userDoubleClickOption];
 
-	if (action == TXUserDoubleClickWhoisAction) {
+	if (action == TXUserDoubleClickActionWhois) {
 		[self whoisSelectedMembers:sender];
-	} else if (action == TXUserDoubleClickPrivateMessageAction) {
+	} else if (action == TXUserDoubleClickActionPrivateMessage) {
 		[self memberStartPrivateMessage:sender];
-	} else if (action == TXUserDoubleClickInsertTextFieldAction) {
+	} else if (action == TXUserDoubleClickActionInsertTextField) {
 		[self memberInsertNameIntoTextField:sender];
 	}
 }
@@ -1943,11 +1943,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	TXUserDoubleClickAction action = [TPCPreferences userDoubleClickOption];
 
-	if (action == TXUserDoubleClickWhoisAction) {
+	if (action == TXUserDoubleClickActionWhois) {
 		[self whoisSelectedMembers:sender];
-	} else if (action == TXUserDoubleClickPrivateMessageAction) {
+	} else if (action == TXUserDoubleClickActionPrivateMessage) {
 		[self memberStartPrivateMessage:sender];
-	} else if (action == TXUserDoubleClickInsertTextFieldAction) {
+	} else if (action == TXUserDoubleClickActionInsertTextField) {
 		[self memberInsertNameIntoTextField:sender];
 	}
 }
@@ -2331,7 +2331,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *vhost = nil;
 
-	TVCAlertResponse response =
+	TVCAlertResponseButton response =
 	[TDCInputPrompt promptWithMessage:TXTLS(@"Prompts[2mx-jf]")
 								title:TXTLS(@"Prompts[7gr-e4]")
 						defaultButton:TXTLS(@"Prompts[c7s-dq]")
@@ -2339,7 +2339,7 @@ NS_ASSUME_NONNULL_BEGIN
 						prefillString:nil
 						 resultString:&vhost];
 
-	if (response == TVCAlertResponseFirstButton) {
+	if (response == TVCAlertResponseButtonFirst) {
 		promptCompletionBlock(vhost);
 	}
 }
@@ -2680,7 +2680,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	TXCommandWKeyAction keyAction = [TPCPreferences commandWKeyAction];
 
-	if (keyAction == TXCommandWKeyCloseWindowAction || mainWindow().keyWindow == NO) {
+	if (keyAction == TXCommandWKeyActionCloseWindow || mainWindow().keyWindow == NO) {
 		NSWindow *windowToClose = [NSApp keyWindow];
 
 		if (windowToClose == nil) {
@@ -2702,7 +2702,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	switch (keyAction) {
-		case TXCommandWKeyPartChannelAction:
+		case TXCommandWKeyActionPartChannel:
 		{
 			if (c == nil) {
 				return;
@@ -2720,7 +2720,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			break;
 		}
-		case TXCommandWKeyDisconnectAction:
+		case TXCommandWKeyActionDisconnect:
 		{
 			if (u.isConnecting == NO && u.isConnected == NO) {
 				return;
@@ -2730,7 +2730,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			break;
 		}
-		case TXCommandWKeyTerminateAction:
+		case TXCommandWKeyActionTerminate:
 		{
 			[NSApp terminate:sender];
 
@@ -2934,37 +2934,37 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)resetMainWindowAppearance:(id)sender
 {
-	[TPCPreferences setAppearance:TXPreferredAppearanceInheritedType];
+	[TPCPreferences setAppearance:TXPreferredAppearanceInherited];
 
-	[TPCPreferences performReloadAction:TPCPreferencesReloadAppearanceAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionAppearance];
 }
 
 - (void)toggleMainWindowAppearance:(id)sender
 {
-	TXPreferredAppearanceType appearance = [TPCPreferences appearance];
+	TXPreferredAppearance appearance = [TPCPreferences appearance];
 
 	switch (appearance) {
-		case TXPreferredAppearanceInheritedType:
+		case TXPreferredAppearanceInherited:
 		{
 			TXAppearance *appAppearance = [TXSharedApplication sharedAppearance];
 
 			if (appAppearance.properties.isDarkAppearance == NO) {
-				appearance = TXPreferredAppearanceDarkType;
+				appearance = TXPreferredAppearanceDark;
 			} else {
-				appearance = TXPreferredAppearanceLightType;
+				appearance = TXPreferredAppearanceLight;
 			}
 
 			break;
 		}
-		case TXPreferredAppearanceLightType:
+		case TXPreferredAppearanceLight:
 		{
-			appearance = TXPreferredAppearanceDarkType;
+			appearance = TXPreferredAppearanceDark;
 
 			break;
 		}
-		case TXPreferredAppearanceDarkType:
+		case TXPreferredAppearanceDark:
 		{
-			appearance = TXPreferredAppearanceLightType;
+			appearance = TXPreferredAppearanceLight;
 
 			break;
 		}
@@ -2972,7 +2972,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[TPCPreferences setAppearance:appearance];
 
-	[TPCPreferences performReloadAction:TPCPreferencesReloadAppearanceAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionAppearance];
 }
 
 - (void)toggleServerListVisibility:(id)sender
@@ -3065,7 +3065,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	[TPCPreferences setDeveloperModeEnabled:([TPCPreferences developerModeEnabled] == NO)];
 
-	[TPCPreferences performReloadAction:TPCPreferencesReloadIRCCommandCacheAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionIRCCommandCache];
 }
 
 - (void)resetDoNotAskMePopupWarnings:(id)sender
@@ -3465,7 +3465,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[self showServerPropertiesSheetForClient:u
-							   withSelection:TDCServerPropertiesSheetAddressBookSelection
+							   withSelection:TDCServerPropertiesSheetSelectionAddressBook
 									 context:nil];
 }
 
@@ -3558,7 +3558,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Server Properties Sheet
 
-- (void)showServerPropertiesSheetForClient:(IRCClient *)client withSelection:(TDCServerPropertiesSheetNavigationSelection)selection context:(nullable id)context
+- (void)showServerPropertiesSheetForClient:(IRCClient *)client withSelection:(TDCServerPropertiesSheetSelection)selection context:(nullable id)context
 {
 	NSParameterAssert(client != nil);
 
@@ -3584,7 +3584,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[self showServerPropertiesSheetForClient:u
-							   withSelection:TDCServerPropertiesSheetDefaultSelection
+							   withSelection:TDCServerPropertiesSheetSelectionDefault
 									 context:nil];
 }
 
@@ -3869,20 +3869,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)showPreferencesWindow:(id)sender
 {
-	[self showPreferencesWindowWithSelection:TDCPreferencesControllerDefaultNavigationSelection];
+	[self showPreferencesWindowWithSelection:TDCPreferencesControllerSelectionDefault];
 }
 
 - (void)showStylePreferences:(id)sender
 {
-	[self showPreferencesWindowWithSelection:TDCPreferencesControllerStyleNavigationSelection];
+	[self showPreferencesWindowWithSelection:TDCPreferencesControllerSelectionStyle];
 }
 
 - (void)showHiddenPreferences:(id)sender
 {
-	[self showPreferencesWindowWithSelection:TDCPreferencesControllerHiddenPreferencesNavigationSelection];
+	[self showPreferencesWindowWithSelection:TDCPreferencesControllerSelectionHiddenPreferences];
 }
 
-- (void)showPreferencesWindowWithSelection:(TDCPreferencesControllerNavigationSelection)selection
+- (void)showPreferencesWindowWithSelection:(TDCPreferencesControllerSelection)selection
 {
 	TDCPreferencesController *openWindow = [windowController() windowFromWindowList:@"TDCPreferencesController"];
 
@@ -3904,8 +3904,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)preferencesDialogWillClose:(TDCPreferencesController *)sender
 {
-	[TPCPreferences performReloadAction:(TPCPreferencesReloadHighlightKeywordsAction |
-										 TPCPreferencesReloadPreferencesChangedAction)];
+	[TPCPreferences performReloadAction:(TPCPreferencesReloadActionHighlightKeywords |
+										 TPCPreferencesReloadActionPreferencesChanged)];
 
 	[windowController() removeWindowFromWindowList:sender];
 }

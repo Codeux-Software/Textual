@@ -40,7 +40,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCInputPrompt : TDCAlert
-+ (TVCAlertResponse)promptWithMessage:(NSString *)bodyText
++ (TVCAlertResponseButton)promptWithMessage:(NSString *)bodyText
 								title:(NSString *)titleText
 						defaultButton:(NSString *)buttonDefault
 					  alternateButton:(nullable NSString *)buttonAlternate

@@ -49,15 +49,15 @@ NS_ASSUME_NONNULL_BEGIN
 	ObjectIsAlreadyInitializedAssert
 
 	self->_defaults = @{
-		@"filterEvents"					: @(TPI_ChatFilterPlainTextMessageEventType |
-											TPI_ChatFilterActionMessageEventType),
+		@"filterEvents"					: @(TPI_ChatFilterEventTypePlainTextMessage |
+											TPI_ChatFilterEventTypeActionMessage),
 
 		@"filterIgnoreContent"			: @(NO),
 		@"filterIgnoresOperators"		: @(YES),
 		@"filterLimitedToMyself"		: @(NO),
 		@"filterLogMatch"				: @(NO),
 
-		@"filterLimitedToValue"			: @(TPI_ChatFilterLimitToNoLimitValue),
+		@"filterLimitedToValue"			: @(TPI_ChatFilterLimitToValueNoLimit),
 	};
 }
 
@@ -172,22 +172,22 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 	else
 	{
-		TPI_ChatFilterEventType filterEventsMask = (TPI_ChatFilterPlainTextMessageEventType | TPI_ChatFilterActionMessageEventType);
+		TPI_ChatFilterEventType filterEventsMask = (TPI_ChatFilterEventTypePlainTextMessage | TPI_ChatFilterEventTypeActionMessage);
 
 		id filterCommandPRIVMSG = defaultsMutable[@"filterCommandPRIVMSG"];
 
 		if (filterCommandPRIVMSG && [filterCommandPRIVMSG boolValue] == NO) {
-			filterEventsMask &= ~TPI_ChatFilterPlainTextMessageEventType;
+			filterEventsMask &= ~TPI_ChatFilterEventTypePlainTextMessage;
 		}
 
 		id filterCommandPRIVMSG_ACTION = defaultsMutable[@"filterCommandPRIVMSG_ACTION"];
 
 		if (filterCommandPRIVMSG_ACTION && [filterCommandPRIVMSG_ACTION boolValue] == NO) {
-			filterEventsMask &= ~TPI_ChatFilterActionMessageEventType;
+			filterEventsMask &= ~TPI_ChatFilterEventTypeActionMessage;
 		}
 
 		if ([defaultsMutable boolForKey:@"filterCommandNOTICE"]) {
-			filterEventsMask |= TPI_ChatFilterNoticeMessageEventType;
+			filterEventsMask |= TPI_ChatFilterEventTypeNoticeMessage;
 		}
 
 		self->_filterEvents = filterEventsMask;
@@ -199,9 +199,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSMutableDictionary<NSString *, id> *dic = [NSMutableDictionary dictionary];
 
 	/* Maintain backwards compatibility by setting old key names */
-	[dic setBool:[self isEventTypeEnabled:TPI_ChatFilterPlainTextMessageEventType] forKey:@"filterCommandPRIVMSG"];
-	[dic setBool:[self isEventTypeEnabled:TPI_ChatFilterActionMessageEventType]	forKey:@"filterCommandPRIVMSG_ACTION"];
-	[dic setBool:[self isEventTypeEnabled:TPI_ChatFilterNoticeMessageEventType]	forKey:@"filterCommandNOTICE"];
+	[dic setBool:[self isEventTypeEnabled:TPI_ChatFilterEventTypePlainTextMessage] forKey:@"filterCommandPRIVMSG"];
+	[dic setBool:[self isEventTypeEnabled:TPI_ChatFilterEventTypeActionMessage]	forKey:@"filterCommandPRIVMSG_ACTION"];
+	[dic setBool:[self isEventTypeEnabled:TPI_ChatFilterEventTypeNoticeMessage]	forKey:@"filterCommandNOTICE"];
 
 	/* Set regular key names */
 	[dic maybeSetObject:self.filterLimitedToChannelsIDs forKey:@"filterLimitedToChannelsIDs"];
@@ -251,16 +251,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		cachedResponse = @((filterEvents & _event_) == _event_);	\
 	}
 
-		_commandMatchesEvent(@"JOIN", TPI_ChatFilterUserJoinedChannelEventType)
-		else _commandMatchesEvent(@"PART", TPI_ChatFilterUserLeftChannelEventType)
-		else _commandMatchesEvent(@"KICK", TPI_ChatFilterUserKickedFromChannelEventType)
-		else _commandMatchesEvent(@"QUIT", TPI_ChatFilterUserDisconnectedEventType)
-		else _commandMatchesEvent(@"NICK", TPI_ChatFilterUserChangedNicknameEventType)
-		else _commandMatchesEvent(@"TOPIC", TPI_ChatFilterChannelTopicChangedEventType)
-		else _commandMatchesEvent(@"MODE", TPI_ChatFilterChannelModeChangedEventType)
-		else _commandMatchesEvent(@"332", TPI_ChatFilterChannelTopicReceivedEventType)
-		else _commandMatchesEvent(@"333", TPI_ChatFilterChannelTopicReceivedEventType)
-		else _commandMatchesEvent(@"324", TPI_ChatFilterChannelModeReceivedEventType)
+		_commandMatchesEvent(@"JOIN", TPI_ChatFilterEventTypeUserJoinedChannel)
+		else _commandMatchesEvent(@"PART", TPI_ChatFilterEventTypeUserLeftChannel)
+		else _commandMatchesEvent(@"KICK", TPI_ChatFilterEventTypeUserKickedFromChannel)
+		else _commandMatchesEvent(@"QUIT", TPI_ChatFilterEventTypeUserDisconnected)
+		else _commandMatchesEvent(@"NICK", TPI_ChatFilterEventTypeUserChangedNickname)
+		else _commandMatchesEvent(@"TOPIC", TPI_ChatFilterEventTypeChannelTopicChanged)
+		else _commandMatchesEvent(@"MODE", TPI_ChatFilterEventTypeChannelModeChanged)
+		else _commandMatchesEvent(@"332", TPI_ChatFilterEventTypeChannelTopicReceived)
+		else _commandMatchesEvent(@"333", TPI_ChatFilterEventTypeChannelTopicReceived)
+		else _commandMatchesEvent(@"324", TPI_ChatFilterEventTypeChannelModeReceived)
 		else
 		{
 			cachedResponse = @([self.filterEventsNumerics containsObject:command]);

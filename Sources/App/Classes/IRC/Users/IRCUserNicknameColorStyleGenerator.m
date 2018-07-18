@@ -86,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(stringHash != nil);
 
-	BOOL onLightBackground = (colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle);
+	BOOL onLightBackground = (colorStyle == TPCThemeSettingsNicknameColorStyleHashHueLight);
 
 	unsigned int stringHash32 = stringHash.intValue;
 

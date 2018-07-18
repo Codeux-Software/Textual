@@ -39,26 +39,26 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
+typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentTypeContent)
 {
-	ICMTwitchLiveUnknownType = 0,
-	ICMTwitchLiveChannelType,
-	ICMTwitchLiveVideoType
+	ICMTwitchLiveContentTypeUnknown = 0,
+	ICMTwitchLiveContentTypeChannel,
+	ICMTwitchLiveContentTypeVideo
 };
 
 @implementation ICMTwitchLive
 
-- (void)_performActionForContent:(NSString *)contentIdentifier type:(ICMTwitchLiveContentType)contentType
+- (void)_performActionForContent:(NSString *)contentIdentifier type:(ICMTwitchLiveContentTypeContent)contentType
 {
 	NSParameterAssert(contentIdentifier != nil);
-	NSParameterAssert(contentType == ICMTwitchLiveChannelType ||
-					  contentType == ICMTwitchLiveVideoType);
+	NSParameterAssert(contentType == ICMTwitchLiveContentTypeChannel ||
+					  contentType == ICMTwitchLiveContentTypeVideo);
 
 	NSString *contentArgument = nil;
 
-	if (contentType == ICMTwitchLiveChannelType) {
+	if (contentType == ICMTwitchLiveContentTypeChannel) {
 		contentArgument = @"channel";
-	} else if (contentType == ICMTwitchLiveVideoType) {
+	} else if (contentType == ICMTwitchLiveContentTypeVideo) {
 		contentArgument = @"video";
 	}
 
@@ -87,7 +87,7 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 {
 	NSParameterAssert(url != nil);
 
-	ICMTwitchLiveContentType contentType = ICMTwitchLiveUnknownType;
+	ICMTwitchLiveContentTypeContent contentType = ICMTwitchLiveContentTypeUnknown;
 
 	NSString *contentIdentifier = [self _contentIdentifierForURL:url type:&contentType];
 
@@ -102,7 +102,7 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 	} copy];
 }
 
-+ (nullable NSString *)_contentIdentifierForURL:(NSURL *)url type:(ICMTwitchLiveContentType *)contentTypeIn
++ (nullable NSString *)_contentIdentifierForURL:(NSURL *)url type:(ICMTwitchLiveContentTypeContent *)contentTypeIn
 {
 	NSString *urlPath = url.path.percentEncodedURLPath;
 
@@ -131,7 +131,7 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 			return nil;
 		}
 
-		*contentTypeIn = ICMTwitchLiveVideoType;
+		*contentTypeIn = ICMTwitchLiveContentTypeVideo;
 
 		return contentIdentifier;
 	}
@@ -150,7 +150,7 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 			return nil;
 		}
 
-		*contentTypeIn = ICMTwitchLiveChannelType;
+		*contentTypeIn = ICMTwitchLiveContentTypeChannel;
 
 		return contentIdentifier;
 	}

@@ -40,8 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 typedef NS_ENUM(NSUInteger, TDCInAppPurchaseProductsTableEntryType)
 {
-	TDCInAppPurchaseProductsTableEntryProductType,
-	TDCInAppPurchaseProductsTableEntryOtherType
+	TDCInAppPurchaseProductsTableEntryTypeProduct,
+	TDCInAppPurchaseProductsTableEntryTypeOther
 };
 
 @interface TDCInAppPurchaseProductsTableEntry : NSObject

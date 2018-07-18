@@ -47,8 +47,8 @@ NS_ASSUME_NONNULL_BEGIN
 #define TPCThemeSettingsLatestTemplateEngineVersion		3
 
 typedef NS_ENUM(NSUInteger, TPCThemeSettingsNicknameColorStyle) {
-	TPCThemeSettingsNicknameColorHashHueDarkStyle,
-	TPCThemeSettingsNicknameColorHashHueLightStyle
+	TPCThemeSettingsNicknameColorStyleHashHueDark,
+	TPCThemeSettingsNicknameColorStyleHashHueLight
 };
 
 @class GRMustacheTemplate;

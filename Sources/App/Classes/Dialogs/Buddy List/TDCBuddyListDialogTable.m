@@ -83,19 +83,19 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *imageName = nil;
 
 	switch (objectValue.availability) {
-		case IRCAddressBookUserTrackingIsAvailalbeStatus:
+		case IRCAddressBookUserTrackingStatusAvailalbe:
 		{
 			imageName = @"NSStatusAvailable";
 
 			break;
 		}
-		case IRCAddressBookUserTrackingIsNotAvailalbeStatus:
+		case IRCAddressBookUserTrackingStatusNotAvailalbe:
 		{
 			imageName = @"NSStatusUnavailable";
 
 			break;
 		}
-		case IRCAddressBookUserTrackingIsAwayStatus:
+		case IRCAddressBookUserTrackingStatusAway:
 		{
 			imageName = @"NSStatusPartiallyAvailable";
 

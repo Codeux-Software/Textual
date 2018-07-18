@@ -154,13 +154,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSFont *preferredFont = nil;
 
-	if (preferredFontSize == TVCMainWindowTextViewFontNormalSize) {
+	if (preferredFontSize == TVCMainWindowTextViewFontSizeNormal) {
 		preferredFont = self.textViewFont;
-	} else if (preferredFontSize == TVCMainWindowTextViewFontLargeSize) {
+	} else if (preferredFontSize == TVCMainWindowTextViewFontSizeLarge) {
 		preferredFont = self.textViewFontLarge;
-	} else if (preferredFontSize == TVCMainWindowTextViewFontExtraLargeSize) {
+	} else if (preferredFontSize == TVCMainWindowTextViewFontSizeExtraLarge) {
 		preferredFont = self.textViewFontExtraLarge;
-	} else if (preferredFontSize == TVCMainWindowTextViewFontHumongousSize) {
+	} else if (preferredFontSize == TVCMainWindowTextViewFontSizeHumongous) {
 		preferredFont = self.textViewFontHumongous;
 	}
 

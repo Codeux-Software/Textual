@@ -136,8 +136,8 @@ NS_ASSUME_NONNULL_BEGIN
 		return newMessage;
 	}
 
-	if (lineType == TVCLogLineActionType ||
-		lineType == TVCLogLinePrivateMessageType)
+	if (lineType == TVCLogLineTypeAction ||
+		lineType == TVCLogLineTypePrivateMessage)
 	{
 		return [self convertStringToEmoji:newMessage];
 	}

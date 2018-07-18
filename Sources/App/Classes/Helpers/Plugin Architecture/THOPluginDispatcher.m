@@ -74,7 +74,7 @@ NSString * const THOPluginProtocolCompatibilityMinimumVersion = @"6.0.0";
 
 	for (THOPluginItem *plugin in sharedPluginManager().loadedPlugins)
 	{
-		if ([plugin supportsFeature:THOPluginItemSupportsDidReceiveCommandEvent] == NO) {
+		if ([plugin supportsFeature:THOPluginItemSupportedFeatureDidReceiveCommandEvent] == NO) {
 			continue;
 		}
 
@@ -97,7 +97,7 @@ NSString * const THOPluginProtocolCompatibilityMinimumVersion = @"6.0.0";
 
 	for (THOPluginItem *plugin in sharedPluginManager().loadedPlugins)
 	{
-		if ([plugin supportsFeature:THOPluginItemSupportsDidReceivePlainTextMessageEvent] == NO) {
+		if ([plugin supportsFeature:THOPluginItemSupportedFeatureDidReceivePlainTextMessageEvent] == NO) {
 			continue;
 		}
 
@@ -120,7 +120,7 @@ NSString * const THOPluginProtocolCompatibilityMinimumVersion = @"6.0.0";
 
 	for (THOPluginItem *plugin in sharedPluginManager().loadedPlugins)
 	{
-		if ([plugin supportsFeature:THOPluginItemSupportsServerInputDataInterception] == NO) {
+		if ([plugin supportsFeature:THOPluginItemSupportedFeatureServerInputDataInterception] == NO) {
 			continue;
 		}
 
@@ -148,7 +148,7 @@ NSString * const THOPluginProtocolCompatibilityMinimumVersion = @"6.0.0";
 
 	for (THOPluginItem *plugin in sharedPluginManager().loadedPlugins)
 	{
-		if ([plugin supportsFeature:THOPluginItemSupportsUserInputDataInterception] == NO) {
+		if ([plugin supportsFeature:THOPluginItemSupportedFeatureUserInputDataInterception] == NO) {
 			continue;
 		}
 
@@ -182,7 +182,7 @@ NSString * const THOPluginProtocolCompatibilityMinimumVersion = @"6.0.0";
 
 	for (THOPluginItem *plugin in sharedPluginManager().loadedPlugins)
 	{
-		if ([plugin supportsFeature:THOPluginItemSupportsWillRenderMessageEvent] == NO) {
+		if ([plugin supportsFeature:THOPluginItemSupportedFeatureWillRenderMessageEvent] == NO) {
 			continue;
 		}
 
@@ -213,7 +213,7 @@ NSString * const THOPluginProtocolCompatibilityMinimumVersion = @"6.0.0";
 
 		for (THOPluginItem *plugin in sharedPluginManager().loadedPlugins)
 		{
-			if ([plugin supportsFeature:THOPluginItemSupportsSubscribedUserInputCommands] == NO) {
+			if ([plugin supportsFeature:THOPluginItemSupportedFeatureSubscribedUserInputCommands] == NO) {
 				continue;
 			}
 
@@ -234,7 +234,7 @@ NSString * const THOPluginProtocolCompatibilityMinimumVersion = @"6.0.0";
 	XRPerformBlockAsynchronouslyOnQueue([self dispatchQueue], ^{
 		for (THOPluginItem *plugin in sharedPluginManager().loadedPlugins)
 		{
-			if ([plugin supportsFeature:THOPluginItemSupportsWebViewJavaScriptPayloads] == NO) {
+			if ([plugin supportsFeature:THOPluginItemSupportedFeatureWebViewJavaScriptPayloads] == NO) {
 				continue;
 			}
 
@@ -259,7 +259,7 @@ NSString * const THOPluginProtocolCompatibilityMinimumVersion = @"6.0.0";
 
 		for (THOPluginItem *plugin in sharedPluginManager().loadedPlugins)
 		{
-			if ([plugin supportsFeature:THOPluginItemSupportsSubscribedServerInputCommands] == NO) {
+			if ([plugin supportsFeature:THOPluginItemSupportedFeatureSubscribedServerInputCommands] == NO) {
 				continue;
 			}
 
@@ -306,7 +306,7 @@ NSString * const THOPluginProtocolCompatibilityMinimumVersion = @"6.0.0";
 	XRPerformBlockAsynchronouslyOnQueue([self dispatchQueue], ^{
 		for (THOPluginItem *plugin in sharedPluginManager().loadedPlugins)
 		{
-			if ([plugin supportsFeature:THOPluginItemSupportsNewMessagePostedEvent] == NO) {
+			if ([plugin supportsFeature:THOPluginItemSupportedFeatureNewMessagePostedEvent] == NO) {
 				continue;
 			}
 

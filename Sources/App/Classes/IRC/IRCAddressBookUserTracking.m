@@ -148,7 +148,7 @@ NSString * const IRCAddressBookUserTrackingRemovedAllTrackedUsersNotification = 
 		NSString *trackingNickname = [self.trackedUsersInt keyIgnoringCase:nickname];
 
 		if (trackingNickname == nil) {
-			return IRCAddressBookUserTrackingUnknownStatus;
+			return IRCAddressBookUserTrackingStatusUnknown;
 		}
 
 		return [self _statusOfUser:nickname];
@@ -163,9 +163,9 @@ NSString * const IRCAddressBookUserTrackingRemovedAllTrackedUsersNotification = 
 		BOOL ison = self.trackedUsersInt[nickname].boolValue;
 
 		if (ison) {
-			return IRCAddressBookUserTrackingIsAvailalbeStatus;
+			return IRCAddressBookUserTrackingStatusAvailalbe;
 		} else {
-			return IRCAddressBookUserTrackingIsNotAvailalbeStatus;
+			return IRCAddressBookUserTrackingStatusNotAvailalbe;
 		}
 	}
 }
@@ -177,7 +177,7 @@ NSString * const IRCAddressBookUserTrackingRemovedAllTrackedUsersNotification = 
 	NSString *trackingNickname = addressBookEntry.trackingNickname;
 
 	if (trackingNickname == nil) {
-		return IRCAddressBookUserTrackingUnknownStatus;
+		return IRCAddressBookUserTrackingStatusUnknown;
 	}
 
 	return [self statusOfUser:trackingNickname];
@@ -194,15 +194,15 @@ NSString * const IRCAddressBookUserTrackingRemovedAllTrackedUsersNotification = 
 {
 	NSParameterAssert(nickname != nil);
 
-	if (newStatus == IRCAddressBookUserTrackingUnknownStatus) {
+	if (newStatus == IRCAddressBookUserTrackingStatusUnknown) {
 		return;
 	}
 
 	@synchronized (self.trackedUsersInt) {
 		NSString *trackingNickname = [self.trackedUsersInt keyIgnoringCase:nickname];
 
-		if (newStatus == IRCAddressBookUserTrackingIsAvailalbeStatus ||
-			newStatus == IRCAddressBookUserTrackingSignedOnStatus)
+		if (newStatus == IRCAddressBookUserTrackingStatusAvailalbe ||
+			newStatus == IRCAddressBookUserTrackingStatusSignedOn)
 		{
 			if (trackingNickname == nil) {
 				trackingNickname = nickname;
@@ -210,8 +210,8 @@ NSString * const IRCAddressBookUserTrackingRemovedAllTrackedUsersNotification = 
 
 			self.trackedUsersInt[trackingNickname] = @(YES);
 		}
-		else if (newStatus == IRCAddressBookUserTrackingIsNotAvailalbeStatus ||
-				 newStatus == IRCAddressBookUserTrackingSignedOffStatus)
+		else if (newStatus == IRCAddressBookUserTrackingStatusNotAvailalbe ||
+				 newStatus == IRCAddressBookUserTrackingStatusSignedOff)
 		{
 			if (trackingNickname == nil) {
 				return;
@@ -219,8 +219,8 @@ NSString * const IRCAddressBookUserTrackingRemovedAllTrackedUsersNotification = 
 
 			self.trackedUsersInt[trackingNickname] = @(NO);
 		}
-		else if (newStatus == IRCAddressBookUserTrackingIsNotAwayStatus ||
-				 newStatus == IRCAddressBookUserTrackingIsAwayStatus)
+		else if (newStatus == IRCAddressBookUserTrackingStatusNotAway ||
+				 newStatus == IRCAddressBookUserTrackingStatusAway)
 		{
 			if (trackingNickname == nil) {
 				return;

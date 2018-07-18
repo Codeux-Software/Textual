@@ -41,9 +41,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, IRCChannelType) {
-	IRCChannelChannelType = 0,
-	IRCChannelPrivateMessageType,
-	IRCChannelUtilityType,
+	IRCChannelTypeChannel = 0,
+	IRCChannelTypePrivateMessage,
+	IRCChannelTypeUtility,
 };
 
 #pragma mark -

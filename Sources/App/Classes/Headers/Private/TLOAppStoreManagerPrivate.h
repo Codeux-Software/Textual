@@ -42,17 +42,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, TLOAppStoreIAPProduct)
 {
-	TLOAppStoreIAPUnknownProduct,
-	TLOAppStoreIAPFreeTrialProduct,
-	TLOAppStoreIAPStandardEditionProduct,
-	TLOAppStoreIAPUpgradeFromV6Product,
-	TLOAppStoreIAPUpgradeFromV6FreeProduct
+	TLOAppStoreIAPProductUnknown,
+	TLOAppStoreIAPProductFreeTrial,
+	TLOAppStoreIAPProductStandardEdition,
+	TLOAppStoreIAPProductUpgradeFromV6,
+	TLOAppStoreIAPProductUpgradeFromV6Free
 };
 
-TEXTUAL_EXTERN NSString * const TLOAppStoreIAPFreeTrialProductIdentifier;
-TEXTUAL_EXTERN NSString * const TLOAppStoreIAPStandardEditionProductIdentifier;
-TEXTUAL_EXTERN NSString * const TLOAppStoreIAPUpgradeFromV6ProductIdentifier;
-TEXTUAL_EXTERN NSString * const TLOAppStoreIAPUpgradeFromV6FreeProductIdentifier;
+typedef NSString *TLOAppStoreIAPProductIdentifier NS_EXTENSIBLE_STRING_ENUM;
+
+TEXTUAL_EXTERN TLOAppStoreIAPProductIdentifier const TLOAppStoreIAPProductIdentifierFreeTrial;
+TEXTUAL_EXTERN TLOAppStoreIAPProductIdentifier const TLOAppStoreIAPProductIdentifierStandardEdition;
+TEXTUAL_EXTERN TLOAppStoreIAPProductIdentifier const TLOAppStoreIAPProductIdentifierUpgradeFromV6;
+TEXTUAL_EXTERN TLOAppStoreIAPProductIdentifier const TLOAppStoreIAPProductIdentifierUpgradeFromV6Free;
 
 TEXTUAL_EXTERN BOOL TLOAppStoreLoadReceipt(void);
 TEXTUAL_EXTERN BOOL TLOAppStoreReceiptLoaded(void);
@@ -67,7 +69,7 @@ TEXTUAL_EXTERN NSTimeInterval TLOAppStoreTimeReaminingInTrial(void);
 TEXTUAL_EXTERN NSUInteger TLOAppStoreNumberOfPurchasedProducts(void);
 TEXTUAL_EXTERN NSArray<NSString *> *TLOAppStorePurchasedProducts(void);
 
-TEXTUAL_EXTERN TLOAppStoreIAPProduct TLOAppStoreProductFromProductIdentifier(NSString *productIdentifier);
+TEXTUAL_EXTERN TLOAppStoreIAPProduct TLOAppStoreProductFromProductIdentifier(TLOAppStoreIAPProductIdentifier productIdentifier);
 
 NS_ASSUME_NONNULL_END
 #endif

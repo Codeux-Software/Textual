@@ -42,9 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
 TEXTUAL_EXTERN NSString * const TDCAlertSuppressionPrefix;
 
 typedef NS_ENUM(NSUInteger, TDCAlertResponse) {
-	TDCAlertResponseDefaultButton = 1000,
-	TDCAlertResponseAlternateButton = 1001,
-	TDCAlertResponseOtherButton = 1002
+	TDCAlertResponseDefault = 1000,
+	TDCAlertResponseAlternate = 1001,
+	TDCAlertResponseOther = 1002
 };
 
 typedef void (^TDCAlertCompletionBlock)(TDCAlertResponse buttonClicked, BOOL suppressed, id _Nullable underlyingAlert);

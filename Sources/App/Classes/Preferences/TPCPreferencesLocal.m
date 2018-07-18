@@ -456,9 +456,9 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	return (TXUserDoubleClickAction)[RZUserDefaults() unsignedIntegerForKey:@"UserListDoubleClickAction"];
 }
 
-+ (TXNoticeSendLocationType)locationToSendNotices
++ (TXNoticeSendLocation)locationToSendNotices
 {
-	return (TXNoticeSendLocationType)[RZUserDefaults() unsignedIntegerForKey:@"DestinationOfNonserverNotices"];
+	return (TXNoticeSendLocation)[RZUserDefaults() unsignedIntegerForKey:@"DestinationOfNonserverNotices"];
 }
 
 + (TXCommandWKeyAction)commandWKeyAction
@@ -540,14 +540,14 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 #pragma mark -
 #pragma mark Theme
 
-+ (void)setAppearance:(TXPreferredAppearanceType)appearance
++ (void)setAppearance:(TXPreferredAppearance)appearance
 {
 	[RZUserDefaults() setUnsignedInteger:appearance forKey:@"Appearance"];
 }
 
-+ (TXPreferredAppearanceType)appearance
++ (TXPreferredAppearance)appearance
 {
-	return (TXPreferredAppearanceType)[RZUserDefaults() unsignedIntegerForKey:@"Appearance"];
+	return (TXPreferredAppearance)[RZUserDefaults() unsignedIntegerForKey:@"Appearance"];
 }
 
 + (BOOL)invertSidebarColors
@@ -759,12 +759,12 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 #pragma mark -
 #pragma mark File Transfers
 
-+ (TXFileTransferRequestReplyAction)fileTransferRequestReplyAction
++ (TXFileTransferRequestReply)fileTransferRequestReplyAction
 {
 	return [RZUserDefaults() unsignedIntegerForKey:@"File Transfers -> File Transfer Request Reply Action"];
 }
 
-+ (TXFileTransferIPAddressDetectionMethod)fileTransferIPAddressDetectionMethod
++ (TXFileTransferIPAddressMethodDetection)fileTransferIPAddressDetectionMethod
 {
 	return [RZUserDefaults() unsignedIntegerForKey:@"File Transfers -> File Transfer IP Address Detection Method"];
 }
@@ -854,25 +854,25 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	switch (event) {
 #define _dv(key, value)		case (key): { returnValue = (value); break; }
 
-		_dv(TXNotificationAddressBookMatchType, @"NotificationType -> Address Book Match -> ")
-		_dv(TXNotificationChannelMessageType, @"NotificationType -> Public Message -> ")
-		_dv(TXNotificationChannelNoticeType, @"NotificationType -> Public Notice -> ")
-		_dv(TXNotificationConnectType, @"NotificationType -> Connected -> ")
-		_dv(TXNotificationDisconnectType, @"NotificationType -> Disconnected -> ")
-		_dv(TXNotificationHighlightType, @"NotificationType -> Highlight -> ")
-		_dv(TXNotificationInviteType, @"NotificationType -> Channel Invitation -> ")
-		_dv(TXNotificationKickType, @"NotificationType -> Kicked from Channel -> ")
-		_dv(TXNotificationNewPrivateMessageType, @"NotificationType -> Private Message (New) -> ")
-		_dv(TXNotificationPrivateMessageType, @"NotificationType -> Private Message -> ")
-		_dv(TXNotificationPrivateNoticeType, @"NotificationType -> Private Notice -> ")
-		_dv(TXNotificationFileTransferSendSuccessfulType, @"NotificationType -> Successful File Transfer (Sending) -> ")
-		_dv(TXNotificationFileTransferReceiveSuccessfulType, @"NotificationType -> Successful File Transfer (Receiving) -> ")
-		_dv(TXNotificationFileTransferSendFailedType, @"NotificationType -> Failed File Transfer (Sending) -> ")
-		_dv(TXNotificationFileTransferReceiveFailedType, @"NotificationType -> Failed File Transfer (Receiving) -> ")
-		_dv(TXNotificationFileTransferReceiveRequestedType, @"NotificationType -> File Transfer Request -> ")
-		_dv(TXNotificationUserJoinedType, @"NotificationType -> User Joined -> ")
-		_dv(TXNotificationUserPartedType, @"NotificationType -> User Parted -> ")
-		_dv(TXNotificationUserDisconnectedType, @"NotificationType -> User Disconnected -> ")
+		_dv(TXNotificationTypeAddressBookMatch, @"NotificationType -> Address Book Match -> ")
+		_dv(TXNotificationTypeChannelMessage, @"NotificationType -> Public Message -> ")
+		_dv(TXNotificationTypeChannelNotice, @"NotificationType -> Public Notice -> ")
+		_dv(TXNotificationTypeConnect, @"NotificationType -> Connected -> ")
+		_dv(TXNotificationTypeDisconnect, @"NotificationType -> Disconnected -> ")
+		_dv(TXNotificationTypeHighlight, @"NotificationType -> Highlight -> ")
+		_dv(TXNotificationTypeInvite, @"NotificationType -> Channel Invitation -> ")
+		_dv(TXNotificationTypeKick, @"NotificationType -> Kicked from Channel -> ")
+		_dv(TXNotificationTypeNewPrivateMessage, @"NotificationType -> Private Message (New) -> ")
+		_dv(TXNotificationTypePrivateMessage, @"NotificationType -> Private Message -> ")
+		_dv(TXNotificationTypePrivateNotice, @"NotificationType -> Private Notice -> ")
+		_dv(TXNotificationTypeFileTransferSendSuccessful, @"NotificationType -> Successful File Transfer (Sending) -> ")
+		_dv(TXNotificationTypeFileTransferReceiveSuccessful, @"NotificationType -> Successful File Transfer (Receiving) -> ")
+		_dv(TXNotificationTypeFileTransferSendFailed, @"NotificationType -> Failed File Transfer (Sending) -> ")
+		_dv(TXNotificationTypeFileTransferReceiveFailed, @"NotificationType -> Failed File Transfer (Receiving) -> ")
+		_dv(TXNotificationTypeFileTransferReceiveRequested, @"NotificationType -> File Transfer Request -> ")
+		_dv(TXNotificationTypeUserJoined, @"NotificationType -> User Joined -> ")
+		_dv(TXNotificationTypeUserParted, @"NotificationType -> User Parted -> ")
+		_dv(TXNotificationTypeUserDisconnected, @"NotificationType -> User Disconnected -> ")
 
 #undef _dv
 	}
@@ -1028,28 +1028,28 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (BOOL)channelMessageSpeakChannelName
 {
-	NSString *eventKey = [self keyForEvent:TXNotificationChannelMessageType category:@"Speak Channel Name"];
+	NSString *eventKey = [self keyForEvent:TXNotificationTypeChannelMessage category:@"Speak Channel Name"];
 
 	return [RZUserDefaults() boolForKey:eventKey];
 }
 
 + (void)setChannelMessageSpeakChannelName:(BOOL)channelMessageSpeakChannelName
 {
-	NSString *eventKey = [self keyForEvent:TXNotificationChannelMessageType category:@"Speak Channel Name"];
+	NSString *eventKey = [self keyForEvent:TXNotificationTypeChannelMessage category:@"Speak Channel Name"];
 
 	[RZUserDefaults() setBool:channelMessageSpeakChannelName forKey:eventKey];
 }
 
 + (BOOL)channelMessageSpeakNickname
 {
-	NSString *eventKey = [self keyForEvent:TXNotificationChannelMessageType category:@"Speak Nickname"];
+	NSString *eventKey = [self keyForEvent:TXNotificationTypeChannelMessage category:@"Speak Nickname"];
 
 	return [RZUserDefaults() boolForKey:eventKey];
 }
 
 + (void)setChannelMessageSpeakNickname:(BOOL)channelMessageSpeakNickname
 {
-	NSString *eventKey = [self keyForEvent:TXNotificationChannelMessageType category:@"Speak Nickname"];
+	NSString *eventKey = [self keyForEvent:TXNotificationTypeChannelMessage category:@"Speak Nickname"];
 
 	[RZUserDefaults() setBool:channelMessageSpeakNickname forKey:eventKey];
 }
@@ -1236,7 +1236,7 @@ TEXTUAL_IGNORE_DEPRECATION_BEGIN
 TEXTUAL_IGNORE_DEPRECATION_END
 
 	if (invertSidebarColors) {
-		[self setAppearance:TXPreferredAppearanceDarkType];
+		[self setAppearance:TXPreferredAppearanceDark];
 	}
 
 	[RZUserDefaults() setBool:YES forKey:_defaultsKey];

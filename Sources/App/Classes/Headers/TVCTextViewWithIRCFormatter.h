@@ -41,10 +41,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, TVCTextViewCaretLocation)
 {
-	TVCTextViewCaretInOnlyLine, // There isn't more than one line
-	TVCTextViewCaretInFirstLine,
-	TVCTextViewCaretInMiddle,
-	TVCTextViewCaretInLastLine,
+	TVCTextViewCaretLocationOnlyLine, // There isn't more than one line
+	TVCTextViewCaretLocationFirstLine,
+	TVCTextViewCaretLocationMiddle,
+	TVCTextViewCaretLocationLastLine,
 };
 
 @interface TVCTextViewWithIRCFormatter : NSTextView <NSTextDelegate, TLOKeyEventHandlerPrototype>

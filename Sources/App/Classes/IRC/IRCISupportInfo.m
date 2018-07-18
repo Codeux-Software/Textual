@@ -600,19 +600,19 @@ ClassWithDesignatedInitializerInitMethod
 - (nullable NSString *)modeSymbolForList:(IRCISupportInfoListType)listType
 {
 	switch (listType) {
-		case IRCISupportInfoBanListType:
+		case IRCISupportInfoListTypeBan:
 		{
 			return @"b";
 		}
-		case IRCISupportInfoBanExceptionListType:
+		case IRCISupportInfoListTypeBanException:
 		{
 			return self.banExceptionModeSymbol;
 		}
-		case IRCISupportInfoInviteExceptionListType:
+		case IRCISupportInfoListTypeInviteException:
 		{
 			return self.inviteExceptionModeSymbol;
 		}
-		case IRCISupportInfoQuietListType:
+		case IRCISupportInfoListTypeQuiet:
 		{
 			/* +q is used by some servers as the user mode for channel owner.
 			 If this mode is a user mode, then hide the menu item. */

@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define RZUserDefaults()						[TPCPreferencesUserDefaults sharedUserDefaults]
 
 /* The user info dictionary of this notification contains the changed key. */
-TEXTUAL_EXTERN NSString * const TPCPreferencesUserDefaultsDidChangeNotification;
+TEXTUAL_EXTERN NSNotificationName const TPCPreferencesUserDefaultsDidChangeNotification;
 
 /* TPCPreferencesUserDefaults subclasses NSUserDefaults to allow Textual to fire off
  notifications for changed keys on a per-key basis so that the iCloud controller can

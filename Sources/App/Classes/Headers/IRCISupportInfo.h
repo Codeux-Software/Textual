@@ -42,10 +42,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, IRCISupportInfoListType)
 {
-	IRCISupportInfoBanListType,
-	IRCISupportInfoBanExceptionListType,
-	IRCISupportInfoInviteExceptionListType,
-	IRCISupportInfoQuietListType
+	IRCISupportInfoListTypeBan,
+	IRCISupportInfoListTypeBanException,
+	IRCISupportInfoListTypeInviteException,
+	IRCISupportInfoListTypeQuiet
 };
 
 #define IRCISupportInfoHighestUserPrefixRank			100

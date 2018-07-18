@@ -49,13 +49,13 @@ TEXTUAL_EXTERN NSString * const TPCThemeControllerCustomThemeNameCompletePrefix;
 TEXTUAL_EXTERN NSString * const TPCThemeControllerBundledThemeNameBasicPrefix;
 TEXTUAL_EXTERN NSString * const TPCThemeControllerBundledThemeNameCompletePrefix;
 
-TEXTUAL_EXTERN NSString * const TPCThemeControllerThemeListDidChangeNotification;
+TEXTUAL_EXTERN NSNotificationName const TPCThemeControllerThemeListDidChangeNotification;
 
 typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
-	TPCThemeControllerStorageUnknownLocation = 0,
-	TPCThemeControllerStorageBundleLocation,
-	TPCThemeControllerStorageCustomLocation,
-	TPCThemeControllerStorageCloudLocation
+	TPCThemeControllerStorageLocationUnknown = 0,
+	TPCThemeControllerStorageLocationBundle,
+	TPCThemeControllerStorageLocationCustom,
+	TPCThemeControllerStorageLocationCloud
 };
 
 /* Theme is not loaded until main window is woken which means

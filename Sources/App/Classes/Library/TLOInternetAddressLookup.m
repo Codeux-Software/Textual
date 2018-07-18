@@ -133,7 +133,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (NSString *)addressSourceURL
 {
-	if ([TPCPreferences fileTransferIPAddressDetectionMethod] == TXFileTransferIPAddressRouterAndThirdPartyMethod) {
+	if ([TPCPreferences fileTransferIPAddressDetectionMethod] == TXFileTransferIPAddressMethodRouterAndThirdParty) {
 		return [self thirdPartySourceURL];
 	}
 	

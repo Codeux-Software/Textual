@@ -411,7 +411,7 @@ ClassWithDesignatedInitializerInitMethod
 										   forViewController:self
 											  withAttributes:@{
 													TVCLogRendererConfigurationRenderLinksAttribute : @YES,
-													TVCLogRendererConfigurationLineTypeAttribute : @(TVCLogLineTopicType)
+													TVCLogRendererConfigurationLineTypeAttribute : @(TVCLogLineTypeTopic)
 															}
 												  resultInfo:NULL];
 
@@ -809,7 +809,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	self.activeLineCount += lineNumbers.count;
 
-	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent] == NO) {
+	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportedFeatureNewMessagePostedEvent] == NO) {
 		return;
 	}
 
@@ -1288,7 +1288,7 @@ ClassWithDesignatedInitializerInitMethod
 
 			/* Using informationi provided by conversation tracking we can update 
 			 our internal array of favored nicknames for nick completion. */
-			if (logLine.memberType == TVCLogLineMemberLocalUserType) {
+			if (logLine.memberType == TVCLogLineMemberTypeLocalUser) {
 				[listOfUsers.allObjects makeObjectsPerformSelector:@selector(outgoingConversation)];
 			} else {
 				[listOfUsers.allObjects makeObjectsPerformSelector:@selector(conversation)];
@@ -1362,7 +1362,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	BOOL inlineMedia =
 		(self.inlineMediaEnabledForView &&
-		 (lineType == TVCLogLinePrivateMessageType || lineType == TVCLogLineActionType));
+		 (lineType == TVCLogLineTypePrivateMessage || lineType == TVCLogLineTypeAction));
 
 	NSString *lineNumber = logLine.uniqueIdentifier;
 
@@ -1417,7 +1417,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSString *classAttribute = nil;
 
-	if (lineType == TVCLogLinePrivateMessageType || lineType == TVCLogLineActionType || lineType == TVCLogLineNoticeType) {
+	if (lineType == TVCLogLineTypePrivateMessage || lineType == TVCLogLineTypeAction || lineType == TVCLogLineTypeNotice) {
 		classAttribute = @"text";
 	} else {
 		classAttribute = @"event";
@@ -1441,7 +1441,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	templateAttributes[@"isHighlight"] = @(highlighted);
 
-	templateAttributes[@"isRemoteMessage"] = @(logLine.memberType == TVCLogLineMemberNormalType);
+	templateAttributes[@"isRemoteMessage"] = @(logLine.memberType == TVCLogLineMemberTypeNormal);
 
 	// ---- //
 
@@ -1484,7 +1484,7 @@ ClassWithDesignatedInitializerInitMethod
 	if (resultInfoTemp) {
 		resultInfoTemp[@"processInlineMedia"] = @(inlineMedia);
 
-		if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
+		if ([sharedPluginManager() supportsFeature:THOPluginItemSupportedFeatureNewMessagePostedEvent]) {
 			NSArray<AHHyperlinkScannerResult *> *listOfLinks = rendererResults[TVCLogRendererResultsListOfLinksInBodyAttribute];
 
 			 THOPluginDidPostNewMessageConcreteObject *pluginConcreteObject =

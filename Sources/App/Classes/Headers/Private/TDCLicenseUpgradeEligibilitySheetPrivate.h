@@ -42,10 +42,10 @@ NS_ASSUME_NONNULL_BEGIN
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 typedef NS_ENUM(NSUInteger, TLOLicenseUpgradeEligibility) {
 	TLOLicenseUpgradeEligibilityUnknown = LONG_MAX,
-	TLOLicenseUpgradeNotEligible = 0,
-	TLOLicenseUpgradeEligibleDiscount = 1,
-	TLOLicenseUpgradeEligibleFree = 3,
-	TLOLicenseUpgradeAlreadyUpgraded = 2,
+	TLOLicenseUpgradeEligibilityNot = 0,
+	TLOLicenseUpgradeEligibilityDiscount = 1,
+	TLOLicenseUpgradeEligibilityFree = 3,
+	TLOLicenseUpgradeEligibilityAlreadyUpgraded = 2,
 };
 
 @protocol TDCLicenseUpgradeEligibilitySheetDelegate;

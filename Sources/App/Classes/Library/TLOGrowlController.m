@@ -91,25 +91,25 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 #define _df(key, num)			case (key): { return TXTLS((num)); }
 
 	switch (event) {
-			_df(TXNotificationAddressBookMatchType, @"Notifications[kx3-xk]")
-			_df(TXNotificationChannelMessageType, @"Notifications[qnz-k4]")
-			_df(TXNotificationChannelNoticeType, @"Notifications[vuq-jp]")
-			_df(TXNotificationConnectType, @"Notifications[4lr-ej]")
-			_df(TXNotificationDisconnectType, @"Notifications[wjv-yb]")
-			_df(TXNotificationInviteType, @"Notifications[eiu-8q]")
-			_df(TXNotificationKickType, @"Notifications[2nk-lg]")
-			_df(TXNotificationNewPrivateMessageType, @"Notifications[5yi-gu]")
-			_df(TXNotificationPrivateMessageType, @"Notifications[00b-nx]")
-			_df(TXNotificationPrivateNoticeType, @"Notifications[nhz-io]")
-			_df(TXNotificationHighlightType, @"Notifications[cs4-x9]")
-			_df(TXNotificationFileTransferSendSuccessfulType, @"Notifications[0x2-3h]")
-			_df(TXNotificationFileTransferReceiveSuccessfulType, @"Notifications[qle-7v]")
-			_df(TXNotificationFileTransferSendFailedType, @"Notifications[sc0-1n]")
-			_df(TXNotificationFileTransferReceiveFailedType, @"Notifications[we9-1b]")
-			_df(TXNotificationFileTransferReceiveRequestedType, @"Notifications[st5-0n]")
-			_df(TXNotificationUserJoinedType, @"Notifications[25q-af]")
-			_df(TXNotificationUserPartedType, @"Notifications[k3s-by]")
-			_df(TXNotificationUserDisconnectedType, @"Notifications[0fo-bt]")
+			_df(TXNotificationTypeAddressBookMatch, @"Notifications[kx3-xk]")
+			_df(TXNotificationTypeChannelMessage, @"Notifications[qnz-k4]")
+			_df(TXNotificationTypeChannelNotice, @"Notifications[vuq-jp]")
+			_df(TXNotificationTypeConnect, @"Notifications[4lr-ej]")
+			_df(TXNotificationTypeDisconnect, @"Notifications[wjv-yb]")
+			_df(TXNotificationTypeInvite, @"Notifications[eiu-8q]")
+			_df(TXNotificationTypeKick, @"Notifications[2nk-lg]")
+			_df(TXNotificationTypeNewPrivateMessage, @"Notifications[5yi-gu]")
+			_df(TXNotificationTypePrivateMessage, @"Notifications[00b-nx]")
+			_df(TXNotificationTypePrivateNotice, @"Notifications[nhz-io]")
+			_df(TXNotificationTypeHighlight, @"Notifications[cs4-x9]")
+			_df(TXNotificationTypeFileTransferSendSuccessful, @"Notifications[0x2-3h]")
+			_df(TXNotificationTypeFileTransferReceiveSuccessful, @"Notifications[qle-7v]")
+			_df(TXNotificationTypeFileTransferSendFailed, @"Notifications[sc0-1n]")
+			_df(TXNotificationTypeFileTransferReceiveFailed, @"Notifications[we9-1b]")
+			_df(TXNotificationTypeFileTransferReceiveRequested, @"Notifications[st5-0n]")
+			_df(TXNotificationTypeUserJoined, @"Notifications[25q-af]")
+			_df(TXNotificationTypeUserParted, @"Notifications[k3s-by]")
+			_df(TXNotificationTypeUserDisconnected, @"Notifications[0fo-bt]")
 	}
 
 #undef _df
@@ -122,7 +122,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 	NSUInteger eventPriority = 0;
 
 	switch (eventType) {
-		case TXNotificationHighlightType:
+		case TXNotificationTypeHighlight:
 		{
 			eventPriority = 1;
 
@@ -130,7 +130,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 
 			break;
 		}
-		case TXNotificationNewPrivateMessageType:
+		case TXNotificationTypeNewPrivateMessage:
 		{
 			eventPriority = 1;
 
@@ -138,43 +138,43 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 
 			break;
 		}
-		case TXNotificationChannelMessageType:
+		case TXNotificationTypeChannelMessage:
 		{
 			eventTitle = TXTLS(@"Notifications[ep5-de]", eventTitle);
 
 			break;
 		}
-		case TXNotificationChannelNoticeType:
+		case TXNotificationTypeChannelNotice:
 		{
 			eventTitle = TXTLS(@"Notifications[chi-km]", eventTitle);
 
 			break;
 		}
-		case TXNotificationPrivateMessageType:
+		case TXNotificationTypePrivateMessage:
 		{
 			eventTitle = TXTLS(@"Notifications[69i-dy]");
 
 			break;
 		}
-		case TXNotificationPrivateNoticeType:
+		case TXNotificationTypePrivateNotice:
 		{
 			eventTitle = TXTLS(@"Notifications[7hn-dg]");
 
 			break;
 		}
-		case TXNotificationKickType:
+		case TXNotificationTypeKick:
 		{
 			eventTitle = TXTLS(@"Notifications[u30-ia]", eventTitle);
 
 			break;
 		}
-		case TXNotificationInviteType:
+		case TXNotificationTypeInvite:
 		{
 			eventTitle = TXTLS(@"Notifications[g4s-cq]", eventTitle);
 
 			break;
 		}
-		case TXNotificationConnectType:
+		case TXNotificationTypeConnect:
 		{
 			eventTitle = TXTLS(@"Notifications[mo1-vn]", eventTitle);
 
@@ -182,7 +182,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 
 			break;
 		}
-		case TXNotificationDisconnectType:
+		case TXNotificationTypeDisconnect:
 		{
 			eventTitle = TXTLS(@"Notifications[7xe-ig]", eventTitle);
 
@@ -190,55 +190,55 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 
 			break;
 		}
-		case TXNotificationAddressBookMatchType:
+		case TXNotificationTypeAddressBookMatch:
 		{
 			eventTitle = TXTLS(@"Notifications[niq-32]");
 
 			break;
 		}
-		case TXNotificationFileTransferSendSuccessfulType:
+		case TXNotificationTypeFileTransferSendSuccessful:
 		{
 			eventTitle = TXTLS(@"Notifications[l5y-sx]", eventTitle);
 
 			break;
 		}
-		case TXNotificationFileTransferReceiveSuccessfulType:
+		case TXNotificationTypeFileTransferReceiveSuccessful:
 		{
 			eventTitle = TXTLS(@"Notifications[hc9-7n]", eventTitle);
 
 			break;
 		}
-		case TXNotificationFileTransferSendFailedType:
+		case TXNotificationTypeFileTransferSendFailed:
 		{
 			eventTitle = TXTLS(@"Notifications[het-vh]", eventTitle);
 
 			break;
 		}
-		case TXNotificationFileTransferReceiveFailedType:
+		case TXNotificationTypeFileTransferReceiveFailed:
 		{
 			eventTitle = TXTLS(@"Notifications[hm4-ze]", eventTitle);
 
 			break;
 		}
-		case TXNotificationFileTransferReceiveRequestedType:
+		case TXNotificationTypeFileTransferReceiveRequested:
 		{
 			eventTitle = TXTLS(@"Notifications[nqz-7v]", eventTitle);
 
 			break;
 		}
-		case TXNotificationUserJoinedType:
+		case TXNotificationTypeUserJoined:
 		{
 			eventTitle = TXTLS(@"Notifications[keq-ts]", eventTitle);
 
 			break;
 		}
-		case TXNotificationUserPartedType:
+		case TXNotificationTypeUserParted:
 		{
 			eventTitle = TXTLS(@"Notifications[im4-p0]", eventTitle);
 
 			break;
 		}
-		case TXNotificationUserDisconnectedType:
+		case TXNotificationTypeUserDisconnected:
 		{
 			eventTitle = TXTLS(@"Notifications[20x-32]", eventTitle);
 
@@ -258,7 +258,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 		notification.title = eventTitle;
 		notification.userInfo = eventContext;
 
-		if (eventType == TXNotificationFileTransferReceiveRequestedType) {
+		if (eventType == TXNotificationTypeFileTransferReceiveRequested) {
 			/* sshhhh... you didn't see nothing. */
 			[notification setValue:@(YES) forKey:@"_showsButtons"];
 
@@ -266,8 +266,8 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 		}
 
 		/* These are the only event types we want to support for now */
-		if (eventType == TXNotificationNewPrivateMessageType ||
-			eventType == TXNotificationPrivateMessageType)
+		if (eventType == TXNotificationTypeNewPrivateMessage ||
+			eventType == TXNotificationTypePrivateMessage)
 		{
 			notification.hasReplyButton = YES;
 
@@ -438,7 +438,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 			return;
 		}
 
-		if (alertType != TXNotificationFileTransferReceiveRequestedType) {
+		if (alertType != TXNotificationTypeFileTransferReceiveRequested) {
 			return;
 		}
 
@@ -452,7 +452,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 
 		TDCFileTransferDialogTransferStatus transferStatus = fileTransfer.transferStatus;
 
-		if (transferStatus != TDCFileTransferDialogTransferStoppedStatus) {
+		if (transferStatus != TDCFileTransferDialogTransferStatusStopped) {
 			return;
 		}
 

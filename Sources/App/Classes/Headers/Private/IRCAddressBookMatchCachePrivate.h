@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 /* If multiple address book entries exist for the same host,
  then we return all of them combined into a single instance.
  This object will have a blank hostmask and the entry type
- IRCAddressBookMixedEntryType. */
+ IRCAddressBookEntryTypeMixed. */
 - (nullable IRCAddressBookEntry *)findAddressBookEntryForHostmask:(NSString *)hostmask;
 
 - (NSArray<IRCAddressBookEntry *> *)findIgnoresForHostmask:(NSString *)hostmask;

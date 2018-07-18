@@ -81,12 +81,12 @@ NS_ASSUME_NONNULL_BEGIN
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 + (void)onInAppPurchaseTrialExpired:(NSNotification *)notification
 {
-	[self performReloadAction:TPCPreferencesReloadLogTranscriptsAction];
+	[self performReloadAction:TPCPreferencesReloadActionLogTranscripts];
 }
 
 + (void)onInAppPurchaseTransactionFinished:(NSNotification *)notification
 {
-	[self performReloadAction:TPCPreferencesReloadLogTranscriptsAction];
+	[self performReloadAction:TPCPreferencesReloadActionLogTranscripts];
 }
 #endif
 
@@ -101,7 +101,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(keys != nil);
 
-	TPCPreferencesReloadActionMask reloadAction = 0;
+	TPCPreferencesReloadAction reloadAction = 0;
 
 	/* Style specific reloads... */
 	if ([keys containsObject:@"AutomaticallyFilterUnicodeTextSpam"] ||
@@ -119,61 +119,61 @@ NS_ASSUME_NONNULL_BEGIN
 		[keys containsObject:TPCPreferencesThemeFontSizeDefaultsKey] ||
 		[keys containsObject:TPCPreferencesThemeNameDefaultsKey])
 	{
-		reloadAction |= TPCPreferencesReloadStyleAction;
+		reloadAction |= TPCPreferencesReloadActionStyle;
 	}
 
 	/* Highlight lists */
 	if ([keys containsObject:@"Highlight List -> Excluded Matches"] ||
 		[keys containsObject:@"Highlight List -> Primary Matches"])
 	{
-		reloadAction |= TPCPreferencesReloadHighlightKeywordsAction;
+		reloadAction |= TPCPreferencesReloadActionHighlightKeywords;
 	}
 
 	/* Highlight logging */
 	if ([keys containsObject:@"LogHighlights"]) {
-		reloadAction |= TPCPreferencesReloadHighlightLoggingAction;
+		reloadAction |= TPCPreferencesReloadActionHighlightLogging;
 	}
 
 	/* Text direction: right-to-left, left-to-right */
 	if ([keys containsObject:@"RightToLeftTextFormatting"]) {
-		reloadAction |= TPCPreferencesReloadTextDirectionAction;
+		reloadAction |= TPCPreferencesReloadActionTextDirection;
 	}
 
 	/* Text field font size */
 	if ([keys containsObject:@"Main Input Text Field -> Font Size"]) {
-		reloadAction |= TPCPreferencesReloadTextFieldFontSizeAction;
+		reloadAction |= TPCPreferencesReloadActionTextFieldFontSize;
 	}
 
 	/* Input history scope */
 	if ([keys containsObject:@"SaveInputHistoryPerSelection"]) {
-		reloadAction |= TPCPreferencesReloadInputHistoryScopeAction;
+		reloadAction |= TPCPreferencesReloadActionInputHistoryScope;
 	}
 
 	/* Main window segmented controller */
 	if ([keys containsObject:@"DisableMainWindowSegmentedController"]) {
-		reloadAction |= TPCPreferencesReloadTextFieldSegmentedControllerOriginAction;
+		reloadAction |= TPCPreferencesReloadActionTextFieldSegmentedControllerOrigin;
 	}
 
 	/* Main window alpha level */
 	if ([keys containsObject:@"MainWindowTransparencyLevel"]) {
-		reloadAction |= TPCPreferencesReloadMainWindowTransparencyLevelAction;
+		reloadAction |= TPCPreferencesReloadActionMainWindowTransparencyLevel;
 	}
 
 	/* Dock icon */
 	if ([keys containsObject:@"DisplayDockBadges"] ||
 		[keys containsObject:@"DisplayPublicMessageCountInDockBadge"])
 	{
-		reloadAction |= TPCPreferencesReloadDockIconBadgesAction;
+		reloadAction |= TPCPreferencesReloadActionDockIconBadges;
 	}
 
 	/* Main window appearance */
 	if ([keys containsObject:@"Appearance"]) {
-		reloadAction |= TPCPreferencesReloadAppearanceAction;
+		reloadAction |= TPCPreferencesReloadActionAppearance;
 	}
 
 	/* Member list sort order */
 	if ([keys containsObject:@"MemberListSortFavorsServerStaff"]) {
-		reloadAction |= TPCPreferencesReloadMemberListSortOrderAction;
+		reloadAction |= TPCPreferencesReloadActionMemberListSortOrder;
 	}
 
 	/* Member list user badge colors */
@@ -186,39 +186,39 @@ NS_ASSUME_NONNULL_BEGIN
 		[keys containsObject:@"User List Mode Badge Colors -> +v"] ||
 		[keys containsObject:@"User List Mode Badge Colors -> no mode"])
 	{
-		reloadAction |= TPCPreferencesReloadMemberListAction;
-		reloadAction |= TPCPreferencesReloadMemberListUserBadgesAction;
+		reloadAction |= TPCPreferencesReloadActionMemberList;
+		reloadAction |= TPCPreferencesReloadActionMemberListUserBadges;
 	}
 
 	/* Server list unread count badge colors */
 	if ([keys containsObject:@"Server List Unread Message Count Badge Colors -> Highlight"]) {
-		reloadAction |= TPCPreferencesReloadServerListUnreadBadgesAction;
+		reloadAction |= TPCPreferencesReloadActionServerListUnreadBadges;
 	}
 
 	/* Sparkle framework update feed URL */
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
 	if ([keys containsObject:@"ReceiveBetaUpdates"]) {
-		reloadAction |= TPCPreferencesReloadSparkleFrameworkFeedURLAction;
+		reloadAction |= TPCPreferencesReloadActionSparkleFrameworkFeedURL;
 	}
 #endif
 
 	/* Developer mode */
 	if ([keys containsObject:@"TextualDeveloperEnvironment"]) {
-		reloadAction |= TPCPreferencesReloadIRCCommandCacheAction;
+		reloadAction |= TPCPreferencesReloadActionIRCCommandCache;
 	}
 
 	/* Scrollback limit */
 	if ([keys containsObject:@"ScrollbackMaximumSavedLineCount"]) {
-		reloadAction |= TPCPreferencesReloadScrollbackSaveLimitAction;
+		reloadAction |= TPCPreferencesReloadActionScrollbackSaveLimit;
 	}
 
 	if ([keys containsObject:@"ScrollbackMaximumVisibleLineCount"]) {
-		reloadAction |= TPCPreferencesReloadScrollbackVisibleLimitAction;
+		reloadAction |= TPCPreferencesReloadActionScrollbackVisibleLimit;
 	}
 
 	/* Channel view arrangement */
 	if ([keys containsObject:@"ChannelViewArrangement"]) {
-		reloadAction |= TPCPreferencesReloadChannelViewArrangementAction;
+		reloadAction |= TPCPreferencesReloadActionChannelViewArrangement;
 	}
 
 	/* Encryption policy */
@@ -227,26 +227,26 @@ NS_ASSUME_NONNULL_BEGIN
 		[keys containsObject:@"Off-the-Record Messaging -> Automatically Enable Service"] ||
 		[keys containsObject:@"Off-the-Record Messaging -> Require Encryption"])
 	{
-		reloadAction |= TPCPreferencesReloadEncryptionPolicyAction;
+		reloadAction |= TPCPreferencesReloadActionEncryptionPolicy;
 	}
 #endif
 
 	/* After this is all complete; we call -preferencesChanged just to take 
 	 care of everything else that does not need specific reloads. */
-	reloadAction |= TPCPreferencesReloadPreferencesChangedAction;
+	reloadAction |= TPCPreferencesReloadActionPreferencesChanged;
 
 	[self performReloadAction:reloadAction];
 }
 
-+ (void)performReloadAction:(TPCPreferencesReloadActionMask)reloadAction
++ (void)performReloadAction:(TPCPreferencesReloadAction)reloadAction
 {
 	[self performReloadAction:reloadAction forKey:nil];
 }
 
-+ (void)performReloadAction:(TPCPreferencesReloadActionMask)reloadAction forKey:(nullable NSString *)key
++ (void)performReloadAction:(TPCPreferencesReloadAction)reloadAction forKey:(nullable NSString *)key
 {
 	/* Update dock icon */
-	if ((reloadAction & TPCPreferencesReloadDockIconBadgesAction) == TPCPreferencesReloadDockIconBadgesAction) {
+	if ((reloadAction & TPCPreferencesReloadActionDockIconBadges) == TPCPreferencesReloadActionDockIconBadges) {
 		[TVCDockIcon updateDockIcon];
 	}
 
@@ -257,7 +257,7 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL didReloadUserInterface = NO;
 
 	/* Member list appearance */
-	if ((reloadAction & TPCPreferencesReloadMemberListUserBadgesAction) == TPCPreferencesReloadMemberListUserBadgesAction) {
+	if ((reloadAction & TPCPreferencesReloadActionMemberListUserBadges) == TPCPreferencesReloadActionMemberListUserBadges) {
 		/* We invalidate this early because a separate action may
 		 which is attached to our mask may reload the drawings for
 		 us so until we know if that happened, we wait. */
@@ -266,7 +266,7 @@ NS_ASSUME_NONNULL_BEGIN
 		 and we have a key for context, then be more efficient by only updating
 		 drawings related to this preference. The member list automatically
 		 invalidates its caches when passing a recognized key. */ 
-		if (reloadAction == TPCPreferencesReloadMemberListUserBadgesAction && key != nil) {
+		if (reloadAction == TPCPreferencesReloadActionMemberListUserBadges && key != nil) {
 			[mainWindowMemberList() refreshDrawingForChangesToPreference:key];
 		} else {
 			[mainWindowMemberList().userInterfaceObjects invalidateUserMarkBadgeCaches];
@@ -274,25 +274,25 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Window appearance */
-	if ((reloadAction & TPCPreferencesReloadAppearanceAction) == TPCPreferencesReloadAppearanceAction) {
+	if ((reloadAction & TPCPreferencesReloadActionAppearance) == TPCPreferencesReloadActionAppearance) {
 		[[TXSharedApplication sharedAppearance] updateAppearance];
 
 		didReloadUserInterface = YES;
 	}
 
 	/* Active style */
-	if ((reloadAction & TPCPreferencesReloadStyleAction) == TPCPreferencesReloadStyleAction) {
+	if ((reloadAction & TPCPreferencesReloadActionStyle) == TPCPreferencesReloadActionStyle) {
 		[mainWindow() reloadTheme];
 
 		didReloadActiveStyle = YES;
 	}
 
 	/* Server list */
-	if ((reloadAction & TPCPreferencesReloadServerListAction) == TPCPreferencesReloadServerListAction) {
+	if ((reloadAction & TPCPreferencesReloadActionServerList) == TPCPreferencesReloadActionServerList) {
 		if (didReloadUserInterface == NO) {
 			[mainWindowServerList() applicationAppearanceChanged];
 		}
-	} else if ((reloadAction & TPCPreferencesReloadServerListUnreadBadgesAction) == TPCPreferencesReloadServerListUnreadBadgesAction) {
+	} else if ((reloadAction & TPCPreferencesReloadActionServerListUnreadBadges) == TPCPreferencesReloadActionServerListUnreadBadges) {
 		if (didReloadUserInterface == NO) {
 			/* The color used for unread badges on Yosemite also apply to the text color
 			 so we must reload all drawings instead of only the badges themselves. */
@@ -305,7 +305,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Member list appearance */
-	if ((reloadAction & TPCPreferencesReloadMemberListAction) == TPCPreferencesReloadMemberListAction) {
+	if ((reloadAction & TPCPreferencesReloadActionMemberList) == TPCPreferencesReloadActionMemberList) {
 		if (didReloadUserInterface == NO) {
 			[mainWindowMemberList() applicationAppearanceChanged];
 		}
@@ -314,7 +314,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Member list sort order */
 	BOOL didReloadMemberListSortOrder = NO;
 
-	if ((reloadAction & TPCPreferencesReloadMemberListSortOrderAction) == TPCPreferencesReloadMemberListSortOrderAction) {
+	if ((reloadAction & TPCPreferencesReloadActionMemberListSortOrder) == TPCPreferencesReloadActionMemberListSortOrder) {
 		for (IRCClient *u in worldController().clientList) {
 			for (IRCChannel *c in u.channelList) {
 				[c reloadDataForTableViewBySortingMembers];
@@ -325,7 +325,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Member list appearance */
-	if ((reloadAction & TPCPreferencesReloadMemberListAction) == TPCPreferencesReloadMemberListAction) {
+	if ((reloadAction & TPCPreferencesReloadActionMemberList) == TPCPreferencesReloadActionMemberList) {
 		/* Sort order will redraw these for us */
 		if (didReloadMemberListSortOrder == NO) {
 			[mainWindowMemberList() refreshAllDrawings];
@@ -333,22 +333,22 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Main window segmented controller */
-	if ((reloadAction & TPCPreferencesReloadTextFieldSegmentedControllerOriginAction) == TPCPreferencesReloadTextFieldSegmentedControllerOriginAction) {
+	if ((reloadAction & TPCPreferencesReloadActionTextFieldSegmentedControllerOrigin) == TPCPreferencesReloadActionTextFieldSegmentedControllerOrigin) {
 		[mainWindowTextField() reloadOriginPointsAndRecalculateSize];
 	}
 
 	/* Main window alpha level */
-	if ((reloadAction & TPCPreferencesReloadMainWindowTransparencyLevelAction) == TPCPreferencesReloadMainWindowTransparencyLevelAction) {
+	if ((reloadAction & TPCPreferencesReloadActionMainWindowTransparencyLevel) == TPCPreferencesReloadActionMainWindowTransparencyLevel) {
 		[mainWindow() updateAlphaValueToReflectPreferences];
 	}
 
 	/* Highlight keywords */
-	if ((reloadAction & TPCPreferencesReloadHighlightKeywordsAction) == TPCPreferencesReloadHighlightKeywordsAction) {
+	if ((reloadAction & TPCPreferencesReloadActionHighlightKeywords) == TPCPreferencesReloadActionHighlightKeywords) {
 		[self cleanUpHighlightKeywords];
 	}
 
 	/* Highlight logging */
-	if ((reloadAction & TPCPreferencesReloadHighlightLoggingAction) == TPCPreferencesReloadHighlightLoggingAction) {
+	if ((reloadAction & TPCPreferencesReloadActionHighlightLogging) == TPCPreferencesReloadActionHighlightLogging) {
 		if ([self logHighlights] == NO) {
 			for (IRCClient *u in worldController().clientList) {
 				[u clearCachedHighlights];
@@ -357,7 +357,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Text direction: right-to-left, left-to-right */
-	if ((reloadAction & TPCPreferencesReloadTextDirectionAction) == TPCPreferencesReloadTextDirectionAction) {
+	if ((reloadAction & TPCPreferencesReloadActionTextDirection) == TPCPreferencesReloadActionTextDirection) {
 		[mainWindowTextField() updateTextDirection];
 
 		if (didReloadActiveStyle == NO) {
@@ -366,29 +366,29 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Text field font size */
-	if ((reloadAction & TPCPreferencesReloadTextFieldFontSizeAction) == TPCPreferencesReloadTextFieldFontSizeAction) {
+	if ((reloadAction & TPCPreferencesReloadActionTextFieldFontSize) == TPCPreferencesReloadActionTextFieldFontSize) {
 		[mainWindowTextField() updateTextBasedOnPreferredFontSize];
 	}
 
 	/* Input history scope */
-	if ((reloadAction & TPCPreferencesReloadInputHistoryScopeAction) == TPCPreferencesReloadInputHistoryScopeAction) {
+	if ((reloadAction & TPCPreferencesReloadActionInputHistoryScope) == TPCPreferencesReloadActionInputHistoryScope) {
 		[mainWindow().inputHistoryManager noteInputHistoryObjectScopeDidChange];
 	}
 
 	/* Sparkle framework update feed URL */
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	if ((reloadAction & TPCPreferencesReloadSparkleFrameworkFeedURLAction) == TPCPreferencesReloadSparkleFrameworkFeedURLAction) {
+	if ((reloadAction & TPCPreferencesReloadActionSparkleFrameworkFeedURL) == TPCPreferencesReloadActionSparkleFrameworkFeedURL) {
 		[masterController() prepareThirdPartyServiceSparkleFramework];
 	}
 #endif
 
 	/* Command index cache */
-	if ((reloadAction & TPCPreferencesReloadIRCCommandCacheAction) == TPCPreferencesReloadIRCCommandCacheAction) {
+	if ((reloadAction & TPCPreferencesReloadActionIRCCommandCache) == TPCPreferencesReloadActionIRCCommandCache) {
 		[IRCCommandIndex invalidateCaches];
 	}
 
 	/* Transcript folder URL */
-	if ((reloadAction & TPCPreferencesReloadLogTranscriptsAction) == TPCPreferencesReloadLogTranscriptsAction) {
+	if ((reloadAction & TPCPreferencesReloadActionLogTranscripts) == TPCPreferencesReloadActionLogTranscripts) {
 		for (IRCClient *u in worldController().clientList) {
 			[u reopenLogFileIfNeeded];
 
@@ -399,11 +399,11 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Scrollback limit */
-	if ((reloadAction & TPCPreferencesReloadScrollbackSaveLimitAction) == TPCPreferencesReloadScrollbackSaveLimitAction) {
+	if ((reloadAction & TPCPreferencesReloadActionScrollbackSaveLimit) == TPCPreferencesReloadActionScrollbackSaveLimit) {
 		[TVCLogControllerHistoricLogSharedInstance() resetMaximumLineCount];
 	}
 
-	if ((reloadAction & TPCPreferencesReloadScrollbackVisibleLimitAction) == TPCPreferencesReloadScrollbackSaveLimitAction) {
+	if ((reloadAction & TPCPreferencesReloadActionScrollbackVisibleLimit) == TPCPreferencesReloadActionScrollbackSaveLimit) {
 		for (IRCClient *u in worldController().clientList) {
 			[u.viewController changeScrollbackLimit];
 
@@ -414,13 +414,13 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Channel view arrangement */
-	if ((reloadAction & TPCPreferencesReloadChannelViewArrangementAction) == TPCPreferencesReloadChannelViewArrangementAction) {
+	if ((reloadAction & TPCPreferencesReloadActionChannelViewArrangement) == TPCPreferencesReloadActionChannelViewArrangement) {
 		[mainWindow() updateChannelViewArrangement];
 	}
 
 	/* Encryption policy */
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-	if ((reloadAction & TPCPreferencesReloadEncryptionPolicyAction) == TPCPreferencesReloadEncryptionPolicyAction) {
+	if ((reloadAction & TPCPreferencesReloadActionEncryptionPolicy) == TPCPreferencesReloadActionEncryptionPolicy) {
 		[sharedEncryptionManager() updatePolicy];
 
 		/* Maybe remove title bar accessory view if encryption is disabled. */
@@ -429,7 +429,7 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 
 	/* World controller preferences changed call */
-	if ((reloadAction & TPCPreferencesReloadPreferencesChangedAction) == TPCPreferencesReloadPreferencesChangedAction) {
+	if ((reloadAction & TPCPreferencesReloadActionPreferencesChanged) == TPCPreferencesReloadActionPreferencesChanged) {
 		[worldController() preferencesChanged];
 
 		[mainWindow() preferencesChanged];

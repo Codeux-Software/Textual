@@ -151,7 +151,7 @@ typedef NS_ENUM(NSUInteger, TVCAlertType) {
 	}
 }
 
-- (TVCAlertResponse)runModal
+- (TVCAlertResponseButton)runModal
 {
 	NSAssert((self.alertFinished == NO),
 		@"Cannot show alert because it has already finished");
@@ -443,7 +443,7 @@ typedef NS_ENUM(NSUInteger, TVCAlertType) {
 #pragma mark -
 #pragma mark Utilities
 
-- (void)_postCompletionBlockWithResponse:(TVCAlertResponse)response
+- (void)_postCompletionBlockWithResponse:(TVCAlertResponseButton)response
 {
 	if (self.completionBlock) {
 		self.completionBlock(self, response);

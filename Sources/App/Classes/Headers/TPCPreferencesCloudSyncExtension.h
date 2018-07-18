@@ -43,8 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
 TEXTUAL_EXTERN NSString * const TPCPreferencesCloudSyncServicesEnabledDefaultsKey;
 TEXTUAL_EXTERN NSString * const TPCPreferencesCloudSyncServicesLimitedToServersDefaultsKey;
 
-TEXTUAL_EXTERN NSString * const TPCPreferencesCloudSyncDidChangeThemeFontNotification;
-TEXTUAL_EXTERN NSString * const TPCPreferencesCloudSyncDidChangeThemeNameNotification;
+TEXTUAL_EXTERN NSNotificationName const TPCPreferencesCloudSyncDidChangeThemeFontNotification;
+TEXTUAL_EXTERN NSNotificationName const TPCPreferencesCloudSyncDidChangeThemeNameNotification;
 
 @interface TPCPreferences (TPCPreferencesCloudSync)
 + (BOOL)syncPreferencesToTheCloud;

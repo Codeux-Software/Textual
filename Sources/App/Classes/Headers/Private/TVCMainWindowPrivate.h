@@ -50,10 +50,10 @@ NS_ASSUME_NONNULL_BEGIN
 @class TXMenuControllerMainWindowProxy;
 
 typedef NS_OPTIONS(NSUInteger, TVCMainWindowShiftSelectionFlags) {
-	TVCMainWindowShiftSelectionMaintainGroupingFlag			= 1 << 0,
-	TVCMainWindowShiftSelectionPerformDeselectFlag			= 1 << 1, // deselect previous selection
-	TVCMainWindowShiftSelectionPerformDeselectChildrenFlag	= 1 << 2, // deselect previous selection + children (if group item)
-//	TVCMainWindowShiftSelectionPerformDeselectAllFlag		= 1 << 2  // deselect all
+	TVCMainWindowShiftSelectionFlagMaintainGrouping			= 1 << 0,
+	TVCMainWindowShiftSelectionFlagPerformDeselect			= 1 << 1, // deselect previous selection
+	TVCMainWindowShiftSelectionFlagPerformDeselectChildren	= 1 << 2, // deselect previous selection + children (if group item)
+//	TVCMainWindowShiftSelectionFlagPerformDeselectAll		= 1 << 2  // deselect all
 };
 
 typedef NS_OPTIONS(NSUInteger, TVCMainWindowMouseLocation) {

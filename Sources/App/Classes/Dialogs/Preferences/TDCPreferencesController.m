@@ -227,34 +227,34 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSMutableArray *notifications = [NSMutableArray array];
 
-	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationAddressBookMatchType]];
+	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationTypeAddressBookMatch]];
 	[notifications addObject:@" "];
-	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationConnectType]];
-	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationDisconnectType]];
+	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationTypeConnect]];
+	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationTypeDisconnect]];
 	[notifications addObject:@" "];
-	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationHighlightType]];
+	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationTypeHighlight]];
 	[notifications addObject:@" "];
-	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationInviteType]];
-	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationKickType]];
+	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationTypeInvite]];
+	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationTypeKick]];
 	[notifications addObject:@" "];
-	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationChannelMessageType]];
-	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationChannelNoticeType]];
+	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationTypeChannelMessage]];
+	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationTypeChannelNotice]];
 	[notifications addObject:@" "];
-	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationNewPrivateMessageType]];
-	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationPrivateMessageType]];
-	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationPrivateNoticeType]];
+	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationTypeNewPrivateMessage]];
+	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationTypePrivateMessage]];
+	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationTypePrivateNotice]];
 	[notifications addObject:@" "];
-	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationUserJoinedType]];
-	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationUserPartedType]];
-	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationUserDisconnectedType]];
+	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationTypeUserJoined]];
+	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationTypeUserParted]];
+	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationTypeUserDisconnected]];
 	[notifications addObject:@" "];
-	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationFileTransferReceiveRequestedType]];
+	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationTypeFileTransferReceiveRequested]];
 	[notifications addObject:@" "];
-	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationFileTransferSendSuccessfulType]];
-	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationFileTransferReceiveSuccessfulType]];
+	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationTypeFileTransferSendSuccessful]];
+	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationTypeFileTransferReceiveSuccessful]];
 	[notifications addObject:@" "];
-	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationFileTransferSendFailedType]];
-	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationFileTransferReceiveFailedType]];
+	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationTypeFileTransferSendFailed]];
+	[notifications addObject:[TDCPreferencesNotificationConfiguration objectWithEventType:TXNotificationTypeFileTransferReceiveFailed]];
 
 	self.notificationController.notifications = notifications;
 
@@ -330,19 +330,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)show
 {
-	[self show:TDCPreferencesControllerDefaultNavigationSelection];
+	[self show:TDCPreferencesControllerSelectionDefault];
 }
 
-- (void)show:(TDCPreferencesControllerNavigationSelection)selection
+- (void)show:(TDCPreferencesControllerSelection)selection
 {
 	switch (selection) {
-		case TDCPreferencesControllerStyleNavigationSelection:
+		case TDCPreferencesControllerSelectionStyle:
 		{
 			[self _showPane:self.contentViewStyle selectedItem:_toolbarItemIndexStyle];
 
 			break;
 		}
-		case TDCPreferencesControllerHiddenPreferencesNavigationSelection:
+		case TDCPreferencesControllerSelectionHiddenPreferences:
 		{
 			[self _showPane:self.contentViewHiddenPreferences selectedItem:_toolbarItemIndexAdvanced];
 
@@ -700,7 +700,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)highlightCurrentNickname
 {
-	if ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightRegularExpressionMatchType) {
+	if ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightMatchTypeRegularExpression) {
 		return NO;
 	}
 
@@ -1133,7 +1133,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	[TPCPathInfo setTranscriptFolderURL:transcriptFolderURL];
 
-	[TPCPreferences performReloadAction:TPCPreferencesReloadLogTranscriptsAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionLogTranscripts];
 
 	[self updateTranscriptFolder];
 }
@@ -1325,7 +1325,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onChangedCheckForBetaUpdates:(id)sender
 {
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	[TPCPreferences performReloadAction:TPCPreferencesReloadSparkleFrameworkFeedURLAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionSparkleFrameworkFeedURL];
 
 	if ([TPCPreferences receiveBetaUpdates]) {
 		[menuController() checkForUpdates:nil];
@@ -1344,7 +1344,7 @@ NS_ASSUME_NONNULL_BEGIN
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (void)offRecordMessagingPolicyChanged:(id)sender
 {
-	[TPCPreferences performReloadAction:TPCPreferencesReloadEncryptionPolicyAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionEncryptionPolicy];
 }
 #endif
 
@@ -1353,7 +1353,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[self willChangeValueForKey:@"highlightCurrentNickname"];
 	[self didChangeValueForKey:@"highlightCurrentNickname"];
 
-	if ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightRegularExpressionMatchType) {
+	if ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightMatchTypeRegularExpression) {
 		self.highlightNicknameButton.enabled = NO;
 	} else {
 		self.highlightNicknameButton.enabled = YES;
@@ -1499,17 +1499,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onChangedInputHistoryScheme:(id)sender
 {
-	[TPCPreferences performReloadAction:TPCPreferencesReloadInputHistoryScopeAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionInputHistoryScope];
 }
 
 - (void)onChangedAppearance:(id)sender
 {
-	[TPCPreferences performReloadAction:TPCPreferencesReloadAppearanceAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionAppearance];
 }
 
 - (void)onChangedTheme:(id)sender
 {
-	[TPCPreferences performReloadAction:(TPCPreferencesReloadStyleAction | TPCPreferencesReloadTextDirectionAction)];
+	[TPCPreferences performReloadAction:(TPCPreferencesReloadActionStyle | TPCPreferencesReloadActionTextDirection)];
 }
 
 - (void)onThemeWillReload:(NSNotification *)notification
@@ -1530,12 +1530,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onChangedChannelViewArrangement:(id)sender
 {
-	[TPCPreferences performReloadAction:TPCPreferencesReloadChannelViewArrangementAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionChannelViewArrangement];
 }
 
 - (void)onChangedMainWindowSegmentedController:(id)sender
 {
-	[TPCPreferences performReloadAction:TPCPreferencesReloadTextFieldSegmentedControllerOriginAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionTextFieldSegmentedControllerOrigin];
 }
 
 - (void)onChangedUserListModeColor:(id)sender
@@ -1560,47 +1560,47 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* -onResetUserListModeColorsToDefaults: passes nil sender */
 	if (preferenceKey == nil) {
-		[TPCPreferences performReloadAction:(TPCPreferencesReloadMemberListUserBadgesAction | TPCPreferencesReloadMemberListAction)];
+		[TPCPreferences performReloadAction:(TPCPreferencesReloadActionMemberListUserBadges | TPCPreferencesReloadActionMemberList)];
 	} else {
-		[TPCPreferences performReloadAction:TPCPreferencesReloadMemberListUserBadgesAction forKey:preferenceKey];
+		[TPCPreferences performReloadAction:TPCPreferencesReloadActionMemberListUserBadges forKey:preferenceKey];
 	}
 }
 
 - (void)onChangedMainInputTextViewFontSize:(id)sender
 {
-	[TPCPreferences performReloadAction:TPCPreferencesReloadTextFieldFontSizeAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionTextFieldFontSize];
 }
 
 - (void)onFileTransferIPAddressDetectionMethodChanged:(id)sender
 {
-	TXFileTransferIPAddressDetectionMethod detectionMethod = [TPCPreferences fileTransferIPAddressDetectionMethod];
+	TXFileTransferIPAddressMethodDetection detectionMethod = [TPCPreferences fileTransferIPAddressDetectionMethod];
 
-	self.fileTransferManuallyEnteredIPAddressTextField.enabled = (detectionMethod == TXFileTransferIPAddressManualDetectionMethod);
+	self.fileTransferManuallyEnteredIPAddressTextField.enabled = (detectionMethod == TXFileTransferIPAddressMethodManual);
 }
 
 - (void)onChangedHighlightLogging:(id)sender
 {
-	[TPCPreferences performReloadAction:TPCPreferencesReloadHighlightLoggingAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionHighlightLogging];
 }
 
 - (void)onChangedUserListModeSortOrder:(id)sender
 {
-	[TPCPreferences performReloadAction:TPCPreferencesReloadMemberListSortOrderAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionMemberListSortOrder];
 }
 
 - (void)onChangedServerListUnreadBadgeColor:(id)sender
 {
-	[TPCPreferences performReloadAction:TPCPreferencesReloadServerListUnreadBadgesAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionServerListUnreadBadges];
 }
 
 - (void)onChangedScrollbackSaveLimit:(id)sender
 {
-	[TPCPreferences performReloadAction:TPCPreferencesReloadScrollbackSaveLimitAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionScrollbackSaveLimit];
 }
 
 - (void)onChangedScrollbackVisibleLimit:(id)sender
 {
-	[TPCPreferences performReloadAction:TPCPreferencesReloadScrollbackVisibleLimitAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionScrollbackVisibleLimit];
 }
 
 - (void)onOpenPathToCloudFolder:(id)sender
@@ -1657,7 +1657,7 @@ NS_ASSUME_NONNULL_BEGIN
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 - (void)onPurgeOfCloudDataRequestedCallback:(TDCAlertResponse)returnCode
 {
-	if (returnCode != TDCAlertResponseDefaultButton) {
+	if (returnCode != TDCAlertResponseDefault) {
 		return;
 	}
 
@@ -1691,11 +1691,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(originalAlert != nil);
 
-	if (returnCode == TDCAlertResponseAlternateButton) {
+	if (returnCode == TDCAlertResponseAlternate) {
 		[self openPathToTheme];
 	}
 
-	if (returnCode == TDCAlertResponseDefaultButton) {
+	if (returnCode == TDCAlertResponseDefault) {
 		[originalAlert.window orderOut:nil];
 
 		BOOL copyingToCloud = NO;
@@ -1707,9 +1707,9 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 
 		if (copyingToCloud) {
-			[themeController() copyActiveThemeToDestinationLocation:TPCThemeControllerStorageCloudLocation reloadOnCopy:YES openOnCopy:YES];
+			[themeController() copyActiveThemeToDestinationLocation:TPCThemeControllerStorageLocationCloud reloadOnCopy:YES openOnCopy:YES];
 		} else {
-			[themeController() copyActiveThemeToDestinationLocation:TPCThemeControllerStorageCustomLocation reloadOnCopy:YES openOnCopy:YES];
+			[themeController() copyActiveThemeToDestinationLocation:TPCThemeControllerStorageLocationCustom reloadOnCopy:YES openOnCopy:YES];
 		}
 	}
 }

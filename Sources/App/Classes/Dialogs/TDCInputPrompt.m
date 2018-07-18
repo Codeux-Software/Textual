@@ -41,12 +41,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TDCInputPrompt
 
-+ (TVCAlertResponse)promptWithMessage:(NSString *)bodyText
-								title:(NSString *)titleText
-						defaultButton:(NSString *)buttonDefault
-					  alternateButton:(nullable NSString *)buttonAlternate
-						prefillString:(nullable NSString *)prefillString
-						 resultString:(NSString * _Nonnull * _Nonnull )resultString
++ (TVCAlertResponseButton)promptWithMessage:(NSString *)bodyText
+									  title:(NSString *)titleText
+							  defaultButton:(NSString *)buttonDefault
+							alternateButton:(nullable NSString *)buttonAlternate
+							  prefillString:(nullable NSString *)prefillString
+							   resultString:(NSString * _Nonnull * _Nonnull )resultString
 {
 	NSParameterAssert(bodyText != nil);
 	NSParameterAssert(titleText != nil);
@@ -104,7 +104,7 @@ NS_ASSUME_NONNULL_BEGIN
 	alert.window.initialFirstResponder = textField;
 
 	/* Run modal */
-	TVCAlertResponse response = [alert runModal];
+	TVCAlertResponseButton response = [alert runModal];
 
 	/* Assign result */
 	*resultString = textField.stringValue;

@@ -52,11 +52,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, TDCChannelPropertiesSheetNavigationSelection)
+typedef NS_ENUM(NSUInteger, TDCChannelPropertiesSheetSelection)
 {
-	TDCChannelPropertiesSheetGeneralSelection = 0,
-	TDCChannelPropertiesSheetDefaultsSelection = 1,
-	TDCChannelPropertiesSheetNotificationsSelection = 2
+	TDCChannelPropertiesSheetSelectionGeneral = 0,
+	TDCChannelPropertiesSheetSelectionDefaults = 1,
+	TDCChannelPropertiesSheetSelectionNotifications = 2
 };
 
 @interface TDCChannelPropertiesSheet ()
@@ -222,13 +222,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSMutableArray *notifications = [NSMutableArray array];
 
-	[notifications addObject:[[TDCChannelPropertiesNotificationConfiguration alloc] initWithEventType:TXNotificationHighlightType inSheet:self]];
+	[notifications addObject:[[TDCChannelPropertiesNotificationConfiguration alloc] initWithEventType:TXNotificationTypeHighlight inSheet:self]];
 	[notifications addObject:@" "];
-	[notifications addObject:[[TDCChannelPropertiesNotificationConfiguration alloc] initWithEventType:TXNotificationChannelMessageType inSheet:self]];
-	[notifications addObject:[[TDCChannelPropertiesNotificationConfiguration alloc] initWithEventType:TXNotificationChannelNoticeType inSheet:self]];
+	[notifications addObject:[[TDCChannelPropertiesNotificationConfiguration alloc] initWithEventType:TXNotificationTypeChannelMessage inSheet:self]];
+	[notifications addObject:[[TDCChannelPropertiesNotificationConfiguration alloc] initWithEventType:TXNotificationTypeChannelNotice inSheet:self]];
 	[notifications addObject:@" "];
-	[notifications addObject:[[TDCChannelPropertiesNotificationConfiguration alloc] initWithEventType:TXNotificationUserJoinedType inSheet:self]];
-	[notifications addObject:[[TDCChannelPropertiesNotificationConfiguration alloc] initWithEventType:TXNotificationUserPartedType inSheet:self]];
+	[notifications addObject:[[TDCChannelPropertiesNotificationConfiguration alloc] initWithEventType:TXNotificationTypeUserJoined inSheet:self]];
+	[notifications addObject:[[TDCChannelPropertiesNotificationConfiguration alloc] initWithEventType:TXNotificationTypeUserParted inSheet:self]];
 
 	self.notificationsController.notifications = notifications;
 
@@ -243,7 +243,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (void)updateNavigationEnabledState
 {
 	[self.contentViewTabView setEnabled:(self.pushNotificationsCheck.state == NSOnState)
-							 forSegment:TDCChannelPropertiesSheetNotificationsSelection];
+							 forSegment:TDCChannelPropertiesSheetSelectionNotifications];
 }
 
 - (void)loadConfig
@@ -274,7 +274,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self _navigateToSelection:[sender indexOfSelectedItem]];
 }
 
-- (void)navigateToSelection:(TDCChannelPropertiesSheetNavigationSelection)selection
+- (void)navigateToSelection:(TDCChannelPropertiesSheetSelection)selection
 {
 	if (self.contentViewTabView.indexOfSelectedItem == selection) {
 		return;
@@ -285,7 +285,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self _navigateToSelection:selection];
 }
 
-- (void)_navigateToSelection:(TDCChannelPropertiesSheetNavigationSelection)selection
+- (void)_navigateToSelection:(TDCChannelPropertiesSheetSelection)selection
 {
 	[self selectPane:self.navigationTree[selection][0]];
 
@@ -307,7 +307,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	[self startSheet];
 
-	[self _navigateToSelection:TDCChannelPropertiesSheetGeneralSelection];
+	[self _navigateToSelection:TDCChannelPropertiesSheetSelectionGeneral];
 }
 
 - (void)controlTextDidChange:(NSNotification *)aNotification
@@ -378,7 +378,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				   alternateButton:TXTLS(@"Prompts[99q-gg]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
-					   if (buttonClicked != TDCAlertResponseDefaultButton) {
+					   if (buttonClicked != TDCAlertResponseDefault) {
 						   return;
 					   }
 					   
@@ -452,10 +452,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (BOOL)okOrError
 {
-	return [self okOrErrorForTextField:self.channelNameTextField inSelection:TDCChannelPropertiesSheetGeneralSelection];
+	return [self okOrErrorForTextField:self.channelNameTextField inSelection:TDCChannelPropertiesSheetSelectionGeneral];
 }
 
-- (BOOL)okOrErrorForTextField:(TVCValidatedTextField *)textField inSelection:(TDCChannelPropertiesSheetNavigationSelection)selection
+- (BOOL)okOrErrorForTextField:(TVCValidatedTextField *)textField inSelection:(TDCChannelPropertiesSheetSelection)selection
 {
 	if (textField.valueIsValid) {
 		return YES;

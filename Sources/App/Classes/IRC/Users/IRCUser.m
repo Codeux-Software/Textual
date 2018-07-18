@@ -172,19 +172,19 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	switch ([TPCPreferences banFormat]) {
-		case TXHostmaskBanWHNINFormat:
+		case TXHostmaskBanFormatWHNIN:
 		{
 			return [NSString stringWithFormat:@"*!*@%@", address];
 		}
-		case TXHostmaskBanWHAINNFormat:
+		case TXHostmaskBanFormatWHAINN:
 		{
 			return [NSString stringWithFormat:@"*!%@@%@", username, address];
 		}
-		case TXHostmaskBanWHANNIFormat:
+		case TXHostmaskBanFormatWHANNI:
 		{
 			return [NSString stringWithFormat:@"%@!*%@", nickname, address];
 		}
-		case TXHostmaskBanExactFormat:
+		case TXHostmaskBanFormatExact:
 		{
 			return [NSString stringWithFormat:@"%@!%@@%@", nickname, username, address];
 		}

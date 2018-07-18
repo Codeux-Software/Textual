@@ -47,22 +47,22 @@ NS_ASSUME_NONNULL_BEGIN
 @class TVCLogController;
 
 typedef NS_ENUM(NSUInteger, TVCServerListNavigationMovementType) {
-	TVCServerListNavigationMovementAllType = 0,	// Move to next item
-	TVCServerListNavigationMovementActiveType,  // Move to next active item
-	TVCServerListNavigationMovementUnreadType,  // Move to next unread item
+	TVCServerListNavigationMovementTypeAll = 0,	// Move to next item
+	TVCServerListNavigationMovementTypeActive,  // Move to next active item
+	TVCServerListNavigationMovementTypeUnread,  // Move to next unread item
 };
 
 typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
-	TVCServerListNavigationSelectionAnyType = 0,	// Move to next item
-	TVCServerListNavigationSelectionChannelType,	// Move to next channel item
-	TVCServerListNavigationSelectionServerType,		// Move to next server item
+	TVCServerListNavigationSelectionTypeAny = 0,	// Move to next item
+	TVCServerListNavigationSelectionTypeChannel,	// Move to next channel item
+	TVCServerListNavigationSelectionTypeServer,		// Move to next server item
 };
 
-TEXTUAL_EXTERN NSString * const TVCMainWindowAppearanceChangedNotification;
-TEXTUAL_EXTERN NSString * const TVCMainWindowRedrawSubviewsNotification;
+TEXTUAL_EXTERN NSNotificationName const TVCMainWindowAppearanceChangedNotification;
+TEXTUAL_EXTERN NSNotificationName const TVCMainWindowRedrawSubviewsNotification;
 
-TEXTUAL_EXTERN NSString * const TVCMainWindowWillReloadThemeNotification;
-TEXTUAL_EXTERN NSString * const TVCMainWindowDidReloadThemeNotification;
+TEXTUAL_EXTERN NSNotificationName const TVCMainWindowWillReloadThemeNotification;
+TEXTUAL_EXTERN NSNotificationName const TVCMainWindowDidReloadThemeNotification;
 
 TEXTUAL_EXTERN NSString * const TVCServerListDragType;
 

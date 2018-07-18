@@ -522,7 +522,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[client print:message
 			   by:nil
 		inChannel:channel
-		   asType:TVCLogLineOffTheRecordEncryptionStatusType
+		   asType:TVCLogLineTypeOffTheRecordEncryptionStatus
 		  command:TVCLogLineDefaultCommandValue
 	escapeMessage:escapeMessage];
 }

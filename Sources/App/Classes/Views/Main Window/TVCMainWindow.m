@@ -704,13 +704,13 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		}
 
 		/* Skip entries depending on navigation type */
-		if (selectionType == TVCServerListNavigationSelectionChannelType)
+		if (selectionType == TVCServerListNavigationSelectionTypeChannel)
 		{
 			if ([item isChannel] == NO && [item isPrivateMessage] == NO) {
 				continue;
 			}
 		}
-		else if (selectionType == TVCServerListNavigationSelectionServerType)
+		else if (selectionType == TVCServerListNavigationSelectionTypeServer)
 		{
 			if ([item isClient] == NO) {
 				continue;
@@ -718,13 +718,13 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		}
 
 		/* Select current item if it is matched by our condition */
-		if (navigationType == TVCServerListNavigationMovementAllType)
+		if (navigationType == TVCServerListNavigationMovementTypeAll)
 		{
 			[self select:item];
 
 			break;
 		}
-		else if (navigationType == TVCServerListNavigationMovementActiveType)
+		else if (navigationType == TVCServerListNavigationMovementTypeActive)
 		{
 			if ([item isActive]) {
 				[self select:item];
@@ -732,7 +732,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 				break;
 			}
 		}
-		else if (navigationType == TVCServerListNavigationMovementUnreadType)
+		else if (navigationType == TVCServerListNavigationMovementTypeUnread)
 		{
 			if ([item isUnread]) {
 				[self select:item];
@@ -763,7 +763,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 					  startingPoint:startingPoint
 					   isMovingDown:isMovingDown
 					 navigationType:navigationType
-					  selectionType:TVCServerListNavigationSelectionChannelType];
+					  selectionType:TVCServerListNavigationSelectionTypeChannel];
 }
 
 - (void)navigateChannelEntriesWithinServerScope:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType
@@ -778,7 +778,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 					  startingPoint:[scannedRows indexOfObject:self.selectedItem]
 					   isMovingDown:isMovingDown
 					 navigationType:navigationType
-					  selectionType:TVCServerListNavigationSelectionChannelType];
+					  selectionType:TVCServerListNavigationSelectionTypeChannel];
 }
 
 - (void)navigateServerEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType
@@ -790,7 +790,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 					  startingPoint:[scannedRows indexOfObject:self.selectedClient]
 					   isMovingDown:isMovingDown
 					 navigationType:navigationType
-					  selectionType:TVCServerListNavigationSelectionServerType];
+					  selectionType:TVCServerListNavigationSelectionTypeServer];
 }
 
 - (void)navigateToNextEntry:(BOOL)isMovingDown
@@ -803,58 +803,58 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 						 entryCount:entryCount
 					  startingPoint:startingPoint
 					   isMovingDown:isMovingDown
-					 navigationType:TVCServerListNavigationMovementAllType
-					  selectionType:TVCServerListNavigationSelectionAnyType];
+					 navigationType:TVCServerListNavigationMovementTypeAll
+					  selectionType:TVCServerListNavigationSelectionTypeAny];
 }
 
 - (void)selectPreviousChannel:(NSEvent *)e
 {
-	[self navigateChannelEntries:NO withNavigationType:TVCServerListNavigationMovementAllType];
+	[self navigateChannelEntries:NO withNavigationType:TVCServerListNavigationMovementTypeAll];
 }
 
 - (void)selectNextChannel:(NSEvent *)e
 {
-	[self navigateChannelEntries:YES withNavigationType:TVCServerListNavigationMovementAllType];
+	[self navigateChannelEntries:YES withNavigationType:TVCServerListNavigationMovementTypeAll];
 }
 
 - (void)selectPreviousUnreadChannel:(NSEvent *)e
 {
-	[self navigateChannelEntries:NO withNavigationType:TVCServerListNavigationMovementUnreadType];
+	[self navigateChannelEntries:NO withNavigationType:TVCServerListNavigationMovementTypeUnread];
 }
 
 - (void)selectNextUnreadChannel:(NSEvent *)e
 {
-	[self navigateChannelEntries:YES withNavigationType:TVCServerListNavigationMovementUnreadType];
+	[self navigateChannelEntries:YES withNavigationType:TVCServerListNavigationMovementTypeUnread];
 }
 
 - (void)selectPreviousActiveChannel:(NSEvent *)e
 {
-	[self navigateChannelEntries:NO withNavigationType:TVCServerListNavigationMovementActiveType];
+	[self navigateChannelEntries:NO withNavigationType:TVCServerListNavigationMovementTypeActive];
 }
 
 - (void)selectNextActiveChannel:(NSEvent *)e
 {
-	[self navigateChannelEntries:YES withNavigationType:TVCServerListNavigationMovementActiveType];
+	[self navigateChannelEntries:YES withNavigationType:TVCServerListNavigationMovementTypeActive];
 }
 
 - (void)selectPreviousServer:(NSEvent *)e
 {
-	[self navigateServerEntries:NO withNavigationType:TVCServerListNavigationMovementAllType];
+	[self navigateServerEntries:NO withNavigationType:TVCServerListNavigationMovementTypeAll];
 }
 
 - (void)selectNextServer:(NSEvent *)e
 {
-	[self navigateServerEntries:YES withNavigationType:TVCServerListNavigationMovementAllType];
+	[self navigateServerEntries:YES withNavigationType:TVCServerListNavigationMovementTypeAll];
 }
 
 - (void)selectPreviousActiveServer:(NSEvent *)e
 {
-	[self navigateServerEntries:NO withNavigationType:TVCServerListNavigationMovementActiveType];
+	[self navigateServerEntries:NO withNavigationType:TVCServerListNavigationMovementTypeActive];
 }
 
 - (void)selectNextActiveServer:(NSEvent *)e
 {
-	[self navigateServerEntries:YES withNavigationType:TVCServerListNavigationMovementActiveType];
+	[self navigateServerEntries:YES withNavigationType:TVCServerListNavigationMovementTypeActive];
 }
 
 - (void)selectPreviousSelection:(NSEvent *)e
@@ -1044,10 +1044,10 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 {
 	TXTabKeyAction tabKeyAction = [TPCPreferences tabKeyAction];
 
-	if (tabKeyAction == TXTabKeyNicknameCompleteAction) {
+	if (tabKeyAction == TXTabKeyActionNicknameComplete) {
 		[self completeNickname:YES];
-	} else if (tabKeyAction == TXTabKeyUnreadChannelAction) {
-		[self navigateChannelEntries:YES withNavigationType:TVCServerListNavigationMovementUnreadType];
+	} else if (tabKeyAction == TXTabKeyActionUnreadChannel) {
+		[self navigateChannelEntries:YES withNavigationType:TVCServerListNavigationMovementTypeUnread];
 	}
 }
 
@@ -1055,10 +1055,10 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 {
 	TXTabKeyAction tabKeyAction = [TPCPreferences tabKeyAction];
 
-	if (tabKeyAction == TXTabKeyNicknameCompleteAction) {
+	if (tabKeyAction == TXTabKeyActionNicknameComplete) {
 		[self completeNickname:NO];
-	} else if (tabKeyAction == TXTabKeyUnreadChannelAction) {
-		[self navigateChannelEntries:NO withNavigationType:TVCServerListNavigationMovementUnreadType];
+	} else if (tabKeyAction == TXTabKeyActionUnreadChannel) {
+		[self navigateChannelEntries:NO withNavigationType:TVCServerListNavigationMovementTypeUnread];
 	}
 }
 
@@ -1076,7 +1076,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 - (void)sendMessageAsAction:(NSEvent *)e
 {
 	if ([TPCPreferences commandReturnSendsMessageAsAction]) {
-		[self inputTextAsCommand:IRCRemoteCommandPrivmsgActionIndex];
+		[self inputTextAsCommand:IRCRemoteCommandPrivmsgAction];
 
 		return;
 	}
@@ -1089,9 +1089,9 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	if (checkScroller) {
 		TVCTextViewCaretLocation caretLocation = self.inputTextField.caretLocation;
 
-		if (caretLocation != TVCTextViewCaretInOnlyLine) {
-			BOOL atTop = (caretLocation == TVCTextViewCaretInFirstLine);
-			BOOL atBottom = (caretLocation == TVCTextViewCaretInLastLine);
+		if (caretLocation != TVCTextViewCaretLocationOnlyLine) {
+			BOOL atTop = (caretLocation == TVCTextViewCaretLocationFirstLine);
+			BOOL atBottom = (caretLocation == TVCTextViewCaretLocationLastLine);
 
 			if ((atTop			&& event.keyCode == TXKeyDownArrowCode) ||
 				(atBottom		&& event.keyCode == TXKeyUpArrowCode) ||
@@ -1263,7 +1263,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 - (void)textEntered
 {
-	[self inputTextAsCommand:IRCRemoteCommandPrivmsgIndex];
+	[self inputTextAsCommand:IRCRemoteCommandPrivmsg];
 }
 
 - (void)inputTextAsCommand:(IRCRemoteCommand)command
@@ -2117,7 +2117,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 			[title appendString:TXTLS(@"TVCMainWindow[q42-an]")];
 		}
 	} else if (u.isConnecting && u.isLoggedIn == NO) {
-		if (u.connectType == IRCClientConnectRetryMode || u.connectType == IRCClientConnectReconnectMode) {
+		if (u.connectType == IRCClientConnectModeRetry || u.connectType == IRCClientConnectModeReconnect) {
 			[title appendString:TXTLS(@"TVCMainWindow[s23-zd]")];
 		} else {
 			[title appendString:TXTLS(@"TVCMainWindow[8eu-c7]")];
@@ -2151,7 +2151,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 		NSString *channelName = c.name;
 
 		switch (c.type) {
-			case IRCChannelChannelType:
+			case IRCChannelTypeChannel:
 			{
 				[title appendString:channelName];
 
@@ -2167,7 +2167,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 				break;
 			}
-			case IRCChannelPrivateMessageType:
+			case IRCChannelTypePrivateMessage:
 			{
 				/* Textual defines the topic of a private message as the user host. */
 				/* If it is not defined yet, then we just use the channel name
@@ -2184,7 +2184,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 				break;
 			}
-			case IRCChannelUtilityType:
+			case IRCChannelTypeUtility:
 			{
 				[title appendString:channelName];
 
@@ -2536,8 +2536,8 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 {
 	[self shiftSelection:self.selectedItem
 				  toItem:item
-				 options:(TVCMainWindowShiftSelectionMaintainGroupingFlag |
-						  TVCMainWindowShiftSelectionPerformDeselectFlag)];
+				 options:(TVCMainWindowShiftSelectionFlagMaintainGrouping |
+						  TVCMainWindowShiftSelectionFlagPerformDeselect)];
 }
 
 - (void)deselect:(IRCTreeItem *)item
@@ -2546,7 +2546,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 	[self shiftSelection:item
 				  toItem:nil
-				 options:TVCMainWindowShiftSelectionPerformDeselectFlag];
+				 options:TVCMainWindowShiftSelectionFlagPerformDeselect];
 }
 
 - (void)deselectGroup:(IRCTreeItem *)item
@@ -2559,8 +2559,8 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 
 	[self shiftSelection:item
 				  toItem:nil
-				 options:(TVCMainWindowShiftSelectionPerformDeselectFlag |
-						  TVCMainWindowShiftSelectionPerformDeselectChildrenFlag)];
+				 options:(TVCMainWindowShiftSelectionFlagPerformDeselect |
+						  TVCMainWindowShiftSelectionFlagPerformDeselectChildren)];
 }
 
 - (void)shiftSelection:(nullable IRCTreeItem *)oldItem toItem:(nullable IRCTreeItem *)newItem options:(TVCMainWindowShiftSelectionFlags)selectionOptions
@@ -2578,11 +2578,11 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	}
 
 	/* Context */
-	BOOL optionMaintainGrouping = ((selectionOptions & TVCMainWindowShiftSelectionMaintainGroupingFlag) == TVCMainWindowShiftSelectionMaintainGroupingFlag);
+	BOOL optionMaintainGrouping = ((selectionOptions & TVCMainWindowShiftSelectionFlagMaintainGrouping) == TVCMainWindowShiftSelectionFlagMaintainGrouping);
 
 	BOOL optionPerformDeselectAll = NO;
-	BOOL optionPerformDeselectOld = ((selectionOptions & TVCMainWindowShiftSelectionPerformDeselectFlag) == TVCMainWindowShiftSelectionPerformDeselectFlag);
-	BOOL optionPerformDeselectChildren = ((selectionOptions & TVCMainWindowShiftSelectionPerformDeselectChildrenFlag) == TVCMainWindowShiftSelectionPerformDeselectChildrenFlag);
+	BOOL optionPerformDeselectOld = ((selectionOptions & TVCMainWindowShiftSelectionFlagPerformDeselect) == TVCMainWindowShiftSelectionFlagPerformDeselect);
+	BOOL optionPerformDeselectChildren = ((selectionOptions & TVCMainWindowShiftSelectionFlagPerformDeselectChildren) == TVCMainWindowShiftSelectionFlagPerformDeselectChildren);
 
 	BOOL optionPerformDeselect = (optionPerformDeselectChildren || optionPerformDeselectOld);
 

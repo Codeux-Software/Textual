@@ -161,7 +161,7 @@ ClassWithDesignatedInitializerInitMethod
 				   alternateButton:TXTLS(@"TDCLicenseUpgradeEligibilitySheet[dn3-4r]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
-					   if (buttonClicked == TDCAlertResponseAlternateButton) {
+					   if (buttonClicked == TDCAlertResponseAlternate) {
 						   [self actionContactSupport:nil];
 					   }
 					   
@@ -272,10 +272,10 @@ ClassWithDesignatedInitializerInitMethod
 	/* Save eligibility */
 	NSUInteger eligibility = [eligibilityObject unsignedIntegerValue];
 
-	if (eligibility != TLOLicenseUpgradeEligibleDiscount &&
-		eligibility != TLOLicenseUpgradeEligibleFree &&
-		eligibility != TLOLicenseUpgradeNotEligible &&
-		eligibility != TLOLicenseUpgradeAlreadyUpgraded)
+	if (eligibility != TLOLicenseUpgradeEligibilityDiscount &&
+		eligibility != TLOLicenseUpgradeEligibilityFree &&
+		eligibility != TLOLicenseUpgradeEligibilityNot &&
+		eligibility != TLOLicenseUpgradeEligibilityAlreadyUpgraded)
 	{
 		NSString *errorMessage = TXTLS(@"TDCLicenseUpgradeEligibilitySheet[5s6-sb]", eligibility);
 
@@ -295,12 +295,12 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)_eligibilityDetermined
 {
-	if (self.eligibility == TLOLicenseUpgradeEligibleDiscount) {
+	if (self.eligibility == TLOLicenseUpgradeEligibilityDiscount) {
 		self.sheet = self.sheetEligibleDiscount;
-	} else if (self.eligibility == TLOLicenseUpgradeNotEligible) {
+	} else if (self.eligibility == TLOLicenseUpgradeEligibilityNot) {
 		self.sheet = self.sheetNotEligible;
-	} else if (self.eligibility == TLOLicenseUpgradeEligibleFree ||
-			   self.eligibility == TLOLicenseUpgradeAlreadyUpgraded)
+	} else if (self.eligibility == TLOLicenseUpgradeEligibilityFree ||
+			   self.eligibility == TLOLicenseUpgradeEligibilityAlreadyUpgraded)
 	{
 		self.sheet = self.sheetEligibleFree;
 	}

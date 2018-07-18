@@ -39,13 +39,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-TEXTUAL_EXTERN NSString * const TXDefaultAlertSoundPreferenceValue;
-TEXTUAL_EXTERN NSString * const TXNoAlertSoundPreferenceValue;
+typedef NSString *TLONotificationAlertSound NS_EXTENSIBLE_STRING_ENUM;
+
+TEXTUAL_EXTERN TLONotificationAlertSound const TXDefaultAlertSoundPreferenceValue;
+TEXTUAL_EXTERN TLONotificationAlertSound const TXNoAlertSoundPreferenceValue;
 
 @interface TLONotificationConfiguration : NSObject
 @property (readonly) TXNotificationType eventType;
 @property (readonly, copy) NSString *displayName;
-@property (nonatomic, copy, nullable) NSString *alertSound;
+@property (nonatomic, copy, nullable) TLONotificationAlertSound alertSound;
 @property (nonatomic, assign) NSUInteger speakEvent;
 @property (nonatomic, assign) NSUInteger pushNotification;
 @property (nonatomic, assign) NSUInteger disabledWhileAway;

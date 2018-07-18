@@ -376,18 +376,18 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 		UniChar character = inputBuffer[i];
 
 		switch (character) {
-			case IRCTextFormatterBoldEffectCharacter:
-			case IRCTextFormatterItalicEffectCharacter:
-			case IRCTextFormatterItalicEffectCharacterOld:
-			case IRCTextFormatterMonospaceEffectCharacter:
-			case IRCTextFormatterStrikethroughEffectCharacter:
-			case IRCTextFormatterUnderlineEffectCharacter:
+			case IRCTextFormatterEffectBoldCharacter:
+			case IRCTextFormatterEffectItalicCharacter:
+			case IRCTextFormatterEffectItalicCharacterOld:
+			case IRCTextFormatterEffectMonospaceCharacter:
+			case IRCTextFormatterEffectStrikethroughCharacter:
+			case IRCTextFormatterEffectUnderlineCharacter:
 			case IRCTextFormatterTerminatingCharacter:
 			{
 				break;
 			}
-			case IRCTextFormatterColorAsDigitEffectCharacter:
-			case IRCTextFormatterColorAsHexEffectCharacter:
+			case IRCTextFormatterEffectColorAsDigitCharacter:
+			case IRCTextFormatterEffectColorAsHexCharacter:
 			{
 				// One is subtracted because the for loop will increment by one for us
 				i += ([self colorComponentsOfCharacter:character startingAt:i foregroundColor:NULL backgroundColor:NULL] - 1);
@@ -408,9 +408,9 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 
 - (NSUInteger)colorComponentsOfCharacter:(UniChar)character startingAt:(NSUInteger)rangeStart foregroundColor:(id _Nullable * _Nullable)foregroundColor backgroundColor:(id _Nullable * _Nullable)backgroundColor
 {
-	if (character == IRCTextFormatterColorAsDigitEffectCharacter) {
+	if (character == IRCTextFormatterEffectColorAsDigitCharacter) {
 		return [self colorAsDigitStartingAt:rangeStart foregroundColor:foregroundColor backgroundColor:backgroundColor];
-	} else if (character == IRCTextFormatterColorAsHexEffectCharacter) {
+	} else if (character == IRCTextFormatterEffectColorAsHexCharacter) {
 		return [self colorAsHexStartingAt:rangeStart foregroundColor:foregroundColor backgroundColor:backgroundColor];
 	}
 

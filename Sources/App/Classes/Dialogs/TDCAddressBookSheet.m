@@ -70,13 +70,13 @@ ClassWithDesignatedInitializerInitMethod
 
 - (instancetype)initWithEntryType:(IRCAddressBookEntryType)entryType
 {
-	NSParameterAssert(entryType == IRCAddressBookIgnoreEntryType ||
-					  entryType == IRCAddressBookUserTrackingEntryType);
+	NSParameterAssert(entryType == IRCAddressBookEntryTypeIgnore ||
+					  entryType == IRCAddressBookEntryTypeUserTracking);
 
 	if ((self = [super init])) {
-		if (entryType == IRCAddressBookIgnoreEntryType) {
+		if (entryType == IRCAddressBookEntryTypeIgnore) {
 			self.config = [IRCAddressBookEntryMutable newIgnoreEntry];
-		} else if (entryType == IRCAddressBookUserTrackingEntryType) {
+		} else if (entryType == IRCAddressBookEntryTypeUserTracking) {
 			self.config = [IRCAddressBookEntryMutable newUserTrackingEntry];
 		}
 
@@ -95,8 +95,8 @@ ClassWithDesignatedInitializerInitMethod
 - (instancetype)initWithConfig:(IRCAddressBookEntry *)config
 {
 	NSParameterAssert(config != nil);
-	NSParameterAssert(config.entryType == IRCAddressBookIgnoreEntryType ||
-					  config.entryType == IRCAddressBookUserTrackingEntryType);
+	NSParameterAssert(config.entryType == IRCAddressBookEntryTypeIgnore ||
+					  config.entryType == IRCAddressBookEntryTypeUserTracking);
 
 	if ((self = [super init])) {
 		self.config = [config mutableCopy];
@@ -144,7 +144,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)loadConfig
 {
-	if (self.entryType == IRCAddressBookIgnoreEntryType)
+	if (self.entryType == IRCAddressBookEntryTypeIgnore)
 	{
 		self.ignoreEntryHostmaskTextField.stringValue = self.config.hostmask;
 
@@ -158,7 +158,7 @@ ClassWithDesignatedInitializerInitMethod
 		self.ignorePublicMessageHighlightsCheck.state = self.config.ignorePublicMessageHighlights;
 		self.ignorePublicMessagesCheck.state = self.config.ignorePublicMessages;
 	}
-	else if (self.entryType == IRCAddressBookUserTrackingEntryType)
+	else if (self.entryType == IRCAddressBookEntryTypeUserTracking)
 	{
 		self.userTrackingEntryNicknameTextField.stringValue = self.config.hostmask;
 
@@ -168,13 +168,13 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)start
 {
-	if (self.entryType == IRCAddressBookIgnoreEntryType)
+	if (self.entryType == IRCAddressBookEntryTypeIgnore)
 	{
 		self.sheet = self.ignoreEntryView;
 
 		[self.sheet makeFirstResponder:self.ignoreEntryHostmaskTextField];
 	}
-	else if (self.entryType == IRCAddressBookUserTrackingEntryType)
+	else if (self.entryType == IRCAddressBookEntryTypeUserTracking)
 	{
 		self.sheet = self.userTrackingEntryView;
 
@@ -190,7 +190,7 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	if (self.entryType == IRCAddressBookIgnoreEntryType)
+	if (self.entryType == IRCAddressBookEntryTypeIgnore)
 	{
 		self.config.hostmask = self.ignoreEntryHostmaskTextField.value;
 
@@ -204,7 +204,7 @@ ClassWithDesignatedInitializerInitMethod
 		self.config.ignorePublicMessageHighlights = (self.ignorePublicMessageHighlightsCheck.state == NSOnState);
 		self.config.ignorePublicMessages = (self.ignorePublicMessagesCheck.state == NSOnState);
 	}
-	else if (self.entryType == IRCAddressBookUserTrackingEntryType)
+	else if (self.entryType == IRCAddressBookEntryTypeUserTracking)
 	{
 		self.config.hostmask = self.userTrackingEntryNicknameTextField.value;
 
@@ -220,11 +220,11 @@ ClassWithDesignatedInitializerInitMethod
 
 - (BOOL)okOrError
 {
-	if (self.entryType == IRCAddressBookIgnoreEntryType)
+	if (self.entryType == IRCAddressBookEntryTypeIgnore)
 	{
 		return [self okOrErrorForTextField:self.ignoreEntryHostmaskTextField];
 	}
-	else if (self.entryType == IRCAddressBookUserTrackingEntryType)
+	else if (self.entryType == IRCAddressBookEntryTypeUserTracking)
 	{
 		return [self okOrErrorForTextField:self.userTrackingEntryNicknameTextField];
 	}

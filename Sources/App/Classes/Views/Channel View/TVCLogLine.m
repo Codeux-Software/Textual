@@ -187,12 +187,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	SetVariableIfNil(self->_messageBody, @"")
 	SetVariableIfNil(self->_receivedAt, [NSDate date])
 
-	if (self->_lineType == TVCLogLineActionNoHighlightType) {
-		self->_lineType = TVCLogLineActionType;
+	if (self->_lineType == TVCLogLineTypeActionNoHighlight) {
+		self->_lineType = TVCLogLineTypeAction;
 
 		self->_highlightKeywords = nil;
-	} else if (self->_lineType == TVCLogLinePrivateMessageNoHighlightType) {
-		self->_lineType = TVCLogLinePrivateMessageType;
+	} else if (self->_lineType == TVCLogLineTypePrivateMessageNoHighlight) {
+		self->_lineType = TVCLogLineTypePrivateMessage;
 
 		self->_highlightKeywords = nil;
 	}
@@ -281,27 +281,27 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 #define _dv(lineType, returnValue)			case (lineType): { return (returnValue); break; }
 
 	switch (type) {
-		_dv(TVCLogLineActionType, @"action")
-		_dv(TVCLogLineActionNoHighlightType, @"action")
-		_dv(TVCLogLineCTCPType, @"ctcp")
-		_dv(TVCLogLineCTCPQueryType, @"ctcp")
-		_dv(TVCLogLineCTCPReplyType, @"ctcp")
-		_dv(TVCLogLineDCCFileTransferType, @"dcc-file-transfer")
-		_dv(TVCLogLineDebugType, @"debug")
-		_dv(TVCLogLineInviteType, @"invite")
-		_dv(TVCLogLineJoinType, @"join")
-		_dv(TVCLogLineKickType, @"kick")
-		_dv(TVCLogLineKillType, @"kill")
-		_dv(TVCLogLineModeType, @"mode")
-		_dv(TVCLogLineNickType, @"nick")
-		_dv(TVCLogLineNoticeType, @"notice")
-		_dv(TVCLogLineOffTheRecordEncryptionStatusType, @"off-the-record-encryption-status")
-		_dv(TVCLogLinePartType, @"part")
-		_dv(TVCLogLinePrivateMessageType, @"privmsg")
-		_dv(TVCLogLinePrivateMessageNoHighlightType, @"privmsg")
-		_dv(TVCLogLineQuitType, @"quit")
-		_dv(TVCLogLineTopicType, @"topic")
-		_dv(TVCLogLineWebsiteType, @"website")
+		_dv(TVCLogLineTypeAction, @"action")
+		_dv(TVCLogLineTypeActionNoHighlight, @"action")
+		_dv(TVCLogLineTypeCTCP, @"ctcp")
+		_dv(TVCLogLineTypeCTCPQuery, @"ctcp")
+		_dv(TVCLogLineTypeCTCPReply, @"ctcp")
+		_dv(TVCLogLineTypeDCCFileTransfer, @"dcc-file-transfer")
+		_dv(TVCLogLineTypeDebug, @"debug")
+		_dv(TVCLogLineTypeInvite, @"invite")
+		_dv(TVCLogLineTypeJoin, @"join")
+		_dv(TVCLogLineTypeKick, @"kick")
+		_dv(TVCLogLineTypeKill, @"kill")
+		_dv(TVCLogLineTypeMode, @"mode")
+		_dv(TVCLogLineTypeNick, @"nick")
+		_dv(TVCLogLineTypeNotice, @"notice")
+		_dv(TVCLogLineTypeOffTheRecordEncryptionStatus, @"off-the-record-encryption-status")
+		_dv(TVCLogLineTypePart, @"part")
+		_dv(TVCLogLineTypePrivateMessage, @"privmsg")
+		_dv(TVCLogLineTypePrivateMessageNoHighlight, @"privmsg")
+		_dv(TVCLogLineTypeQuit, @"quit")
+		_dv(TVCLogLineTypeTopic, @"topic")
+		_dv(TVCLogLineTypeWebsite, @"website")
 
 		default:
 		{
@@ -314,7 +314,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 + (NSString *)stringForMemberType:(TVCLogLineMemberType)type
 {
-	if (type == TVCLogLineMemberLocalUserType) {
+	if (type == TVCLogLineMemberTypeLocalUser) {
 		return @"myself";
 	} else {
 		return @"normal";
@@ -367,9 +367,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	}
 
 	if (format == nil) {
-		if (self.lineType == TVCLogLineActionType) {
+		if (self.lineType == TVCLogLineTypeAction) {
 			return [NSString stringWithFormat:TVCLogLineActionNicknameFormat, self.nickname];
-		} else if (self.lineType == TVCLogLineNoticeType) {
+		} else if (self.lineType == TVCLogLineTypeNotice) {
 			return [NSString stringWithFormat:TVCLogLineNoticeNicknameFormat, self.nickname];
 		}
 	}
@@ -395,9 +395,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 	NSString *nicknameFormatted = nil;
 
-	if (self.lineType == TVCLogLineActionType) {
+	if (self.lineType == TVCLogLineTypeAction) {
 		nicknameFormatted = [self formattedNicknameInChannel:channel withFormat:TLOFileLoggerActionNicknameFormat];
-	} else if (self.lineType == TVCLogLineNoticeType) {
+	} else if (self.lineType == TVCLogLineTypeNotice) {
 		nicknameFormatted = [self formattedNicknameInChannel:channel withFormat:TLOFileLoggerNoticeNicknameFormat];
 	} else {
 		nicknameFormatted = [self formattedNicknameInChannel:channel withFormat:TLOFileLoggerUndefinedNicknameFormat];
@@ -416,10 +416,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 - (void)computeNicknameColorStyle
 {
 	if (self.nickname != nil &&
-		(self.lineType == TVCLogLinePrivateMessageType ||
-		 self.lineType == TVCLogLinePrivateMessageNoHighlightType ||
-		 self.lineType == TVCLogLineActionType ||
-		 self.lineType == TVCLogLineActionNoHighlightType))
+		(self.lineType == TVCLogLineTypePrivateMessage ||
+		 self.lineType == TVCLogLineTypePrivateMessageNoHighlight ||
+		 self.lineType == TVCLogLineTypeAction ||
+		 self.lineType == TVCLogLineTypeActionNoHighlight))
 	{
 		BOOL isOverride = NO;
 

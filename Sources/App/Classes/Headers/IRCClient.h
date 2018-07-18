@@ -49,24 +49,24 @@ NS_ASSUME_NONNULL_BEGIN
 @class IRCAddressBookEntry, IRCMessage, IRCServer, IRCUser;
 
 typedef NS_ENUM(NSUInteger, IRCClientConnectMode) {
-	IRCClientConnectNormalMode = 0,
-	IRCClientConnectRetryMode,
-	IRCClientConnectReconnectMode,
+	IRCClientConnectModeNormal = 0,
+	IRCClientConnectModeRetry,
+	IRCClientConnectModeReconnect,
 };
 
 typedef NS_ENUM(NSUInteger, IRCClientDisconnectMode) {
-	IRCClientDisconnectNormalMode = 0,
-	IRCClientDisconnectComputerSleepMode,
-	IRCClientDisconnectBadCertificateMode,
-	IRCClientDisconnectReachabilityChangeMode,
-	IRCClientDisconnectServerRedirectMode,
+	IRCClientDisconnectModeNormal = 0,
+	IRCClientDisconnectModeComputerSleep,
+	IRCClientDisconnectModeBadCertificate,
+	IRCClientDisconnectModeReachabilityChange,
+	IRCClientDisconnectModeServerRedirect,
 
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	IRCClientDisconnectSoftwareTrialMode,
+	IRCClientDisconnectModeSoftwareTrial,
 #endif
 };
 
-typedef NS_OPTIONS(NSUInteger, ClientIRCv3SupportedCapabilities) {
+typedef NS_OPTIONS(NSUInteger, ClientIRCv3SupportedCapability) {
 	ClientIRCv3SupportedCapabilityAwayNotify			= 1 << 0, // YES if away-notify CAP supported
 	ClientIRCv3SupportedCapabilityBatch					= 1 << 1, // YES if batch CAP supported
 	ClientIRCv3SupportedCapabilityEchoMessage			= 1 << 2, // YES if echo-message CAP supported
@@ -85,18 +85,18 @@ typedef NS_OPTIONS(NSUInteger, ClientIRCv3SupportedCapabilities) {
 	ClientIRCv3SupportedCapabilityChangeHost			= 1 << 15  // YES if the CHGHOST CAP supported
 };
 
-TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
+TEXTUAL_EXTERN NSNotificationName const IRCClientConfigurationWasUpdatedNotification;
 
-TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
+TEXTUAL_EXTERN NSNotificationName const IRCClientChannelListWasModifiedNotification;
 
-TEXTUAL_EXTERN NSString * const IRCClientWillConnectNotification;
-TEXTUAL_EXTERN NSString * const IRCClientDidConnectNotification;
+TEXTUAL_EXTERN NSNotificationName const IRCClientWillConnectNotification;
+TEXTUAL_EXTERN NSNotificationName const IRCClientDidConnectNotification;
 
-TEXTUAL_EXTERN NSString * const IRCClientWillSendQuitNotification;
-TEXTUAL_EXTERN NSString * const IRCClientWillDisconnectNotification;
-TEXTUAL_EXTERN NSString * const IRCClientDidDisconnectNotification;
+TEXTUAL_EXTERN NSNotificationName const IRCClientWillSendQuitNotification;
+TEXTUAL_EXTERN NSNotificationName const IRCClientWillDisconnectNotification;
+TEXTUAL_EXTERN NSNotificationName const IRCClientDidDisconnectNotification;
 
-TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
+TEXTUAL_EXTERN NSNotificationName const IRCClientUserNicknameChangedNotification;
 
 @interface IRCClient : IRCTreeItem <IRCConnectionDelegate>
 @property (readonly, copy) IRCClientConfig *config;
@@ -143,12 +143,12 @@ TEXTUAL_EXTERN NSString * const IRCClientUserNicknameChangedNotification;
 
 - (void)cancelReconnect;
 
-@property (readonly) ClientIRCv3SupportedCapabilities capacities;
+@property (readonly) ClientIRCv3SupportedCapability capacities;
 @property (readonly, copy) NSString *enabledCapacitiesStringValue;
 
 - (BOOL)isCapabilitySupported:(NSString *)capabilityString;
 
-- (BOOL)isCapabilityEnabled:(ClientIRCv3SupportedCapabilities)capability;
+- (BOOL)isCapabilityEnabled:(ClientIRCv3SupportedCapability)capability;
 
 - (void)joinChannel:(IRCChannel *)channel;
 - (void)joinChannel:(IRCChannel *)channel password:(nullable NSString *)password;

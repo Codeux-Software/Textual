@@ -40,26 +40,26 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, TPI_ChatFilterLimitToValue) {
-	TPI_ChatFilterLimitToNoLimitValue				= 0,
-	TPI_ChatFilterLimitToChannelsValue				= 1,
-	TPI_ChatFilterLimitToPrivateMessagesValue		= 2,
-	TPI_ChatFilterLimitToSpecificItemsValue			= 3
+	TPI_ChatFilterLimitToValueNoLimit				= 0,
+	TPI_ChatFilterLimitToValueChannels				= 1,
+	TPI_ChatFilterLimitToValuePrivateMessages		= 2,
+	TPI_ChatFilterLimitToValueSpecificItems			= 3
 };
 
 typedef NS_OPTIONS(NSUInteger, TPI_ChatFilterEventType) {
-	TPI_ChatFilterNumericEventType					= 1 << 0,
-	TPI_ChatFilterPlainTextMessageEventType			= 1 << 1,
-	TPI_ChatFilterActionMessageEventType			= 1 << 2,
-	TPI_ChatFilterNoticeMessageEventType			= 1 << 3,
-	TPI_ChatFilterUserJoinedChannelEventType		= 1 << 4,
-	TPI_ChatFilterUserLeftChannelEventType			= 1 << 5,
-	TPI_ChatFilterUserKickedFromChannelEventType	= 1 << 6,
-	TPI_ChatFilterUserDisconnectedEventType			= 1 << 7,
-	TPI_ChatFilterUserChangedNicknameEventType		= 1 << 8,
-	TPI_ChatFilterChannelTopicReceivedEventType		= 1 << 9,
-	TPI_ChatFilterChannelTopicChangedEventType		= 1 << 10,
-	TPI_ChatFilterChannelModeReceivedEventType		= 1 << 11,
-	TPI_ChatFilterChannelModeChangedEventType		= 1 << 12
+	TPI_ChatFilterEventTypeNumeric					= 1 << 0,
+	TPI_ChatFilterEventTypePlainTextMessage			= 1 << 1,
+	TPI_ChatFilterEventTypeActionMessage			= 1 << 2,
+	TPI_ChatFilterEventTypeNoticeMessage			= 1 << 3,
+	TPI_ChatFilterEventTypeUserJoinedChannel		= 1 << 4,
+	TPI_ChatFilterEventTypeUserLeftChannel			= 1 << 5,
+	TPI_ChatFilterEventTypeUserKickedFromChannel	= 1 << 6,
+	TPI_ChatFilterEventTypeUserDisconnected			= 1 << 7,
+	TPI_ChatFilterEventTypeUserChangedNickname		= 1 << 8,
+	TPI_ChatFilterEventTypeChannelTopicReceived		= 1 << 9,
+	TPI_ChatFilterEventTypeChannelTopicChanged		= 1 << 10,
+	TPI_ChatFilterEventTypeChannelModeReceived		= 1 << 11,
+	TPI_ChatFilterEventTypeChannelModeChanged		= 1 << 12
 };
 
 @interface TPI_ChatFilter : NSObject <NSCopying, NSMutableCopying>

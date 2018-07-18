@@ -407,13 +407,13 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 
 	dispatch_once(&onceToken, ^{
 		preferenceMap = @{
-			@"User List Mode Badge Colors -> +y" : @(IRCUserIRCopByModeRank),
-			@"User List Mode Badge Colors -> +q" : @(IRCUserChannelOwnerRank),
-			@"User List Mode Badge Colors -> +a" : @(IRCUserSuperOperatorRank),
-			@"User List Mode Badge Colors -> +o" : @(IRCUserNormalOperatorRank),
-			@"User List Mode Badge Colors -> +h" : @(IRCUserHalfOperatorRank),
-			@"User List Mode Badge Colors -> +v" : @(IRCUserVoicedRank),
-			@"User List Mode Badge Colors -> no mode" : @(IRCUserNoRank)
+			@"User List Mode Badge Colors -> +y" : @(IRCUserRankIRCopByMode),
+			@"User List Mode Badge Colors -> +q" : @(IRCUserRankChannelOwner),
+			@"User List Mode Badge Colors -> +a" : @(IRCUserRankSuperOperator),
+			@"User List Mode Badge Colors -> +o" : @(IRCUserRankNonermalOperator),
+			@"User List Mode Badge Colors -> +h" : @(IRCUserRankHalfOperator),
+			@"User List Mode Badge Colors -> +v" : @(IRCUserRankVoiced),
+			@"User List Mode Badge Colors -> no mode" : @(IRCUserRankNone)
 		};
 	});
 
@@ -425,7 +425,7 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 
 	IRCUserRank rankEnum = rank.unsignedIntegerValue;
 
-	[self refreshDrawingForMembersWithRank:rankEnum isIRCop:(rankEnum == IRCUserIRCopByModeRank)];
+	[self refreshDrawingForMembersWithRank:rankEnum isIRCop:(rankEnum == IRCUserRankIRCopByMode)];
 }
 
 - (void)refreshDrawingForMembersWithRank:(IRCUserRank)rank isIRCop:(BOOL)isIRCop

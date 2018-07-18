@@ -204,7 +204,7 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 		  suppressionKey:suppressKey
 	 suppressionResponse:suppressionResponse];
 
-	return (response == TDCAlertResponseDefaultButton);
+	return (response == TDCAlertResponseDefault);
 }
 
 #pragma mark -
@@ -310,7 +310,7 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 		/* Exit if suppressed */
 		if ([RZUserDefaults() boolForKey:suppressKey]) {
 			if (completionBlock) {
-				completionBlock(TDCAlertResponseDefaultButton, YES, nil);
+				completionBlock(TDCAlertResponseDefault, YES, nil);
 			}
 
 			return;
@@ -344,7 +344,7 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 	}
 
 	/* Pop alert */
-	[alert showAlertWithCompletionBlock:^(TVCAlert *sender, TVCAlertResponse buttonClicked)
+	[alert showAlertWithCompletionBlock:^(TVCAlert *sender, TVCAlertResponseButton buttonClicked)
 	{
 		[self _finalizeAlert:alert
 				withResponse:[self _convertResponseFromTVCAlert:buttonClicked]
@@ -478,7 +478,7 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 		/* Exit if suppressed */
 		if ([RZUserDefaults() boolForKey:suppressKey]) {
 			if (completionBlock) {
-				completionBlock(TDCAlertResponseDefaultButton, YES, nil);
+				completionBlock(TDCAlertResponseDefault, YES, nil);
 			}
 
 			return;
@@ -612,33 +612,33 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 	switch (response) {
 		case NSAlertSecondButtonReturn:
 		{
-			return TDCAlertResponseAlternateButton;
+			return TDCAlertResponseAlternate;
 		}
 		case NSAlertThirdButtonReturn:
 		{
-			return TDCAlertResponseOtherButton;
+			return TDCAlertResponseOther;
 		}
 		default:
 		{
-			return TDCAlertResponseDefaultButton;
+			return TDCAlertResponseDefault;
 		}
 	}
 }
 
-+ (TDCAlertResponse)_convertResponseFromTVCAlert:(TVCAlertResponse)response
++ (TDCAlertResponse)_convertResponseFromTVCAlert:(TVCAlertResponseButton)response
 {
 	switch (response) {
-		case TVCAlertResponseSecondButton:
+		case TVCAlertResponseButtonSecond:
 		{
-			return TDCAlertResponseAlternateButton;
+			return TDCAlertResponseAlternate;
 		}
-		case TVCAlertResponseThirdButton:
+		case TVCAlertResponseButtonThird:
 		{
-			return TDCAlertResponseOtherButton;
+			return TDCAlertResponseOther;
 		}
 		default:
 		{
-			return TDCAlertResponseDefaultButton;
+			return TDCAlertResponseDefault;
 		}
 	}
 }

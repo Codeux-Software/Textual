@@ -231,11 +231,11 @@ NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppressi
 + (TLOPopupPromptReturnType)_convertResponseFromTDCAlert:(TDCAlertResponse)response
 {
 	switch (response) {
-		case TDCAlertResponseAlternateButton:
+		case TDCAlertResponseAlternate:
 		{
 			return TLOPopupPromptReturnSecondaryType;
 		}
-		case TDCAlertResponseOtherButton:
+		case TDCAlertResponseOther:
 		{
 			return TLOPopupPromptReturnOtherType;
 		}
