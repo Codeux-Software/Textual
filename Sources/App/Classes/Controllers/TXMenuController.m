@@ -2906,6 +2906,8 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(state == NSOffState ||
 					  state == NSOnState);
 
+	[TPCPreferences setSoundIsMuted:(state == NSOnState)];
+
 	self.muteNotificationsSoundsDockMenuItem.state = state;
 
 	self.muteNotificationsSoundsFileMenuItem.state = state;
