@@ -91,6 +91,8 @@
 			<integer>14</integer>
 			<key>padding</key>
 			<integer>6</integer>
+			<key>textCenterYOffset@2x</key>
+			<real>-0.5</real>
 			<key>topOffset</key>
 			<integer>1</integer>
 			<key>rightMargin</key>
