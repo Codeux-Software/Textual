@@ -20,6 +20,27 @@
 	<string>7.1.0</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2010 - 2018 Codeux Software, LLC. All rights reserved.</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIconFile</key>
+	<string>applicationIcon.icns</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>NSMainNibFile</key>
+	<string>TXCMainMenu</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.9.5</string>
+	<key>NSPrincipalClass</key>
+	<string>TXApplication</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Textual accesses contacts to automatically populate certain forms with your name and/or e-mail address. Access to this information is not required.</string>
+	<key>NSAppleScriptEnabled</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -55,25 +76,18 @@
 			<string>TPCResourceManagerDocumentTypeImporter</string>
 		</dict>
 	</array>
-	<key>CFBundleExecutable</key>
-	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleIconFile</key>
-	<string>applicationIcon.icns</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>NSMainNibFile</key>
-	<string>TXCMainMenu</string>
-	<key>LSMinimumSystemVersion</key>
-	<string>10.9.5</string>
-	<key>NSAppTransportSecurity</key>
+	<key>NSUbiquitousContainers</key>
 	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
+		<key>iCloud.com.codeux.apps.textual-mas</key>
+		<dict>
+			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
+			<true/>
+			<key>NSUbiquitousContainerName</key>
+			<string>${PRODUCT_NAME}</string>
+			<key>NSUbiquitousContainerSupportedFolderLevels</key>
+			<string>Any</string>
+		</dict>
 	</dict>
-	<key>NSPrincipalClass</key>
-	<string>TXApplication</string>
-	<key>NSAppleScriptEnabled</key>
-	<true/>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -91,17 +105,5 @@
 			</array>
 		</dict>
 	</array>
-	<key>NSUbiquitousContainers</key>
-	<dict>
-		<key>iCloud.com.codeux.apps.textual-mas</key>
-		<dict>
-			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
-			<true/>
-			<key>NSUbiquitousContainerName</key>
-			<string>${PRODUCT_NAME}</string>
-			<key>NSUbiquitousContainerSupportedFolderLevels</key>
-			<string>Any</string>
-		</dict>
-	</dict>
 </dict>
 </plist>
