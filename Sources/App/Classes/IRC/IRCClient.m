@@ -7042,20 +7042,24 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(m != nil);
 	NSParameterAssert(text != nil);
 
-	/* Ignore messages echoed back to ourselves */
 	NSString *sender = m.senderNickname;
 
-	if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityEchoMessage]) {
-		if ([self nicknameIsMyself:sender]) {
+	BOOL myself = [self nicknameIsMyself:sender];
+
+	IRCAddressBookEntry *ignoreInfo = nil;
+
+	if (myself) {
+		/* Ignore messages echoed back to ourselves */
+		if ([self isCapabilityEnabled:ClientIRCv3SupportedCapabilityEchoMessage]) {
 			return;
 		}
-	}
+	} else {
+		/* Find ignore for sender and possibly exit method */
+		ignoreInfo = [self findAddressBookEntryForHostmask:m.senderHostmask];
 
-	/* Find ignore for sender and possibly exit method */
-	IRCAddressBookEntry *ignoreInfo = [self findAddressBookEntryForHostmask:m.senderHostmask];
-
-	if (ignoreInfo.ignoreClientToClientProtocol) {
-		return;
+		if (ignoreInfo.ignoreClientToClientProtocol) {
+			return;
+		}
 	}
 
 	/* Context */
@@ -7064,6 +7068,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSString *command = textMutable.uppercaseGetToken;
 
 	if (command.length == 0) {
+		return;
+	}
+
+	/* Lag check responses should only ever come from ourselves so we
+	 let it through. The method we call into already has a built-in
+	 check for myself so no need to wrap an if statement here. */
+	if ([command isEqualToString:@"LAGCHECK"]) {
+		[self receiveCTCPLagCheckQuery:m text:textMutable];
+
 		return;
 	}
 
@@ -7082,8 +7095,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	/* Print message */
-	BOOL isLagCheckQuery = [command isEqualToString:@"LAGCHECK"];
-
 	IRCChannel *printTarget = nil;
 
 	if ([TPCPreferences locationToSendNotices] == TXNoticeSendLocationSelectedChannel) {
@@ -7092,23 +7103,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSString *messageToPrint = TXTLS(@"IRC[6o8-eu]", command, sender);
 
-	if (isLagCheckQuery == NO) {
-		[self print:messageToPrint
-				 by:nil
-		  inChannel:printTarget
-			 asType:TVCLogLineTypeCTCPQuery
-			command:m.command
-		 receivedAt:m.receivedAt];
-	}
-
-	/* Respond to query with the value asked for */
-	if (isLagCheckQuery)
-	{
-		[self receiveCTCPLagCheckQuery:m text:textMutable];
-	}
+	[self print:messageToPrint
+			 by:nil
+	  inChannel:printTarget
+		 asType:TVCLogLineTypeCTCPQuery
+		command:m.command
+	 receivedAt:m.receivedAt];
 
 	/* CLIENTINFO command */
-	else if ([command isEqualToString:@"CLIENTINFO"])
+	if ([command isEqualToString:@"CLIENTINFO"])
 	{
 		[self sendCTCPReply:sender command:command text:TXTLS(@"IRC[jer-ju]")];
 	}
