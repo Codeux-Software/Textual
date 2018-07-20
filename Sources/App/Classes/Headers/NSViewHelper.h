@@ -38,6 +38,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSView (TXViewHelper)
+@property (readonly, copy) NSArray<NSLayoutConstraint *> *constraintsForHuggingEdges; // top, right, bottom, left all == 0
+
 - (void)attachSubviewToHugEdges:(NSView *)subview;
 - (void)attachSubview:(NSView *)subview adjustedWidthConstraint:(nullable NSLayoutConstraint *)parentViewWidthConstraint adjustedHeightConstraint:(nullable NSLayoutConstraint *)parentViewHeightConstraint;
 @end
