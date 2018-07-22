@@ -118,9 +118,13 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(appearance != nil);
 
+	NSAppearance *appKitAppearance = nil;
+
 	if (appearance.appKitAppearanceTarget == TXAppKitAppearanceTargetView) {
-		self.segmentedController.appearance = appearance.appKitAppearance;
+		appKitAppearance = appearance.appKitAppearance;
 	}
+
+	self.segmentedController.appearance = appKitAppearance;
 
 	self.backgroundView.needsDisplay = YES;
 

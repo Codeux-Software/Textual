@@ -318,11 +318,13 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 {
 	NSParameterAssert(appearance != nil);
 
-	if (appearance.appKitAppearanceTarget != TXAppKitAppearanceTargetWindow) {
-		return;
+	NSAppearance *appKitAppearance = nil;
+
+	if (appearance.appKitAppearanceTarget == TXAppKitAppearanceTargetWindow) {
+		appKitAppearance = appearance.appKitAppearance;
 	}
 
-	self.appearance = appearance.appKitAppearance;
+	self.appearance = appKitAppearance;
 }
 
 - (void)notifyApplicationAppearanceChanged
