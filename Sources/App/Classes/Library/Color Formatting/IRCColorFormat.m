@@ -725,7 +725,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 				 {
 					 NSInteger colorCode = [foregroundColor integerValue];
 
-					 if (colorCode < 0 && colorCode > 15) {
+					 if (colorCode < 0 || colorCode > IRCTextFormatterEffectColorHighestDigit) {
 						 return;
 					 }
 				 }
@@ -752,7 +752,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 				 {
 					 NSInteger colorCode = [backgroundColor integerValue];
 
-					 if (colorCode < 0 && colorCode > 15) {
+					 if (colorCode < 0 || colorCode > IRCTextFormatterEffectColorHighestDigit) {
 						 return;
 					 }
 				 }
@@ -871,7 +871,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 				 {
 					 NSInteger colorCode = [value integerValue];
 
-					 if (colorCode >= 0 && colorCode <= 15) {
+					 if (colorCode >= 0 && colorCode <= IRCTextFormatterEffectColorHighestDigit) {
 						 [self addAttribute:IRCTextFormatterForegroundColorAttributeName value:@(colorCode) range:effectiveRange];
 
 						 [self addAttribute:NSForegroundColorAttributeName value:[TVCLogRenderer mapColorCode:colorCode] range:effectiveRange];
@@ -896,7 +896,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 				 {
 					 NSInteger colorCode = [value integerValue];
 
-					 if (colorCode >= 0 && colorCode <= 15) {
+					 if (colorCode >= 0 && colorCode <= IRCTextFormatterEffectColorHighestDigit) {
 						 [self addAttribute:IRCTextFormatterBackgroundColorAttributeName value:@(colorCode) range:effectiveRange];
 
 						 [self addAttribute:NSBackgroundColorAttributeName value:[TVCLogRenderer mapColorCode:colorCode] range:effectiveRange];

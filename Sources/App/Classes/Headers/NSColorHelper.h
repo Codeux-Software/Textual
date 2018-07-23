@@ -39,6 +39,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSColor (TXColorHelper)
+@property (class, readonly, copy) NSArray<NSColor *> *formatterColors;
+
 @property (class, readonly) NSColor *formatterWhiteColor;
 @property (class, readonly) NSColor *formatterBlackColor;
 @property (class, readonly) NSColor *formatterNavyBlueColor;
