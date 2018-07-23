@@ -1137,32 +1137,9 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 
 + (NSColor *)mapColorCode:(NSUInteger)colorCode
 {
-	NSParameterAssert(colorCode <= 15);
+	NSParameterAssert(colorCode <= IRCTextFormatterEffectColorHighestDigit);
 
-#define _dv(key, value)		case (key): { return (value); }
-
-	switch (colorCode) {
-		_dv(0, [NSColor formatterWhiteColor])
-		_dv(1, [NSColor formatterBlackColor])
-		_dv(2, [NSColor formatterNavyBlueColor])
-		_dv(3, [NSColor formatterDarkGreenColor])
-		_dv(4, [NSColor formatterRedColor])
-		_dv(5, [NSColor formatterBrownColor])
-		_dv(6, [NSColor formatterPurpleColor])
-		_dv(7, [NSColor formatterOrangeColor])
-		_dv(8, [NSColor formatterYellowColor])
-		_dv(9, [NSColor formatterLimeGreenColor])
-		_dv(10, [NSColor formatterTealColor])
-		_dv(11, [NSColor formatterAquaCyanColor])
-		_dv(12, [NSColor formatterLightBlueColor])
-		_dv(13, [NSColor formatterFuchsiaPinkColor])
-		_dv(14, [NSColor formatterNormalGrayColor])
-		_dv(15, [NSColor formatterLightGrayColor])
-	}
-
-#undef _dv
-
-	return nil;
+	return [NSColor formatterColors][colorCode];
 }
 
 @end

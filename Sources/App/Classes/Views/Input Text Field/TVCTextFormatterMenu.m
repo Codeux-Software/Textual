@@ -38,6 +38,7 @@
 
 #import "NSColorHelper.h"
 #import "IRCColorFormat.h"
+#import "TLOLocalization.h"
 #import "TVCTextViewWithIRCFormatterPrivate.h"
 #import "TVCTextFormatterMenuPrivate.h"
 
@@ -61,6 +62,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Menu Management
+
+- (void)awakeFromNib
+{
+	[super awakeFromNib];
+
+	[self generateColorList];
+}
 
 - (nullable TVCTextViewWithIRCFormatter *)textField
 {
@@ -202,6 +210,23 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)emptyAction:(id)sender
 {
 	/* Empty action used to validate submenus */
+}
+
+#pragma mark -
+#pragma mark Menu Generation
+
+- (void)generateColorList
+{
+	/* While we could technically load this from a file; we don't need to.
+	 That just adds extra space to the app when we already need to have an
+	 array of colors in the binary. */
+	NSColorList *colorList = [[NSColorList alloc] initWithName:TXTLS(@"iwp-cg")];
+
+	[[NSColor formatterColors] enumerateObjectsUsingBlock:^(NSColor *color, NSUInteger index, BOOL *stop) {
+		[colorList setColor:color forKey:TXTLS(@"ham-vk", index)];
+	}];
+
+	[[NSColorPanel sharedColorPanel] attachColorList:colorList];
 }
 
 #pragma mark -
@@ -371,7 +396,8 @@ NS_ASSUME_NONNULL_BEGIN
 		[colorPanel setTarget:self];
 		[colorPanel setAction:@selector(foregroundColorPanelColorChanged:)];
 		[colorPanel setAlphaValue:1.0];
-		[colorPanel setColor:self.textField.preferredFontColor];
+		[colorPanel setMode:NSColorPanelModeColorList];
+		[colorPanel setColor:[NSColor formatterWhiteColor]];
 
 		[colorPanel orderFront:nil];
 	}
@@ -396,7 +422,8 @@ NS_ASSUME_NONNULL_BEGIN
 		[colorPanel setTarget:self];
 		[colorPanel setAction:@selector(backgroundColorPanelColorChanged:)];
 		[colorPanel setAlphaValue:1.0];
-		[colorPanel setColor:[NSColor whiteColor]];
+		[colorPanel setMode:NSColorPanelModeColorList];
+		[colorPanel setColor:[NSColor formatterBlackColor]];
 
 		[colorPanel orderFront:nil];
 	}
@@ -449,14 +476,30 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterEffectForegroundColor withValue:sender.color inRange:selectedTextRange];
+	NSColor *color = sender.color;
+
+	NSUInteger colorDigit = [[NSColor formatterColors] indexOfObject:color];
+
+	if (colorDigit == NSNotFound) {
+		[self applyEffectToTextBox:IRCTextFormatterEffectForegroundColor withValue:color inRange:selectedTextRange];
+	} else {
+		[self applyEffectToTextBox:IRCTextFormatterEffectForegroundColor withValue:@(colorDigit) inRange:selectedTextRange];
+	}
 }
 
 - (void)backgroundColorPanelColorChanged:(NSColorPanel *)sender
 {
 	NSRange selectedTextRange = self.textField.selectedRange;
 
-	[self applyEffectToTextBox:IRCTextFormatterEffectBackgroundColor withValue:sender.color inRange:selectedTextRange];
+	NSColor *color = sender.color;
+
+	NSUInteger colorDigit = [[NSColor formatterColors] indexOfObject:color];
+
+	if (colorDigit == NSNotFound) {
+		[self applyEffectToTextBox:IRCTextFormatterEffectBackgroundColor withValue:color inRange:selectedTextRange];
+	} else {
+		[self applyEffectToTextBox:IRCTextFormatterEffectBackgroundColor withValue:@(colorDigit) inRange:selectedTextRange];
+	}
 }
 
 - (void)insertSpoilerCharIntoTextBox:(id)sender

@@ -610,12 +610,18 @@ return_method:
 		currentPosition -= 1;
 	}
 
-	if ( foregroundColor && m_foregoundColor != NSNotFound) {
-		*foregroundColor = @(m_foregoundColor % 16);
+	if (  foregroundColor &&
+		m_foregoundColor != NSNotFound &&
+		m_foregoundColor <= IRCTextFormatterEffectColorHighestDigit)
+	{
+		*foregroundColor = @(m_foregoundColor);
 	}
 
-	if ( backgroundColor && m_backgroundColor != NSNotFound) {
-		*backgroundColor = @(m_backgroundColor % 16);
+	if (  backgroundColor &&
+		m_backgroundColor != NSNotFound &&
+		m_backgroundColor <= IRCTextFormatterEffectColorHighestDigit)
+	{
+		*backgroundColor = @(m_backgroundColor);
 	}
 
 	return (currentPosition - rangeStart);

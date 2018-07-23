@@ -71,6 +71,8 @@ TEXTUAL_EXTERN IRCTextFormatterAttributeName const IRCTextFormatterSpoilerAttrib
 #define IRCTextFormatterEffectUnderlineCharacter		0x1F
 #define IRCTextFormatterTerminatingCharacter			0x0F
 
+#define IRCTextFormatterEffectColorHighestDigit			98
+
 @class IRCTextFormatterEffects;
 
 @interface IRCTextFormatterEffect : NSObject
