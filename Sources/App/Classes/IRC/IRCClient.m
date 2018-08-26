@@ -8877,6 +8877,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return NO;
 }
 
+- (void)resetSASLNegotation
+{
+	[self disablePendingCapability:ClientIRCv3SupportedCapabilitySASLGeneric];
+	[self disablePendingCapability:ClientIRCv3SupportedCapabilitySASLPlainText];
+	[self disablePendingCapability:ClientIRCv3SupportedCapabilitySASLExternal];
+	[self disablePendingCapability:ClientIRCv3SupportedCapabilityIsInSASLNegotiation];
+
+	[self disableCapability:ClientIRCv3SupportedCapabilityIsIdentifiedWithSASL];
+}
+
 #pragma mark -
 #pragma mark Protocol Handlers
 
@@ -10462,7 +10472,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			NSAssertReturn([m paramsCount] == 3);
 
-			[self disableCapability:ClientIRCv3SupportedCapabilityIsIdentifiedWithSASL];
+			[self resetSASLNegotation];
 
 			if (printMessage) {
 				[self print:[m sequence:2]
