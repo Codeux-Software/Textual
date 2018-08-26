@@ -8765,7 +8765,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			for (NSString *cap in caps) {
-				[self toggleCapability:cap enabled:YES isUpdateRequest:YES];
+				[self processPendingCapability:cap];
 			}
 		} else if ([subcommand isEqualToStringIgnoringCase:@"DEL"]) {
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
