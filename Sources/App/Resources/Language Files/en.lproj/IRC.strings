@@ -68,7 +68,6 @@
 "v4t-zw" = "You will be disconnected in %.0f minutes due to trial period limit. You can remove this limitation by unlocking the Standard Edition of Textual 7. <a href='#' onclick='appPrivate.showInAppPurchaseWindow(); return false;'>Click here</a> to do this.";
 
 /* Specific IRC related, app-specific errors */
-"z2r-sd" = "Messages cannot be sent to this window.";
 "iaa-0u" = "There are no servers configured to connect to.";
 
 /* Raw mode messages */
@@ -270,9 +269,11 @@
 "atq-93" = "Invalid syntax: “%@“";
 "pxa-ox" = "Cannot find channel named “%@“";
 "1fc-vl" = "Cannot find query named “%@“";
+"zef-q9" = "One or more arguments are not properly formatted for this command.";
 "g01-qn" = "This command can only be used with a channel.";
 "m6o-z1" = "This command can only be used with a query.";
-"zef-q9" = "One or more arguments are not properly formatted for this command.";
+"sxf-qx" = "This command cannot be used within this window.";
+"z2r-sd" = "Messages cannot be sent to this window.";
 
 /* Miscellaneous messages related to IRC events */
 "xog-in" = "Be back later";

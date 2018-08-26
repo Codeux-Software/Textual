@@ -2875,7 +2875,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	if (channel.isUtility) {
-		[self printCannotSendMessageToWindowErrorInChannel:channel];
+		[self printDebugInformation:TXTLS(@"IRC[z2r-sd]") inChannel:channel];
 
 		return;
 	}
@@ -3086,12 +3086,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		targetChannel = [self findChannel:targetChannelName];
 	} else if (completeTarget && selectedClient == self && selectedChannel) {
 		targetChannel = selectedChannel;
-	}
-
-	if (targetChannel.isUtility) {
-		[self printCannotSendMessageToWindowErrorInChannel:targetChannel];
-
-		return;
 	}
 
 	switch (commandNumeric) {
@@ -3327,6 +3321,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			NSAssertReturnLoopBreak(self.isLoggedIn);
 
 			if (targetChannel && targetChannel != selectedChannel) {
+				if (targetChannel.isUtility) {
+					[self printDebugInformation:TXTLS(@"sxf-qx")];
+
+					break;
+				}
+
 				targetChannelName = targetChannel.name;
 			} else {
 				targetChannelName = stringIn.tokenAsString;
@@ -3654,7 +3654,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		case IRCLocalCommandIgnore: // Command: IGNORE
 		case IRCLocalCommandUnignore: // Command: UNIGNORE
 		{
-			BOOL isIgnoreCommand = (commandNumeric == 5029);
+			BOOL isIgnoreCommand = (commandNumeric == IRCLocalCommandIgnore);
 
 			if (stringIn.length == 0 || targetChannel == nil) {
 				if (isIgnoreCommand) {
@@ -4928,6 +4928,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 			 string in is a channel name */
 			/* All other scenarios use the string in (token) */
 			if (isSecretMessage == NO && lineType == TVCLogLineTypeAction && targetChannel) {
+				if (targetChannel.isUtility) {
+					[self printDebugInformation:TXTLS(@"sxf-qx")];
+
+					break;
+				}
+
 				targetChannelName = targetChannel.name;
 			} else if (isOperatorMessage && [self stringIsChannelName:stringIn.string] == NO && targetChannel.isChannel) {
 				targetChannelName = targetChannel.name;
@@ -5692,13 +5698,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	[self printDebugInformationToConsole:message asCommand:command escapeMessage:escapeMessage];
-}
-
-- (void)printCannotSendMessageToWindowErrorInChannel:(IRCChannel *)channel
-{
-	NSParameterAssert(channel != nil);
-
-	[self printDebugInformation:TXTLS(@"IRC[z2r-sd]") inChannel:channel];
 }
 
 #pragma mark -
