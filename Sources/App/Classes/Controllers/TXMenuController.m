@@ -36,6 +36,8 @@
  *
  *********************************************************************** */
 
+#warning TODO: Close Query keyboard shortcut stopped working.
+
 #import "NSObjectHelperPrivate.h"
 #import "IRCClientConfig.h"
 #import "IRCClientPrivate.h"
