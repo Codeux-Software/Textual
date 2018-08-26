@@ -563,7 +563,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(logLine != nil);
 
-	if ([TPCPreferences logToDiskIsEnabled] == NO || self.isUtility) {
+	if (self.isUtility || [TPCPreferences logToDiskIsEnabled] == NO) {
 		return;
 	}
 
