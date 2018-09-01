@@ -1747,9 +1747,9 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	if (isClient) {
 		self.serverList.menu = menuController().mainMenuServerMenuItem.submenu;
 	} else if (isChannel) {
-		self.serverList.menu = menuController().mainMenuChannelMenuItem.submenu;
+		self.serverList.menu = menuController().mainMenuChannelMenu;
 	} else {
-		self.serverList.menu = menuController().mainMenuQueryMenuItem.submenu;
+		self.serverList.menu = menuController().mainMenuQueryMenu;
 	}
 
 	/* Update table view data sources */

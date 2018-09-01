@@ -349,6 +349,8 @@ enum
 #endif
 
 @property (readonly, weak) NSMenu *mainMenuNavigationChannelListMenu;
+@property (readonly, weak) NSMenu *mainMenuChannelMenu;
+@property (readonly, weak) NSMenu *mainMenuQueryMenu;
 @property (readonly, weak) NSMenuItem *mainMenuChannelMenuItem;
 @property (readonly, weak) NSMenuItem *mainMenuQueryMenuItem;
 @property (readonly, weak) NSMenuItem *mainMenuServerMenuItem;
