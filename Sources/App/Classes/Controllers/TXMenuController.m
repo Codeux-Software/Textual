@@ -36,8 +36,6 @@
  *
  *********************************************************************** */
 
-#warning TODO: Close Query keyboard shortcut stopped working.
-
 #import "NSObjectHelperPrivate.h"
 #import "IRCClientConfig.h"
 #import "IRCClientPrivate.h"
@@ -122,6 +120,8 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 
 @property (nonatomic, weak, readwrite) IBOutlet NSMenu *mainMenuNavigationChannelListMenu;
+@property (nonatomic, weak, readwrite) IBOutlet NSMenu *mainMenuChannelMenu;
+@property (nonatomic, weak, readwrite) IBOutlet NSMenu *mainMenuQueryMenu;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuChannelMenuItem;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuQueryMenuItem;
 @property (nonatomic, weak, readwrite) IBOutlet NSMenuItem *mainMenuServerMenuItem;
@@ -181,13 +181,10 @@ NS_ASSUME_NONNULL_BEGIN
 	NSMenuItem *channelMenu = self.mainMenuChannelMenuItem;
 
 	[self _forceMenuItemValidation:channelMenu];
-	[self _forceMenuItemValidation:[channelMenu.submenu itemWithTag:MTMMChannelDeleteChannel]];
 
 	NSMenuItem *queryMenu = self.mainMenuQueryMenuItem;
 
 	[self _forceMenuItemValidation:queryMenu];
-	[self _forceMenuItemValidation:[queryMenu.submenu itemWithTag:MTMMQueryCloseQuery]];
-
 }
 
 - (void)_forceMenuValidation:(NSMenu *)menu
@@ -383,13 +380,29 @@ NS_ASSUME_NONNULL_BEGIN
 	switch (tag) {
 		case MTMainMenuChannel: // "Channel"
 		{
-			menuItem.hidden = (c.isChannel == NO);
+			BOOL isChannel = c.isChannel;
+
+			menuItem.hidden = (isChannel == NO);
+
+			if (isChannel) {
+				menuItem.submenu = self.mainMenuChannelMenu;
+			} else {
+				menuItem.submenu = nil;
+			}
 
 			return YES;
 		}
 		case MTMainMenuQuery: // "Query"
 		{
-			menuItem.hidden = (c.isPrivateMessage == NO && c.isUtility == NO);
+			BOOL isQuery = (c.isPrivateMessage || c.isUtility);
+
+			menuItem.hidden = (isQuery == NO);
+
+			if (isQuery) {
+				menuItem.submenu = self.mainMenuQueryMenu;
+			} else {
+				menuItem.submenu = nil;
+			}
 
 			return YES;
 		}
@@ -632,43 +645,6 @@ NS_ASSUME_NONNULL_BEGIN
 		case MTMMChannelAddChannel: // "Add Channel…"
 		{
 			return (u != nil);
-		}
-		case MTMMChannelDeleteChannel: // "Delete Channel"
-		case MTMMQueryCloseQuery: // "Close Query"
-		{
-			/*
-			 These two keyboard shortcuts share the same keyboard shortcut.
-			 Only one menu item can have a keyboard shortcut, so we have two
-			 options:
-
-			 1):
-
-			 Return to only having one menu item and change the title when
-			 performing validation. I don't want to do this because I think
-			 the main menu looks cleaner with a separate menu for channels
-			 and querieis.
-
-			 2):
-
-			 Shuffle the keyboard shortcut during validation.
-			 This is the solution I went with.
-			 When selection changes, we perform validation again on these
-			 two menu items. If its parent is hidden, then we archive its
-			 current keyboard shortcut then restore it when it's visible.
-			 Only one of these can ever be visible, so this works.
-			*/
-
-			if (menuItem.parentItem.hidden) {
-				if (menuItem.keyboardShortcutArchived == NO) {
-					[menuItem archiveKeyboardShortcutAndUnset];
-				}
-			} else {
-				[menuItem restoreKeyboardShorcut];
-
-				[menuItem unsetArchivedKeyboardShortcut];
-			}
-
-			return YES;
 		}
 		case MTMMChannelViewLogs: // "View Logs"
 		{
