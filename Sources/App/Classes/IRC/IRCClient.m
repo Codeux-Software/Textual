@@ -159,7 +159,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define _autojoinDelayedWarningInterval		90
+#define _autojoinDelayedWarningInterval		90 // max delay after identification is 10 so keep this above that
 #define _autojoinDelayedWarningMaxCount		3
 
 #define _isonCheckInterval			30
@@ -219,6 +219,7 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, strong) IRCMessageBatchMessageContainer *batchMessages;
 @property (nonatomic, strong, nullable) TLOFileLogger *logFile;
 @property (nonatomic, strong) TLOTimer *autojoinTimer;
+@property (nonatomic, strong) TLOTimer *autojoinNextJoinTimer;
 @property (nonatomic, strong) TLOTimer *autojoinDelayedWarningTimer;
 @property (nonatomic, strong) TLOTimer *isonTimer;
 @property (nonatomic, strong) TLOTimer *pongTimer;
@@ -335,6 +336,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[self onAutojoinTimer];
 	}];
 
+	self.autojoinNextJoinTimer =
+	[TLOTimer timerWithActionBlock:^(TLOTimer *sender) {
+		[self onAutojoinNextJoinTimer];
+	}];
+
 	self.autojoinDelayedWarningTimer =
 	[TLOTimer timerWithActionBlock:^(TLOTimer *sender) {
 		[self onAutojoinDelayedWarningTimer];
@@ -389,6 +395,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #endif
 
 	[self.autojoinTimer stop];
+	[self.autojoinNextJoinTimer stop];
 	[self.autojoinDelayedWarningTimer stop];
 	[self.isonTimer	stop];
 	[self.pongTimer	stop];
@@ -397,6 +404,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self.whoTimer stop];
 
 	self.autojoinTimer = nil;
+	self.autojoinNextJoinTimer = nil;
 	self.autojoinDelayedWarningTimer = nil;
 	self.isonTimer = nil;
 	self.pongTimer = nil;
@@ -5790,6 +5798,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self removeRequestedCommands];
 
 	[self stopAutojoinTimer];
+	[self stopAutojoinNextJoinTimer];
 	[self stopAutojoinDelayedWarningTimer];
 	[self stopISONTimer];
 	[self stopPongTimer];
@@ -10749,6 +10758,37 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #pragma mark -
 #pragma mark Autojoin
 
+- (void)startAutojoinTimer
+{
+	if (self.autojoinTimer.timerIsActive) {
+		return;
+	}
+
+	NSTimeInterval interval = [TPCPreferences autojoinDelayAfterIdentification];
+
+	if (CGFloatAreEqual(interval, 0.0)) {
+		[self onAutojoinTimer];
+
+		return;
+	}
+
+	[self.autojoinTimer start:interval onRepeat:NO];
+}
+
+- (void)stopAutojoinTimer
+{
+	if (self.autojoinTimer.timerIsActive == NO) {
+		return;
+	}
+
+	[self.autojoinTimer stop];
+}
+
+- (void)onAutojoinTimer
+{
+	[self onAutojoinNextJoinTimer];
+}
+
 - (void)startAutojoinDelayedWarningTimer
 {
 	if (self.autojoinDelayedWarningTimer.timerIsActive) {
@@ -10793,29 +10833,29 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 }
 
-- (void)startAutojoinTimer
+- (void)startAutojoinNextJoinTimer
 {
-	if (self.autojoinTimer.timerIsActive) {
+	if (self.autojoinNextJoinTimer.timerIsActive) {
 		return;
 	}
 
 	NSTimeInterval interval = [TPCPreferences autojoinDelayBetweenChannelJoins];
 
-	[self.autojoinTimer start:interval onRepeat:YES];
+	[self.autojoinNextJoinTimer start:interval onRepeat:YES];
 }
 
-- (void)stopAutojoinTimer
+- (void)stopAutojoinNextJoinTimer
 {
-	if (self.autojoinTimer.timerIsActive == NO) {
+	if (self.autojoinNextJoinTimer.timerIsActive == NO) {
 		return;
 	}
 
-	[self.autojoinTimer stop];
+	[self.autojoinNextJoinTimer stop];
 
 	self.channelsToAutojoin = nil;
 }
 
-- (void)onAutojoinTimer
+- (void)onAutojoinNextJoinTimer
 {
 	[self autojoinNextChannel];
 }
@@ -10852,7 +10892,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			self.isAutojoined = YES;
 
-			[self stopAutojoinTimer];
+			[self stopAutojoinNextJoinTimer];
 		}
 	}
 }
@@ -10925,8 +10965,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	}
 
 	[self startAutojoinTimer];
-
-	[self onAutojoinTimer];
 }
 
 #pragma mark -

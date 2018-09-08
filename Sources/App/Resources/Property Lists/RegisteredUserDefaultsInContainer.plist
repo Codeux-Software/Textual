@@ -16,6 +16,8 @@
 	<false/>
 	<key>AutojoinDelayBetweenChannelJoins</key>
 	<real>2.2</real>
+	<key>AutojoinDelayAfterIdentification</key>
+	<real>0</real>
 	<key>AutojoinMaximumChannelJoinCount</key>
 	<integer>2</integer>
 	<key>AutojoinWaitsForNickservIdentification</key>
