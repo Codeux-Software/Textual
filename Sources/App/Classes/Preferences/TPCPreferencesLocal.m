@@ -116,6 +116,11 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	return [RZUserDefaults() doubleForKey:@"AutojoinDelayBetweenChannelJoins"];
 }
 
++ (NSTimeInterval)autojoinDelayAfterIdentification
+{
+	return [RZUserDefaults() doubleForKey:@"AutojoinDelayAfterIdentification"];
+}
+
 + (NSString *)defaultKickMessage
 {
 	return [RZUserDefaults() objectForKey:@"ChannelOperatorDefaultLocalization -> Kick Reason"];

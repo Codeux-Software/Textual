@@ -236,6 +236,7 @@ typedef NS_ENUM(NSUInteger, TXPreferredAppearance) {
 
 + (NSUInteger)autojoinMaximumChannelJoins;
 + (NSTimeInterval)autojoinDelayBetweenChannelJoins;
++ (NSTimeInterval)autojoinDelayAfterIdentification;
 
 + (TXUserDoubleClickAction)userDoubleClickOption;
 
