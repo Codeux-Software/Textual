@@ -6977,8 +6977,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		self.userIsIdentifiedWithNickServ = YES;
 
 		if (self.config.autojoinWaitsForNickServ) {
-#warning TODO: Add small delay before autojoining
-
 			[self performAutoJoin];
 		}
 
