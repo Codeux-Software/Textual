@@ -90,6 +90,8 @@ NSString * const TVCMainWindowRedrawSubviewsNotification = @"TVCMainWindowRedraw
 NSString * const TVCMainWindowWillReloadThemeNotification = @"TVCMainWindowWillReloadThemeNotification";
 NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidReloadThemeNotification";
 
+NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSelectionChangedNotification";
+
 @interface TVCMainWindow ()
 @property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowChannelView *channelView;
 @property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowTitlebarAccessoryView *titlebarAccessoryView;
@@ -1800,9 +1802,7 @@ NSString * const TVCMainWindowDidReloadThemeNotification = @"TVCMainWindowDidRel
 	/* Finish up */
 	[self storeLastSelectedChannel];
 
-	[sharedGrowlController() dismissNotificationCenterNotificationsForChannel:self.selectedChannel onClient:self.selectedClient];
-
-	[menuController() mainWindowSelectionDidChange];
+	[RZNotificationCenter() postNotificationName:TVCMainWindowSelectionChangedNotification object:self];
 
 	[TVCDockIcon updateDockIcon];
 

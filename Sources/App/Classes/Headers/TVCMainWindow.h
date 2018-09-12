@@ -64,6 +64,8 @@ TEXTUAL_EXTERN NSNotificationName const TVCMainWindowRedrawSubviewsNotification;
 TEXTUAL_EXTERN NSNotificationName const TVCMainWindowWillReloadThemeNotification;
 TEXTUAL_EXTERN NSNotificationName const TVCMainWindowDidReloadThemeNotification;
 
+TEXTUAL_EXTERN NSNotificationName const TVCMainWindowSelectionChangedNotification;
+
 TEXTUAL_EXTERN NSString * const TVCServerListDragType;
 
 @interface TVCMainWindow : NSWindow

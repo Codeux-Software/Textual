@@ -152,6 +152,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[RZNotificationCenter() addObserver:self selector:@selector(menuItemWillPerformedAction:) name:NSMenuWillSendActionNotification object:nil];
 	[RZNotificationCenter() addObserver:self selector:@selector(menuItemPerformedAction:) name:NSMenuDidSendActionNotification object:nil];
+
+	[RZNotificationCenter() addObserver:self selector:@selector(mainWindowSelectionChanged:) name:TVCMainWindowSelectionChangedNotification object:nil];
 }
 
 - (void)setupOtherServices
@@ -169,7 +171,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[self.fileTransferController clearIPAddress];
 }
 
-- (void)mainWindowSelectionDidChange
+- (void)mainWindowSelectionChanged:(NSNotification *)notification
 {
 	if (self.menuIsOpen == NO) {
 		[self resetSelectedItems];
