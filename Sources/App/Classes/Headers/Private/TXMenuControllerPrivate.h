@@ -46,8 +46,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TXMenuController ()
 @property (nonatomic, copy, nullable) NSString *pointedNickname; // Takes priority if sender of an action returns nil userInfo value
 
-- (void)mainWindowSelectionDidChange;
-
 - (void)populateNavigationChannelList;
 
 - (IBAction)performNavigationAction:(id)sender;

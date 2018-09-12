@@ -84,6 +84,15 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 	RZUserNotificationCenter().delegate = (id)self;
 
 	[GrowlApplicationBridge setGrowlDelegate:(id)self];
+
+	[RZNotificationCenter() addObserver:self selector:@selector(mainWindowSelectionChanged:) name:TVCMainWindowSelectionChangedNotification object:nil];
+}
+
+- (void)mainWindowSelectionChanged:(NSNotification *)notification
+{
+	TVCMainWindow *mainWindow = mainWindow();
+
+	[self dismissNotificationCenterNotificationsForChannel:mainWindow.selectedChannel onClient:mainWindow.selectedClient];
 }
 
 - (NSString *)titleForEvent:(TXNotificationType)event
