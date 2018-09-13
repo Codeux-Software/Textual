@@ -905,7 +905,7 @@
 		4C06E50020EC551C0055D09A /* NSViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E620EB673E00448776 /* NSViewHelper.m */; };
 		4C06E50120EC551C0055D09A /* TXAppearanceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E920EB673E00448776 /* TXAppearanceHelper.m */; };
 		4C06E50220EC551C0055D09A /* WebScriptObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152DC20EB673E00448776 /* WebScriptObjectHelper.m */; };
-		4C06E50320EC551C0055D09A /* GTMEncodeHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152DE20EB673E00448776 /* GTMEncodeHTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4C06E50320EC551C0055D09A /* GTMEncodeHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152DE20EB673E00448776 /* GTMEncodeHTML.m */; };
 		4C06E50420EC551C0055D09A /* THOPluginDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E120EB673E00448776 /* THOPluginDispatcher.m */; };
 		4C06E50520EC551C0055D09A /* THOPluginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E220EB673E00448776 /* THOPluginManager.m */; };
 		4C06E50620EC551C0055D09A /* THOPluginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E320EB673E00448776 /* THOPluginItem.m */; };
@@ -1079,7 +1079,7 @@
 		4C06E5B920EC553A0055D09A /* NSViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E620EB673E00448776 /* NSViewHelper.m */; };
 		4C06E5BA20EC553A0055D09A /* TXAppearanceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E920EB673E00448776 /* TXAppearanceHelper.m */; };
 		4C06E5BB20EC553A0055D09A /* WebScriptObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152DC20EB673E00448776 /* WebScriptObjectHelper.m */; };
-		4C06E5BC20EC553A0055D09A /* GTMEncodeHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152DE20EB673E00448776 /* GTMEncodeHTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4C06E5BC20EC553A0055D09A /* GTMEncodeHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152DE20EB673E00448776 /* GTMEncodeHTML.m */; };
 		4C06E5BD20EC553A0055D09A /* THOPluginDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E120EB673E00448776 /* THOPluginDispatcher.m */; };
 		4C06E5BE20EC553A0055D09A /* THOPluginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E220EB673E00448776 /* THOPluginManager.m */; };
 		4C06E5BF20EC553A0055D09A /* THOPluginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E320EB673E00448776 /* THOPluginItem.m */; };
@@ -1253,7 +1253,7 @@
 		4C06E67220EC55B90055D09A /* NSViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E620EB673E00448776 /* NSViewHelper.m */; };
 		4C06E67320EC55B90055D09A /* TXAppearanceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E920EB673E00448776 /* TXAppearanceHelper.m */; };
 		4C06E67420EC55B90055D09A /* WebScriptObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152DC20EB673E00448776 /* WebScriptObjectHelper.m */; };
-		4C06E67520EC55B90055D09A /* GTMEncodeHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152DE20EB673E00448776 /* GTMEncodeHTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4C06E67520EC55B90055D09A /* GTMEncodeHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152DE20EB673E00448776 /* GTMEncodeHTML.m */; };
 		4C06E67620EC55B90055D09A /* THOPluginDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E120EB673E00448776 /* THOPluginDispatcher.m */; };
 		4C06E67720EC55B90055D09A /* THOPluginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E220EB673E00448776 /* THOPluginManager.m */; };
 		4C06E67820EC55B90055D09A /* THOPluginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E320EB673E00448776 /* THOPluginItem.m */; };
@@ -1427,7 +1427,7 @@
 		4C06E72B20EC55DA0055D09A /* NSViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E620EB673E00448776 /* NSViewHelper.m */; };
 		4C06E72C20EC55DA0055D09A /* TXAppearanceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E920EB673E00448776 /* TXAppearanceHelper.m */; };
 		4C06E72D20EC55DA0055D09A /* WebScriptObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152DC20EB673E00448776 /* WebScriptObjectHelper.m */; };
-		4C06E72E20EC55DA0055D09A /* GTMEncodeHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152DE20EB673E00448776 /* GTMEncodeHTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4C06E72E20EC55DA0055D09A /* GTMEncodeHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152DE20EB673E00448776 /* GTMEncodeHTML.m */; };
 		4C06E72F20EC55DA0055D09A /* THOPluginDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E120EB673E00448776 /* THOPluginDispatcher.m */; };
 		4C06E73020EC55DA0055D09A /* THOPluginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E220EB673E00448776 /* THOPluginManager.m */; };
 		4C06E73120EC55DA0055D09A /* THOPluginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3152E320EB673E00448776 /* THOPluginItem.m */; };
