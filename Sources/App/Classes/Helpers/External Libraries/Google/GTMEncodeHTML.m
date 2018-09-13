@@ -19,7 +19,6 @@
 
 #import "GTMEncodeHTML.h"
 
-// TODO: 10.14 supports ARC with Objective-C types in structs
 typedef struct {
 	NSString *escapeSequence;
 	unichar uchar;
