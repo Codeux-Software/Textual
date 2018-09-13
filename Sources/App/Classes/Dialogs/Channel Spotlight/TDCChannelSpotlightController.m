@@ -96,7 +96,6 @@ NS_ASSUME_NONNULL_BEGIN
 											  return [self respondToKeyDownEvent:event];
 										  }];
 
-#warning TODO: Predicate needs to be updated when selection changes
 	self.searchResultsController.sortDescriptors = @[
 		[NSSortDescriptor sortDescriptorWithKey:@"distance" ascending:NO selector:@selector(compare:)]
 	];
