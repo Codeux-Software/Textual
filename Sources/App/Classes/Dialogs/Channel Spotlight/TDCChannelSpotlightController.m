@@ -97,21 +97,15 @@ NS_ASSUME_NONNULL_BEGIN
 										  }];
 
 #warning TODO: Predicate needs to be updated when selection changes
-	if ([TPCPreferences channelNavigationIsServerSpecific]) {
-		NSString *clientId = mainWindow().selectedClient.uniqueIdentifier;
-
-		self.searchResultsController.filterPredicate = [NSPredicate predicateWithFormat:@"distance >= 0.5 && clientId LIKE[c] %@", clientId];
-	} else {
-		self.searchResultsController.filterPredicate = [NSPredicate predicateWithFormat:@"distance >= 0.5"];
-	}
-
 	self.searchResultsController.sortDescriptors = @[
 		[NSSortDescriptor sortDescriptorWithKey:@"distance" ascending:NO selector:@selector(compare:)]
 	];
 
-	[RZNotificationCenter() addObserver:self selector:@selector(clientListChanged:) name:IRCWorldClientListWasModifiedNotification object:nil];
-	[RZNotificationCenter() addObserver:self selector:@selector(channelListChanged:) name:IRCClientChannelListWasModifiedNotification object:nil];
 	[RZNotificationCenter() addObserver:self selector:@selector(applicationAppearanceChanged:) name:TXApplicationAppearanceChangedNotification object:nil];
+	[RZNotificationCenter() addObserver:self selector:@selector(channelListChanged:) name:IRCClientChannelListWasModifiedNotification object:nil];
+	[RZNotificationCenter() addObserver:self selector:@selector(clientListChanged:) name:IRCWorldClientListWasModifiedNotification object:nil];
+	[RZNotificationCenter() addObserver:self selector:@selector(mainWindowSelectionChanged:) name:TVCMainWindowSelectionChangedNotification object:nil];
+	[RZNotificationCenter() addObserver:self selector:@selector(preferencesChanged:) name:TPCPreferencesUserDefaultsDidChangeNotification object:nil];
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 	[RZNotificationCenter() addObserver:self selector:@selector(licenseManagerDeactivatedLicense:) name:TDCLicenseManagerDeactivatedLicenseNotification object:nil];
@@ -130,7 +124,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[self.searchResultsViewHeightConstraint archiveConstant];
 
-	[self updateControlsState];
+	[self updatePredicate];
 }
 
 #pragma mark -
@@ -436,6 +430,19 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Search Results
 
+- (void)updatePredicate
+{
+	if ([TPCPreferences channelNavigationIsServerSpecific]) {
+		NSString *clientId = mainWindow().selectedClient.uniqueIdentifier;
+
+		self.searchResultsController.filterPredicate = [NSPredicate predicateWithFormat:@"distance >= 0.5 && clientId LIKE[c] %@", clientId];
+	} else {
+		self.searchResultsController.filterPredicate = [NSPredicate predicateWithFormat:@"distance >= 0.5"];
+	}
+
+	[self updateControlsState];
+}
+
 - (void)resetSearch
 {
 	self.searchField.stringValue = @"";
@@ -536,6 +543,25 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Notifications
+
+- (void)mainWindowSelectionChanged:(NSNotification *)notification
+{
+	/* Predicate is updated when selection changes because predicate may be configured
+	 to be per-server. This could be made more efficient by checking if it is server
+	 specific and comparing the selected client identifier to what is in predicate.
+	 That involves a lot more work for something that shouldn't be fired a lot. */
+
+	[self updatePredicate];
+}
+
+- (void)preferencesChanged:(NSNotification *)notification
+{
+	NSString *changedKey = notification.userInfo[@"changedKey"];
+
+	if ([changedKey isEqualToString:@"ChannelNavigationIsServerSpecific"]) {
+		[self updatePredicate];
+	}
+}
 
 - (void)clientListChanged:(id)sender
 {
