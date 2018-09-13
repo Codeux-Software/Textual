@@ -148,6 +148,9 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (BOOL)channelNavigationIsServerSpecific
 {
+	/* TDCChannelSpotlightController is observing this key with it hard coded.
+	 If changed here, change there as well. */
+
 	return [RZUserDefaults() boolForKey:@"ChannelNavigationIsServerSpecific"];
 }
 
