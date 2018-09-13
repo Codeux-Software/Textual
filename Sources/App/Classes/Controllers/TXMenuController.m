@@ -146,7 +146,7 @@ NS_ASSUME_NONNULL_BEGIN
 		self.muteNotificationsSoundsFileMenuItem.state = NSOnState;
 	}
 
-	[self.channelViewGeneralMenu itemWithTag:MTWKGeneralChannelMenu].submenu = [self.mainMenuChannelMenuItem.submenu copy];
+	[self.channelViewGeneralMenu itemWithTag:MTWKGeneralChannelMenu].submenu = [self.mainMenuChannelMenu copy];
 
 	[self setupOtherServices];
 
