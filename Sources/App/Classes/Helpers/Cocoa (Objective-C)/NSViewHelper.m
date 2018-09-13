@@ -145,15 +145,6 @@ NS_ASSUME_NONNULL_BEGIN
 								   constant:subviewFrameHeight]
 	 ];
 
-	/* Fix for Mojave */
-	/* For some reason, as of beta 4 of Mojave, some frames had a negative Y
-	 origin even though that should be impossible since the views passed to
-	 this method aren't already on a window when they are passed. */
-	/* TODO: Revisit this when beta 5 comes out (July 20, 2018) */
-	if (TEXTUAL_RUNNING_ON_MOJAVE) {
-		[self addConstraints:subview.constraintsForHuggingEdges];
-	}
-
 	[subview addConstraints:constraints];
 }
 
