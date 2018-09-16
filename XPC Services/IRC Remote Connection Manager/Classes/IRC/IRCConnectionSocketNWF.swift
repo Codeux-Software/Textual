@@ -198,24 +198,13 @@ final class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 
 		/* First combine the existing read buffer with the
 		 new data so we can process it in mass. */
-		/* Note: June 29, 2018 on Swift 4.2 on Xcode 10 beta 2
-		 When I first wrote this code, I wrote the logic in the
-		 form "newBuffer = (oldBuffer + data)" When writing it
-		 using this syntax, Foundation would throw at random
-		 an out of range exception similiar to the following:
-
-		 *** Terminating app due to uncaught exception 'NSRangeException', reason: '*** -[NSConcreteMutableData subdataWithRange:]: range {12945, 87} exceeds data length 7282'
-
-		 TODO: Maybe this should be revisited at a later time. */
 		var newBuffer: Data
 
 		if let oldBuffer = readInBuffer {
-			newBuffer = oldBuffer
+			newBuffer = (oldBuffer + data)
 		} else {
-			newBuffer = Data()
+			newBuffer = data
 		}
-
-		newBuffer.append(data)
 
 		/* Regardless of the result, we need to update the
 		 saved buffer with the updated buffer, but we prefer
