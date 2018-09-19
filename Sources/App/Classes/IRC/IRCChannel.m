@@ -266,6 +266,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		writePath = self.logFile.writePath;
 	}
 
+	if (writePath == nil) {
+		return nil;
+	}
+
 	return [NSURL fileURLWithPath:writePath];
 }
 
