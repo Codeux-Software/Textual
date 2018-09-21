@@ -107,8 +107,8 @@
 	}
 	
 	/* Only work on plain text messages */
-	if (lineType == TVCLogLinePrivateMessageType ||
-		lineType == TVCLogLineActionType)
+	if (lineType == TVCLogLineTypePrivateMessage ||
+		lineType == TVCLogLineTypeAction)
 	{
 		IRCChannel *channel = [logController associatedChannel];
 		
