@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.14" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,14 +21,14 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="302">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="283" y="305" width="434" height="129"/>
+            <rect key="contentRect" x="283" y="305" width="434" height="128"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="303">
-                <rect key="frame" x="0.0" y="0.0" width="434" height="129"/>
+                <rect key="frame" x="0.0" y="0.0" width="434" height="128"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="304">
-                        <rect key="frame" x="18" y="85" width="100" height="26"/>
+                        <rect key="frame" x="18" y="84" width="100" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="95" id="nPm-5S-cdY"/>
                         </constraints>
@@ -45,7 +45,7 @@
                         <accessibility description="Highlight Match Type"/>
                     </popUpButton>
                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="314">
-                        <rect key="frame" x="18" y="64" width="90" height="17"/>
+                        <rect key="frame" x="18" y="63" width="90" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="in the channel" id="315">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -53,7 +53,7 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="316">
-                        <rect key="frame" x="112" y="58" width="305" height="26"/>
+                        <rect key="frame" x="112" y="58" width="305" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="300" id="O88-U8-9d4"/>
                         </constraints>
@@ -95,7 +95,7 @@ DQ
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="310" customClass="TVCValidatedTextField">
-                        <rect key="frame" x="206" y="89" width="208" height="22"/>
+                        <rect key="frame" x="206" y="87" width="208" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="EpS-gd-fY4"/>
                         </constraints>
@@ -110,7 +110,7 @@ DQ
                         </connections>
                     </textField>
                     <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="312">
-                        <rect key="frame" x="121" y="91" width="79" height="17"/>
+                        <rect key="frame" x="121" y="89" width="79" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="the keyword" id="313">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
