@@ -11,7 +11,7 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.13</string>
+	<string>1.0.14</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2015 - 2018 Codeux Software, LLC. All rights reserved.</string>
 	<key>MinimumTextualVersion</key>
