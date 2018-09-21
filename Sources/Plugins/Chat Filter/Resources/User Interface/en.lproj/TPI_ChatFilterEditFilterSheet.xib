@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -146,13 +146,13 @@ Gw
                                             </connections>
                                         </button>
                                         <box autoresizesSubviews="NO" borderType="line" title="Filter Action Tokens" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="4wE-6t-SLO">
-                                            <rect key="frame" x="31" y="21" width="481" height="96"/>
+                                            <rect key="frame" x="31" y="16" width="481" height="101"/>
                                             <view key="contentView" id="aRg-yo-qrI">
-                                                <rect key="frame" x="3" y="3" width="475" height="90"/>
+                                                <rect key="frame" x="3" y="3" width="475" height="95"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tokenField verticalHuggingPriority="750" tag="1" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hub-7d-YOP">
-                                                        <rect key="frame" x="22" y="61" width="132" height="17"/>
+                                                        <rect key="frame" x="22" y="66" width="132" height="17"/>
                                                         <tokenFieldCell key="cell" selectable="YES" allowsUndo="NO" alignment="left" tag="1" title="Network Name" placeholderString="" allowsEditingTextAttributes="YES" tokenStyle="rounded" id="9By-pk-GTz">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -163,7 +163,7 @@ Gw
                                                         </connections>
                                                     </tokenField>
                                                     <tokenField verticalHuggingPriority="750" tag="7" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hz3-ib-naL">
-                                                        <rect key="frame" x="157" y="61" width="149" height="17"/>
+                                                        <rect key="frame" x="157" y="66" width="149" height="17"/>
                                                         <tokenFieldCell key="cell" selectable="YES" allowsUndo="NO" alignment="left" title="Sender Nickname" placeholderString="" allowsEditingTextAttributes="YES" tokenStyle="rounded" id="WZD-Zm-lha">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -174,7 +174,7 @@ Gw
                                                         </connections>
                                                     </tokenField>
                                                     <tokenField verticalHuggingPriority="750" tag="8" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bEr-mb-T5p">
-                                                        <rect key="frame" x="306" y="61" width="151" height="17"/>
+                                                        <rect key="frame" x="306" y="66" width="151" height="17"/>
                                                         <tokenFieldCell key="cell" selectable="YES" allowsUndo="NO" alignment="left" title="Sender Username" placeholderString="" allowsEditingTextAttributes="YES" tokenStyle="rounded" id="Swn-qj-488">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -185,7 +185,7 @@ Gw
                                                         </connections>
                                                     </tokenField>
                                                     <tokenField verticalHuggingPriority="750" tag="1" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xNC-RA-OVo">
-                                                        <rect key="frame" x="22" y="36" width="132" height="17"/>
+                                                        <rect key="frame" x="22" y="41" width="132" height="17"/>
                                                         <tokenFieldCell key="cell" selectable="YES" allowsUndo="NO" alignment="left" title="Channel Name" placeholderString="" allowsEditingTextAttributes="YES" tokenStyle="rounded" id="w2K-np-UI4">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -196,7 +196,7 @@ Gw
                                                         </connections>
                                                     </tokenField>
                                                     <tokenField verticalHuggingPriority="750" tag="5" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k3G-9I-Qxd">
-                                                        <rect key="frame" x="157" y="36" width="139" height="17"/>
+                                                        <rect key="frame" x="157" y="41" width="139" height="17"/>
                                                         <tokenFieldCell key="cell" selectable="YES" allowsUndo="NO" alignment="left" title="Sender Address" placeholderString="" allowsEditingTextAttributes="YES" tokenStyle="rounded" id="IWY-vb-65R">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -207,7 +207,7 @@ Gw
                                                         </connections>
                                                     </tokenField>
                                                     <tokenField verticalHuggingPriority="750" tag="6" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IC3-dU-HTg">
-                                                        <rect key="frame" x="306" y="36" width="151" height="17"/>
+                                                        <rect key="frame" x="306" y="41" width="151" height="17"/>
                                                         <tokenFieldCell key="cell" selectable="YES" allowsUndo="NO" alignment="left" title="Sender Hostmask" placeholderString="" allowsEditingTextAttributes="YES" tokenStyle="rounded" id="Foq-12-BzJ">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -218,7 +218,7 @@ Gw
                                                         </connections>
                                                     </tokenField>
                                                     <tokenField verticalHuggingPriority="750" tag="9" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jah-Fc-rje">
-                                                        <rect key="frame" x="22" y="11" width="135" height="17"/>
+                                                        <rect key="frame" x="22" y="16" width="135" height="17"/>
                                                         <tokenFieldCell key="cell" selectable="YES" allowsUndo="NO" alignment="left" title="Server Address" placeholderString="" allowsEditingTextAttributes="YES" tokenStyle="rounded" id="Xrk-zW-D9B">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -229,7 +229,7 @@ Gw
                                                         </connections>
                                                     </tokenField>
                                                     <tokenField verticalHuggingPriority="750" tag="2" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dbl-MS-g0g">
-                                                        <rect key="frame" x="157" y="11" width="124" height="17"/>
+                                                        <rect key="frame" x="157" y="16" width="124" height="17"/>
                                                         <tokenFieldCell key="cell" selectable="YES" allowsUndo="NO" alignment="left" title="My Nickname" placeholderString="" allowsEditingTextAttributes="YES" tokenStyle="rounded" id="8op-NH-aty">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -240,7 +240,7 @@ Gw
                                                         </connections>
                                                     </tokenField>
                                                     <tokenField verticalHuggingPriority="750" tag="4" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hTf-Zo-2fg">
-                                                        <rect key="frame" x="306" y="11" width="147" height="17"/>
+                                                        <rect key="frame" x="306" y="16" width="147" height="17"/>
                                                         <tokenFieldCell key="cell" selectable="YES" allowsUndo="NO" alignment="left" title="Original Message" placeholderString="" allowsEditingTextAttributes="YES" tokenStyle="rounded" id="Lw0-nm-IeG">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -333,7 +333,7 @@ Gw
                                         <constraint firstItem="TYu-Qh-WKq" firstAttribute="leading" secondItem="8Ux-sm-Alm" secondAttribute="leading" constant="34" id="gq9-mQ-3v1"/>
                                         <constraint firstItem="b1E-IB-AAD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CsT-6O-3Gc" secondAttribute="trailing" constant="20" id="h2o-iU-GnS"/>
                                         <constraint firstItem="wGy-N2-oQL" firstAttribute="top" secondItem="TYu-Qh-WKq" secondAttribute="bottom" constant="43" id="hCb-zy-5Bz"/>
-                                        <constraint firstAttribute="bottom" secondItem="4wE-6t-SLO" secondAttribute="bottom" constant="25" id="hPm-fc-6Ds"/>
+                                        <constraint firstAttribute="bottom" secondItem="4wE-6t-SLO" secondAttribute="bottom" constant="20" id="hPm-fc-6Ds"/>
                                         <constraint firstAttribute="trailing" secondItem="TYu-Qh-WKq" secondAttribute="trailing" constant="34" id="hj1-MQ-CDy"/>
                                         <constraint firstItem="TYu-Qh-WKq" firstAttribute="top" secondItem="vBs-bR-T5n" secondAttribute="bottom" constant="10" id="j1O-Xo-MDh"/>
                                         <constraint firstItem="4wE-6t-SLO" firstAttribute="leading" secondItem="8Ux-sm-Alm" secondAttribute="leading" constant="34" id="lZY-uO-V0v"/>
@@ -636,6 +636,7 @@ Gw
                                                 <constraint firstItem="pwj-AW-O7i" firstAttribute="leading" secondItem="BD9-9Q-U3q" secondAttribute="leading" id="XPB-Vr-TFv"/>
                                                 <constraint firstItem="Q49-5O-3FE" firstAttribute="top" secondItem="BD9-9Q-U3q" secondAttribute="top" id="XTv-lO-U7c"/>
                                                 <constraint firstItem="UPV-bN-hrr" firstAttribute="leading" secondItem="Q49-5O-3FE" secondAttribute="leading" id="Zdm-9H-mNY"/>
+                                                <constraint firstAttribute="trailing" secondItem="HN3-2G-7vP" secondAttribute="trailing" constant="281" id="Zkr-jx-dER"/>
                                                 <constraint firstAttribute="bottom" secondItem="OCm-2d-5iT" secondAttribute="bottom" id="b0o-TG-Zhw"/>
                                                 <constraint firstItem="HPO-EK-Lr9" firstAttribute="leading" secondItem="Q49-5O-3FE" secondAttribute="leading" id="bO7-5g-OKC"/>
                                                 <constraint firstAttribute="trailing" secondItem="Gfn-vF-XtN" secondAttribute="trailing" constant="58" id="d2r-VG-E95"/>
@@ -674,7 +675,6 @@ Gw
                                         <constraint firstItem="Vry-Tf-Odq" firstAttribute="trailing" secondItem="qe2-po-Vne" secondAttribute="trailing" id="okk-GW-K3q"/>
                                         <constraint firstItem="fJz-XV-6oT" firstAttribute="top" secondItem="BD9-9Q-U3q" secondAttribute="bottom" constant="22" id="vOO-CC-Cna"/>
                                         <constraint firstItem="fJz-XV-6oT" firstAttribute="centerX" secondItem="g73-Zu-4Qw" secondAttribute="centerX" id="wYH-OC-98D"/>
-                                        <constraint firstAttribute="bottom" secondItem="Vry-Tf-Odq" secondAttribute="bottom" constant="91" id="yPp-8v-vPB"/>
                                     </constraints>
                                 </view>
                             </tabViewItem>
@@ -901,7 +901,7 @@ Gw
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jAQ-A0-0fz">
                                             <rect key="frame" x="373" y="272" width="48" height="22"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="48" id="bFM-BS-mIy"/>
+                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="48" id="bFM-BS-mIy"/>
                                             </constraints>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="1" drawsBackground="YES" id="4gr-RI-ABh">
                                                 <font key="font" metaFont="system"/>
@@ -940,6 +940,7 @@ Gw
                                         <constraint firstItem="FeH-nM-2Zz" firstAttribute="top" secondItem="A8t-L5-qUs" secondAttribute="bottom" constant="20" id="8fr-qG-484"/>
                                         <constraint firstItem="FeH-nM-2Zz" firstAttribute="centerX" secondItem="hsJ-a5-uAO" secondAttribute="centerX" id="8ns-fi-qk0"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="vdu-cW-fcy" secondAttribute="trailing" constant="20" id="B38-1Z-lgF"/>
+                                        <constraint firstAttribute="trailing" secondItem="ZUu-lu-9qu" secondAttribute="trailing" constant="62" id="Cxy-dC-PGN"/>
                                         <constraint firstItem="A8t-L5-qUs" firstAttribute="centerX" secondItem="FeH-nM-2Zz" secondAttribute="centerX" id="FTU-Qi-nwi"/>
                                         <constraint firstItem="CCU-H7-ovf" firstAttribute="centerY" secondItem="muN-88-pns" secondAttribute="centerY" id="HS8-Js-fkv"/>
                                         <constraint firstItem="CCU-H7-ovf" firstAttribute="leading" secondItem="muN-88-pns" secondAttribute="trailing" constant="8" symbolic="YES" id="L18-G1-B1D"/>
@@ -960,6 +961,7 @@ Gw
                                         <constraint firstItem="jAQ-A0-0fz" firstAttribute="leading" secondItem="KgF-yt-KDi" secondAttribute="trailing" constant="8" id="nOg-Aa-G9o"/>
                                         <constraint firstAttribute="trailing" secondItem="CCU-H7-ovf" secondAttribute="trailing" constant="68" id="oEd-kO-GLM"/>
                                         <constraint firstItem="x0Z-6b-fhh" firstAttribute="top" secondItem="muN-88-pns" secondAttribute="bottom" constant="20" id="pqg-DL-RAN"/>
+                                        <constraint firstItem="ZVP-ho-Ddx" firstAttribute="leading" secondItem="hsJ-a5-uAO" secondAttribute="leading" constant="94" id="yxC-L7-Ula"/>
                                     </constraints>
                                     <connections>
                                         <accessibilityConnection property="title" destination="1Dp-RH-HQY" id="jkj-QM-QCY"/>

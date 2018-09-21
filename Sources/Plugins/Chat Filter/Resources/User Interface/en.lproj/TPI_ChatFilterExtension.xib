@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -117,9 +117,9 @@ Click the + button in the bottom left corner to add your first filter.</string>
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="un4-9j-DSX">
-                    <rect key="frame" x="30" y="29" width="25" height="23"/>
+                    <rect key="frame" x="30" y="29" width="30" height="23"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="25" id="l1a-6x-RTe"/>
+                        <constraint firstAttribute="width" constant="30" id="l1a-6x-RTe"/>
                         <constraint firstAttribute="height" constant="21" id="tIE-Rt-Pwu"/>
                     </constraints>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cTJ-QJ-tKS">
@@ -148,11 +148,7 @@ Click the + button in the bottom left corner to add your first filter.</string>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p1g-v9-KVk">
-                    <rect key="frame" x="56" y="29" width="25" height="23"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="25" id="S5t-Pm-GTY"/>
-                        <constraint firstAttribute="height" constant="21" id="hSt-4b-rEX"/>
-                    </constraints>
+                    <rect key="frame" x="61" y="29" width="30" height="23"/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UvM-Ae-sCx">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -169,12 +165,14 @@ Click the + button in the bottom left corner to add your first filter.</string>
                 <constraint firstItem="gPh-Vf-Ty1" firstAttribute="top" secondItem="1xp-tp-X2E" secondAttribute="bottom" constant="17" id="6Sz-dA-G9S"/>
                 <constraint firstItem="p1g-v9-KVk" firstAttribute="baseline" secondItem="un4-9j-DSX" secondAttribute="baseline" id="Dy0-A0-Enh"/>
                 <constraint firstItem="1xp-tp-X2E" firstAttribute="trailing" secondItem="gPh-Vf-Ty1" secondAttribute="trailing" id="Gh5-zV-hSO"/>
+                <constraint firstItem="p1g-v9-KVk" firstAttribute="height" secondItem="un4-9j-DSX" secondAttribute="height" id="HTZ-Xw-SbN"/>
                 <constraint firstAttribute="bottom" secondItem="un4-9j-DSX" secondAttribute="bottom" constant="30" id="LUH-JP-vpY"/>
                 <constraint firstAttribute="trailing" secondItem="gPh-Vf-Ty1" secondAttribute="trailing" constant="30" id="MoV-hc-nRm"/>
                 <constraint firstItem="un4-9j-DSX" firstAttribute="leading" secondItem="gPh-Vf-Ty1" secondAttribute="leading" id="Qck-pT-anC"/>
                 <constraint firstItem="p1g-v9-KVk" firstAttribute="leading" secondItem="un4-9j-DSX" secondAttribute="trailing" constant="1" id="R78-e2-s6s"/>
                 <constraint firstItem="1aY-QC-Kzo" firstAttribute="baseline" secondItem="p1g-v9-KVk" secondAttribute="baseline" id="VBV-Yt-0Nn"/>
                 <constraint firstItem="1xp-tp-X2E" firstAttribute="top" secondItem="Age-ET-si9" secondAttribute="top" constant="30" id="khm-as-hhl"/>
+                <constraint firstItem="p1g-v9-KVk" firstAttribute="width" secondItem="un4-9j-DSX" secondAttribute="width" id="pYr-90-irB"/>
                 <constraint firstItem="1aY-QC-Kzo" firstAttribute="trailing" secondItem="gPh-Vf-Ty1" secondAttribute="trailing" id="uPi-o2-pSC"/>
                 <constraint firstItem="1xp-tp-X2E" firstAttribute="leading" secondItem="gPh-Vf-Ty1" secondAttribute="leading" id="vOA-VA-gaY"/>
                 <constraint firstItem="un4-9j-DSX" firstAttribute="top" secondItem="gPh-Vf-Ty1" secondAttribute="bottom" constant="8" id="vc8-xo-twR"/>

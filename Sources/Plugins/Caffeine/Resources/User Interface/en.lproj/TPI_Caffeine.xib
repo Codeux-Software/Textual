@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -43,6 +44,7 @@
                 <constraint firstItem="s7v-vd-1wt" firstAttribute="leading" secondItem="ARD-gu-kap" secondAttribute="leading" constant="106" id="MIl-tU-QVX"/>
                 <constraint firstItem="s7v-vd-1wt" firstAttribute="top" secondItem="ARD-gu-kap" secondAttribute="top" constant="30" id="SF2-qZ-ePs"/>
                 <constraint firstAttribute="bottom" secondItem="Bql-3Z-Voy" secondAttribute="bottom" constant="30" id="Ylc-ia-aXe"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="s7v-vd-1wt" secondAttribute="trailing" constant="20" id="dnY-nG-uK0"/>
                 <constraint firstAttribute="trailing" secondItem="Bql-3Z-Voy" secondAttribute="trailing" constant="115" id="fxu-9X-7sX"/>
                 <constraint firstItem="Bql-3Z-Voy" firstAttribute="leading" secondItem="s7v-vd-1wt" secondAttribute="leading" constant="18" id="jbZ-Nn-bp1"/>
             </constraints>

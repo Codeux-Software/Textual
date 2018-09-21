@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -189,10 +188,6 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="286">
                     <rect key="frame" x="71" y="31" width="30" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="19" id="6bD-sP-VG1"/>
-                        <constraint firstAttribute="width" constant="30" id="ogU-fQ-2DB"/>
-                    </constraints>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="287">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -208,13 +203,14 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                 <constraint firstItem="68" firstAttribute="leading" secondItem="273" secondAttribute="leading" id="C5s-UU-9dL"/>
                 <constraint firstItem="286" firstAttribute="firstBaseline" secondItem="284" secondAttribute="firstBaseline" id="C69-dS-W8g"/>
                 <constraint firstAttribute="trailing" secondItem="60" secondAttribute="trailing" constant="40" id="CcQ-q1-Mzl"/>
+                <constraint firstItem="286" firstAttribute="width" secondItem="284" secondAttribute="width" id="Gqx-fv-H1t"/>
                 <constraint firstItem="64" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="65" id="IWA-VD-5ft"/>
                 <constraint firstItem="286" firstAttribute="leading" secondItem="284" secondAttribute="trailing" constant="1" id="Oty-ql-PE0"/>
                 <constraint firstItem="284" firstAttribute="top" secondItem="273" secondAttribute="bottom" constant="8" id="QPW-qE-PSp"/>
                 <constraint firstItem="60" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="40" id="Qwf-8t-mVI"/>
                 <constraint firstItem="273" firstAttribute="top" secondItem="68" secondAttribute="bottom" constant="8" symbolic="YES" id="TUc-iM-2d5"/>
                 <constraint firstItem="64" firstAttribute="top" secondItem="60" secondAttribute="bottom" constant="8" symbolic="YES" id="Taf-Ox-BPO"/>
-                <constraint firstItem="60" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="YnO-Bm-phb"/>
+                <constraint firstItem="286" firstAttribute="height" secondItem="284" secondAttribute="height" id="Zck-bD-8Jd"/>
                 <constraint firstItem="273" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="40" id="aYl-YB-IJi"/>
                 <constraint firstAttribute="trailing" secondItem="273" secondAttribute="trailing" constant="40" id="c4y-is-j1d"/>
                 <constraint firstItem="60" firstAttribute="top" secondItem="1" secondAttribute="top" constant="30" id="jGq-yp-ByY"/>
@@ -253,7 +249,7 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                         </connections>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="246">
-                        <rect key="frame" x="17" y="65" width="89" height="17"/>
+                        <rect key="frame" x="17" y="64" width="89" height="17"/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="in the channel" id="247">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -261,7 +257,7 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                         </textFieldCell>
                     </textField>
                     <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="262">
-                        <rect key="frame" x="110" y="58" width="320" height="26"/>
+                        <rect key="frame" x="110" y="58" width="320" height="25"/>
                         <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" id="263">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>

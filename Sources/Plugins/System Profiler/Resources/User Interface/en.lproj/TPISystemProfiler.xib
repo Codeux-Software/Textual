@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -22,17 +22,17 @@
             </userGuides>
             <subviews>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="92">
-                    <rect key="frame" x="110" y="304" width="369" height="16"/>
+                    <rect key="frame" x="110" y="304" width="370" height="16"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="qvj-NF-uPO">
-                        <rect key="frame" x="0.0" y="0.0" width="369" height="16"/>
+                        <rect key="frame" x="0.0" y="0.0" width="370" height="16"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" allowsNonContiguousLayout="YES" id="96">
-                                <rect key="frame" x="1" y="0.0" width="370" height="16"/>
+                                <rect key="frame" x="1" y="0.0" width="371" height="16"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="369" height="16"/>
+                                <size key="minSize" width="370" height="16"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="Select each item to show as part of the ">
@@ -62,6 +62,7 @@
                         </subviews>
                     </clipView>
                     <constraints>
+                        <constraint firstAttribute="width" constant="370" id="03I-1m-lRp"/>
                         <constraint firstAttribute="height" constant="16" id="gi2-gU-wES"/>
                     </constraints>
                     <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="94">
@@ -212,9 +213,9 @@
                 <constraint firstItem="12" firstAttribute="leading" secondItem="14" secondAttribute="leading" id="Gc3-57-Hcg"/>
                 <constraint firstItem="16" firstAttribute="top" secondItem="14" secondAttribute="bottom" constant="14" id="HUN-fa-hhY"/>
                 <constraint firstItem="6bj-fu-TKI" firstAttribute="top" secondItem="98" secondAttribute="bottom" constant="8" id="Ixu-Kj-Kve"/>
+                <constraint firstItem="92" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="K0o-J1-NfJ"/>
                 <constraint firstItem="92" firstAttribute="top" secondItem="1" secondAttribute="top" constant="28" id="LcK-yq-TdT"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="12" secondAttribute="trailing" constant="20" id="MqS-xh-hrb"/>
-                <constraint firstItem="92" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="110" id="NrM-wg-MJR"/>
                 <constraint firstItem="12" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="14" id="Olx-0n-2Ss"/>
                 <constraint firstItem="98" firstAttribute="top" secondItem="97" secondAttribute="bottom" constant="18" id="Tfk-11-JcR"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="16" secondAttribute="trailing" constant="20" id="X8O-vf-9yq"/>
@@ -229,7 +230,6 @@
                 <constraint firstItem="6bj-fu-TKI" firstAttribute="leading" secondItem="98" secondAttribute="leading" constant="18" id="lmT-vP-6Kc"/>
                 <constraint firstItem="3" firstAttribute="leading" secondItem="5" secondAttribute="leading" id="qWh-kV-gCg"/>
                 <constraint firstAttribute="bottom" secondItem="6bj-fu-TKI" secondAttribute="bottom" constant="30" id="scM-rb-FFG"/>
-                <constraint firstAttribute="trailing" secondItem="92" secondAttribute="trailing" constant="110" id="ufs-Ny-yam"/>
                 <constraint firstItem="97" firstAttribute="top" secondItem="22" secondAttribute="bottom" constant="18" id="yY3-HT-8Kf"/>
             </constraints>
             <point key="canvasLocation" x="190" y="385"/>

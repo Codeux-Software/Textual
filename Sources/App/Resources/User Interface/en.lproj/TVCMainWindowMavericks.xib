@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14295.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14295.6"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,7 +16,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="455" y="163" width="800" height="477"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="vSf-eS-cbh">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="477"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -30,7 +31,7 @@
                                         <rect key="frame" x="0.0" y="3" width="608" height="19"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="0kO-pf-9ZA">
                                             <rect key="frame" x="0.0" y="0.0" width="608" height="19"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" continuousSpellChecking="YES" allowsUndo="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" grammarChecking="YES" smartInsertDelete="YES" id="AbN-7J-waj" customClass="TVCMainWindowTextView">
                                                     <rect key="frame" x="0.0" y="0.0" width="608" height="19"/>
@@ -127,7 +128,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Ugn-kA-dZH">
                                                         <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <outlineView horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" allowsExpansionToolTips="YES" selectionHighlightStyle="sourceList" columnResizing="NO" emptySelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="2" outlineTableColumn="uPw-dS-cnM" id="bhZ-Cj-KBM" customClass="TVCServerList">
                                                                 <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
@@ -288,7 +289,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                                     <clipView key="contentView" drawsBackground="NO" id="iqZ-oE-HbV">
                                                         <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" selectionHighlightStyle="sourceList" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" rowHeight="20" viewBased="YES" floatsGroupRows="NO" outlineTableColumn="bdD-7t-ks4" id="uZZ-ie-yHv" customClass="TVCMemberList">
                                                                 <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
@@ -2012,13 +2013,14 @@
                     </textFieldCell>
                 </textField>
                 <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="g06-q9-i7d">
-                    <rect key="frame" x="271" y="15" width="16" height="16"/>
+                    <rect key="frame" x="271" y="19" width="16" height="16"/>
                 </progressIndicator>
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="g06-q9-i7d" secondAttribute="trailing" constant="20" id="ABY-JX-zhO"/>
                 <constraint firstItem="zJy-aD-GWq" firstAttribute="centerX" secondItem="VEi-CX-Bgx" secondAttribute="centerX" id="CgH-BS-NaH"/>
                 <constraint firstItem="zJy-aD-GWq" firstAttribute="top" secondItem="VEi-CX-Bgx" secondAttribute="bottom" constant="8" id="IAL-8d-ah7"/>
+                <constraint firstItem="g06-q9-i7d" firstAttribute="centerY" secondItem="XbN-Lh-kvY" secondAttribute="centerY" constant="2" id="V2d-TZ-IdY"/>
                 <constraint firstItem="VEi-CX-Bgx" firstAttribute="top" secondItem="87U-6U-CXs" secondAttribute="top" constant="20" id="VQe-Ln-8U2"/>
                 <constraint firstItem="XbN-Lh-kvY" firstAttribute="centerX" secondItem="zJy-aD-GWq" secondAttribute="centerX" constant="-13" id="aP9-KU-111"/>
                 <constraint firstAttribute="width" constant="400" id="aoM-Gb-JbS"/>
@@ -2027,7 +2029,6 @@
                 <constraint firstItem="g06-q9-i7d" firstAttribute="leading" secondItem="XbN-Lh-kvY" secondAttribute="trailing" constant="10" id="ho0-VV-4WN"/>
                 <constraint firstAttribute="bottom" secondItem="XbN-Lh-kvY" secondAttribute="bottom" constant="20" id="jMP-T6-pmz"/>
                 <constraint firstItem="XbN-Lh-kvY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="87U-6U-CXs" secondAttribute="leading" constant="20" id="m6E-Cn-jh5"/>
-                <constraint firstAttribute="bottom" secondItem="g06-q9-i7d" secondAttribute="bottom" constant="15" id="vJa-XH-TQr"/>
             </constraints>
             <point key="canvasLocation" x="51" y="428"/>
         </customView>
@@ -2143,6 +2144,6 @@ To continue using Textual 7, you will need to purchase it.</string>
         <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSAddTemplate" width="11" height="11"/>
         <image name="NSLockUnlockedTemplate" width="10" height="14"/>
-        <image name="applicationIcon" width="128" height="128"/>
+        <image name="applicationIcon" width="512" height="512"/>
     </resources>
 </document>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -241,12 +241,12 @@ Gw
                     <constraint firstItem="247" firstAttribute="baseline" secondItem="248" secondAttribute="baseline" id="R8L-kg-ypT"/>
                     <constraint firstItem="248" firstAttribute="leading" secondItem="247" secondAttribute="trailing" constant="12" symbolic="YES" id="UhY-2I-PFH"/>
                     <constraint firstItem="247" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="277" secondAttribute="trailing" constant="20" id="dys-lh-nPv"/>
-                    <constraint firstItem="277" firstAttribute="baseline" secondItem="247" secondAttribute="baseline" id="hLC-nJ-ycH"/>
                     <constraint firstAttribute="trailing" secondItem="248" secondAttribute="trailing" constant="20" symbolic="YES" id="iFS-I2-HQM"/>
                     <constraint firstItem="246" firstAttribute="centerX" secondItem="244" secondAttribute="centerX" id="n2A-Ou-C5Z"/>
                     <constraint firstItem="249" firstAttribute="top" secondItem="244" secondAttribute="top" constant="13" id="oHc-Jd-kBt"/>
                     <constraint firstItem="249" firstAttribute="leading" secondItem="244" secondAttribute="leading" constant="20" symbolic="YES" id="oYF-cz-qoa"/>
                     <constraint firstItem="248" firstAttribute="top" secondItem="246" secondAttribute="bottom" constant="10" id="ocI-Av-3pC"/>
+                    <constraint firstItem="277" firstAttribute="top" secondItem="246" secondAttribute="bottom" constant="11" id="xK5-kU-AJg"/>
                     <constraint firstItem="246" firstAttribute="leading" secondItem="244" secondAttribute="leading" id="ypx-IL-Ez0"/>
                 </constraints>
             </view>

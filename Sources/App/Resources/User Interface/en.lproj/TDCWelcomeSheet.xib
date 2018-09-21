@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14295.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14295.6"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,7 +25,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="821" y="627" width="380" height="469"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="144">
                 <rect key="frame" x="0.0" y="0.0" width="380" height="469"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -47,7 +48,7 @@
                         <rect key="frame" x="109" y="169" width="244" height="112"/>
                         <clipView key="contentView" id="UXg-Uw-XfU">
                             <rect key="frame" x="1" y="1" width="242" height="110"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" id="173" customClass="TVCBasicTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="242" height="110"/>
@@ -183,10 +184,6 @@ Gw
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="155">
                         <rect key="frame" x="140" y="143" width="30" height="23"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="Pn4-aP-RQp"/>
-                            <constraint firstAttribute="width" constant="30" id="gaf-wW-CVJ"/>
-                        </constraints>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="165">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -253,6 +250,7 @@ Gw
                     <constraint firstItem="150" firstAttribute="trailing" secondItem="145" secondAttribute="trailing" id="9jp-Vk-yms"/>
                     <constraint firstItem="145" firstAttribute="trailing" secondItem="148" secondAttribute="trailing" id="9xV-q6-rJf"/>
                     <constraint firstItem="155" firstAttribute="leading" secondItem="154" secondAttribute="trailing" constant="1" id="BZW-Su-j2z"/>
+                    <constraint firstItem="155" firstAttribute="width" secondItem="154" secondAttribute="width" id="BdA-Hf-ujs"/>
                     <constraint firstItem="157" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zqh-Vb-fjj" secondAttribute="trailing" constant="20" id="CoS-ew-Sgc"/>
                     <constraint firstItem="201" firstAttribute="top" secondItem="160" secondAttribute="bottom" constant="18" id="Crc-IN-nzE"/>
                     <constraint firstItem="216" firstAttribute="leading" secondItem="148" secondAttribute="trailing" constant="8" id="DAw-DY-YOD"/>
@@ -262,6 +260,7 @@ Gw
                     <constraint firstItem="149" firstAttribute="top" secondItem="146" secondAttribute="bottom" constant="7" id="I9I-TG-rHf"/>
                     <constraint firstAttribute="trailing" secondItem="160" secondAttribute="trailing" constant="29" id="KHa-5M-qlp"/>
                     <constraint firstItem="157" firstAttribute="centerX" secondItem="I1L-Fi-uaP" secondAttribute="centerX" id="KIf-Je-pl7"/>
+                    <constraint firstItem="155" firstAttribute="height" secondItem="154" secondAttribute="height" id="NW1-SD-bZt"/>
                     <constraint firstItem="160" firstAttribute="leading" secondItem="154" secondAttribute="leading" id="Nls-eF-Y4Z"/>
                     <constraint firstItem="I1L-Fi-uaP" firstAttribute="leading" secondItem="zqh-Vb-fjj" secondAttribute="trailing" constant="24" id="Ny1-94-0cP"/>
                     <constraint firstItem="zqh-Vb-fjj" firstAttribute="top" secondItem="144" secondAttribute="top" constant="20" id="OnB-CL-bD3"/>
@@ -299,6 +298,6 @@ Gw
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>
         <image name="NSRemoveTemplate" width="11" height="11"/>
-        <image name="applicationIcon" width="128" height="128"/>
+        <image name="applicationIcon" width="512" height="512"/>
     </resources>
 </document>
