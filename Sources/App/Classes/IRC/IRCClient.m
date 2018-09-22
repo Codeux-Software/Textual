@@ -10784,7 +10784,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)onAutojoinTimer
 {
-	[self onAutojoinNextJoinTimer];
+	[self startAutojoinNextJoinTimer];
 }
 
 - (void)startAutojoinDelayedWarningTimer
@@ -10840,6 +10840,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSTimeInterval interval = [TPCPreferences autojoinDelayBetweenChannelJoins];
 
 	[self.autojoinNextJoinTimer start:interval onRepeat:YES];
+
+	/* Fake first event */
+	[self onAutojoinNextJoinTimer];
 }
 
 - (void)stopAutojoinNextJoinTimer
