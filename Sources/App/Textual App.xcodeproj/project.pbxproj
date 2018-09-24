@@ -798,7 +798,6 @@
 		4C06E44D20EC53D70055D09A /* Growl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E44E20EC53D70055D09A /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
 		4C06E44F20EC53D70055D09A /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4C06E45120EC53D70055D09A /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E45320EC53EE0055D09A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */; };
 		4C06E45420EC53EE0055D09A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBC1580469E00846B64 /* Cocoa.framework */; };
 		4C06E45520EC53EE0055D09A /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA8EC621B63C2970087BF72 /* CoreServices.framework */; };
@@ -2642,7 +2641,6 @@
 				4C06E44720EC53D70055D09A /* CocoaExtensions.framework in Embed Frameworks */,
 				4C06E44920EC53D70055D09A /* EncryptionKit.framework in Embed Frameworks */,
 				4C06E44F20EC53D70055D09A /* HockeySDK.framework in Embed Frameworks */,
-				4C06E45120EC53D70055D09A /* Sparkle.framework in Embed Frameworks */,
 				4C06E44520EC53D70055D09A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C06E44B20EC53D70055D09A /* GRMustache.framework in Embed Frameworks */,
 				4C06E44D20EC53D70055D09A /* Growl.framework in Embed Frameworks */,
