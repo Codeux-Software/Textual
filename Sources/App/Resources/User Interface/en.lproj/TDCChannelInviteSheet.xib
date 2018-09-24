@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TDCChannelInviteSheet">
+            <connections>
+                <outlet property="cancelButton" destination="10" id="jMs-mJ-IVv"/>
+                <outlet property="channelListPopup" destination="31" id="44"/>
+                <outlet property="headerTitleTextField" destination="37" id="62k-Xx-UjI"/>
+                <outlet property="okButton" destination="9" id="45"/>
+                <outlet property="sheet" destination="5" id="22"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Sheet">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="593" y="397" width="300" height="135"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
+            <view key="contentView" id="6">
+                <rect key="frame" x="0.0" y="0.0" width="300" height="135"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9">
+                        <rect key="frame" x="213" y="13" width="73" height="32"/>
+                        <buttonCell key="cell" type="push" title="Invite" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="20">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <accessibility description="Save"/>
+                        <connections>
+                            <action selector="ok:" target="-2" id="46"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="10">
+                        <rect key="frame" x="131" y="13" width="82" height="32"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="21">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <accessibility description="Cancel"/>
+                        <connections>
+                            <action selector="cancel:" target="-2" id="30"/>
+                        </connections>
+                    </button>
+                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="31">
+                        <rect key="frame" x="48" y="57" width="205" height="26"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="400" id="Fat-NW-5Ah"/>
+                        </constraints>
+                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="32">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" title="OtherViews" id="33"/>
+                        </popUpButtonCell>
+                        <accessibility description="Channel to Invite User(s) To"/>
+                    </popUpButton>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="37">
+                        <rect key="frame" x="18" y="98" width="85" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Invite nick to:" id="38">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="37" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" symbolic="YES" id="4Xv-fs-dmU"/>
+                    <constraint firstItem="31" firstAttribute="leading" relation="lessThanOrEqual" secondItem="6" secondAttribute="leading" constant="50" id="5mO-rc-d5D"/>
+                    <constraint firstAttribute="bottom" secondItem="9" secondAttribute="bottom" constant="20" id="70k-TY-70s"/>
+                    <constraint firstAttribute="trailing" secondItem="9" secondAttribute="trailing" constant="20" id="78K-U6-aYs"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="31" secondAttribute="trailing" constant="20" id="J9f-Yx-rya"/>
+                    <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="31" secondAttribute="trailing" constant="50" id="JcY-Am-pgx"/>
+                    <constraint firstItem="31" firstAttribute="top" secondItem="37" secondAttribute="bottom" constant="17" id="TtU-d5-tss"/>
+                    <constraint firstItem="9" firstAttribute="leading" secondItem="10" secondAttribute="trailing" constant="12" symbolic="YES" id="TzH-YV-af9"/>
+                    <constraint firstItem="31" firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="b8J-9V-5ih"/>
+                    <constraint firstItem="37" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="20" symbolic="YES" id="c6r-Y1-R31"/>
+                    <constraint firstItem="31" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6" secondAttribute="leading" constant="20" id="cSI-GJ-jdQ"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="37" secondAttribute="trailing" constant="20" id="db7-i8-IdW"/>
+                    <constraint firstItem="10" firstAttribute="baseline" secondItem="9" secondAttribute="baseline" id="jax-td-VGr"/>
+                    <constraint firstItem="10" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6" secondAttribute="leading" constant="20" id="utG-2r-VA0"/>
+                    <constraint firstItem="9" firstAttribute="top" secondItem="31" secondAttribute="bottom" constant="19" id="wxE-Vs-PUq"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="42"/>
+            </connections>
+            <point key="canvasLocation" x="38" y="38"/>
+        </window>
+    </objects>
+</document>

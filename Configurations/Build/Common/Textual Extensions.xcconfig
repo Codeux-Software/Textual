@@ -1,0 +1,21 @@
+
+// Textual Extensions *.xcconfig file contains settings that
+// are specific to extensions for Textual (main application).
+
+// TEXTUAL_WORKSPACE_DIR is replaced by the build script
+TEXTUAL_WORKSPACE_DIR = ${PROJECT_DIR}/../../..
+
+CONFIGURATION_BUILD_DIR = ${TEXTUAL_WORKSPACE_TEMP_DIR}/SharedBuildProducts-Extensions
+
+CODE_SIGN_ENTITLEMENTS = ${TEXTUAL_WORKSPACE_DIR}/Configurations/Sandbox/Inherited.entitlements
+
+HEADER_SEARCH_PATHS = ${inherited} "${TEXTUAL_WORKSPACE_DIR}/Sources/App/Classes/Headers/**" "${TEXTUAL_WORKSPACE_DIR}/Sources/Shared/Headers/**"
+LIBRARY_SEARCH_PATHS = ${inherited} "${TEXTUAL_WORKSPACE_TEMP_DIR}/SharedBuildProducts-Frameworks/**" "${TEXTUAL_WORKSPACE_DIR}/Frameworks/**"
+FRAMEWORK_SEARCH_PATHS = ${inherited} "${TEXTUAL_WORKSPACE_TEMP_DIR}/SharedBuildProducts-Frameworks/**" "${TEXTUAL_WORKSPACE_DIR}/Frameworks/**"
+
+WRAPPER_EXTENSION = bundle
+
+PROVISIONING_PROFILE =
+PROVISIONING_PROFILE_SPECIFIER =
+
+BUNDLE_LOADER = ${TEXTUAL_PRODUCT_BINARY}

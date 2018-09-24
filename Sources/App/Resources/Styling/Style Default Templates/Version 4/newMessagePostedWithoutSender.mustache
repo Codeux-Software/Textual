@@ -1,0 +1,34 @@
+
+{{#showDateIndicator}}
+	{{> dateIndicator}}
+{{/showDateIndicator}}
+
+<div
+	class="line {{lineClassAttribute}}"
+	id="line-{{lineNumber}}"
+
+	data-command="{{command}}"
+	data-line-type="{{lineType}}"
+
+{{^isRemoteMessage}}
+	data-member-type="{{nicknameType}}"
+{{/isRemoteMessage}}
+
+	data-timestamp="{{timestamp}}">
+
+	<p>
+		<span class="time"
+
+		{{^ isEmpty(localizedTimestamp) }}
+		title="{{localizedTimestamp}}"
+		{{/ isEmpty(localizedTimestamp) }}>{{formattedTimestamp}} </span>
+
+		<span class="message">
+			{{{formattedMessage}}}
+		</span>
+	</p>
+</div>
+
+{{#showSessionIndicator}}
+	{{> sessionIndicator}}
+{{/showSessionIndicator}}

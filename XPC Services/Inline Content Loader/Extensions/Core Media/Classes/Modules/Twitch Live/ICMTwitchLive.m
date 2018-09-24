@@ -1,63 +1,64 @@
-/* ********************************************************************* 
-                  _____         _               _
-                 |_   _|____  _| |_ _   _  __ _| |
-                   | |/ _ \ \/ / __| | | |/ _` | |
-                   | |  __/>  <| |_| |_| | (_| | |
-                   |_|\___/_/\_\\__|\__,_|\__,_|_|
-
- Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
-        Please see Acknowledgements.pdf for additional information.
-
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions
- are met:
-
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of Textual and/or "Codeux Software, LLC", nor the 
-      names of its contributors may be used to endorse or promote products 
-      derived from this software without specific prior written permission.
-
- THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
- ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
- FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- SUCH DAMAGE.
-
+/* *********************************************************************
+ *                  _____         _               _
+ *                 |_   _|____  _| |_ _   _  __ _| |
+ *                   | |/ _ \ \/ / __| | | |/ _` | |
+ *                   | |  __/>  <| |_| |_| | (_| | |
+ *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
+ *
+ * Copyright (c) 2017, 2018 Codeux Software, LLC & respective contributors.
+ *       Please see Acknowledgements.pdf for additional information.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *  * Neither the name of Textual, "Codeux Software, LLC", nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
  *********************************************************************** */
 
 #import "ICMTwitchLive.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
+typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentTypeContent)
 {
-	ICMTwitchLiveUnknownType = 0,
-	ICMTwitchLiveChannelType,
-	ICMTwitchLiveVideoType
+	ICMTwitchLiveContentTypeUnknown = 0,
+	ICMTwitchLiveContentTypeChannel,
+	ICMTwitchLiveContentTypeVideo
 };
 
 @implementation ICMTwitchLive
 
-- (void)_performActionForContent:(NSString *)contentIdentifier type:(ICMTwitchLiveContentType)contentType
+- (void)_performActionForContent:(NSString *)contentIdentifier type:(ICMTwitchLiveContentTypeContent)contentType
 {
 	NSParameterAssert(contentIdentifier != nil);
-	NSParameterAssert(contentType != ICMTwitchLiveUnknownType);
+	NSParameterAssert(contentType == ICMTwitchLiveContentTypeChannel ||
+					  contentType == ICMTwitchLiveContentTypeVideo);
 
 	NSString *contentArgument = nil;
 
-	if (contentType == ICMTwitchLiveChannelType) {
+	if (contentType == ICMTwitchLiveContentTypeChannel) {
 		contentArgument = @"channel";
-	} else if (contentType == ICMTwitchLiveVideoType) {
+	} else if (contentType == ICMTwitchLiveContentTypeVideo) {
 		contentArgument = @"video";
 	}
 
@@ -86,7 +87,7 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 {
 	NSParameterAssert(url != nil);
 
-	ICMTwitchLiveContentType contentType = ICMTwitchLiveUnknownType;
+	ICMTwitchLiveContentTypeContent contentType = ICMTwitchLiveContentTypeUnknown;
 
 	NSString *contentIdentifier = [self _contentIdentifierForURL:url type:&contentType];
 
@@ -101,7 +102,7 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 	} copy];
 }
 
-+ (nullable NSString *)_contentIdentifierForURL:(NSURL *)url type:(ICMTwitchLiveContentType *)contentTypeIn
++ (nullable NSString *)_contentIdentifierForURL:(NSURL *)url type:(ICMTwitchLiveContentTypeContent *)contentTypeIn
 {
 	NSString *urlPath = url.path.percentEncodedURLPath;
 
@@ -130,7 +131,7 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 			return nil;
 		}
 
-		*contentTypeIn = ICMTwitchLiveVideoType;
+		*contentTypeIn = ICMTwitchLiveContentTypeVideo;
 
 		return contentIdentifier;
 	}
@@ -149,7 +150,7 @@ typedef NS_ENUM(NSUInteger, ICMTwitchLiveContentType)
 			return nil;
 		}
 
-		*contentTypeIn = ICMTwitchLiveChannelType;
+		*contentTypeIn = ICMTwitchLiveContentTypeChannel;
 
 		return contentIdentifier;
 	}

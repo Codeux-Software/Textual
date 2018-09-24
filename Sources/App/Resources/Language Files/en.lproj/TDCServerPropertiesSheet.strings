@@ -1,0 +1,92 @@
+/* *********************************************************************
+ *                  _____         _               _
+ *                 |_   _|____  _| |_ _   _  __ _| |
+ *                   | |/ _ \ \/ / __| | | |/ _` | |
+ *                   | |  __/>  <| |_| |_| | (_| | |
+ *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
+ *
+ * Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+ *       Please see Acknowledgements.pdf for additional information.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *  * Neither the name of Textual, "Codeux Software, LLC", nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ *********************************************************************** */
+
+/* Server properties Address Book entry types */
+"f7o-x4" = "User Ignore";
+"b0g-0x" = "User Tracking";
+
+/* Server properties iCloud options */
+"x08-ko" = "Do you want to remove this server from devices it has been shared with?";
+"sqc-nw" = "";
+
+/* Server specific highlight entry things */
+"61f-6b" = "All Channels";
+"qcc-b4" = "Exclude";
+"tet-dk" = "Match";
+
+/* Server properties navigation menu */
+"lww-pc" = "Server Properties";
+"v27-8w" = "Vendor Specific";
+"8uw-tz" = "Advanced";
+"8zc-6y" = "Address Book";
+"5oz-07" = "Channel List";
+"hip-13" = "Connect Commands";
+"8ug-ka" = "Encoding";
+"ehx-4d" = "General";
+"8ik-qo" = "Identity";
+"jtx-hn" = "Highlights";
+"j34-yr" = "Messages";
+"fsj-7f" = "ZNC Bouncer";
+"ce7-kc" = "Client Certificate";
+"fcr-w8" = "Flood Control";
+"ffy-xt" = "Network Socket";
+"t52-7a" = "Proxy Server";
+"36n-u9" = "Redundancy";
+
+/* Error localizations */
+"8iw-q8" = "Please enter a properly formatted username.";
+"agy-bp" = "Please enter a properly formatted real name.";
+"tlo-b6" = "Please enter a properly formatted proxy address.";
+"wlz-tb" = "Please enter a list of properly formatted nicknames.\n\nFailed on nickname: “%@“\n\nList of nicknames should be space separated.\nFor example: “Guest1 Guest2 Guest3“";
+
+/* Custom client-side certificate selection */
+"6xz-ec" = "No Certificate Selected";
+
+"6wq-i4" = "Choose An Identity";
+"mi4-fd" = "Select a certificate to send when you connect securely.";
+
+/* Cipher suites */
+"yko-5g" = "The “%@” includes the following cipher suites:";
+"k50-8n" = "%@\n\nThese cipher suites are ordered by preference with the most preferred at the top.";
+
+/* Enabling wait for NickServ without a password */
+"94r-eq" = "The preference you have enabled will not work correctly because you do not have a password set";
+"26u-j8" = "Enter your NickServ password into the field labeled “Personal Password”";
+
+/* Cloud changes */
+"bzh-il" = "This connection's configuration has changed. Do you want to reload the Server Properties dialog?";
+"oz4-kb" = "You will loose unsaved changes if you click “Yes”";

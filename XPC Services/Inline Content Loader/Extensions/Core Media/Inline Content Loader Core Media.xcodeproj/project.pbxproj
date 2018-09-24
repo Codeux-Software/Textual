@@ -7,83 +7,96 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C03B5C01FA64D4000748FE7 /* ICMCommonInlineImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C03B5AA1FA64B9000748FE7 /* ICMCommonInlineImages.m */; };
-		4C03B5C11FA64D4000748FE7 /* ICMCommonInlineVideos.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C03B5A41FA64B9000748FE7 /* ICMCommonInlineVideos.m */; };
-		4C03B5C21FA64D4000748FE7 /* ICMDailymotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C03B5A21FA64B9000748FE7 /* ICMDailymotion.m */; };
-		4C03B5C31FA64D4000748FE7 /* ICMGfycat.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C03B5901FA64B9000748FE7 /* ICMGfycat.m */; };
-		4C03B5C41FA64D4000748FE7 /* ICMGyazo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C03B5961FA64B9000748FE7 /* ICMGyazo.m */; };
-		4C03B5C51FA64D4000748FE7 /* ICMImgurGifv.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C03B5A71FA64B9000748FE7 /* ICMImgurGifv.m */; };
-		4C03B5C61FA64D4000748FE7 /* ICMLiveleak.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C03B5831FA64B9000748FE7 /* ICMLiveleak.m */; };
-		4C03B5C71FA64D4000748FE7 /* ICMPornhub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C03B59E1FA64B9000748FE7 /* ICMPornhub.m */; };
-		4C03B5C81FA64D4000748FE7 /* ICMStreamable.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C03B59C1FA64B9000748FE7 /* ICMStreamable.m */; };
-		4C03B5C91FA64D4000748FE7 /* ICMTwitchClips.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C03B5AD1FA64B9000748FE7 /* ICMTwitchClips.m */; };
-		4C03B5CA1FA64D4000748FE7 /* ICMTwitchLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C03B58C1FA64B9000748FE7 /* ICMTwitchLive.m */; };
-		4C03B5CB1FA64D4000748FE7 /* ICMTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C03B5861FA64B9000748FE7 /* ICMTweet.m */; };
-		4C03B5CC1FA64D4000748FE7 /* ICMVimeo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C03B5931FA64B9000748FE7 /* ICMVimeo.m */; };
-		4C03B5CD1FA64D4000748FE7 /* ICMXkcd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C03B5891FA64B9000748FE7 /* ICMXkcd.m */; };
-		4C03B5CE1FA64D4000748FE7 /* ICMYouTube.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C03B5981FA64B9000748FE7 /* ICMYouTube.m */; };
-		4C03B5CF1FA64D5800748FE7 /* ICMDailymotion.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 4C03B5B81FA64CD600748FE7 /* ICMDailymotion.mustache */; };
-		4C03B5D01FA64D5800748FE7 /* ICMLiveleak.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 4C03B5BE1FA64CD700748FE7 /* ICMLiveleak.mustache */; };
-		4C03B5D11FA64D5800748FE7 /* ICMPornhub.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 4C03B5BB1FA64CD700748FE7 /* ICMPornhub.mustache */; };
-		4C03B5D21FA64D5800748FE7 /* ICMTwitchClips.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 4C03B5B91FA64CD600748FE7 /* ICMTwitchClips.mustache */; };
-		4C03B5D31FA64D5800748FE7 /* ICMTwitchLive.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 4C03B5BA1FA64CD700748FE7 /* ICMTwitchLive.mustache */; };
-		4C03B5D41FA64D5800748FE7 /* ICMTweet.js in Resources */ = {isa = PBXBuildFile; fileRef = 4C03B5BD1FA64CD700748FE7 /* ICMTweet.js */; };
-		4C03B5D51FA64D5800748FE7 /* ICMVimeo.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 4C03B5BC1FA64CD700748FE7 /* ICMVimeo.mustache */; };
-		4C03B5D61FA64D5800748FE7 /* ICMYouTube.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 4C03B5B71FA64CD600748FE7 /* ICMYouTube.mustache */; };
-		4C03B5DA1FA64DAA00748FE7 /* ICPCoreMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C03B5D91FA64DAA00748FE7 /* ICPCoreMedia.m */; };
-		4C03B65D1FA6519E00748FE7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C03B65C1FA6519300748FE7 /* Foundation.framework */; };
-		4C03B6761FA6568500748FE7 /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C03B6771FA6568500748FE7 /* CocoaExtensions.framework */; };
+		4C469ED520EC600900094EA4 /* ICPCoreMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469EA620EC600900094EA4 /* ICPCoreMedia.m */; };
+		4C469ED620EC600900094EA4 /* ICMCommonInlineVideos.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469EA920EC600900094EA4 /* ICMCommonInlineVideos.m */; };
+		4C469ED720EC600900094EA4 /* ICMTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469EAC20EC600900094EA4 /* ICMTweet.m */; };
+		4C469ED820EC600900094EA4 /* ICMGfycat.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469EB020EC600900094EA4 /* ICMGfycat.m */; };
+		4C469ED920EC600900094EA4 /* ICMLiveleak.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469EB220EC600900094EA4 /* ICMLiveleak.m */; };
+		4C469EDA20EC600900094EA4 /* ICMGyazo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469EB620EC600900094EA4 /* ICMGyazo.m */; };
+		4C469EDB20EC600900094EA4 /* ICMStreamable.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469EB920EC600900094EA4 /* ICMStreamable.m */; };
+		4C469EDC20EC600900094EA4 /* ICMVimeo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469EBC20EC600900094EA4 /* ICMVimeo.m */; };
+		4C469EDD20EC600900094EA4 /* ICMPornhub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469EBE20EC600900094EA4 /* ICMPornhub.m */; };
+		4C469EDE20EC600900094EA4 /* ICMImgurGifv.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469EC120EC600900094EA4 /* ICMImgurGifv.m */; };
+		4C469EDF20EC600900094EA4 /* ICMYouTube.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469EC420EC600900094EA4 /* ICMYouTube.m */; };
+		4C469EE020EC600900094EA4 /* ICMDailymotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469EC820EC600900094EA4 /* ICMDailymotion.m */; };
+		4C469EE120EC600900094EA4 /* ICMTwitchClips.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469ECA20EC600900094EA4 /* ICMTwitchClips.m */; };
+		4C469EE220EC600900094EA4 /* ICMTwitchLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469ECD20EC600900094EA4 /* ICMTwitchLive.m */; };
+		4C469EE320EC600900094EA4 /* ICMCommonInlineImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469ED020EC600900094EA4 /* ICMCommonInlineImages.m */; };
+		4C469EE420EC600900094EA4 /* ICMXkcd.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C469ED320EC600900094EA4 /* ICMXkcd.m */; };
+		4C469F3720EC608E00094EA4 /* ICMTweet.js in Resources */ = {isa = PBXBuildFile; fileRef = 4C469F2620EC608E00094EA4 /* ICMTweet.js */; };
+		4C469F3820EC608E00094EA4 /* ICMLiveleak.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 4C469F2820EC608E00094EA4 /* ICMLiveleak.mustache */; };
+		4C469F3920EC608E00094EA4 /* ICMVimeo.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 4C469F2A20EC608E00094EA4 /* ICMVimeo.mustache */; };
+		4C469F3A20EC608E00094EA4 /* ICMPornhub.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 4C469F2C20EC608E00094EA4 /* ICMPornhub.mustache */; };
+		4C469F3B20EC608E00094EA4 /* ICMYouTube.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 4C469F2E20EC608E00094EA4 /* ICMYouTube.mustache */; };
+		4C469F3C20EC608E00094EA4 /* ICMDailymotion.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 4C469F3020EC608E00094EA4 /* ICMDailymotion.mustache */; };
+		4C469F3D20EC608E00094EA4 /* ICMTwitchClips.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 4C469F3220EC608E00094EA4 /* ICMTwitchClips.mustache */; };
+		4C469F3E20EC608E00094EA4 /* ICMTwitchLive.mustache in Resources */ = {isa = PBXBuildFile; fileRef = 4C469F3420EC608E00094EA4 /* ICMTwitchLive.mustache */; };
+		4CE144E820EC0448000E01C9 /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE144E720EC0448000E01C9 /* CocoaExtensions.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4C03B5761FA648FF00748FE7 /* XPC Service - ICL Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "XPC Service - ICL Extensions.xcconfig"; path = "../../../../Resources/Build Configurations/Debug/XPC Service - ICL Extensions.xcconfig"; sourceTree = "<group>"; };
-		4C03B5771FA648FF00748FE7 /* XPC Service - ICL Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "XPC Service - ICL Extensions.xcconfig"; path = "../../../../Resources/Build Configurations/Standard Release/XPC Service - ICL Extensions.xcconfig"; sourceTree = "<group>"; };
-		4C03B5831FA64B9000748FE7 /* ICMLiveleak.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMLiveleak.m; path = Classes/Modules/Liveleak/ICMLiveleak.m; sourceTree = "<group>"; };
-		4C03B5841FA64B9000748FE7 /* ICMLiveleak.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMLiveleak.h; path = Classes/Modules/Liveleak/ICMLiveleak.h; sourceTree = "<group>"; };
-		4C03B5861FA64B9000748FE7 /* ICMTweet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMTweet.m; path = Classes/Modules/Twitter/ICMTweet.m; sourceTree = "<group>"; };
-		4C03B5871FA64B9000748FE7 /* ICMTweet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMTweet.h; path = Classes/Modules/Twitter/ICMTweet.h; sourceTree = "<group>"; };
-		4C03B5891FA64B9000748FE7 /* ICMXkcd.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMXkcd.m; path = Classes/Modules/xkcd/ICMXkcd.m; sourceTree = "<group>"; };
-		4C03B58A1FA64B9000748FE7 /* ICMXkcd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMXkcd.h; path = Classes/Modules/xkcd/ICMXkcd.h; sourceTree = "<group>"; };
-		4C03B58C1FA64B9000748FE7 /* ICMTwitchLive.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMTwitchLive.m; path = "Classes/Modules/Twitch Live/ICMTwitchLive.m"; sourceTree = "<group>"; };
-		4C03B58D1FA64B9000748FE7 /* ICMTwitchLive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMTwitchLive.h; path = "Classes/Modules/Twitch Live/ICMTwitchLive.h"; sourceTree = "<group>"; };
-		4C03B58F1FA64B9000748FE7 /* ICMGfycat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMGfycat.h; path = Classes/Modules/Gfycat/ICMGfycat.h; sourceTree = "<group>"; };
-		4C03B5901FA64B9000748FE7 /* ICMGfycat.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMGfycat.m; path = Classes/Modules/Gfycat/ICMGfycat.m; sourceTree = "<group>"; };
-		4C03B5921FA64B9000748FE7 /* ICMVimeo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMVimeo.h; path = Classes/Modules/Vimeo/ICMVimeo.h; sourceTree = "<group>"; };
-		4C03B5931FA64B9000748FE7 /* ICMVimeo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMVimeo.m; path = Classes/Modules/Vimeo/ICMVimeo.m; sourceTree = "<group>"; };
-		4C03B5951FA64B9000748FE7 /* ICMGyazo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMGyazo.h; path = Classes/Modules/Gyazo/ICMGyazo.h; sourceTree = "<group>"; };
-		4C03B5961FA64B9000748FE7 /* ICMGyazo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMGyazo.m; path = Classes/Modules/Gyazo/ICMGyazo.m; sourceTree = "<group>"; };
-		4C03B5981FA64B9000748FE7 /* ICMYouTube.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMYouTube.m; path = Classes/Modules/YouTube/ICMYouTube.m; sourceTree = "<group>"; };
-		4C03B5991FA64B9000748FE7 /* ICMYouTube.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMYouTube.h; path = Classes/Modules/YouTube/ICMYouTube.h; sourceTree = "<group>"; };
-		4C03B59B1FA64B9000748FE7 /* ICMStreamable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMStreamable.h; path = Classes/Modules/Streamable/ICMStreamable.h; sourceTree = "<group>"; };
-		4C03B59C1FA64B9000748FE7 /* ICMStreamable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMStreamable.m; path = Classes/Modules/Streamable/ICMStreamable.m; sourceTree = "<group>"; };
-		4C03B59E1FA64B9000748FE7 /* ICMPornhub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMPornhub.m; path = Classes/Modules/Pornhub/ICMPornhub.m; sourceTree = "<group>"; };
-		4C03B59F1FA64B9000748FE7 /* ICMPornhub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMPornhub.h; path = Classes/Modules/Pornhub/ICMPornhub.h; sourceTree = "<group>"; };
-		4C03B5A11FA64B9000748FE7 /* ICMDailymotion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMDailymotion.h; path = Classes/Modules/Dailymotion/ICMDailymotion.h; sourceTree = "<group>"; };
-		4C03B5A21FA64B9000748FE7 /* ICMDailymotion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMDailymotion.m; path = Classes/Modules/Dailymotion/ICMDailymotion.m; sourceTree = "<group>"; };
-		4C03B5A41FA64B9000748FE7 /* ICMCommonInlineVideos.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMCommonInlineVideos.m; path = "Classes/Modules/Common Videos/ICMCommonInlineVideos.m"; sourceTree = "<group>"; };
-		4C03B5A51FA64B9000748FE7 /* ICMCommonInlineVideos.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMCommonInlineVideos.h; path = "Classes/Modules/Common Videos/ICMCommonInlineVideos.h"; sourceTree = "<group>"; };
-		4C03B5A71FA64B9000748FE7 /* ICMImgurGifv.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMImgurGifv.m; path = "Classes/Modules/Imgur .gifv/ICMImgurGifv.m"; sourceTree = "<group>"; };
-		4C03B5A81FA64B9000748FE7 /* ICMImgurGifv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMImgurGifv.h; path = "Classes/Modules/Imgur .gifv/ICMImgurGifv.h"; sourceTree = "<group>"; };
-		4C03B5AA1FA64B9000748FE7 /* ICMCommonInlineImages.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMCommonInlineImages.m; path = "Classes/Modules/Common Images/ICMCommonInlineImages.m"; sourceTree = "<group>"; };
-		4C03B5AB1FA64B9000748FE7 /* ICMCommonInlineImages.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMCommonInlineImages.h; path = "Classes/Modules/Common Images/ICMCommonInlineImages.h"; sourceTree = "<group>"; };
-		4C03B5AD1FA64B9000748FE7 /* ICMTwitchClips.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICMTwitchClips.m; path = "Classes/Modules/Twitch Clips/ICMTwitchClips.m"; sourceTree = "<group>"; };
-		4C03B5AE1FA64B9000748FE7 /* ICMTwitchClips.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICMTwitchClips.h; path = "Classes/Modules/Twitch Clips/ICMTwitchClips.h"; sourceTree = "<group>"; };
-		4C03B5B71FA64CD600748FE7 /* ICMYouTube.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMYouTube.mustache; path = Resources/Modules/YouTube/ICMYouTube.mustache; sourceTree = "<group>"; };
-		4C03B5B81FA64CD600748FE7 /* ICMDailymotion.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMDailymotion.mustache; path = Resources/Modules/Dailymotion/ICMDailymotion.mustache; sourceTree = "<group>"; };
-		4C03B5B91FA64CD600748FE7 /* ICMTwitchClips.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMTwitchClips.mustache; path = "Resources/Modules/Twitch Clips/ICMTwitchClips.mustache"; sourceTree = "<group>"; };
-		4C03B5BA1FA64CD700748FE7 /* ICMTwitchLive.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMTwitchLive.mustache; path = "Resources/Modules/Twitch Live/ICMTwitchLive.mustache"; sourceTree = "<group>"; };
-		4C03B5BB1FA64CD700748FE7 /* ICMPornhub.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMPornhub.mustache; path = Resources/Modules/Pornhub/ICMPornhub.mustache; sourceTree = "<group>"; };
-		4C03B5BC1FA64CD700748FE7 /* ICMVimeo.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMVimeo.mustache; path = Resources/Modules/Vimeo/ICMVimeo.mustache; sourceTree = "<group>"; };
-		4C03B5BD1FA64CD700748FE7 /* ICMTweet.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = ICMTweet.js; path = Resources/Modules/Twitter/ICMTweet.js; sourceTree = "<group>"; };
-		4C03B5BE1FA64CD700748FE7 /* ICMLiveleak.mustache */ = {isa = PBXFileReference; lastKnownFileType = text; name = ICMLiveleak.mustache; path = Resources/Modules/Liveleak/ICMLiveleak.mustache; sourceTree = "<group>"; };
-		4C03B5D91FA64DAA00748FE7 /* ICPCoreMedia.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ICPCoreMedia.m; path = Classes/ICPCoreMedia.m; sourceTree = "<group>"; };
-		4C03B5DD1FA64E8800748FE7 /* ICPCoreMediaPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICPCoreMediaPrivate.h; path = Classes/Headers/Private/ICPCoreMediaPrivate.h; sourceTree = "<group>"; };
-		4C03B5E11FA64EEF00748FE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
-		4C03B64A1FA6509B00748FE7 /* ICPCoreMediaPCHPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICPCoreMediaPCHPrivate.h; path = Classes/Headers/Private/ICPCoreMediaPCHPrivate.h; sourceTree = "<group>"; };
-		4C03B65C1FA6519300748FE7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		4C03B6771FA6568500748FE7 /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "/Users/michael/Projects/Textual/XPC Services/Inline Content Loader/../../.tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<absolute>"; };
+		4C469EA420EC600900094EA4 /* ICPCoreMediaPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICPCoreMediaPrivate.h; sourceTree = "<group>"; };
+		4C469EA520EC600900094EA4 /* ICPCoreMediaPCHPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICPCoreMediaPCHPrivate.h; sourceTree = "<group>"; };
+		4C469EA620EC600900094EA4 /* ICPCoreMedia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICPCoreMedia.m; sourceTree = "<group>"; };
+		4C469EA920EC600900094EA4 /* ICMCommonInlineVideos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICMCommonInlineVideos.m; sourceTree = "<group>"; };
+		4C469EAA20EC600900094EA4 /* ICMCommonInlineVideos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICMCommonInlineVideos.h; sourceTree = "<group>"; };
+		4C469EAC20EC600900094EA4 /* ICMTweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICMTweet.m; sourceTree = "<group>"; };
+		4C469EAD20EC600900094EA4 /* ICMTweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICMTweet.h; sourceTree = "<group>"; };
+		4C469EAF20EC600900094EA4 /* ICMGfycat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICMGfycat.h; sourceTree = "<group>"; };
+		4C469EB020EC600900094EA4 /* ICMGfycat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICMGfycat.m; sourceTree = "<group>"; };
+		4C469EB220EC600900094EA4 /* ICMLiveleak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICMLiveleak.m; sourceTree = "<group>"; };
+		4C469EB320EC600900094EA4 /* ICMLiveleak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICMLiveleak.h; sourceTree = "<group>"; };
+		4C469EB520EC600900094EA4 /* ICMGyazo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICMGyazo.h; sourceTree = "<group>"; };
+		4C469EB620EC600900094EA4 /* ICMGyazo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICMGyazo.m; sourceTree = "<group>"; };
+		4C469EB820EC600900094EA4 /* ICMStreamable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICMStreamable.h; sourceTree = "<group>"; };
+		4C469EB920EC600900094EA4 /* ICMStreamable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICMStreamable.m; sourceTree = "<group>"; };
+		4C469EBB20EC600900094EA4 /* ICMVimeo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICMVimeo.h; sourceTree = "<group>"; };
+		4C469EBC20EC600900094EA4 /* ICMVimeo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICMVimeo.m; sourceTree = "<group>"; };
+		4C469EBE20EC600900094EA4 /* ICMPornhub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICMPornhub.m; sourceTree = "<group>"; };
+		4C469EBF20EC600900094EA4 /* ICMPornhub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICMPornhub.h; sourceTree = "<group>"; };
+		4C469EC120EC600900094EA4 /* ICMImgurGifv.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICMImgurGifv.m; sourceTree = "<group>"; };
+		4C469EC220EC600900094EA4 /* ICMImgurGifv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICMImgurGifv.h; sourceTree = "<group>"; };
+		4C469EC420EC600900094EA4 /* ICMYouTube.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICMYouTube.m; sourceTree = "<group>"; };
+		4C469EC520EC600900094EA4 /* ICMYouTube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICMYouTube.h; sourceTree = "<group>"; };
+		4C469EC720EC600900094EA4 /* ICMDailymotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICMDailymotion.h; sourceTree = "<group>"; };
+		4C469EC820EC600900094EA4 /* ICMDailymotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICMDailymotion.m; sourceTree = "<group>"; };
+		4C469ECA20EC600900094EA4 /* ICMTwitchClips.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICMTwitchClips.m; sourceTree = "<group>"; };
+		4C469ECB20EC600900094EA4 /* ICMTwitchClips.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICMTwitchClips.h; sourceTree = "<group>"; };
+		4C469ECD20EC600900094EA4 /* ICMTwitchLive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICMTwitchLive.m; sourceTree = "<group>"; };
+		4C469ECE20EC600900094EA4 /* ICMTwitchLive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICMTwitchLive.h; sourceTree = "<group>"; };
+		4C469ED020EC600900094EA4 /* ICMCommonInlineImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICMCommonInlineImages.m; sourceTree = "<group>"; };
+		4C469ED120EC600900094EA4 /* ICMCommonInlineImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICMCommonInlineImages.h; sourceTree = "<group>"; };
+		4C469ED320EC600900094EA4 /* ICMXkcd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICMXkcd.m; sourceTree = "<group>"; };
+		4C469ED420EC600900094EA4 /* ICMXkcd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICMXkcd.h; sourceTree = "<group>"; };
+		4C469F0120EC601B00094EA4 /* TPCPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferences.h; sourceTree = "<group>"; };
+		4C469F2620EC608E00094EA4 /* ICMTweet.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ICMTweet.js; sourceTree = "<group>"; };
+		4C469F2820EC608E00094EA4 /* ICMLiveleak.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ICMLiveleak.mustache; sourceTree = "<group>"; };
+		4C469F2A20EC608E00094EA4 /* ICMVimeo.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ICMVimeo.mustache; sourceTree = "<group>"; };
+		4C469F2C20EC608E00094EA4 /* ICMPornhub.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ICMPornhub.mustache; sourceTree = "<group>"; };
+		4C469F2E20EC608E00094EA4 /* ICMYouTube.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ICMYouTube.mustache; sourceTree = "<group>"; };
+		4C469F3020EC608E00094EA4 /* ICMDailymotion.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ICMDailymotion.mustache; sourceTree = "<group>"; };
+		4C469F3220EC608E00094EA4 /* ICMTwitchClips.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ICMTwitchClips.mustache; sourceTree = "<group>"; };
+		4C469F3420EC608E00094EA4 /* ICMTwitchLive.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ICMTwitchLive.mustache; sourceTree = "<group>"; };
+		4C469F3620EC608E00094EA4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CA1FE581FA606890095901F /* Core Media.mediaPlugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Core Media.mediaPlugin"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4CACEEF220B127840039CD30 /* TPCPreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TPCPreferences.h; path = "../../../../Classes (Shared)/Headers/TPCPreferences.h"; sourceTree = "<group>"; };
+		4CE144E720EC0448000E01C9 /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "../../../../.tmp/SharedBuildProducts-Frameworks/CocoaExtensions.framework"; sourceTree = SOURCE_ROOT; };
+		4CE145B220EC0D5A000E01C9 /* Textual.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
+		4CE145B620EC0D5A000E01C9 /* XPC Service - ICL Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "XPC Service - ICL Extensions.xcconfig"; sourceTree = "<group>"; };
+		4CE145B720EC0D5A000E01C9 /* Enabled Features.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Enabled Features.xcconfig"; sourceTree = "<group>"; };
+		4CE145BB20EC0D5A000E01C9 /* Textual.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
+		4CE145BF20EC0D5A000E01C9 /* XPC Service - ICL Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "XPC Service - ICL Extensions.xcconfig"; sourceTree = "<group>"; };
+		4CE145C020EC0D5A000E01C9 /* Enabled Features.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Enabled Features.xcconfig"; sourceTree = "<group>"; };
+		4CE145C520EC0D5A000E01C9 /* Textual.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
+		4CE145C620EC0D5A000E01C9 /* Preserve Symbols.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Preserve Symbols.xcconfig"; sourceTree = "<group>"; };
+		4CE145C920EC0D5A000E01C9 /* Foundation.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Foundation.xcconfig; sourceTree = "<group>"; };
+		4CE145CB20EC0D5A000E01C9 /* XPC Service - ICL Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "XPC Service - ICL Extensions.xcconfig"; sourceTree = "<group>"; };
+		4CE145CC20EC0D5A000E01C9 /* Foundation Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Foundation Debug.xcconfig"; sourceTree = "<group>"; };
+		4CE145D120EC0D5A000E01C9 /* Textual.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
+		4CE145D520EC0D5A000E01C9 /* XPC Service - ICL Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "XPC Service - ICL Extensions.xcconfig"; sourceTree = "<group>"; };
+		4CE145D620EC0D5A000E01C9 /* Enabled Features.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Enabled Features.xcconfig"; sourceTree = "<group>"; };
+		4CE145DA20EC0D5A000E01C9 /* Textual.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
+		4CE145DE20EC0D5A000E01C9 /* XPC Service - ICL Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "XPC Service - ICL Extensions.xcconfig"; sourceTree = "<group>"; };
+		4CE145DF20EC0D5A000E01C9 /* Enabled Features.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Enabled Features.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,283 +104,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C03B65D1FA6519E00748FE7 /* Foundation.framework in Frameworks */,
-				4C03B6761FA6568500748FE7 /* CocoaExtensions.framework in Frameworks */,
+				4CE144E820EC0448000E01C9 /* CocoaExtensions.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4C03B5811FA64B7B00748FE7 /* Source Code */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B64B1FA6509E00748FE7 /* Headers */,
-				4C03B5AF1FA64C8800748FE7 /* Modules */,
-				4CACEEF020B1274D0039CD30 /* Shared */,
-				4C03B5D91FA64DAA00748FE7 /* ICPCoreMedia.m */,
-			);
-			name = "Source Code";
-			sourceTree = "<group>";
-		};
-		4C03B5821FA64B9000748FE7 /* Liveleak */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5B51FA64CC000748FE7 /* Resources */,
-				4C03B5841FA64B9000748FE7 /* ICMLiveleak.h */,
-				4C03B5831FA64B9000748FE7 /* ICMLiveleak.m */,
-			);
-			name = Liveleak;
-			sourceTree = "<group>";
-		};
-		4C03B5851FA64B9000748FE7 /* Twitter */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5BF1FA64CEB00748FE7 /* Resources */,
-				4C03B5871FA64B9000748FE7 /* ICMTweet.h */,
-				4C03B5861FA64B9000748FE7 /* ICMTweet.m */,
-			);
-			name = Twitter;
-			sourceTree = "<group>";
-		};
-		4C03B5881FA64B9000748FE7 /* xkcd */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B58A1FA64B9000748FE7 /* ICMXkcd.h */,
-				4C03B5891FA64B9000748FE7 /* ICMXkcd.m */,
-			);
-			name = xkcd;
-			sourceTree = "<group>";
-		};
-		4C03B58B1FA64B9000748FE7 /* Twitch Live */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5B21FA64CB600748FE7 /* Resources */,
-				4C03B58D1FA64B9000748FE7 /* ICMTwitchLive.h */,
-				4C03B58C1FA64B9000748FE7 /* ICMTwitchLive.m */,
-			);
-			name = "Twitch Live";
-			sourceTree = "<group>";
-		};
-		4C03B58E1FA64B9000748FE7 /* Gfycat */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B58F1FA64B9000748FE7 /* ICMGfycat.h */,
-				4C03B5901FA64B9000748FE7 /* ICMGfycat.m */,
-			);
-			name = Gfycat;
-			sourceTree = "<group>";
-		};
-		4C03B5911FA64B9000748FE7 /* Vimeo */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5B11FA64CB300748FE7 /* Resources */,
-				4C03B5921FA64B9000748FE7 /* ICMVimeo.h */,
-				4C03B5931FA64B9000748FE7 /* ICMVimeo.m */,
-			);
-			name = Vimeo;
-			sourceTree = "<group>";
-		};
-		4C03B5941FA64B9000748FE7 /* Gyazo */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5951FA64B9000748FE7 /* ICMGyazo.h */,
-				4C03B5961FA64B9000748FE7 /* ICMGyazo.m */,
-			);
-			name = Gyazo;
-			sourceTree = "<group>";
-		};
-		4C03B5971FA64B9000748FE7 /* YouTube */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5B01FA64CAC00748FE7 /* Resources */,
-				4C03B5991FA64B9000748FE7 /* ICMYouTube.h */,
-				4C03B5981FA64B9000748FE7 /* ICMYouTube.m */,
-			);
-			name = YouTube;
-			sourceTree = "<group>";
-		};
-		4C03B59A1FA64B9000748FE7 /* Streamable */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B59B1FA64B9000748FE7 /* ICMStreamable.h */,
-				4C03B59C1FA64B9000748FE7 /* ICMStreamable.m */,
-			);
-			name = Streamable;
-			sourceTree = "<group>";
-		};
-		4C03B59D1FA64B9000748FE7 /* Pornhub */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5B41FA64CBC00748FE7 /* Resources */,
-				4C03B59F1FA64B9000748FE7 /* ICMPornhub.h */,
-				4C03B59E1FA64B9000748FE7 /* ICMPornhub.m */,
-			);
-			name = Pornhub;
-			sourceTree = "<group>";
-		};
-		4C03B5A01FA64B9000748FE7 /* Dailymotion */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5B61FA64CC200748FE7 /* Resources */,
-				4C03B5A11FA64B9000748FE7 /* ICMDailymotion.h */,
-				4C03B5A21FA64B9000748FE7 /* ICMDailymotion.m */,
-			);
-			name = Dailymotion;
-			sourceTree = "<group>";
-		};
-		4C03B5A31FA64B9000748FE7 /* Common Videos */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5A51FA64B9000748FE7 /* ICMCommonInlineVideos.h */,
-				4C03B5A41FA64B9000748FE7 /* ICMCommonInlineVideos.m */,
-			);
-			name = "Common Videos";
-			sourceTree = "<group>";
-		};
-		4C03B5A61FA64B9000748FE7 /* Imgur .gifv */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5A81FA64B9000748FE7 /* ICMImgurGifv.h */,
-				4C03B5A71FA64B9000748FE7 /* ICMImgurGifv.m */,
-			);
-			name = "Imgur .gifv";
-			sourceTree = "<group>";
-		};
-		4C03B5A91FA64B9000748FE7 /* Common Images */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5AB1FA64B9000748FE7 /* ICMCommonInlineImages.h */,
-				4C03B5AA1FA64B9000748FE7 /* ICMCommonInlineImages.m */,
-			);
-			name = "Common Images";
-			sourceTree = "<group>";
-		};
-		4C03B5AC1FA64B9000748FE7 /* Twitch Clips */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5B31FA64CBA00748FE7 /* Resources */,
-				4C03B5AE1FA64B9000748FE7 /* ICMTwitchClips.h */,
-				4C03B5AD1FA64B9000748FE7 /* ICMTwitchClips.m */,
-			);
-			name = "Twitch Clips";
-			sourceTree = "<group>";
-		};
-		4C03B5AF1FA64C8800748FE7 /* Modules */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5A91FA64B9000748FE7 /* Common Images */,
-				4C03B5A31FA64B9000748FE7 /* Common Videos */,
-				4C03B5A01FA64B9000748FE7 /* Dailymotion */,
-				4C03B58E1FA64B9000748FE7 /* Gfycat */,
-				4C03B5941FA64B9000748FE7 /* Gyazo */,
-				4C03B5A61FA64B9000748FE7 /* Imgur .gifv */,
-				4C03B5821FA64B9000748FE7 /* Liveleak */,
-				4C03B59D1FA64B9000748FE7 /* Pornhub */,
-				4C03B59A1FA64B9000748FE7 /* Streamable */,
-				4C03B5AC1FA64B9000748FE7 /* Twitch Clips */,
-				4C03B58B1FA64B9000748FE7 /* Twitch Live */,
-				4C03B5851FA64B9000748FE7 /* Twitter */,
-				4C03B5911FA64B9000748FE7 /* Vimeo */,
-				4C03B5881FA64B9000748FE7 /* xkcd */,
-				4C03B5971FA64B9000748FE7 /* YouTube */,
-			);
-			name = Modules;
-			sourceTree = "<group>";
-		};
-		4C03B5B01FA64CAC00748FE7 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5B71FA64CD600748FE7 /* ICMYouTube.mustache */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		4C03B5B11FA64CB300748FE7 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5BC1FA64CD700748FE7 /* ICMVimeo.mustache */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		4C03B5B21FA64CB600748FE7 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5BA1FA64CD700748FE7 /* ICMTwitchLive.mustache */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		4C03B5B31FA64CBA00748FE7 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5B91FA64CD600748FE7 /* ICMTwitchClips.mustache */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		4C03B5B41FA64CBC00748FE7 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5BB1FA64CD700748FE7 /* ICMPornhub.mustache */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		4C03B5B51FA64CC000748FE7 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5BE1FA64CD700748FE7 /* ICMLiveleak.mustache */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		4C03B5B61FA64CC200748FE7 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5B81FA64CD600748FE7 /* ICMDailymotion.mustache */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		4C03B5BF1FA64CEB00748FE7 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5BD1FA64CD700748FE7 /* ICMTweet.js */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		4C03B5E01FA64EDB00748FE7 /* Property Lists */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B5E11FA64EEF00748FE7 /* Info.plist */,
-			);
-			name = "Property Lists";
-			sourceTree = "<group>";
-		};
-		4C03B64B1FA6509E00748FE7 /* Headers */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B64C1FA650A200748FE7 /* Private */,
-			);
-			name = Headers;
-			sourceTree = "<group>";
-		};
-		4C03B64C1FA650A200748FE7 /* Private */ = {
-			isa = PBXGroup;
-			children = (
-				4C03B64A1FA6509B00748FE7 /* ICPCoreMediaPCHPrivate.h */,
-				4C03B5DD1FA64E8800748FE7 /* ICPCoreMediaPrivate.h */,
-			);
-			name = Private;
-			sourceTree = "<group>";
-		};
 		4C03B65B1FA6518A00748FE7 /* System Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4C03B65C1FA6519300748FE7 /* Foundation.framework */,
 			);
 			name = "System Frameworks";
 			sourceTree = "<group>";
@@ -375,15 +121,304 @@
 		4C03B6731FA6566200748FE7 /* External Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4C03B6771FA6568500748FE7 /* CocoaExtensions.framework */,
+				4CE144E720EC0448000E01C9 /* CocoaExtensions.framework */,
 			);
 			name = "External Frameworks";
+			sourceTree = "<group>";
+		};
+		4C469EA120EC600900094EA4 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4C469EA220EC600900094EA4 /* Headers */,
+				4C469EA720EC600900094EA4 /* Modules */,
+				4C469EE520EC601B00094EA4 /* Shared */,
+				4C469EA620EC600900094EA4 /* ICPCoreMedia.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		4C469EA220EC600900094EA4 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				4C469EA320EC600900094EA4 /* Private */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		4C469EA320EC600900094EA4 /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				4C469EA420EC600900094EA4 /* ICPCoreMediaPrivate.h */,
+				4C469EA520EC600900094EA4 /* ICPCoreMediaPCHPrivate.h */,
+			);
+			path = Private;
+			sourceTree = "<group>";
+		};
+		4C469EA720EC600900094EA4 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				4C469ECF20EC600900094EA4 /* Common Images */,
+				4C469EA820EC600900094EA4 /* Common Videos */,
+				4C469EC620EC600900094EA4 /* Dailymotion */,
+				4C469EAE20EC600900094EA4 /* Gfycat */,
+				4C469EB420EC600900094EA4 /* Gyazo */,
+				4C469EC020EC600900094EA4 /* Imgur .gifv */,
+				4C469EB120EC600900094EA4 /* Liveleak */,
+				4C469EBD20EC600900094EA4 /* Pornhub */,
+				4C469EB720EC600900094EA4 /* Streamable */,
+				4C469EC920EC600900094EA4 /* Twitch Clips */,
+				4C469ECC20EC600900094EA4 /* Twitch Live */,
+				4C469EAB20EC600900094EA4 /* Twitter */,
+				4C469EBA20EC600900094EA4 /* Vimeo */,
+				4C469ED220EC600900094EA4 /* xkcd */,
+				4C469EC320EC600900094EA4 /* YouTube */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		4C469EA820EC600900094EA4 /* Common Videos */ = {
+			isa = PBXGroup;
+			children = (
+				4C469EA920EC600900094EA4 /* ICMCommonInlineVideos.m */,
+				4C469EAA20EC600900094EA4 /* ICMCommonInlineVideos.h */,
+			);
+			path = "Common Videos";
+			sourceTree = "<group>";
+		};
+		4C469EAB20EC600900094EA4 /* Twitter */ = {
+			isa = PBXGroup;
+			children = (
+				4C469EAC20EC600900094EA4 /* ICMTweet.m */,
+				4C469EAD20EC600900094EA4 /* ICMTweet.h */,
+			);
+			path = Twitter;
+			sourceTree = "<group>";
+		};
+		4C469EAE20EC600900094EA4 /* Gfycat */ = {
+			isa = PBXGroup;
+			children = (
+				4C469EAF20EC600900094EA4 /* ICMGfycat.h */,
+				4C469EB020EC600900094EA4 /* ICMGfycat.m */,
+			);
+			path = Gfycat;
+			sourceTree = "<group>";
+		};
+		4C469EB120EC600900094EA4 /* Liveleak */ = {
+			isa = PBXGroup;
+			children = (
+				4C469EB220EC600900094EA4 /* ICMLiveleak.m */,
+				4C469EB320EC600900094EA4 /* ICMLiveleak.h */,
+			);
+			path = Liveleak;
+			sourceTree = "<group>";
+		};
+		4C469EB420EC600900094EA4 /* Gyazo */ = {
+			isa = PBXGroup;
+			children = (
+				4C469EB520EC600900094EA4 /* ICMGyazo.h */,
+				4C469EB620EC600900094EA4 /* ICMGyazo.m */,
+			);
+			path = Gyazo;
+			sourceTree = "<group>";
+		};
+		4C469EB720EC600900094EA4 /* Streamable */ = {
+			isa = PBXGroup;
+			children = (
+				4C469EB820EC600900094EA4 /* ICMStreamable.h */,
+				4C469EB920EC600900094EA4 /* ICMStreamable.m */,
+			);
+			path = Streamable;
+			sourceTree = "<group>";
+		};
+		4C469EBA20EC600900094EA4 /* Vimeo */ = {
+			isa = PBXGroup;
+			children = (
+				4C469EBB20EC600900094EA4 /* ICMVimeo.h */,
+				4C469EBC20EC600900094EA4 /* ICMVimeo.m */,
+			);
+			path = Vimeo;
+			sourceTree = "<group>";
+		};
+		4C469EBD20EC600900094EA4 /* Pornhub */ = {
+			isa = PBXGroup;
+			children = (
+				4C469EBE20EC600900094EA4 /* ICMPornhub.m */,
+				4C469EBF20EC600900094EA4 /* ICMPornhub.h */,
+			);
+			path = Pornhub;
+			sourceTree = "<group>";
+		};
+		4C469EC020EC600900094EA4 /* Imgur .gifv */ = {
+			isa = PBXGroup;
+			children = (
+				4C469EC120EC600900094EA4 /* ICMImgurGifv.m */,
+				4C469EC220EC600900094EA4 /* ICMImgurGifv.h */,
+			);
+			path = "Imgur .gifv";
+			sourceTree = "<group>";
+		};
+		4C469EC320EC600900094EA4 /* YouTube */ = {
+			isa = PBXGroup;
+			children = (
+				4C469EC420EC600900094EA4 /* ICMYouTube.m */,
+				4C469EC520EC600900094EA4 /* ICMYouTube.h */,
+			);
+			path = YouTube;
+			sourceTree = "<group>";
+		};
+		4C469EC620EC600900094EA4 /* Dailymotion */ = {
+			isa = PBXGroup;
+			children = (
+				4C469EC720EC600900094EA4 /* ICMDailymotion.h */,
+				4C469EC820EC600900094EA4 /* ICMDailymotion.m */,
+			);
+			path = Dailymotion;
+			sourceTree = "<group>";
+		};
+		4C469EC920EC600900094EA4 /* Twitch Clips */ = {
+			isa = PBXGroup;
+			children = (
+				4C469ECA20EC600900094EA4 /* ICMTwitchClips.m */,
+				4C469ECB20EC600900094EA4 /* ICMTwitchClips.h */,
+			);
+			path = "Twitch Clips";
+			sourceTree = "<group>";
+		};
+		4C469ECC20EC600900094EA4 /* Twitch Live */ = {
+			isa = PBXGroup;
+			children = (
+				4C469ECD20EC600900094EA4 /* ICMTwitchLive.m */,
+				4C469ECE20EC600900094EA4 /* ICMTwitchLive.h */,
+			);
+			path = "Twitch Live";
+			sourceTree = "<group>";
+		};
+		4C469ECF20EC600900094EA4 /* Common Images */ = {
+			isa = PBXGroup;
+			children = (
+				4C469ED020EC600900094EA4 /* ICMCommonInlineImages.m */,
+				4C469ED120EC600900094EA4 /* ICMCommonInlineImages.h */,
+			);
+			path = "Common Images";
+			sourceTree = "<group>";
+		};
+		4C469ED220EC600900094EA4 /* xkcd */ = {
+			isa = PBXGroup;
+			children = (
+				4C469ED320EC600900094EA4 /* ICMXkcd.m */,
+				4C469ED420EC600900094EA4 /* ICMXkcd.h */,
+			);
+			path = xkcd;
+			sourceTree = "<group>";
+		};
+		4C469EE520EC601B00094EA4 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				4C469EF420EC601B00094EA4 /* Headers */,
+			);
+			name = Shared;
+			path = ../../../../Sources/Shared;
+			sourceTree = SOURCE_ROOT;
+		};
+		4C469EF420EC601B00094EA4 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				4C469F0120EC601B00094EA4 /* TPCPreferences.h */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		4C469F2420EC608E00094EA4 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				4C469F2520EC608E00094EA4 /* Twitter */,
+				4C469F2720EC608E00094EA4 /* Liveleak */,
+				4C469F2920EC608E00094EA4 /* Vimeo */,
+				4C469F2B20EC608E00094EA4 /* Pornhub */,
+				4C469F2D20EC608E00094EA4 /* YouTube */,
+				4C469F2F20EC608E00094EA4 /* Dailymotion */,
+				4C469F3120EC608E00094EA4 /* Twitch Clips */,
+				4C469F3320EC608E00094EA4 /* Twitch Live */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		4C469F2520EC608E00094EA4 /* Twitter */ = {
+			isa = PBXGroup;
+			children = (
+				4C469F2620EC608E00094EA4 /* ICMTweet.js */,
+			);
+			path = Twitter;
+			sourceTree = "<group>";
+		};
+		4C469F2720EC608E00094EA4 /* Liveleak */ = {
+			isa = PBXGroup;
+			children = (
+				4C469F2820EC608E00094EA4 /* ICMLiveleak.mustache */,
+			);
+			path = Liveleak;
+			sourceTree = "<group>";
+		};
+		4C469F2920EC608E00094EA4 /* Vimeo */ = {
+			isa = PBXGroup;
+			children = (
+				4C469F2A20EC608E00094EA4 /* ICMVimeo.mustache */,
+			);
+			path = Vimeo;
+			sourceTree = "<group>";
+		};
+		4C469F2B20EC608E00094EA4 /* Pornhub */ = {
+			isa = PBXGroup;
+			children = (
+				4C469F2C20EC608E00094EA4 /* ICMPornhub.mustache */,
+			);
+			path = Pornhub;
+			sourceTree = "<group>";
+		};
+		4C469F2D20EC608E00094EA4 /* YouTube */ = {
+			isa = PBXGroup;
+			children = (
+				4C469F2E20EC608E00094EA4 /* ICMYouTube.mustache */,
+			);
+			path = YouTube;
+			sourceTree = "<group>";
+		};
+		4C469F2F20EC608E00094EA4 /* Dailymotion */ = {
+			isa = PBXGroup;
+			children = (
+				4C469F3020EC608E00094EA4 /* ICMDailymotion.mustache */,
+			);
+			path = Dailymotion;
+			sourceTree = "<group>";
+		};
+		4C469F3120EC608E00094EA4 /* Twitch Clips */ = {
+			isa = PBXGroup;
+			children = (
+				4C469F3220EC608E00094EA4 /* ICMTwitchClips.mustache */,
+			);
+			path = "Twitch Clips";
+			sourceTree = "<group>";
+		};
+		4C469F3320EC608E00094EA4 /* Twitch Live */ = {
+			isa = PBXGroup;
+			children = (
+				4C469F3420EC608E00094EA4 /* ICMTwitchLive.mustache */,
+			);
+			path = "Twitch Live";
+			sourceTree = "<group>";
+		};
+		4C469F3520EC608E00094EA4 /* Property Lists */ = {
+			isa = PBXGroup;
+			children = (
+				4C469F3620EC608E00094EA4 /* Info.plist */,
+			);
+			path = "Property Lists";
 			sourceTree = "<group>";
 		};
 		4CA1FE4F1FA606890095901F = {
 			isa = PBXGroup;
 			children = (
-				4C03B5811FA64B7B00748FE7 /* Source Code */,
+				4C469EA120EC600900094EA4 /* Classes */,
 				4CA1FE611FA6069D0095901F /* Resources */,
 				4CA1FE671FA608E70095901F /* Frameworks */,
 				4CA1FE591FA606890095901F /* Products */,
@@ -402,15 +437,15 @@
 			isa = PBXGroup;
 			children = (
 				4CA1FE621FA607390095901F /* Build Settings */,
-				4C03B5E01FA64EDB00748FE7 /* Property Lists */,
+				4C469F2420EC608E00094EA4 /* Modules */,
+				4C469F3520EC608E00094EA4 /* Property Lists */,
 			);
-			name = Resources;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		4CA1FE621FA607390095901F /* Build Settings */ = {
 			isa = PBXGroup;
 			children = (
-				4CA1FE8C1FA625E20095901F /* Build Scripts */,
 				4CA1FE631FA607450095901F /* Configurations */,
 			);
 			name = "Build Settings";
@@ -419,10 +454,10 @@
 		4CA1FE631FA607450095901F /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				4C03B5771FA648FF00748FE7 /* XPC Service - ICL Extensions.xcconfig */,
-				4C03B5761FA648FF00748FE7 /* XPC Service - ICL Extensions.xcconfig */,
+				4CE145AE20EC0D5A000E01C9 /* Build */,
 			);
 			name = Configurations;
+			path = ../../../../../Configurations;
 			sourceTree = "<group>";
 		};
 		4CA1FE671FA608E70095901F /* Frameworks */ = {
@@ -434,45 +469,86 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4CA1FE8C1FA625E20095901F /* Build Scripts */ = {
+		4CE145AE20EC0D5A000E01C9 /* Build */ = {
 			isa = PBXGroup;
 			children = (
+				4CE145B820EC0D5A000E01C9 /* App Store Release */,
+				4CE145C220EC0D5A000E01C9 /* Common */,
+				4CE145D720EC0D5A000E01C9 /* Debug */,
+				4CE145AF20EC0D5A000E01C9 /* Standard Release */,
+				4CE145CE20EC0D5A000E01C9 /* Standard Release Sandboxed */,
 			);
-			name = "Build Scripts";
+			path = Build;
 			sourceTree = "<group>";
 		};
-		4CACEEF020B1274D0039CD30 /* Shared */ = {
+		4CE145AF20EC0D5A000E01C9 /* Standard Release */ = {
 			isa = PBXGroup;
 			children = (
-				4CACEEF320B1278B0039CD30 /* Headers */,
+				4CE145B720EC0D5A000E01C9 /* Enabled Features.xcconfig */,
+				4CE145B220EC0D5A000E01C9 /* Textual.xcconfig */,
+				4CE145B620EC0D5A000E01C9 /* XPC Service - ICL Extensions.xcconfig */,
 			);
-			name = Shared;
+			path = "Standard Release";
 			sourceTree = "<group>";
 		};
-		4CACEEF320B1278B0039CD30 /* Headers */ = {
+		4CE145B820EC0D5A000E01C9 /* App Store Release */ = {
 			isa = PBXGroup;
 			children = (
-				4CACEEF220B127840039CD30 /* TPCPreferences.h */,
+				4CE145C020EC0D5A000E01C9 /* Enabled Features.xcconfig */,
+				4CE145BB20EC0D5A000E01C9 /* Textual.xcconfig */,
+				4CE145BF20EC0D5A000E01C9 /* XPC Service - ICL Extensions.xcconfig */,
 			);
-			name = Headers;
+			path = "App Store Release";
+			sourceTree = "<group>";
+		};
+		4CE145C220EC0D5A000E01C9 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				4CE145CC20EC0D5A000E01C9 /* Foundation Debug.xcconfig */,
+				4CE145C920EC0D5A000E01C9 /* Foundation.xcconfig */,
+				4CE145C620EC0D5A000E01C9 /* Preserve Symbols.xcconfig */,
+				4CE145C520EC0D5A000E01C9 /* Textual.xcconfig */,
+				4CE145CB20EC0D5A000E01C9 /* XPC Service - ICL Extensions.xcconfig */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		4CE145CE20EC0D5A000E01C9 /* Standard Release Sandboxed */ = {
+			isa = PBXGroup;
+			children = (
+				4CE145D620EC0D5A000E01C9 /* Enabled Features.xcconfig */,
+				4CE145D120EC0D5A000E01C9 /* Textual.xcconfig */,
+				4CE145D520EC0D5A000E01C9 /* XPC Service - ICL Extensions.xcconfig */,
+			);
+			path = "Standard Release Sandboxed";
+			sourceTree = "<group>";
+		};
+		4CE145D720EC0D5A000E01C9 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				4CE145DF20EC0D5A000E01C9 /* Enabled Features.xcconfig */,
+				4CE145DA20EC0D5A000E01C9 /* Textual.xcconfig */,
+				4CE145DE20EC0D5A000E01C9 /* XPC Service - ICL Extensions.xcconfig */,
+			);
+			path = Debug;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4CA1FE571FA606890095901F /* Core Media */ = {
+		4CA1FE571FA606890095901F /* Inline Content Loader Core Media */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4CA1FE5E1FA606890095901F /* Build configuration list for PBXNativeTarget "Core Media" */;
+			buildConfigurationList = 4CA1FE5E1FA606890095901F /* Build configuration list for PBXNativeTarget "Inline Content Loader Core Media" */;
 			buildPhases = (
-				4CA1FE541FA606890095901F /* Sources */,
-				4CA1FE551FA606890095901F /* Frameworks */,
 				4CA1FE561FA606890095901F /* Resources */,
+				4CA1FE551FA606890095901F /* Frameworks */,
+				4CA1FE541FA606890095901F /* Sources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Core Media";
+			name = "Inline Content Loader Core Media";
 			productName = "Core Media";
 			productReference = 4CA1FE581FA606890095901F /* Core Media.mediaPlugin */;
 			productType = "com.apple.product-type.bundle";
@@ -484,7 +560,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = ICP;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Codeux Software, LLC";
 				TargetAttributes = {
 					4CA1FE571FA606890095901F = {
@@ -504,7 +580,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4CA1FE571FA606890095901F /* Core Media */,
+				4CA1FE571FA606890095901F /* Inline Content Loader Core Media */,
 			);
 		};
 /* End PBXProject section */
@@ -514,14 +590,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C03B5D01FA64D5800748FE7 /* ICMLiveleak.mustache in Resources */,
-				4C03B5D61FA64D5800748FE7 /* ICMYouTube.mustache in Resources */,
-				4C03B5D31FA64D5800748FE7 /* ICMTwitchLive.mustache in Resources */,
-				4C03B5CF1FA64D5800748FE7 /* ICMDailymotion.mustache in Resources */,
-				4C03B5D21FA64D5800748FE7 /* ICMTwitchClips.mustache in Resources */,
-				4C03B5D41FA64D5800748FE7 /* ICMTweet.js in Resources */,
-				4C03B5D51FA64D5800748FE7 /* ICMVimeo.mustache in Resources */,
-				4C03B5D11FA64D5800748FE7 /* ICMPornhub.mustache in Resources */,
+				4C469F3820EC608E00094EA4 /* ICMLiveleak.mustache in Resources */,
+				4C469F3920EC608E00094EA4 /* ICMVimeo.mustache in Resources */,
+				4C469F3E20EC608E00094EA4 /* ICMTwitchLive.mustache in Resources */,
+				4C469F3B20EC608E00094EA4 /* ICMYouTube.mustache in Resources */,
+				4C469F3A20EC608E00094EA4 /* ICMPornhub.mustache in Resources */,
+				4C469F3720EC608E00094EA4 /* ICMTweet.js in Resources */,
+				4C469F3D20EC608E00094EA4 /* ICMTwitchClips.mustache in Resources */,
+				4C469F3C20EC608E00094EA4 /* ICMDailymotion.mustache in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,22 +608,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C03B5C61FA64D4000748FE7 /* ICMLiveleak.m in Sources */,
-				4C03B5C01FA64D4000748FE7 /* ICMCommonInlineImages.m in Sources */,
-				4C03B5C31FA64D4000748FE7 /* ICMGfycat.m in Sources */,
-				4C03B5CB1FA64D4000748FE7 /* ICMTweet.m in Sources */,
-				4C03B5C11FA64D4000748FE7 /* ICMCommonInlineVideos.m in Sources */,
-				4C03B5CD1FA64D4000748FE7 /* ICMXkcd.m in Sources */,
-				4C03B5C91FA64D4000748FE7 /* ICMTwitchClips.m in Sources */,
-				4C03B5C81FA64D4000748FE7 /* ICMStreamable.m in Sources */,
-				4C03B5CA1FA64D4000748FE7 /* ICMTwitchLive.m in Sources */,
-				4C03B5C41FA64D4000748FE7 /* ICMGyazo.m in Sources */,
-				4C03B5C51FA64D4000748FE7 /* ICMImgurGifv.m in Sources */,
-				4C03B5C71FA64D4000748FE7 /* ICMPornhub.m in Sources */,
-				4C03B5CE1FA64D4000748FE7 /* ICMYouTube.m in Sources */,
-				4C03B5CC1FA64D4000748FE7 /* ICMVimeo.m in Sources */,
-				4C03B5DA1FA64DAA00748FE7 /* ICPCoreMedia.m in Sources */,
-				4C03B5C21FA64D4000748FE7 /* ICMDailymotion.m in Sources */,
+				4C469ED720EC600900094EA4 /* ICMTweet.m in Sources */,
+				4C469EDF20EC600900094EA4 /* ICMYouTube.m in Sources */,
+				4C469ED920EC600900094EA4 /* ICMLiveleak.m in Sources */,
+				4C469EDA20EC600900094EA4 /* ICMGyazo.m in Sources */,
+				4C469EE220EC600900094EA4 /* ICMTwitchLive.m in Sources */,
+				4C469EE320EC600900094EA4 /* ICMCommonInlineImages.m in Sources */,
+				4C469EDB20EC600900094EA4 /* ICMStreamable.m in Sources */,
+				4C469EE420EC600900094EA4 /* ICMXkcd.m in Sources */,
+				4C469EE020EC600900094EA4 /* ICMDailymotion.m in Sources */,
+				4C469EE120EC600900094EA4 /* ICMTwitchClips.m in Sources */,
+				4C469ED820EC600900094EA4 /* ICMGfycat.m in Sources */,
+				4C469ED520EC600900094EA4 /* ICPCoreMedia.m in Sources */,
+				4C469EDC20EC600900094EA4 /* ICMVimeo.m in Sources */,
+				4C469EDD20EC600900094EA4 /* ICMPornhub.m in Sources */,
+				4C469EDE20EC600900094EA4 /* ICMImgurGifv.m in Sources */,
+				4C469ED620EC600900094EA4 /* ICMCommonInlineVideos.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -556,27 +632,25 @@
 /* Begin XCBuildConfiguration section */
 		4CA1FE5C1FA606890095901F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C03B5761FA648FF00748FE7 /* XPC Service - ICL Extensions.xcconfig */;
+			baseConfigurationReference = 4CE145DE20EC0D5A000E01C9 /* XPC Service - ICL Extensions.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = "";
 			};
 			name = Debug;
 		};
 		4CA1FE5D1FA606890095901F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C03B5771FA648FF00748FE7 /* XPC Service - ICL Extensions.xcconfig */;
+			baseConfigurationReference = 4CE145B620EC0D5A000E01C9 /* XPC Service - ICL Extensions.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = "";
 			};
 			name = Release;
 		};
 		4CA1FE5F1FA606890095901F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/ICPCoreMediaPCHPrivate.h";
-				INFOPLIST_FILE = Resources/Info.plist;
+				GCC_PREFIX_HEADER = "${PROJECT_DIR}/Classes/Headers/Private/ICPCoreMediaPCHPrivate.h";
+				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.InlineContentLoader-CoreMedia";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Core Media";
 				WRAPPER_EXTENSION = mediaPlugin;
 			};
 			name = Debug;
@@ -584,10 +658,10 @@
 		4CA1FE601FA606890095901F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/ICPCoreMediaPCHPrivate.h";
-				INFOPLIST_FILE = Resources/Info.plist;
+				GCC_PREFIX_HEADER = "${PROJECT_DIR}/Classes/Headers/Private/ICPCoreMediaPCHPrivate.h";
+				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.InlineContentLoader-CoreMedia";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Core Media";
 				WRAPPER_EXTENSION = mediaPlugin;
 			};
 			name = Release;
@@ -604,7 +678,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4CA1FE5E1FA606890095901F /* Build configuration list for PBXNativeTarget "Core Media" */ = {
+		4CA1FE5E1FA606890095901F /* Build configuration list for PBXNativeTarget "Inline Content Loader Core Media" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4CA1FE5F1FA606890095901F /* Debug */,

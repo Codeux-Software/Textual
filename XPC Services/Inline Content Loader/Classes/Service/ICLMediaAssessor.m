@@ -1,38 +1,38 @@
-/* ********************************************************************* 
-                  _____         _               _
-                 |_   _|____  _| |_ _   _  __ _| |
-                   | |/ _ \ \/ / __| | | |/ _` | |
-                   | |  __/>  <| |_| |_| | (_| | |
-                   |_|\___/_/\_\\__|\__,_|\__,_|_|
-
- Copyright (c) 2010 - 2017 Codeux Software, LLC & respective contributors.
-        Please see Acknowledgements.pdf for additional information.
-
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions
- are met:
-
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of Textual and/or "Codeux Software, LLC", nor the 
-      names of its contributors may be used to endorse or promote products 
-      derived from this software without specific prior written permission.
-
- THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
- ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
- FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- SUCH DAMAGE.
-
+/* *********************************************************************
+ *                  _____         _               _
+ *                 |_   _|____  _| |_ _   _  __ _| |
+ *                   | |/ _ \ \/ / __| | | |/ _` | |
+ *                   | |  __/>  <| |_| |_| | (_| | |
+ *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
+ *
+ * Copyright (c) 2017, 2018 Codeux Software, LLC & respective contributors.
+ *       Please see Acknowledgements.pdf for additional information.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *  * Neither the name of Textual, "Codeux Software, LLC", nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
  *********************************************************************** */
 
 #import "NSObjectHelperPrivate.h"
@@ -273,13 +273,13 @@ ClassWithDesignatedInitializerInitMethod
 
 	/* This condition is typically true when we refuse an authentication challenge. */
 	if (error == nil && assessment == nil) {
-		error = [self _errorWithDescription:@"Assessment failed" code:9999];
+		error = [self _errorWithDescription:@"Assessment failed" code:ICLMediaAssessorErrorCodeAssessmentFailed];
 	}
 
 	config.completionBlock(assessment, error);
 }
 
-- (NSError *)_errorWithDescription:(NSString *)errorDescription code:(NSInteger)errorCode
+- (NSError *)_errorWithDescription:(NSString *)errorDescription code:(ICLMediaAssessorErrorCode)errorCode
 {
 	NSParameterAssert(errorDescription != nil);
 
@@ -289,7 +289,6 @@ ClassWithDesignatedInitializerInitMethod
 					userInfo:@{
 		NSLocalizedDescriptionKey : errorDescription
 	}];
-
 }
 
 #pragma mark -
@@ -325,7 +324,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	/* Read in status code */
 	if (response.statusCode != 200) {
-		*error = [self _errorWithDescription:@"Endpoint did not respond with OK (200)" code:1000];
+		*error = [self _errorWithDescription:@"Endpoint did not respond with OK (200)" code:ICLMediaAssessorErrorCodeUnexpectedStatusCode];
 
 		return nil;
 	}
@@ -334,7 +333,7 @@ ClassWithDesignatedInitializerInitMethod
 	NSString *contentType = response.MIMEType;
 
 	if (contentType.length > 128) {
-		*error = [self _errorWithDescription:@"Content-Type header is improperly formatted" code:1001];
+		*error = [self _errorWithDescription:@"Content-Type header is improperly formatted" code:ICLMediaAssessorErrorCodeMalformedContentType];
 
 		return nil;
 	}
@@ -343,7 +342,7 @@ ClassWithDesignatedInitializerInitMethod
 	long long contentLength = response.expectedContentLength;
 
 	if (contentLength <= 0) {
-		*error = [self _errorWithDescription:@"Content-Length header is improperly formatted" code:1002];
+		*error = [self _errorWithDescription:@"Content-Length header is improperly formatted" code:ICLMediaAssessorErrorCodeMalformedContentLength];
 
 		return nil;
 	}
@@ -371,7 +370,7 @@ ClassWithDesignatedInitializerInitMethod
 	if (expectedType != ICLMediaTypeUnknown &&
 		expectedType != mediaType)
 	{
-		*error = [self _errorWithDescription:@"Unexpected media type" code:1003];
+		*error = [self _errorWithDescription:@"Unexpected media type" code:ICLMediaAssessorErrorCodeUnexpectedType];
 
 		return nil;
 	}
@@ -384,7 +383,7 @@ ClassWithDesignatedInitializerInitMethod
 
 			/* Limit maximum filesize */
 			if (contentLength > limits.imageMaximumFilesize) {
-				*error = [self _errorWithDescription:@"Content-Length exceeds maximum allowed" code:1004];
+				*error = [self _errorWithDescription:@"Content-Length exceeds maximum allowed" code:ICLMediaAssessorErrorCodeContentLengthExceeded];
 
 				return nil;
 			}
@@ -429,7 +428,7 @@ ClassWithDesignatedInitializerInitMethod
 	 end up receiving a redirect to a data URL. */
 	if ([response isKindOfClass:[NSHTTPURLResponse class]] == NO) {
 		self.request.alternateError =
-		[self _errorWithDescription:@"Invalid response type (not HTTP)" code:1100];
+		[self _errorWithDescription:@"Invalid response type (not HTTP)" code:ICLMediaAssessorErrorCodeUnexpectedResponse];
 
 		completionHandler(NSURLSessionResponseCancel);
 
@@ -532,7 +531,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	self.request.alternateError =
-	[self _errorWithDescription:@"Size of response exceeded maximum allowed" code:1101];
+	[self _errorWithDescription:@"Maximum response size exceeded" code:ICLMediaAssessorErrorCodeContentLengthExceeded];
 
 	[session invalidateAndCancel];
 }
@@ -647,7 +646,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	if (image == NULL) {
 		*error =
-		[self _errorWithDescription:@"Image validation: CGImageSourceCreateWithURL() returned NULL" code:6000];
+		[self _errorWithDescription:@"Image validation: CGImageSourceCreateWithURL() returned NULL" code:ICLMediaAssessorErrorCodeAssessmentFailed];
 
 		return NO;
 	}
@@ -658,7 +657,7 @@ ClassWithDesignatedInitializerInitMethod
 		CFRelease(image);
 
 		*error =
-		[self _errorWithDescription:@"Image validation: CGImageSourceCopyPropertiesAtIndex() returned NULL" code:6001];
+		[self _errorWithDescription:@"Image validation: CGImageSourceCopyPropertiesAtIndex() returned NULL" code:ICLMediaAssessorErrorCodeAssessmentFailed];
 
 		return NO;
 	}
@@ -673,18 +672,52 @@ ClassWithDesignatedInitializerInitMethod
 
 	if (imageWidth.integerValue > limits.imageMaximumWidth)
 	{
-		*error = [self _errorWithDescription:@"Image validation: Maximum width exceeded" code:6002];
+		*error = [self _errorWithDescription:@"Image validation: Maximum width exceeded" code:ICLMediaAssessorErrorCodeMaximumWidthExceeded];
 
 		return NO;
 	}
 	else if (imageHeight.integerValue > limits.imageMaximumHeight)
 	{
-		*error = [self _errorWithDescription:@"Image validation: Maximum height exceeded" code:6003];
+		*error = [self _errorWithDescription:@"Image validation: Maximum height exceeded" code:ICLMediaAssessorErrorCodeMaximumHeightExceeded];
 
 		return NO;
 	}
 
 	return YES; /* Success */
+}
+
+#pragma mark -
+#pragma mark Logging
+
++ (void)logError:(NSError *)error
+{
+	NSParameterAssert(error != nil);
+
+	if ([error.domain isEqualToString:ICLMediaAssessorErrorDomain] == NO) {
+		return;
+	}
+
+	ICLMediaAssessorErrorCode errorCode = error.code;
+
+	switch (errorCode) {
+		case ICLMediaAssessorErrorCodeAssessmentFailed:
+		case ICLMediaAssessorErrorCodeUnexpectedStatusCode:
+		case ICLMediaAssessorErrorCodeMalformedContentType:
+		case ICLMediaAssessorErrorCodeMalformedContentLength:
+		case ICLMediaAssessorErrorCodeUnexpectedResponse:
+		{
+			LogToConsoleDebug("Assessor fatal error: %@",
+				error.localizedDescription);
+		}
+		case ICLMediaAssessorErrorCodeUnexpectedType:
+		case ICLMediaAssessorErrorCodeContentLengthExceeded:
+		case ICLMediaAssessorErrorCodeMaximumWidthExceeded:
+		case ICLMediaAssessorErrorCodeMaximumHeightExceeded:
+		{
+			LogToConsoleDebug("Assessor validation error: %@",
+				error.localizedDescription);
+		}
+	} // switch()
 }
 
 @end

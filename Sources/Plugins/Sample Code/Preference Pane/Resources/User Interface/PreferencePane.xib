@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14295.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14295.6"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TPI_PreferencePaneExample">
+            <connections>
+                <outlet property="ourView" destination="1" id="16"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="589" height="406"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2">
+                    <rect key="frame" x="252" y="224" width="94" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="90" id="32"/>
+                    </constraints>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Do Something" id="3">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="17">
+                    <rect key="frame" x="231" y="163" width="128" height="18"/>
+                    <buttonCell key="cell" type="check" title="Check something" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="18">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="preferenceChanged:" target="-2" id="22"/>
+                        <binding destination="23" name="value" keyPath="values.TPI_PreferencesSomethingCheckboxIsChecked" id="TbS-CI-9YK"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="17" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="28"/>
+                <constraint firstItem="2" firstAttribute="top" secondItem="1" secondAttribute="top" constant="165" id="29"/>
+                <constraint firstItem="2" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="254" id="30"/>
+                <constraint firstAttribute="bottom" secondItem="17" secondAttribute="bottom" constant="165" id="31"/>
+            </constraints>
+            <point key="canvasLocation" x="373.5" y="362"/>
+        </customView>
+        <userDefaultsController id="23"/>
+    </objects>
+</document>
