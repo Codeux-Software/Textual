@@ -1,0 +1,236 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4C0BA81020ECB0CB00C9D351 /* PreferencePane.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C0BA80D20ECB0CB00C9D351 /* PreferencePane.xib */; };
+		4C51BE9412D0471600E79CEB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C51BE9312D0471600E79CEB /* Cocoa.framework */; };
+		4CF30A1F20EC73480028D64F /* TPI_PreferencePaneExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF30A1B20EC73480028D64F /* TPI_PreferencePaneExample.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4C0BA80D20ECB0CB00C9D351 /* PreferencePane.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencePane.xib; sourceTree = "<group>"; };
+		4C0BA80F20ECB0CB00C9D351 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4C51BE9312D0471600E79CEB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		4CF30A1A20EC73480028D64F /* TPI_PreferencePaneExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_PreferencePaneExample.h; sourceTree = "<group>"; };
+		4CF30A1B20EC73480028D64F /* TPI_PreferencePaneExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPI_PreferencePaneExample.m; sourceTree = "<group>"; };
+		8D576316048677EA00EA77CD /* PreferencePaneExample.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PreferencePaneExample.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D576313048677EA00EA77CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C51BE9412D0471600E79CEB /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* PreferencePaneExample */ = {
+			isa = PBXGroup;
+			children = (
+				4CF30A1920EC73480028D64F /* Classes */,
+				4CF30A1C20EC73480028D64F /* Resources */,
+				089C1671FE841209C02AAC07 /* Frameworks */,
+				19C28FB6FE9D52B211CA2CBB /* Products */,
+			);
+			name = PreferencePaneExample;
+			sourceTree = "<group>";
+		};
+		089C1671FE841209C02AAC07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4C51BE9312D0471600E79CEB /* Cocoa.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		19C28FB6FE9D52B211CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D576316048677EA00EA77CD /* PreferencePaneExample.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4C0BA80C20ECB0CB00C9D351 /* User Interface */ = {
+			isa = PBXGroup;
+			children = (
+				4C0BA80D20ECB0CB00C9D351 /* PreferencePane.xib */,
+			);
+			path = "User Interface";
+			sourceTree = "<group>";
+		};
+		4C0BA80E20ECB0CB00C9D351 /* Property Lists */ = {
+			isa = PBXGroup;
+			children = (
+				4C0BA80F20ECB0CB00C9D351 /* Info.plist */,
+			);
+			path = "Property Lists";
+			sourceTree = "<group>";
+		};
+		4CF30A1920EC73480028D64F /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4CF30A1A20EC73480028D64F /* TPI_PreferencePaneExample.h */,
+				4CF30A1B20EC73480028D64F /* TPI_PreferencePaneExample.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		4CF30A1C20EC73480028D64F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4C0BA80E20ECB0CB00C9D351 /* Property Lists */,
+				4C0BA80C20ECB0CB00C9D351 /* User Interface */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D57630D048677EA00EA77CD /* PreferencePaneExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "PreferencePaneExample" */;
+			buildPhases = (
+				8D57630F048677EA00EA77CD /* Resources */,
+				8D576313048677EA00EA77CD /* Frameworks */,
+				8D576311048677EA00EA77CD /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PreferencePaneExample;
+			productInstallPath = "$(HOME)/Library/Bundles";
+			productName = PreferencePaneExample;
+			productReference = 8D576316048677EA00EA77CD /* PreferencePaneExample.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1000;
+			};
+			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "PreferencePaneExample" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 089C166AFE841209C02AAC07 /* PreferencePaneExample */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D57630D048677EA00EA77CD /* PreferencePaneExample */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D57630F048677EA00EA77CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C0BA81020ECB0CB00C9D351 /* PreferencePane.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D576311048677EA00EA77CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CF30A1F20EC73480028D64F /* TPI_PreferencePaneExample.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB911B08733D790010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual;
+				CLANG_ENABLE_MODULES = YES;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Textual.app/Contents/Frameworks/**\"";
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = "\"/Applications/Textual.app/Contents/Headers/**\"";
+				INFOPLIST_FILE = "Resources/Property List/Info.plist";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-PreferencePaneExample";
+				PRODUCT_NAME = PreferencePaneExample;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		1DEB911C08733D790010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual;
+				CLANG_ENABLE_MODULES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Textual.app/Contents/Frameworks/**\"";
+				HEADER_SEARCH_PATHS = "\"/Applications/Textual.app/Contents/Headers/**\"";
+				INFOPLIST_FILE = "Resources/Property List/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-PreferencePaneExample";
+				PRODUCT_NAME = PreferencePaneExample;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		1DEB911F08733D790010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		1DEB912008733D790010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "PreferencePaneExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB911B08733D790010E9CD /* Debug */,
+				1DEB911C08733D790010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "PreferencePaneExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB911F08733D790010E9CD /* Debug */,
+				1DEB912008733D790010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}

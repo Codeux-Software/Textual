@@ -1,0 +1,4 @@
+
+// Inline content loader XPC service
+
+#include "Preserve Symbols.xcconfig"

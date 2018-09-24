@@ -1,0 +1,16 @@
+
+// Main application, extensions, and XPC services
+
+TEXTUAL_PRODUCT_NAME = Textual
+
+// TEXTUAL_PRODUCT_LOCATION is replaced by the build script
+TEXTUAL_PRODUCT_LOCATION = /Applications/${TEXTUAL_PRODUCT_NAME}.app
+
+// TEXTUAL_PRODUCT_BINARY is replaced by the build script
+TEXTUAL_PRODUCT_BINARY = ${TEXTUAL_PRODUCT_LOCATION}/Contents/MacOS/${TEXTUAL_PRODUCT_NAME}
+
+// TEXTUAL_WORKSPACE_TEMP_DIR should be same for every
+// project so only override TEXTUAL_WORKSPACE_DIR, not this.
+TEXTUAL_WORKSPACE_TEMP_DIR = ${TEXTUAL_WORKSPACE_DIR}/.tmp
+
+SHARED_PRECOMPS_DIR = ${TEXTUAL_WORKSPACE_TEMP_DIR}/SharedPCH

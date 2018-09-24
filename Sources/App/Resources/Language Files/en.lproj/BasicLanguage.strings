@@ -1,0 +1,85 @@
+/* *********************************************************************
+ *                  _____         _               _
+ *                 |_   _|____  _| |_ _   _  __ _| |
+ *                   | |/ _ \ \/ / __| | | |/ _` | |
+ *                   | |  __/>  <| |_| |_| | (_| | |
+ *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
+ *
+ * Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ *       Please see Acknowledgements.pdf for additional information.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *  * Neither the name of Textual, "Codeux Software, LLC", nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ *********************************************************************** */
+
+"71l-y7" = "None";
+"vbl-xi" = "Unknown";
+
+"1dd-0f" = "Textual IRC Client: www.textualapp.com";
+"vfu-c0" = "Untitled Connection";
+
+"zhr-lq" = "My %@ has gone to sleep. ZZZzzz…";
+"qi7-5y" = "My Mac has gone to sleep. ZZZzzz…";
+
+"hri-l0" = "Close Query";
+"1f6-bg" = "Close Window";
+"w3a-je" = "Disconnect from %@";
+"5td-3f" = "Leave Channel";
+"x97-ro" = "Quit Textual 7";
+
+"6cw-ni" = "Copy Log as HTML";
+"ngd-ms" = "Force Reload Style";
+"tfj-m9" = "Open Web Inspector";
+"o5l-4s" = "Look Up in Dictionary";
+"zxs-yy" = "Look Up “%@”";
+"1ll-h9" = "Search With %@";
+
+"eoq-pr-128" = "seconds";
+"eoq-pr-64" = "minutes";
+"eoq-pr-32" = "hours";
+"eoq-pr-16" = "days";
+"eoq-pr-8" = "months";
+"eoq-pr-4" = "years";
+
+"fko-64-128" = "second";
+"fko-64-64" = "minute";
+"fko-64-32" = "hour";
+"fko-64-16" = "day";
+"fko-64-8" = "month";
+"fko-64-4" = "year";
+
+"4um-w4" = "%@ ago";
+
+"7kc-mo" = "No Actions Available";
+
+"7lm-bq" = "Built-in";
+"bm2-4p" = "Custom";
+"aqy-6c" = "Custom — iCloud Drive";
+
+"fo8-1h" = "Fill out this field";
+
+"iwp-cg" = "IRC Colors";
+"ham-vk" = "Color %ld";
