@@ -262,7 +262,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	d.message = TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[gnb-rv]");
 
-	d.prompt = TXTLS(@"Prompts[0006]");
+	d.prompt = TXTLS(@"Prompts[xne-79]");
 
 	[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
 		if (result == NSModalResponseOK) {
@@ -283,7 +283,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[TDCAlert alertSheetWithWindow:self.window
 							  body:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[967-f3]", errorMessage)
 							 title:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[i3q-j0]")
-					 defaultButton:TXTLS(@"Prompts[0005]")
+					 defaultButton:TXTLS(@"Prompts[c7s-dq]")
 				   alternateButton:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[uyy-qm]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
@@ -300,7 +300,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[TDCAlert alertSheetWithWindow:self.window
 							  body:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[lum-et]")
 							 title:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[i83-gw]")
-					 defaultButton:TXTLS(@"Prompts[0005]")
+					 defaultButton:TXTLS(@"Prompts[c7s-dq]")
 				   alternateButton:TXTLS(@"TDCInAppPurchaseUpgradeEligibilitySheet[on9-6e]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
