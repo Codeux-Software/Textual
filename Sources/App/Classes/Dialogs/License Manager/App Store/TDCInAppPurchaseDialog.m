@@ -294,7 +294,7 @@ enum {
 							 title:TXTLS(@"TDCInAppPurchaseDialog[92e-sa]")
 					 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[abg-mv]")
 				   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[bt3-h3]")
-					   otherButton:TXTLS(@"Prompts[0008]")
+					   otherButton:TXTLS(@"Prompts[aqw-q1]")
 					suppressionKey:@"trial_is_expired_mas"
 				   suppressionText:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
@@ -319,7 +319,7 @@ enum {
 							 title:TXTLS(@"TDCInAppPurchaseDialog[doy-jd]")
 					 defaultButton:TXTLS(@"TDCInAppPurchaseDialog[wsb-3b]")
 				   alternateButton:TXTLS(@"TDCInAppPurchaseDialog[wl7-9j]")
-					   otherButton:TXTLS(@"Prompts[0008]")
+					   otherButton:TXTLS(@"Prompts[aqw-q1]")
 					suppressionKey:@"trial_is_expired_mas"
 				   suppressionText:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
@@ -466,7 +466,7 @@ enum {
 					[TDCAlert alertSheetWithWindow:self.window
 											  body:TXTLS(@"TDCInAppPurchaseDialog[cco-a9]", transationError.localizedDescription)
 											 title:TXTLS(@"TDCInAppPurchaseDialog[qmn-og]")
-									 defaultButton:TXTLS(@"Prompts[0005]")
+									 defaultButton:TXTLS(@"Prompts[c7s-dq]")
 								   alternateButton:nil
 									   otherButton:nil];
 
@@ -545,7 +545,7 @@ enum {
 	[TDCAlert alertSheetWithWindow:self.window
 							  body:TXTLS(@"TDCInAppPurchaseDialog[get-1i]")
 							 title:TXTLS(@"TDCInAppPurchaseDialog[2g7-u2]")
-					 defaultButton:TXTLS(@"Prompts[0005]")
+					 defaultButton:TXTLS(@"Prompts[c7s-dq]")
 				   alternateButton:nil
 					   otherButton:nil];
 }
@@ -1043,7 +1043,7 @@ enum {
 		[TDCAlert alertSheetWithWindow:self.window
 								  body:TXTLS(@"TDCInAppPurchaseDialog[ej5-pi]")
 								 title:TXTLS(@"TDCInAppPurchaseDialog[ziy-5r]", productTitle)
-						 defaultButton:TXTLS(@"Prompts[0005]")
+						 defaultButton:TXTLS(@"Prompts[c7s-dq]")
 					   alternateButton:nil
 						   otherButton:nil];
 
@@ -1086,7 +1086,7 @@ enum {
 		[TDCAlert alertSheetWithWindow:self.window
 								  body:TXTLS(@"TDCInAppPurchaseDialog[be0-0g]")
 								 title:TXTLS(@"TDCInAppPurchaseDialog[bgq-1w]")
-						 defaultButton:TXTLS(@"Prompts[0005]")
+						 defaultButton:TXTLS(@"Prompts[c7s-dq]")
 					   alternateButton:nil
 						   otherButton:nil];
 		
@@ -1386,7 +1386,7 @@ enum {
 	[TDCAlert alertSheetWithWindow:self.window
 							  body:TXTLS(@"TDCInAppPurchaseDialog[n09-d1]")
 							 title:TXTLS(@"TDCInAppPurchaseDialog[dg7-y2]")
-					 defaultButton:TXTLS(@"Prompts[0003]")
+					 defaultButton:TXTLS(@"Prompts[zjw-bd]")
 				   alternateButton:nil
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
@@ -1471,7 +1471,7 @@ enum {
 	[TDCAlert alertSheetWithWindow:self.window
 							  body:TXTLS(@"TDCInAppPurchaseDialog[zyf-bl]")
 							 title:TXTLS(@"TDCInAppPurchaseDialog[e15-d5]")
-					 defaultButton:TXTLS(@"Prompts[0005]")
+					 defaultButton:TXTLS(@"Prompts[c7s-dq]")
 				   alternateButton:nil
 					   otherButton:nil];
 }
