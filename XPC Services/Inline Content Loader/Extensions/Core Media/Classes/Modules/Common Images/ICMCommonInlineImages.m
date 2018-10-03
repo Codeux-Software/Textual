@@ -451,6 +451,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 		return [NSString stringWithFormat:@"http://www.speedtest.net/result/%@.png", resultId];
 	}
+	else if ([urlHost isDomain:@"fuelrats.cloud"])
+	{
+		if ([urlPath hasPrefix:@"/s/"] == NO) {
+			return nil;
+		}
+
+		NSString *s = [urlPath substringFromIndex:3];
+
+		if (s.alphabeticNumericOnly) {
+			return [NSString stringWithFormat:@"https://fuelrats.cloud/s/%@/preview", s];
+		}
+	}
 	else if ([urlPath hasPrefix:@"/image/"])
 	{
 		/* Try our best to regonize cl.ly custom domains. */
