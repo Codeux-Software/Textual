@@ -299,5 +299,14 @@
 		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
+	<key>hackint</key>
+	<dict>
+		<key>serverAddress</key>
+		<string>irc.hackint.org</string>
+		<key>serverPort</key>
+		<integer>6697</integer>
+		<key>prefersSecuredConnection</key>
+		<true/>
+	</dict>	
 </dict>
 </plist>
