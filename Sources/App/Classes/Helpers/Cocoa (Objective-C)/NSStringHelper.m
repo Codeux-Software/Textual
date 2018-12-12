@@ -171,34 +171,6 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 {
 	NSUInteger maximumLength = TXMaximumIRCNicknameLength;
 
-	if (client) {
-		/* At least one server has been found (gitter.im) has been found
-		 which does not send a configuration profile. They allow a 
-		 nickname length larger than IRCISupportInfo uses as a default
-		 which means parsing will go wonky. */
-		/* A smarter workaround would probably to check if specific 
-		 configuration options were received (e.g. "NICKLEN"), but that 
-		 has more overhead than using a boolean. */
-
-		if (client.supportInfo.configurationReceived) {
-			maximumLength = client.supportInfo.maximumNicknameLength;
-		} else {
-			maximumLength = 0;
-		}
-
-		/* If we are connected to ZNC, then do not enforce maximum 
-		 nickname length. It is easier to disable this check than
-		 to check whether a nickname (e.g. *buffextras) should be
-		 handled differently. */
-		if (client.isConnectedToZNC) {
-			maximumLength = 0;
-		}
-	}
-
-	if (maximumLength == 0) {
-		maximumLength = TXMaximumIRCNicknameLength;
-	}
-
 	return ([self isNotEqualTo:@"*"] &&
 			self.length > 0 &&
 			self.length <= maximumLength &&
