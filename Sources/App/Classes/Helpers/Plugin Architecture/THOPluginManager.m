@@ -246,7 +246,7 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 
 			NSString *command = fileWithoutExtension.lowercaseString;
 
-            BOOL executable = [RZFileManager() isExecutableFileAtPath:file];
+			BOOL executable = [RZFileManager() isExecutableFileAtPath:file];
 
 			if (executable == NO && fileExtension != TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod) {
 				LogToConsoleDebug("WARNING: File “%@“ found in unsupervised script folder but it does not have a file extension recognized by Textual. It will be ignored.", file);
