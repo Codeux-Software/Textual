@@ -222,8 +222,6 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 {
 	NSArray *forbiddenCommands = self.listOfForbiddenCommandNames;
 
-	NSArray *scriptExtensions = @[@"scpt", @"py", @"pyc", @"rb", @"pl", @"sh", @"php", @"bash"];
-
 	NSArray *scriptPaths =
 	[RZFileManager() buildPathArray:
 		[TPCPathInfo customScripts],
@@ -248,7 +246,9 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 
 			NSString *command = fileWithoutExtension.lowercaseString;
 
-			if ([scriptExtensions containsObject:fileExtension] == NO) {
+            BOOL executable = [RZFileManager() isExecutableFileAtPath:file];
+
+			if (executable == NO && fileExtension != TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod) {
 				LogToConsoleDebug("WARNING: File “%@“ found in unsupervised script folder but it does not have a file extension recognized by Textual. It will be ignored.", file);
 
 				continue;
