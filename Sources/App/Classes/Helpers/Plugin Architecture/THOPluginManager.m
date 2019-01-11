@@ -240,15 +240,17 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 		NSArray *pathFiles = [RZFileManager() contentsOfDirectoryAtPath:path error:NULL];
 
 		for (NSString *file in pathFiles) {
+			NSString *filePath = [path stringByAppendingPathComponent:file];
+
 			NSString *fileExtension = file.pathExtension;
 
 			NSString *fileWithoutExtension = file.stringByDeletingPathExtension;
 
 			NSString *command = fileWithoutExtension.lowercaseString;
 
-			BOOL executable = [RZFileManager() isExecutableFileAtPath:file];
+			BOOL executable = [RZFileManager() isExecutableFileAtPath:filePath];
 
-			if (executable == NO && fileExtension != TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod) {
+			if (executable == NO && ![fileExtension isEqualToString:TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod]) {
 				LogToConsoleDebug("WARNING: File “%@“ found in unsupervised script folder but it does not have a file extension recognized by Textual. It will be ignored.", file);
 
 				continue;
@@ -259,8 +261,6 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 			}
 
 			if (returnPathInfo) {
-				NSString *filePath = [path stringByAppendingPathComponent:file];
-
 				[returnValue setObjectWithoutOverride:filePath forKey:command];
 			} else {
 				[returnValue addObjectWithoutDuplication:command];
