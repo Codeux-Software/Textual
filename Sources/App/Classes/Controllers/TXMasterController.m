@@ -410,12 +410,12 @@ NS_ASSUME_NONNULL_BEGIN
 		return YES;
 	}
 
-    BOOL stillConnected = NO;
-    for (IRCClient *u in worldController().clientList) {
-        if (u.isConnecting || u.isConnected) {
-            stillConnected = YES;
-        }
-    }
+	BOOL stillConnected = NO;
+	for (IRCClient *u in worldController().clientList) {
+		if (u.isConnecting || u.isConnected) {
+			stillConnected = YES;
+		}
+	}
 
 	if ([TPCPreferences confirmQuit] && stillConnected) {
 		BOOL result = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[77u-vp]")
@@ -519,7 +519,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* We want certain things to 100% happen before the app completely closes.
 	 This block that is performed below loops until all these actions are completed.
 	 Notable actions: gracefully leaving IRC, saving historic logs, and closing
-	 down iCloud syncing (if applicable). */ 
+	 down iCloud syncing (if applicable). */
 	XRPerformBlockAsynchronouslyOnGlobalQueueWithPriority(^{
 		do {
 			/* We wait until this value reaches zero so that
