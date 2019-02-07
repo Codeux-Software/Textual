@@ -5,6 +5,10 @@
 
 /* Basic Body Structure - Sapientia 1.3 */
 
+:root {
+	supported-color-schemes: dark;
+}
+
 * {
 	margin: 0;
 	padding: 0;

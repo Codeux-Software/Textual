@@ -5,6 +5,10 @@
 
 /* Basic Structure */
 
+:root {
+	supported-color-schemes: dark;
+}
+
 body {
 	background: #222;
 	color: #cfcfcf;
