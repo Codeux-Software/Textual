@@ -250,8 +250,8 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 
 			BOOL executable = [RZFileManager() isExecutableFileAtPath:filePath];
 
-			if (executable == NO && ![fileExtension isEqualToString:TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod]) {
-				LogToConsoleDebug("WARNING: File “%@“ found in unsupervised script folder but it does not have a file extension recognized by Textual. It will be ignored.", file);
+			if (executable == NO && [fileExtension isEqualToString:TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod] == NO) {
+				LogToConsoleDebug("WARNING: File “%@“ found in unsupervised script folder but it isn't AppleScript or an executable. It will be ignored.", file);
 
 				continue;
 			} else if ([forbiddenCommands containsObject:command]) {
