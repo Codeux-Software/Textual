@@ -279,8 +279,8 @@
             <rect key="frame" x="0.0" y="0.0" width="589" height="236"/>
             <subviews>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="bKt-Ac-1I2">
-                    <rect key="frame" x="58" y="190" width="410" height="18"/>
-                    <buttonCell key="cell" type="check" title="Request confirmation before quitting Textual if connections are open" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="XAa-aA-vKv">
+                    <rect key="frame" x="58" y="190" width="274" height="18"/>
+                    <buttonCell key="cell" type="check" title="Request confirmation before quitting Textual" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="XAa-aA-vKv">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
