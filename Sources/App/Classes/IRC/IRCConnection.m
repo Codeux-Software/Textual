@@ -314,7 +314,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)openInsecureCertificateTrustPanel:(RCMTrustResponse)trustBlock
 {
-	if (self.isConnected == NO || self.trustPanel != nil) {
+	if (self.isConnecting == NO || self.trustPanel != nil) {
 		return;
 	}
 
