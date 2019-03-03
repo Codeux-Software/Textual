@@ -48,6 +48,8 @@
 	<string>MacBook Air (11-inch, Early 2015)</string>
 	<key>MacBookAir7,2</key>
 	<string>MacBook Air (13-inch, Early 2015)</string>
+	<key>MacBookAir8,1</key>
+	<string>MacBook Air (13-inch, Late 2018)</string>
 	<key>MacBookPro1,1</key>
 	<string>MacBook Pro (Original)</string>
 	<key>MacBookPro1,2</key>
@@ -148,6 +150,8 @@
 	<string>Mac Mini (Late 2012)</string>
 	<key>Macmini7,1</key>
 	<string>Mac Mini (Late 2014)</string>
+	<key>Macmini8,1</key>
+	<string>Mac Mini (Late 2018)</string>
 	<key>Xserve1,1</key>
 	<string>Xserve (Original)</string>
 	<key>Xserve2,1</key>
@@ -194,6 +198,8 @@
 	<string>iMac (21.5-Inch, Retina, Mid-2017)</string>
 	<key>iMac18,3</key>
 	<string>iMac (27-inch, Retina, Mid-2017)</string>
+	<key>iMacPro1,1</key>
+	<string>iMac (27-inch, Retina, Late 2017)</string>
 	<key>iMac4,1</key>
 	<string>iMac (Early 2006)</string>
 	<key>iMac4,2</key>
