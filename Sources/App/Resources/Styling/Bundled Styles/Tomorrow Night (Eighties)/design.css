@@ -11,6 +11,10 @@
 
 /* @group Basic Body Structure */
 
+:root {
+	supported-color-schemes: dark;
+}
+
 * {
 	margin: 0;
 	padding: 0;
