@@ -65,6 +65,7 @@
 #import "TXMenuControllerPrivate.h"
 #import "TXWindowControllerPrivate.h"
 #import "TXMasterControllerPrivate.h"
+#import "IRCClient.h"
 
 #if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
 #import <HockeySDK/HockeySDK.h>
@@ -409,7 +410,14 @@ NS_ASSUME_NONNULL_BEGIN
 		return YES;
 	}
 
-	if ([TPCPreferences confirmQuit]) {
+	BOOL stillConnected = NO;
+	for (IRCClient *u in worldController().clientList) {
+		if (u.isConnecting || u.isConnected) {
+			stillConnected = YES;
+		}
+	}
+
+	if ([TPCPreferences confirmQuit] && stillConnected) {
 		BOOL result = [TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[77u-vp]")
 												title:TXTLS(@"Prompts[6vj-2p]")
 										defaultButton:TXTLS(@"Prompts[1bf-k0]")
@@ -511,7 +519,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* We want certain things to 100% happen before the app completely closes.
 	 This block that is performed below loops until all these actions are completed.
 	 Notable actions: gracefully leaving IRC, saving historic logs, and closing
-	 down iCloud syncing (if applicable). */ 
+	 down iCloud syncing (if applicable). */
 	XRPerformBlockAsynchronouslyOnGlobalQueueWithPriority(^{
 		do {
 			/* We wait until this value reaches zero so that
