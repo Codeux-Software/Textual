@@ -8707,7 +8707,7 @@
 		4C0BA6D81990798800857343 /* App Store */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				PROVISIONING_PROFILE_SPECIFIER = "Development: com.codeux.apps.textual-mas";
+				PROVISIONING_PROFILE_SPECIFIER = "App Store Dev. (com.codeux.apps.textual-mas)";
 			};
 			name = "App Store";
 		};
