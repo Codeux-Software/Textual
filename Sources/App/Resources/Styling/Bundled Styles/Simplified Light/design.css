@@ -5,6 +5,10 @@
 
 /* Basic Body Structure */
 
+:root {
+	supported-color-schemes: light;
+}
+
 * {
 	margin: 0;
 	padding: 0;
