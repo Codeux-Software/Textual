@@ -54,8 +54,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)emptyCaches;
 + (void)emptyCaches:(void (^ _Nullable)(void))completionHandler;
-
-- (void)openWebInspector;
 @end
 
 NS_ASSUME_NONNULL_END

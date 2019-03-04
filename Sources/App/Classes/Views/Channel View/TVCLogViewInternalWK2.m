@@ -305,27 +305,6 @@ create_normal_pool:
 	}
 }
 
-- (void)openWebInspector
-{
-	WKPageRef pageRef = NULL;
-
-	if (TEXTUAL_RUNNING_ON_SIERRA) {
-		pageRef = [self _pageForTesting];
-	} else if (TEXTUAL_RUNNING_ON_ELCAPITAN) {
-		WKView *webViewParent = (id)self.subviews[0];
-
-		pageRef = [webViewParent pageRef];
-	}
-
-	if (pageRef == NULL) {
-		return;
-	}
-
-	WKInspectorRef inspectorRef = WKPageGetInspector(pageRef);
-
-	WKInspectorShow(inspectorRef);
-}
-
 - (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward
 {
 	NSParameterAssert(searchString != nil);
