@@ -160,3 +160,6 @@
 
 "rn7-08" = "Unable to access iCloud";
 "wjn-f1" = "Make sure you're logged in and that “iCloud Drive” or “Documents & Data” is enabled.";
+
+"ujw-64" = "The “Inspect Element” feature of WebKit2 cannot be accessed on this version of macOS.";
+"kig-m1" = "Disable WebKit2 or upgrade to a newer version of macOS.";

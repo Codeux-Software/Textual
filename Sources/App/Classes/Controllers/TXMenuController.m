@@ -1401,16 +1401,35 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)openWebInspector:(id)sender
 {
-	TVCLogView *webView = self.selectedViewControllerBackingView;
+	/*
+	 When WebKit2 first announced, there was no way for an
+	 app to take an NSMenu, modify it, and return the result
+	 when a context menu is presented.
 
-	if (webView == nil) {
-		return;
-	}
+	 WebKit1 had a delegate method for that named:
+	 -webView:contextMenuItemsForElement:defaultMenuItems:
 
-	NSAssert(webView.isUsingWebKit2,
-		@"Missing implementation");
+	 WebKit2 added this delegate method, in private, but it
+	 was not available until the next update of macOS.
 
-	[(TVCLogViewInternalWK2 *)webView.webView openWebInspector];
+	 'Til then, we had to fake "Inspect Element" because we
+	 did not have access to the default implementation that
+	 is available through the delegate method.
+
+	 Apple now flags the function names that were used to do that.
+
+	 This will break "Inspect Element" on one version of macOS.
+	 Which one I don't even recall.
+	 But it is worth it to make the review process smoother.
+
+	 Sorry.
+*/
+
+	(void)
+	[TDCAlert alertWithMessage:TXTLS(@"Prompts[kig-m1]")
+						 title:TXTLS(@"Prompts[ujw-64]")
+				 defaultButton:TXTLS(@"Prompts[c7s-dq]")
+			   alternateButton:nil];
 }
 
 - (void)markScrollback:(id)sender
