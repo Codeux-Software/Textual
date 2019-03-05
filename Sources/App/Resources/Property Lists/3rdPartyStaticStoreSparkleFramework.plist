@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SUFeedURL</key>
+	<string>https://textual-updates-backend.codeux.com/sparkle/feeds/v7/feed-one.xml</string>
+	<key>SUFeedURL-beta</key>
+	<string>https://textual-updates-backend.codeux.com/sparkle/feeds/v7/feed-one-beta.xml</string>
+	<key>SUScheduledCheckInterval</key>
+	<string>345600</string>
+	<key>SUScheduledCheckInterval-beta</key>
+	<string>86400</string>
+</dict>
+</plist>

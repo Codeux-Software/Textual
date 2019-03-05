@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>com.adiumX.AutoHyperlinks.permittedSchemesDefault</key>
+	<array>
+		<string>feed</string>
+		<string>ftp</string>
+		<string>gopher</string>
+		<string>irc</string>
+		<string>ircs</string>
+		<string>itms</string>
+		<string>sftp</string>
+		<string>ssh</string>
+		<string>telnet</string>
+		<string>textual</string>
+		<string>webcal</string>
+		<string>x-man-page</string>
+	</array>
+	<key>NSWindowAutosaveFrameMovesToActiveDisplay</key>
+	<false/>
+	<key>WebKitDeveloperExtras</key>
+	<true/>
+	<key>__uniquePageGroupID-1.WebKit2ScrollAnimatorEnabled</key>
+	<false/>
+	<key>__uniquePageGroupID-1.WebKit2ShouldRespectImageOrientation</key>
+	<true/>
+</dict>
+</plist>

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>TPCPreferencesUserDefaults Paths to Migrate</key>
+	<array>
+		<dict>
+			<key>buildScheme</key>
+			<string>devid</string>
+			<key>sourcePath</key>
+			<string>group:8482Q6EPL6.com.codeux.irc.textual</string>
+			<key>identifier</key>
+			<string>8f014f5a-b079-4574-b856-c4f893c99145</string>
+		</dict>
+	</array>
+	<key>TPCPreferencesUserDefaults Keys Excluded from Export</key>
+	<dict>
+		<key>CG</key>
+		<string>PREFIX</string>
+		<key>NS</key>
+		<string>PREFIX</string>
+		<key>SU</key>
+		<string>PREFIX</string>
+		<key>SGT</key>
+		<string>PREFIX</string>
+		<key>Apple</key>
+		<string>PREFIX</string>
+		<key>WebKit</key>
+		<string>PREFIX</string>
+		<key>__</key>
+		<string>PREFIX</string>
+		<key>com.apple.</key>
+		<string>PREFIX</string>
+		<key>DataDetectorsSettings</key>
+		<string>PREFIX</string>
+		<key>METAL_</key>
+		<string>PREFIX</string>
+		<key>HockeySDK</key>
+		<string>PREFIX</string>
+		<key>Color Catalog -&gt;</key>
+		<string>PREFIX</string>
+		<key>TXRunCount</key>
+		<string>=</string>
+		<key>TXRunTime</key>
+		<string>=</string>
+		<key>TextField</key>
+		<string>PREFIX</string>
+		<key>System -&gt;</key>
+		<string>PREFIX</string>
+		<key>Security -&gt;</key>
+		<string>PREFIX</string>
+		<key>Window -&gt; Main Window</key>
+		<string>PREFIX</string>
+		<key>Private Extension Store -&gt;</key>
+		<string>PREFIX</string>
+		<key>THOPluginManager -&gt;</key>
+		<string>PREFIX</string>
+		<key>Saved Window State -&gt; Internal (v3) -&gt;</key>
+		<string>PREFIX</string>
+		<key>Text Input Prompt Suppression -&gt;</key>
+		<string>PREFIX</string>
+		<key>Textual In-App Purchase -&gt; </key>
+		<string>PREFIX</string>
+		<key>Textual Five Migration Tool -&gt;</key>
+		<string>PREFIX</string>
+		<key>Textual 7 Upgrade -&gt; </key>
+		<string>PREFIX</string>
+		<key>Internal Theme Settings Key-value Store -&gt;</key>
+		<string>PREFIX</string>
+		<key>TPCPreferences -&gt; Migration -&gt;</key>
+		<string>PREFIX</string>
+		<key>TPCPreferencesUserDefaults</key>
+		<string>PREFIX</string>
+		<key>TDCPreferencesControllerDidShowMountainLionDeprecationWarning</key>
+		<string>=</string>
+		<key>File Transfers -&gt; File Transfer Download Folder Bookmark</key>
+		<string>=</string>
+		<key>LogTranscriptDestinationSecurityBookmark</key>
+		<string>=</string>
+		<key>LogTranscriptDestinationSecurityBookmark_5</key>
+		<string>=</string>
+		<key>Theme -&gt; Name -&gt; Did Not Exist During Last Sync</key>
+		<string>=</string>
+		<key>Theme -&gt; Font Name -&gt; Did Not Exist During Last Sync</key>
+		<string>=</string>
+		<key>TVCLogControllerHistoricLogFileSavePath_v2</key>
+		<string>=</string>
+		<key>TVCLogControllerHistoricLogFileSavePath_v3</key>
+		<string>=</string>
+	</dict>
+	<key>TPCPreferencesUserDefaults Obsolete Keys</key>
+	<dict>
+		<key>System -&gt;</key>
+		<string>PREFIX</string>
+		<key>Security -&gt;</key>
+		<string>PREFIX</string>
+		<key>Saved Window State —&gt; Internal —&gt;</key>
+		<string>PREFIX</string>
+		<key>Saved Window State —&gt; Internal (v2) —&gt;</key>
+		<string>PREFIX</string>
+		<key>Saved Window State —&gt; Internal (v3) -&gt;</key>
+		<string>PREFIX</string>
+		<key>Theme -&gt; Name -&gt; Did Not Exist During Last Sync</key>
+		<string>=</string>
+		<key>Theme -&gt; Font Name -&gt; Did Not Exist During Last Sync</key>
+		<string>=</string>
+		<key>Theme -&gt; Invert Sidebar Colors Preference Enabled</key>
+		<string>=</string>
+		<key>Theme -&gt; Channel Font Preference Enabled</key>
+		<string>=</string>
+		<key>Theme -&gt; Nickname Format Preference Enabled</key>
+		<string>=</string>
+		<key>Theme -&gt; Timestamp Format Preference Enabled</key>
+		<string>=</string>
+		<key>GenerateLocalizedTimestampTemplateToken</key>
+		<string>=</string>
+		<key>GCDAsyncSocket Cipher List Includes Deprecated Ciphers</key>
+		<string>=</string>
+	</dict>
+	<key>IRCClient List of NickServ Successfully Identified Tokens</key>
+	<array>
+		<string>now recognized</string>
+		<string>automatically identified</string>
+		<string>already identified</string>
+		<string>successfully identified</string>
+		<string>you are already logged in</string>
+		<string>you are now identified</string>
+		<string>password accepted</string>
+	</array>
+	<key>IRCClient List of NickServ Needs Identification Tokens</key>
+	<array>
+		<string>nickname is owned</string>
+		<string>nickname is registered</string>
+		<string>owned by someone else</string>
+		<string>nick belongs to another user</string>
+		<string>if you do not change your nickname</string>
+		<string>authentication required</string>
+		<string>authenticate yourself</string>
+		<string>identify yourself</string>
+		<string>type /msg NickServ IDENTIFY password</string>
+	</array>
+	<key>IRCClient List of Nicknames that Encryption Forbids</key>
+	<dict>
+		<key>UnderNet</key>
+		<array>
+			<string>c</string>
+			<string>w</string>
+			<string>x</string>
+			<string>x@channels.undernet.org</string>
+		</array>
+		<key>-default-</key>
+		<array>
+			<string>authserv</string>
+			<string>botserv</string>
+			<string>chanserv</string>
+			<string>hostserv</string>
+			<string>memoserv</string>
+			<string>nickserv</string>
+			<string>operserv</string>
+			<string>rootserv</string>
+			<string>statserv</string>
+			<string>userserv</string>
+		</array>
+	</dict>
+	<key>THOPluginManager List of Forbidden Commands</key>
+	<array>
+		<string>connect</string>
+		<string>die</string>
+		<string>error</string>
+		<string>info</string>
+		<string>kill</string>
+		<string>links</string>
+		<string>lusers</string>
+		<string>motd</string>
+		<string>names</string>
+		<string>oper</string>
+		<string>pass</string>
+		<string>ping</string>
+		<string>pong</string>
+		<string>rehash</string>
+		<string>restart</string>
+		<string>server</string>
+		<string>service</string>
+		<string>servlist</string>
+		<string>squery</string>
+		<string>squit</string>
+		<string>stats</string>
+		<string>time</string>
+		<string>trace</string>
+		<string>userhost</string>
+		<string>users</string>
+		<string>version</string>
+		<string>whowas</string>
+	</array>
+	<key>THOPluginManager List of Reserved Commands</key>
+	<array>
+		<string>apps</string>
+		<string>banhammer</string>
+		<string>delkey</string>
+		<string>ffuu</string>
+		<string>flip</string>
+		<string>hermes</string>
+		<string>key</string>
+		<string>keyx</string>
+		<string>music</string>
+		<string>np</string>
+		<string>o_p</string>
+		<string>page</string>
+		<string>qt</string>
+		<string>radium</string>
+		<string>setkey</string>
+		<string>setkeymode</string>
+		<string>shell</string>
+		<string>slap</string>
+		<string>spotify</string>
+		<string>vlc</string>
+	</array>
+	<key>THOPluginManager Extras Installer Latest Extension Versions</key>
+	<dict>
+		<key>com.codeux.app-extensions.textual-BlowfishEncryption</key>
+		<string>1.0.14</string>
+		<key>com.codeux.app-extensions.textual-Caffeine</key>
+		<string>1.0.7</string>
+		<key>com.codeux.app-extensions.textual-WikiStyleLinkParser</key>
+		<string>1.0.7</string>
+	</dict>
+	<key>Spelling Ignores</key>
+	<array>
+		<string>deop</string>
+	</array>
+</dict>
+</plist>

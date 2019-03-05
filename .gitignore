@@ -8,8 +8,11 @@
 *.perspectivev3
 *.pyc
 .tmp
-Build Results/*
+build
+Build Results
 xcuserdata
 *.xcworkspace
-Resources/Build Configurations/Provisioning Profile.xcconfig
-Resources/Documents/Header Documentation/Results/*
+Sources/App/Resources/Scripting/Script Files/Textual Extras Installer/Installation Files/Extensions/*
+Sources/App/Resources/Scripting/Script Files/Textual Extras Installer/Packages/MACAPPSTORE/*
+Sources/App/Resources/Scripting/Script Files/Textual Extras Installer/Packages/STANDALONE/*
+!/Configurations/Build

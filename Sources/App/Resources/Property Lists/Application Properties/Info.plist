@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.social-networking</string>
+	<key>CFBundleSignature</key>
+	<string>TXTL</string>
+	<key>CFBundleDisplayName</key>
+	<string>Textual IRC Client</string>
+	<key>CFBundleIdentifier</key>
+	<string>${PRODUCT_BUNDLE_IDENTIFIER}</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleVersion</key>
+	<string>7.1.1</string>
+	<key>CFBundleShortVersionString</key>
+	<string>7.1.1</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2010 - 2018 Codeux Software, LLC. All rights reserved.</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIconFile</key>
+	<string>applicationIcon.icns</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>NSMainNibFile</key>
+	<string>TXCMainMenu</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.9.5</string>
+	<key>NSPrincipalClass</key>
+	<string>TXApplication</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Textual accesses contacts to automatically populate certain forms with your name and/or e-mail address. Access to this information is not required.</string>
+	<key>NSAppleScriptEnabled</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>scpt</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Textual IRC Client Script</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>****</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSTypeIsPackage</key>
+			<integer>0</integer>
+			<key>NSDocumentClass</key>
+			<string>TPCResourceManagerDocumentTypeImporter</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>bundle</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Textual IRC Client Extension</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSTypeIsPackage</key>
+			<integer>1</integer>
+			<key>NSDocumentClass</key>
+			<string>TPCResourceManagerDocumentTypeImporter</string>
+		</dict>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleURLIconFile</key>
+			<string>application</string>
+			<key>CFBundleURLName</key>
+			<string>Internet Relay Chat</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>irc</string>
+				<string>ircs</string>
+				<string>textual</string>
+			</array>
+		</dict>
+	</array>
+	<key>SUAllowsAutomaticUpdates</key>
+	<true/>
+	<key>SUBundleName</key>
+	<string>Textual</string>
+	<key>SUEnableSystemProfiling</key>
+	<false/>
+</dict>
+</plist>

@@ -1,0 +1,245 @@
+
+/*
+
+	 PLEASE READ
+
+	 The following CSS definitions exist for the internal use of Textual.
+	 If you are a style developer reading this and plan on using custom
+	 templates, then DO NOT modify these. You can touch anything else you
+	 want, but we are trying to have some consistency between styles.
+
+	 PLEASE READ
+
+ */
+
+/* Print actions */
+@media print {
+	#topicBar {
+		display: none;
+	}
+}
+
+/* Reserved lines */
+/* Fixed width font line */
+tt {
+	font-family: "Menlo" !important;
+}
+
+/* mIRC Color Codes */
+.effect[data-foreground-color='0']  { color: #ffffff; }
+.effect[data-foreground-color='1']  { color: #000000; }
+.effect[data-foreground-color='2']  { color: #000088; }
+.effect[data-foreground-color='3']  { color: #008800; }
+.effect[data-foreground-color='4']  { color: #ff0000; }
+.effect[data-foreground-color='5']  { color: #880000; }
+.effect[data-foreground-color='6']  { color: #880088; }
+.effect[data-foreground-color='7']  { color: #ff8800; }
+.effect[data-foreground-color='8']  { color: #ffff00; }
+.effect[data-foreground-color='9']  { color: #00ff00; }
+.effect[data-foreground-color='10'] { color: #008888; }
+.effect[data-foreground-color='11'] { color: #00ffff; }
+.effect[data-foreground-color='12'] { color: #0000ff; }
+.effect[data-foreground-color='13'] { color: #ff00ff; }
+.effect[data-foreground-color='14'] { color: #888888; }
+.effect[data-foreground-color='15'] { color: #cccccc; }
+.effect[data-foreground-color='16'] { color: #470000; }
+.effect[data-foreground-color='17'] { color: #472100; }
+.effect[data-foreground-color='18'] { color: #474700; }
+.effect[data-foreground-color='19'] { color: #324700; }
+.effect[data-foreground-color='20'] { color: #004700; }
+.effect[data-foreground-color='21'] { color: #00472c; }
+.effect[data-foreground-color='22'] { color: #004747; }
+.effect[data-foreground-color='23'] { color: #002747; }
+.effect[data-foreground-color='24'] { color: #000047; }
+.effect[data-foreground-color='25'] { color: #2e0047; }
+.effect[data-foreground-color='26'] { color: #470047; }
+.effect[data-foreground-color='27'] { color: #47002a; }
+.effect[data-foreground-color='28'] { color: #740000; }
+.effect[data-foreground-color='29'] { color: #743a00; }
+.effect[data-foreground-color='30'] { color: #747400; }
+.effect[data-foreground-color='31'] { color: #517400; }
+.effect[data-foreground-color='32'] { color: #007400; }
+.effect[data-foreground-color='33'] { color: #007449; }
+.effect[data-foreground-color='34'] { color: #007474; }
+.effect[data-foreground-color='35'] { color: #004074; }
+.effect[data-foreground-color='36'] { color: #000074; }
+.effect[data-foreground-color='37'] { color: #4b0074; }
+.effect[data-foreground-color='38'] { color: #740074; }
+.effect[data-foreground-color='39'] { color: #740045; }
+.effect[data-foreground-color='40'] { color: #b50000; }
+.effect[data-foreground-color='41'] { color: #b56300; }
+.effect[data-foreground-color='42'] { color: #b5b500; }
+.effect[data-foreground-color='43'] { color: #7db500; }
+.effect[data-foreground-color='44'] { color: #00b500; }
+.effect[data-foreground-color='45'] { color: #00b571; }
+.effect[data-foreground-color='46'] { color: #00b5b5; }
+.effect[data-foreground-color='47'] { color: #0063b5; }
+.effect[data-foreground-color='48'] { color: #0000b5; }
+.effect[data-foreground-color='49'] { color: #7500b5; }
+.effect[data-foreground-color='50'] { color: #b500b5; }
+.effect[data-foreground-color='51'] { color: #b5006b; }
+.effect[data-foreground-color='52'] { color: #ff0000; }
+.effect[data-foreground-color='53'] { color: #ff8c00; }
+.effect[data-foreground-color='54'] { color: #ffff00; }
+.effect[data-foreground-color='55'] { color: #b2ff00; }
+.effect[data-foreground-color='56'] { color: #00ff00; }
+.effect[data-foreground-color='57'] { color: #00ffa0; }
+.effect[data-foreground-color='58'] { color: #00ffff; }
+.effect[data-foreground-color='59'] { color: #008cff; }
+.effect[data-foreground-color='60'] { color: #0000ff; }
+.effect[data-foreground-color='61'] { color: #a500ff; }
+.effect[data-foreground-color='62'] { color: #ff00ff; }
+.effect[data-foreground-color='63'] { color: #ff0098; }
+.effect[data-foreground-color='64'] { color: #ff5959; }
+.effect[data-foreground-color='65'] { color: #ffb459; }
+.effect[data-foreground-color='66'] { color: #ffff71; }
+.effect[data-foreground-color='67'] { color: #cfff60; }
+.effect[data-foreground-color='68'] { color: #6fff6f; }
+.effect[data-foreground-color='69'] { color: #65ffc9; }
+.effect[data-foreground-color='70'] { color: #6dffff; }
+.effect[data-foreground-color='71'] { color: #59b4ff; }
+.effect[data-foreground-color='72'] { color: #5959ff; }
+.effect[data-foreground-color='73'] { color: #c459ff; }
+.effect[data-foreground-color='74'] { color: #ff66ff; }
+.effect[data-foreground-color='75'] { color: #ff59bc; }
+.effect[data-foreground-color='76'] { color: #ff9c9c; }
+.effect[data-foreground-color='77'] { color: #ffd39c; }
+.effect[data-foreground-color='78'] { color: #ffff9c; }
+.effect[data-foreground-color='79'] { color: #e2ff9c; }
+.effect[data-foreground-color='80'] { color: #9cff9c; }
+.effect[data-foreground-color='81'] { color: #9cffdb; }
+.effect[data-foreground-color='82'] { color: #9cffff; }
+.effect[data-foreground-color='83'] { color: #9cd3ff; }
+.effect[data-foreground-color='84'] { color: #9c9cff; }
+.effect[data-foreground-color='85'] { color: #dc9cff; }
+.effect[data-foreground-color='86'] { color: #ff9cff; }
+.effect[data-foreground-color='87'] { color: #ff94d3; }
+.effect[data-foreground-color='88'] { color: #000000; }
+.effect[data-foreground-color='89'] { color: #131313; }
+.effect[data-foreground-color='90'] { color: #282828; }
+.effect[data-foreground-color='91'] { color: #363636; }
+.effect[data-foreground-color='92'] { color: #4d4d4d; }
+.effect[data-foreground-color='93'] { color: #656565; }
+.effect[data-foreground-color='94'] { color: #818181; }
+.effect[data-foreground-color='95'] { color: #9f9f9f; }
+.effect[data-foreground-color='96'] { color: #bcbcbc; }
+.effect[data-foreground-color='97'] { color: #e2e2e2; }
+.effect[data-foreground-color='98'] { color: #ffffff; }
+
+.effect[data-background-color='0']  { background-color: #ffffff; }
+.effect[data-background-color='1']  { background-color: #000000; }
+.effect[data-background-color='2']  { background-color: #000088; }
+.effect[data-background-color='3']  { background-color: #008800; }
+.effect[data-background-color='4']  { background-color: #ff0000; }
+.effect[data-background-color='5']  { background-color: #880000; }
+.effect[data-background-color='6']  { background-color: #880088; }
+.effect[data-background-color='7']  { background-color: #ff8800; }
+.effect[data-background-color='8']  { background-color: #ffff00; }
+.effect[data-background-color='9']  { background-color: #00ff00; }
+.effect[data-background-color='10'] { background-color: #008888; }
+.effect[data-background-color='11'] { background-color: #00ffff; }
+.effect[data-background-color='12'] { background-color: #0000ff; }
+.effect[data-background-color='13'] { background-color: #ff00ff; }
+.effect[data-background-color='14'] { background-color: #888888; }
+.effect[data-background-color='15'] { background-color: #cccccc; }
+.effect[data-background-color='16'] { background-color: #470000; }
+.effect[data-background-color='17'] { background-color: #472100; }
+.effect[data-background-color='18'] { background-color: #474700; }
+.effect[data-background-color='19'] { background-color: #324700; }
+.effect[data-background-color='20'] { background-color: #004700; }
+.effect[data-background-color='21'] { background-color: #00472c; }
+.effect[data-background-color='22'] { background-color: #004747; }
+.effect[data-background-color='23'] { background-color: #002747; }
+.effect[data-background-color='24'] { background-color: #000047; }
+.effect[data-background-color='25'] { background-color: #2e0047; }
+.effect[data-background-color='26'] { background-color: #470047; }
+.effect[data-background-color='27'] { background-color: #47002a; }
+.effect[data-background-color='28'] { background-color: #740000; }
+.effect[data-background-color='29'] { background-color: #743a00; }
+.effect[data-background-color='30'] { background-color: #747400; }
+.effect[data-background-color='31'] { background-color: #517400; }
+.effect[data-background-color='32'] { background-color: #007400; }
+.effect[data-background-color='33'] { background-color: #007449; }
+.effect[data-background-color='34'] { background-color: #007474; }
+.effect[data-background-color='35'] { background-color: #004074; }
+.effect[data-background-color='36'] { background-color: #000074; }
+.effect[data-background-color='37'] { background-color: #4b0074; }
+.effect[data-background-color='38'] { background-color: #740074; }
+.effect[data-background-color='39'] { background-color: #740045; }
+.effect[data-background-color='40'] { background-color: #b50000; }
+.effect[data-background-color='41'] { background-color: #b56300; }
+.effect[data-background-color='42'] { background-color: #b5b500; }
+.effect[data-background-color='43'] { background-color: #7db500; }
+.effect[data-background-color='44'] { background-color: #00b500; }
+.effect[data-background-color='45'] { background-color: #00b571; }
+.effect[data-background-color='46'] { background-color: #00b5b5; }
+.effect[data-background-color='47'] { background-color: #0063b5; }
+.effect[data-background-color='48'] { background-color: #0000b5; }
+.effect[data-background-color='49'] { background-color: #7500b5; }
+.effect[data-background-color='50'] { background-color: #b500b5; }
+.effect[data-background-color='51'] { background-color: #b5006b; }
+.effect[data-background-color='52'] { background-color: #ff0000; }
+.effect[data-background-color='53'] { background-color: #ff8c00; }
+.effect[data-background-color='54'] { background-color: #ffff00; }
+.effect[data-background-color='55'] { background-color: #b2ff00; }
+.effect[data-background-color='56'] { background-color: #00ff00; }
+.effect[data-background-color='57'] { background-color: #00ffa0; }
+.effect[data-background-color='58'] { background-color: #00ffff; }
+.effect[data-background-color='59'] { background-color: #008cff; }
+.effect[data-background-color='60'] { background-color: #0000ff; }
+.effect[data-background-color='61'] { background-color: #a500ff; }
+.effect[data-background-color='62'] { background-color: #ff00ff; }
+.effect[data-background-color='63'] { background-color: #ff0098; }
+.effect[data-background-color='64'] { background-color: #ff5959; }
+.effect[data-background-color='65'] { background-color: #ffb459; }
+.effect[data-background-color='66'] { background-color: #ffff71; }
+.effect[data-background-color='67'] { background-color: #cfff60; }
+.effect[data-background-color='68'] { background-color: #6fff6f; }
+.effect[data-background-color='69'] { background-color: #65ffc9; }
+.effect[data-background-color='70'] { background-color: #6dffff; }
+.effect[data-background-color='71'] { background-color: #59b4ff; }
+.effect[data-background-color='72'] { background-color: #5959ff; }
+.effect[data-background-color='73'] { background-color: #c459ff; }
+.effect[data-background-color='74'] { background-color: #ff66ff; }
+.effect[data-background-color='75'] { background-color: #ff59bc; }
+.effect[data-background-color='76'] { background-color: #ff9c9c; }
+.effect[data-background-color='77'] { background-color: #ffd39c; }
+.effect[data-background-color='78'] { background-color: #ffff9c; }
+.effect[data-background-color='79'] { background-color: #e2ff9c; }
+.effect[data-background-color='80'] { background-color: #9cff9c; }
+.effect[data-background-color='81'] { background-color: #9cffdb; }
+.effect[data-background-color='82'] { background-color: #9cffff; }
+.effect[data-background-color='83'] { background-color: #9cd3ff; }
+.effect[data-background-color='84'] { background-color: #9c9cff; }
+.effect[data-background-color='85'] { background-color: #dc9cff; }
+.effect[data-background-color='86'] { background-color: #ff9cff; }
+.effect[data-background-color='87'] { background-color: #ff94d3; }
+.effect[data-background-color='88'] { background-color: #000000; }
+.effect[data-background-color='89'] { background-color: #131313; }
+.effect[data-background-color='90'] { background-color: #282828; }
+.effect[data-background-color='91'] { background-color: #363636; }
+.effect[data-background-color='92'] { background-color: #4d4d4d; }
+.effect[data-background-color='93'] { background-color: #656565; }
+.effect[data-background-color='94'] { background-color: #818181; }
+.effect[data-background-color='95'] { background-color: #9f9f9f; }
+.effect[data-background-color='96'] { background-color: #bcbcbc; }
+.effect[data-background-color='97'] { background-color: #e2e2e2; }
+.effect[data-background-color='98'] { background-color: #ffffff; }
+
+/* Selection */
+body[data-selected="false"] {
+	pointer-events: none;
+}
+
+body[data-selected="false"] #topicBar {
+	display: none;
+}
+
+/* Spoilers */
+/* !importmant must be used in this context because
+ when we have hex colors, those are set using the
+ style attribute which we must overpower. */
+.effect[data-is-spoiler='true']:hover {
+	color: inherit !important;
+	background-color: transparent !important;
+}

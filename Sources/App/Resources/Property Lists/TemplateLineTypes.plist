@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>action</key>
+	<string>newMessagePostedWithSender</string>
+	<key>ctcp</key>
+	<string>newMessagePostedWithSender</string>
+	<key>dcc-file-transfer</key>
+	<string>newMessagePostedWithoutSender</string>
+	<key>debug</key>
+	<string>newMessagePostedWithoutSender</string>
+	<key>invite</key>
+	<string>newMessagePostedWithoutSender</string>
+	<key>join</key>
+	<string>newMessagePostedWithoutSender</string>
+	<key>kick</key>
+	<string>newMessagePostedWithoutSender</string>
+	<key>kill</key>
+	<string>newMessagePostedWithoutSender</string>
+	<key>mode</key>
+	<string>newMessagePostedWithoutSender</string>
+	<key>nick</key>
+	<string>newMessagePostedWithoutSender</string>
+	<key>notice</key>
+	<string>newMessagePostedWithSender</string>
+	<key>off-the-record-encryption-status</key>
+	<string>newMessagePostedWithoutSender</string>
+	<key>part</key>
+	<string>newMessagePostedWithoutSender</string>
+	<key>privmsg</key>
+	<string>newMessagePostedWithSender</string>
+	<key>quit</key>
+	<string>newMessagePostedWithoutSender</string>
+	<key>topic</key>
+	<string>newMessagePostedWithoutSender</string>
+	<key>website</key>
+	<string>newMessagePostedWithoutSender</string>
+</dict>
+</plist>

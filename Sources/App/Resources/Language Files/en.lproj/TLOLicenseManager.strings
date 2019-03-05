@@ -1,0 +1,109 @@
+/* *********************************************************************
+ *                  _____         _               _
+ *                 |_   _|____  _| |_ _   _  __ _| |
+ *                   | |/ _ \ \/ / __| | | |/ _` | |
+ *                   | |  __/>  <| |_| |_| | (_| | |
+ *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
+ *
+ * Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+ *       Please see Acknowledgements.pdf for additional information.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *  * Neither the name of Textual, "Codeux Software, LLC", nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ *********************************************************************** */
+
+"nhh-ts" = "A problem was encountered while communicating with the web server located at www.codeux.com";
+"1cv-0v" = "Try again in a few minutes then contact support if the problem persists.";
+"bqw-cv" = "Contact Support";
+
+"u8h-qv" = "The license key “%@“ cannot be activated because it is blacklisted";
+"w1n-n0" = "Contact support for more information.";
+"vgp-j6" = "Contact Support";
+
+"ocm-03" = "The following error was returned while processing request:";
+"dio-y9" = "Improperly formatted e-mail address or missing";
+
+"fg6-gf" = "The following error was returned while processing request:";
+"wc7-mn" = "Unknown or improperly formatted license key";
+
+"m4q-ul" = "Successfully queued e-mail for %@";
+"fxj-s6" = "An e-mail which contains your license key will be delivered to %@ within the next few minutes.";
+
+"jbs-64" = "Thank you for your purchase of Textual 7!";
+"k39-7l" = "All limitations have been lifted.";
+
+"pg1-a9" = "Are you sure you want to deactivate this copy of Textual?";
+"z87-wb" = "All limitations that apply to the trial version of Textual 7 will immediately take effect once deactivated.";
+
+"vft-qo" = "Select a copy of Textual downloaded from the Mac App Store to receive a license key.";
+
+"b6l-ka" = "The application “%@“ cannot be used to request a license key";
+"sdj-xd" = "This application is not Textual 5 or a newer version, or was not downloaded from the Mac App Store.";
+
+"vxq-oa" = "Successfully migrated Mac App Store purchase";
+"yxk-ej" = "An e-mail which contains your license key will be delivered to %@ within the next few minutes.";
+
+"enb-hw" = "Cannot migrate Mac App Store purchase because it has already been migrated";
+"36y-49" = "Click the “Recover Lost License” button if you have lost your license key.";
+
+"ztd-5y" = "The following error was returned while processing request:";
+"bu4-zk" = "Improperly formatted e-mail address or is missing";
+
+"r87-jw" = "The following error was returned while processing request:";
+"6zh-jr" = "Unable to locate an order that is linked to the e-mail address “%@“";
+
+"o66-ox" = "The license key “%@“ has exceeded its daily activation limit";
+"6aa-ow" = "This license key cannot be activated more than %ld times within a twenty-four (24) hour period. Please try again at a later time.";
+
+"wdl-3f" = "Your trial of Textual 7 will expire in %@";
+"kn7-ju" = "Your trial of Textual 7 has expired.";
+
+"ccj-ag" = "Please purchase Textual 7 to prevent disruption to your chat experience.";
+"b8b-sg" = "More Info";
+
+"f49-rk" = "The following error was returned while processing request:";
+"do9-8x" = "Improperly formatted name or is missing";
+
+"p9s-ak" = "The following error was returned while processing request:";
+"ujo-cd" = "Receipt did not pass validation because of the following error:\n\n“%@“";
+
+"0uc-io" = "The license key “%@“ cannot be activated because another operation is already in progress";
+"vnu-5e" = "";
+
+"bw3-sc" = "The license key “%@“ cannot be activated because it is already in use";
+"fxu-su" = "";
+
+"pmv-qp" = "The license key “%@“ cannot be activated because it requires an upgrade";
+"5bu-ov" = "";
+"53u-lt" = "Learn More";
+
+"t28-j9" = "Cannot migrate Mac App Store purchase because the appropriate in-app purchase is missing";
+"4n2-ps" = "The Standard Edition in-app purchase is required to perform migration.";
+
+"12h-3w" = "Are you sure you want to purchase a new license key?";
+"dpo-ln" = "You already own the license key “%@.”";
+"qrx-aq" = "Upgrade Existing License Key";
+"zp8-8q" = "Purchase New License Key";

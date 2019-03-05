@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TDCChannelModifyTopicSheet">
+            <connections>
+                <outlet property="cancelButton" destination="10" id="48"/>
+                <outlet property="headerTitleTextField" destination="26" id="ewf-vi-fnG"/>
+                <outlet property="okButton" destination="9" id="47"/>
+                <outlet property="sheet" destination="5" id="46"/>
+                <outlet property="topicValueTextField" destination="40" id="OZL-ug-Nin"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Sheet">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="593" y="374" width="595" height="201"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
+            <view key="contentView" id="6">
+                <rect key="frame" x="0.0" y="0.0" width="595" height="201"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="26">
+                        <rect key="frame" x="19" y="164" width="88" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Topic for %@:" id="27">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37">
+                        <rect key="frame" x="20" y="62" width="555" height="94"/>
+                        <clipView key="contentView" id="KLN-Zi-fYz">
+                            <rect key="frame" x="1" y="1" width="553" height="92"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <textView importsGraphics="NO" verticallyResizable="YES" continuousSpellChecking="YES" allowsUndo="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="40" customClass="TVCTextViewWithIRCFormatter">
+                                    <rect key="frame" x="0.0" y="0.0" width="553" height="92"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <size key="minSize" width="553" height="92"/>
+                                    <size key="maxSize" width="555" height="10000000"/>
+                                    <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-2" id="1bI-Ag-KTX"/>
+                                    </connections>
+                                </textView>
+                            </subviews>
+                        </clipView>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="94" id="hRn-mc-ROH"/>
+                        </constraints>
+                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="39">
+                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="38">
+                            <rect key="frame" x="538" y="1" width="16" height="92"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <connections>
+                            <accessibilityConnection property="title" destination="26" id="ow9-Js-qRF"/>
+                        </connections>
+                    </scrollView>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9">
+                        <rect key="frame" x="458" y="13" width="123" height="32"/>
+                        <buttonCell key="cell" type="push" title="Change Topic" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="20">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <accessibility description="Change Topic"/>
+                        <connections>
+                            <action selector="ok:" target="-2" id="50"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="10">
+                        <rect key="frame" x="376" y="13" width="82" height="32"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="21">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <accessibility description="Cancel"/>
+                        <connections>
+                            <action selector="cancel:" target="-2" id="49"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="9" secondAttribute="trailing" constant="20" id="59a-dd-1Rf"/>
+                    <constraint firstItem="26" firstAttribute="leading" secondItem="40" secondAttribute="leading" id="5M7-hO-UUf"/>
+                    <constraint firstAttribute="trailing" secondItem="37" secondAttribute="trailing" constant="20" id="No7-Wc-km1"/>
+                    <constraint firstItem="26" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="40" secondAttribute="trailing" id="SvT-gc-Mhc"/>
+                    <constraint firstItem="37" firstAttribute="top" secondItem="26" secondAttribute="bottom" constant="8" symbolic="YES" id="UxQ-Tf-Kqm"/>
+                    <constraint firstItem="9" firstAttribute="top" secondItem="40" secondAttribute="bottom" constant="22" id="cnl-Pw-siu"/>
+                    <constraint firstAttribute="bottom" secondItem="9" secondAttribute="bottom" constant="20" id="eem-Dd-aGC"/>
+                    <constraint firstItem="10" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6" secondAttribute="leading" constant="20" id="hrc-7X-pfb"/>
+                    <constraint firstItem="26" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" symbolic="YES" id="kkM-IF-4TV"/>
+                    <constraint firstItem="37" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="20" id="lWD-lj-Riz"/>
+                    <constraint firstItem="10" firstAttribute="baseline" secondItem="9" secondAttribute="baseline" id="ofe-J5-e16"/>
+                    <constraint firstItem="9" firstAttribute="leading" secondItem="10" secondAttribute="trailing" constant="12" symbolic="YES" id="ttT-T7-e4m"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="23"/>
+            </connections>
+            <point key="canvasLocation" x="-751" y="-1"/>
+        </window>
+    </objects>
+</document>

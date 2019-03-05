@@ -1,0 +1,600 @@
+/* Colors taken from the Tomorrow and base16 themes:
+ * https://github.com/ChrisKempson/Tomorrow-Theme
+ * https://github.com/chriskempson/base16
+ */
+
+/* @group Inline media */
+
+@import "inlineMedia.css";
+
+/* @end */
+
+/* @group Basic Body Structure */
+
+:root {
+	supported-color-schemes: light;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+	word-wrap: break-word;
+	word-break: break-word;
+}
+
+body {
+	color: #4D4D4C; /* Tomorrow: Foreground */
+	height: 100%;
+	z-index: 100;
+	font-size: 12px;
+	overflow: hidden;
+	background-color: #FFFFFF; /* Tomorrow: Background */
+	font-family: "EspressoMono-Regular", "Menlo";
+}
+
+#body {
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	max-height: 100%;
+	/* overflow: none is added here, even though it is already
+	 declared by body {} because on OS X Mavericks, there is a
+	 weird quirk that causes the horizontal slider to appear
+	 even though we only ask for the vertical one. */
+	overflow: none;
+	overflow-y: auto;
+	z-index: 100;
+	position: absolute;
+	opacity: 0; /* Set by JavaScript */
+	-webkit-transition: opacity 0.8s linear;
+}
+
+/* Only factor in height of topic bar when selected == true
+ because that is only time the topic is displayed according
+ to the logic defined by baseLayout.css */
+body[data-selected="true"][data-view-type="channel"] #body {
+	max-height: calc(100% - 1.7em); /* height minus topic */
+}
+
+div.line {
+	padding: 2px 5px 2px 5px;
+	clear: both;
+}
+
+.sender {
+	cursor: pointer;
+	font-weight: 700;
+}
+
+body[dir="rtl"] .sender {
+	display: inline-block;
+}
+
+/* @end */
+
+/* @group Scrolling */
+
+body[data-custom-scroller="true"]::-webkit-scrollbar {
+	width: 17px;
+}
+
+body[data-custom-scroller="true"]::-webkit-scrollbar:horizontal {
+	height: 0;
+}
+
+body[data-custom-scroller="true"]::-webkit-scrollbar-track {
+	background: #fbfbfb;
+	box-shadow: inset 1px 0px 0px 0px #e8e8e8;
+}
+
+body[data-custom-scroller="true"]::-webkit-scrollbar-thumb {
+	background-color: #c1c1c1;
+	border: 4px solid transparent;
+	border-left: 5px solid transparent;
+	border-radius: 20px;
+	background-clip: content-box;
+}
+
+body[data-custom-scroller="true"]::-webkit-scrollbar-thumb:hover {
+	background-color: #7d7d7d;
+}
+
+/* @end */
+
+/* @group Misc */
+
+#loadingScreen {
+	position: absolute;
+	top: 45%;
+	left: calc(50% - (320px / 2)); /* half of width + padding */
+	width: 300px;
+	font-size: 18px;
+	background: #EFEFEF; /* Tomorrow: Current Line */
+	border: 1px solid #D6D6D6; /* Tomorrow: Selection */
+	border-radius: 5px;
+	padding: 5px 10px;
+	opacity: 1; /* Set by JavaScript */
+	-webkit-transition: opacity 0.8s linear;
+	text-align: center;
+}
+
+.encryptionLock img {
+	float: right;
+	margin: 0;
+	padding: 0;
+	height: 11px;
+	margin-top: 2px;
+	padding-left: 10px;
+}
+
+/* @end */
+
+/* @group Time */
+
+.time {
+	color: #C5C8C6; /* Tomorrow Night: Foreground */
+	white-space: nowrap;
+}
+
+body[dir="rtl"] .time {
+	padding-left: 0.4em;
+	display: inline-block;
+}
+
+/* @end */
+
+/* @group Links */
+
+a {
+	color: #4271AE; /* Tomorrow: Blue */
+	border-color: #4271AE; /* Tomorrow: Blue */
+	text-decoration: none;
+	border-bottom: dotted 1px;
+}
+
+a:hover {
+	color: #8959A8; /* Tomorrow: Purple */
+	border-color: #8959A8; /* Tomorrow: Purple */
+}
+
+/* @end */
+
+/* @group Topic Bar */
+
+#topicBar {
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 400;
+	opacity: 0; /* Set by JavaScript */
+	color: #718C00; /* Tomorrow Night Blue: Green */
+	position: fixed;
+	padding: 2px 0.5em 3px;
+	background-color: rgba(209, 241, 169, 0.95); /* Tomorrow Night Blue: Green 95% */
+	-webkit-transition: opacity 0.8s linear;
+	-webkit-font-smoothing: subpixel-antialiased;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+/* Topic bar hover additions contributed with permission from the project:
+ * https://github.com/hbang/Simplified-Light-Modifications
+ */
+
+#topicBar:hover {
+	overflow: visible;
+	white-space: normal;
+}
+
+/* @end */
+
+/* @group Separating History */
+
+#mark {
+	clear: both;
+	position: relative;
+	z-index: 295;
+	margin-top: -1px;
+	border-bottom: 1px dashed;
+	border-color: #C82829; /* Tomorrow: Red */
+	-webkit-transition: 0.2s linear;
+}
+
+/* @end */
+
+/* @group Message buffer loading animation */
+
+.message_buffer_loading_indicator {
+	text-align: center;
+	height: 42px;
+}
+
+.message_buffer_loading_indicator span {
+	font-family: Optima !important;
+	font-size: 35px;
+	font-weight: 600;
+	letter-spacing: 5px;
+	line-height: 43px;
+	color: #b6b6b6;
+	-webkit-animation: ellipsis-period 1.5s infinite;
+	animation: ellipsis-period 1.5s infinite;
+}
+
+.message_buffer_loading_indicator span:nth-child(1) {
+	-webkit-animation-delay: 0.0s;
+	animation-delay: 0.0s;
+}
+
+.message_buffer_loading_indicator span:nth-child(2) {
+	-webkit-animation-delay: 0.1s;
+	animation-delay: 0.1s;
+}
+
+.message_buffer_loading_indicator span:nth-child(3) {
+	-webkit-animation-delay: 0.2s;
+	animation-delay: 0.2s;
+}
+
+@keyframes ellipsis-period {
+	0% { opacity: 0.2; }
+	20% { opacity: 1.0; }
+	100% { opacity: 0.2; }
+}
+
+/* @end */
+
+/* @group Message buffer session indicator */
+
+.date_indicator ,
+.session_indicator {
+	display: flex;
+	display: -webkit-flex;
+	padding: 0.5em 0;
+}
+
+.date_indicator > hr,
+.session_indicator > hr {
+	background: #dbdbdb;
+	border: 0;
+	height: 1px;
+	margin-top: 0.6em;
+	flex: 1;
+	-webkit-flex: 1;
+}
+
+.date_indicator > span,
+.session_indicator > span {
+	font-style: oblique;
+	margin: 0 1em;
+	color: #a6a6a6;
+}
+
+.date_indicator + #mark,
+.session_indicator + #mark {
+	display: none;
+}
+
+/* @end */
+
+/* @group NOTICE / CTCP / WALLOPS */
+
+div.line[data-line-type="ctcp"],
+div.line[data-line-type="notice"],
+div.line[data-line-type="wallops"] {
+	color: #EAB700; /* Tomorrow: Yellow */
+	z-index: 191;
+	background-color: rgba(255, 238, 173, 0.25); /* Tomorrow Night Blue: Yellow 25% */
+	position: relative;
+}
+
+/* @end */
+
+/* @group Selected User */
+
+div.line[data-line-type="privmsg"]:not(.selectedUser),
+div.line[data-line-type="action"]:not(.selectedUser) {
+	transition: background-color 0.5s;
+}
+
+div.line.selectedUser[data-highlight="false"] {
+	transition: background-color 0.5s;
+	z-index: 190;
+	position: relative;
+	background-color: rgba(255, 197, 143, 0.25) !important; /* Tomorrow Night Blue: Orange 25% */
+}
+
+/* @end */
+
+/* @group PRIVMSG */
+
+div.line[data-line-type="privmsg"][data-highlight="true"],
+div.line[data-line-type="action"][data-highlight="true"] {
+	z-index: 191;
+	position: relative;
+	font-weight: normal;
+	background-color: rgba(255, 157, 164, 0.25) !important; /* Tomorrow Night Blue: Red 25% */
+}
+
+div.line[data-line-type="privmsg"] .sender {
+	white-space: pre-wrap;
+}
+
+/* @end */
+
+/* @group ACTION */
+
+div.line[data-line-type="action"] .sender:before {
+	content: "•";
+}
+
+body[dir="ltr"] div.line[data-line-type="action"] .sender:before {
+	margin-right: 0.4em;
+}
+
+body[dir="rtl"] div.line[data-line-type="action"] .sender:before {
+	margin-left: 0.4em;
+}
+
+div.line[data-line-type="action"] .sender:after {
+	content: "";
+}
+
+/* @end */
+
+/* @group DEBUG / INVITE */
+
+div.line[data-line-type="invite"],
+div.line[data-line-type="debug"],
+div.line[data-line-type="dcc-file-transfer"],
+div.line[data-line-type="off-the-record-encryption-status"] {
+	color: #C5C8C6; /* Tomorrow Night: Foreground */
+	z-index: 190;
+	background: rgba(214, 214, 214, 0.25); /* Tomorrow: Selection 25% */
+	position: relative;
+}
+
+/* off-the-record-encryption-status Message Event */
+div.line[data-line-type="off-the-record-encryption-status"] .message {
+	color: #C82829;
+	font-weight: 700;
+}
+
+/* @end */
+
+/* @group Message of the Day (MOTD)
+ *
+ * 720, 721, 722 are used by ShadowIRCd for Oper MOTD.
+ * 372, 375, 376 are normal MOTD shared by several IRCds.
+ */
+
+div.line[data-command="372"],
+div.line[data-command="721"] {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+div.line[data-command="375"],
+div.line[data-command="720"] { /* Start. */
+	padding-top: 2px;
+	padding-bottom: 3px;
+}
+
+div.line[data-command="376"],
+div.line[data-command="722"] { /* End. */
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+div.line[data-command="372"] .message,
+div.line[data-command="375"] .message,
+div.line[data-command="376"] .message
+div.line[data-command="720"] .message,
+div.line[data-command="721"] .message,
+div.line[data-command="722"] .message {
+	font-family: "EspressoMono-Regular", "Menlo" !important;
+}
+
+/* @end */
+
+/* @group General Events */
+
+div.line[data-line-type="join"],
+div.line[data-line-type="part"],
+div.line[data-line-type="quit"],
+div.line[data-line-type="nick"],
+div.line[data-line-type="mode"],
+div.line[data-line-type="topic"],
+div.line[data-line-type="website"] {
+	color: #C5C8C6; /* Tomorrow Night: Foreground */
+}
+
+/* Slightly more interesting events */
+div.line[data-line-type="kick"],
+div.line[data-line-type="kill"],
+div.line[data-line-type="mode"][data-command=mode] {
+	color: #8E908C; /* Tomorrow: Comment */
+}
+
+/* @group Event Indicators */
+
+div.line[data-line-type="join"] .message:before {
+	content: "→";
+	color: #718C00; /* Tomorrow: Green */
+}
+
+div.line[data-line-type="kick"] .message:before,
+div.line[data-line-type="part"] .message:before,
+div.line[data-line-type="quit"] .message:before {
+	content: "←";
+	color: #C82829; /* Tomorrow: Red */
+}
+
+div.line[data-line-type="nick"] .message:before {
+	content:"◦";
+	color: #3E999F; /* Tomorrow: Aqua */
+}
+
+/* @end */
+
+/* @end */
+
+/* @group Own Messages */
+
+.sender[data-member-type="myself"] {
+	color: #4271AE; /* Tomorrow: Blue */
+}
+
+div[data-member-type="myself"] {
+	background-color: rgba(187, 218, 255, 0.25); /* Tomorrow Night Blue: Blue 25% */
+}
+
+/* @end */
+
+/* @group mIRC Color Codes */
+
+/* @group Foreground Colors */
+
+.effect[data-foreground-color="0"] {
+	color: #D6D6D6 !important; /* Tomorrow: Selection */
+}
+
+.effect[data-foreground-color="1"] {
+	color: #4D4D4C !important; /* Tomorrow: Foreground */
+}
+
+.effect[data-foreground-color="2"] {
+	color: #4271AE !important; /* Tomorrow: Blue */
+}
+
+.effect[data-foreground-color="3"] {
+	color: #718C00 !important; /* Tomorrow: Green */
+}
+
+.effect[data-foreground-color="4"] {
+	color: #C82829 !important; /* Tomorrow: Red */
+}
+
+.effect[data-foreground-color="5"] {
+	color: #DE935F !important; /* Tomorrow Night: Red */
+}
+
+.effect[data-foreground-color="6"] {
+	color: #8959A8 !important; /* Tomorrow: Purple */
+}
+
+.effect[data-foreground-color="7"] {
+	color: #F5871F !important; /* Tomorrow: Orange */
+}
+
+.effect[data-foreground-color="8"] {
+	color: #EAB700 !important; /* Tomorrow: Yellow */
+}
+
+.effect[data-foreground-color="9"] {
+	color: #B9CA4A !important; /* Tomorrow Night Bright: Green */
+}
+
+.effect[data-foreground-color="10"] {
+	color: #3E999F !important; /* Tomorrow: Aqua */
+}
+
+.effect[data-foreground-color="11"] {
+	color: #66CCCC !important; /* Tomorrow Night Eighties: Aqua */
+}
+
+.effect[data-foreground-color="12"] {
+	color: #7AA6DA !important; /* Tomorrow Night Bright: Blue */
+}
+
+.effect[data-foreground-color="13"] {
+	color: #C397D8 !important; /* Tomorrow Night Bright: Purple */
+}
+
+.effect[data-foreground-color="14"] {
+	color: #8E908C !important; /* Tomorrow: Comment */
+}
+
+.effect[data-foreground-color="15"] {
+	color: #C5C8C6 !important; /* Tomorrow Night: Foreground */
+}
+
+/* @end */
+
+/* @group Background Colors */
+
+.effect[data-background-color="0"] {
+	background-color: #D6D6D6 !important; /* Tomorrow: Selection */
+}
+
+.effect[data-background-color="1"] {
+	background-color: #4D4D4C !important; /* Tomorrow: Foreground */
+}
+
+.effect[data-background-color="2"] {
+	background-color: #4271AE !important; /* Tomorrow: Blue */
+}
+
+.effect[data-background-color="3"] {
+	background-color: #718C00 !important; /* Tomorrow: Green */
+}
+
+.effect[data-background-color="4"] {
+	background-color: #C82829 !important; /* Tomorrow: Red */
+}
+
+.effect[data-background-color="5"] {
+	background-color: #DE935F !important; /* Tomorrow Night: Red */
+}
+
+.effect[data-background-color="6"] {
+	background-color: #8959A8 !important; /* Tomorrow: Purple */
+}
+
+.effect[data-background-color="7"] {
+	background-color: #F5871F !important; /* Tomorrow: Orange */
+}
+
+.effect[data-background-color="8"] {
+	background-color: #EAB700 !important; /* Tomorrow: Yellow */
+}
+
+.effect[data-background-color="9"] {
+	background-color: #B9CA4A !important; /* Tomorrow Night Bright: Green */
+}
+
+.effect[data-background-color="10"] {
+	background-color: #3E999F !important; /* Tomorrow: Aqua */
+}
+
+.effect[data-background-color="11"] {
+	background-color: #66CCCC !important; /* Tomorrow Night Eighties: Aqua */
+}
+
+.effect[data-background-color="12"] {
+	background-color: #7AA6DA !important; /* Tomorrow Night Bright: Blue */
+}
+
+.effect[data-background-color="13"] {
+	background-color: #C397D8 !important; /* Tomorrow Night Bright: Purple */
+}
+
+.effect[data-background-color="14"] {
+	background-color: #8E908C !important; /* Tomorrow: Comment */
+}
+
+.effect[data-background-color="15"] {
+	background-color: #C5C8C6 !important; /* Tomorrow Night: Foreground */
+}
+
+/* @end */
+
+/* @end */
+
+/*
+	vim: set foldmethod=marker:
+	vim: set foldmarker=@group,@end:
+	vim: set nofoldenable:
+ */

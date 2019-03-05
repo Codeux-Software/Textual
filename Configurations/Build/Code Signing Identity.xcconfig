@@ -1,0 +1,9 @@
+
+// This is the code signing identity used by all projects.
+
+CODE_SIGN_IDENTITY = Mac Developer
+
+// Set these values to empty
+
+DEVELOPMENT_TEAM = 8482Q6EPL6
+PROVISIONING_PROFILE_SPECIFIER = 8482Q6EPL6/

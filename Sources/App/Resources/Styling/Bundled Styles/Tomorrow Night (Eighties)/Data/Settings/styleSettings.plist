@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Channel View Overlay Color</key>
+	<string>#00000066</string>
+	<key>Indentation Offset</key>
+	<integer>6</integer>
+	<key>Nickname Color Style</key>
+	<string>HSL-dark</string>
+	<key>Template Engine Versions</key>
+	<dict>
+		<key>default</key>
+		<integer>4</integer>
+	</dict>
+	<key>Underlying Window Color</key>
+	<string>#2D2D2D</string>
+</dict>
+</plist>

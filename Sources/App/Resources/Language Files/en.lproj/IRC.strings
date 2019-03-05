@@ -1,0 +1,341 @@
+/* *********************************************************************
+ *                  _____         _               _
+ *                 |_   _|____  _| |_ _   _  __ _| |
+ *                   | |/ _ \ \/ / __| | | |/ _` | |
+ *                   | |  __/>  <| |_| |_| | (_| | |
+ *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
+ *
+ * Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+ *       Please see Acknowledgements.pdf for additional information.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *  * Neither the name of Textual, "Codeux Software, LLC", nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ *********************************************************************** */
+
+/* Script errors */
+"d3c-9b" = "The command \002%@\002 is defined by a plugin and a script. Ignoring command because of inability to determine priority.";
+
+"ax0-mt" = "Script Execution Failure: %@";
+"2mc-h0" = "Script Execution Failure (%1$@: %2$@): %3$@";
+
+/* Generic messages */
+"0r1-5l" = "Textual has prevented you from banning yourself on %@";
+
+"6rj-2r" = "Failed to send data to server. Not connected.";
+
+/* Default G:Line reason */
+"56r-wn" = "35d Your behavior is not conducive to the desired environment";
+"2aw-rf" = "Your behavior is not conducive to the desired environment";
+"yy6-fx" = "Your behavior is not conducive to the desired environment";
+"80c-i8" = "1d Shunned";
+
+/* Network not available messages */
+"3s6-e6" = "Delaying auto connect for %lu seconds";
+
+/* File transfer server console messages */
+"ags-s8" = "Trying file transfer to %1$@, %2$@ (%3$qi bytes)";
+"snf-45" = "Received file transfer request from %1$@, %2$@ (%3$qi bytes)";
+"y3w-la" = "Textual has received a DCC request from %@ that could not be processed.";
+
+/* Version info */
+"vzu-u7" = "%1$@ IRC Client: www.textualapp.com — v%2$@";
+
+/* Software trial (Mac App Store) */
+"t8r-ak" = "Disconnected from server due to trial period limit. Please unlock the Standard Edition of Textual 7, or simply reconnect.";
+"v4t-zw" = "You will be disconnected in %.0f minutes due to trial period limit. You can remove this limitation by unlocking the Standard Edition of Textual 7. <a href='#' onclick='appPrivate.showInAppPurchaseWindow(); return false;'>Click here</a> to do this.";
+
+/* Specific IRC related, app-specific errors */
+"iaa-0u" = "There are no servers configured to connect to.";
+
+/* Raw mode messages */
+"ik6-dl" = "⍅ Server traffic will be output to this window until it is closed by control clicking (right clicking) it. ⍆";
+
+/* Hidden command responses messages */
+"yem-td" = "⍅ Command responses which are normally hidden will be output to this window until it is closed by control clicking (right clicking) it. ⍆";
+
+/* Log file session headers */
+"qrg-ua" = "------------- Begin Session -------------";
+"d5d-uy" = "------------- End Session -------------";
+
+/* Ban list */
+"c04-d0-1" = "Ban in %1$@: %2$@ set by %3$@ on %4$@";
+"c04-d0-2" = "Ban in %1$@: %2$@";
+
+/* Invite exception list */
+"py2-qh-1" = "Invite Exception in %1$@: %2$@ set by %3$@ on %4$@";
+"py2-qh-2" = "Invite Exception in %1$@: %2$@";
+
+/* Ban exception list */
+"ov2-ci-1" = "Ban exception in %1$@: %2$@ set by %3$@ on %4$@";
+"ov2-ci-2" = "Ban exception in %1$@: %2$@";
+
+/* Quiet list */
+"u5z-az-1" = "Quiet in %1$@: %2$@ set by %3$@ on %4$@";
+"u5z-az-2" = "Quiet in %1$@: %2$@";
+
+/* Cipher suite information */
+"uyz-4r" = "\002%1$@\002 with the cipher suite: \002%2$@\002";
+"xwj-xy" = "\002%1$@\002 with the cipher suite: \002%2$@\002 \0034\002(deprecated)\002\003";
+
+/* XPC errors */
+"vdy-jk" = "Connection service closed unexpectedly";
+
+/* Large messages warning */
+"u4c-7i" = "The message that you are sending is very large which means it will be split up into multiple messages. Sending too many messages at once is often considered disruptive and may result in a ban.";
+"lql-8i" = "Are you sure you want to send this message?";
+
+/* /away/ command */
+"41y-p2" = "You have exceeded the maximum away message length for %1$@ which is %2$ld characters. The end of your away message may have been cut off.";
+
+/* /defaults/ command */
+"1dz-jb" = "Invalid Syntax. Type “/defaults help” for more information.";
+
+"bkk-lo" = "The \002defaults\002 command can be used to toggle very specific, rarely used features.";
+"znw-02" = " ";
+"xw4-rr" = "Usage:";
+"0g8-7m" = "\t“/defaults enable <token>” — Enables the feature defined by \002<token>\002";
+"wag-2j" = "\t“/defaults disable <token>” — Disables the feature defined by \002<token>\002";
+"hob-ky" = "\t“/defaults features” — View list of supported features";
+"8mk-t8" = " ";
+"whg-ky" = "Surround \002<token>\002 with double quotes (\") if it contains a space.";
+
+"pc4-67" = "Cannot enable the feature “%@” because it is not supported";
+"d7y-pv" = "Cannot disable the feature “%@” because it is not supported";
+
+"5ke-18" = "Enabled Feature: %@";
+"0gn-cb" = "Disabled Feature: %@";
+
+/* /ignore/ command */
+"ret-20" = "Added ignore that matches \002%1$@\002 with pattern: %2$@";
+"jzg-g8" = "Removed ignore that matches \002%1$@\002 with pattern: %2$@";
+"wu0-jp" = "No ignores could be found that matches \002%@\002";
+"5ix-zn" = "An ignore already exists that matches \002%@\002. To modify this ignore, open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
+"vrx-1f" = "Cannot remove ignore for \002%@\002 because Textual isn't sure which to remove. More than one ignore exists that matches this user. To remove a specific ignore, open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
+
+/* /kick/ command */
+"59a-ir" = "You have exceeded the maximum kick message length for %1$@ which is %2$ld characters. The end of your kick message may have been cut off.";
+
+/* /lagcheck/ command */
+"5bf-jp" = "Received lag check reply from %1$@. Time elapsed: %2$1.0f milliseconds. (Rating: %3$@)";
+"qoh-kt" = "Waiting for response from lag check…";
+
+"58g-m9" = "Yeah, okay…";
+"0jp-93" = "Are you plugged into the server?";
+"yym-8y" = "Pretty good";
+"mic-qe" = "Not bad";
+"mqg-wi" = "Okay";
+"ut8-7s" = "Needs work";
+"8fo-ss" = "Slow";
+"4oc-p2" = "Very Slow";
+
+/* /mode/ command */
+"dwi-d1" = "The mode \002+%@\002 is not supported on this server";
+
+/* /monitor/ command errors */
+"khw-4y" = "Please use the \002Address Book\002 to add or remove tracked users. Open the \002Address Book\002 using the keyboard shortcut \002Control 3\002.";
+
+/* /msg/ command errors */
+"54l-h7" = "Cannot send operator message because the mode \002+o\002 is not supported by this server.";
+
+/* /mute/ command */
+"sdn-yr" = "Sound is already muted";
+"190-f2" = "Sound is no longer muted";
+"5rf-mj" = "Sound is not muted";
+"u48-aa" = "Sound has been muted";
+
+/* /myversion/ command */
+"ccb-ur" = "%1$@ %2$@ (Build %3$@) (%4$@)";
+"9fp-8h" = "Mac App Store";
+"b8p-44" = "Standalone Version";
+"pqj-1y" = "I am using %@";
+
+/* /timer/ command */
+"jj9-94" = "Invalid Syntax. Type “/timer help” for more information.";
+"327-pv" = "Timer interval must be a whole number that is grater than zero (0). Type “/timer help” for more information.";
+"eud-kc" = "Timer repeat count must be a whole number that is grater than or equal to zero (0). Type “/timer help” for more information.";
+"p6l-o4" = "Timer identifier is not properly formatted. Type “/timer list“ for a list of timers.";
+"vzu-xh" = "Timer with identifier “%@“ does not exist. Type “/timer list“ for a list of timers.";
+"uiz-32" = "Timer with identifier “%@“ can't be stopped";
+"ax6-n9" = "Timer with identifier “%@“ is already stopped";
+"hs0-up" = "Timer with identifier “%@“ stopped";
+"dgp-d4" = "Timer with identifier “%@“ can't be restarted. Add a new timer.";
+"qb7-mi" = "Timer with identifier “%@“ restarted";
+"p7s-is" = "Timer with identifier “%@“ removed";
+"808-bs" = "All timers removed";
+"jef-tp" = "Timer with identifier “%@“ added"; // unused
+"pqk-5k" = "There are no timers";
+"q1m-1e" = "There are %ld timers:";
+"6ts-oi" = "There is %ld timer:";
+
+"4n6-2x" = "\002ID:\002 %1$@ • \002Status:\002 %2$@ • \002Interval:\002 %3$@ • \002Next Fire:\002 %4$@ • \002Command:\002 “%5$@“";
+"uw0-v2" = "\002ID:\002 %1$@ • \002Status:\002 %2$@ • \002Interval:\002 %3$@ • \002Next Fire:\002 %4$@ • \002Repeat:\002 Yes • \002Repeat Limit:\002 %5$@ • \002Iteration:\002 %6$ld • \002Command:\002 “%7$@“";
+"bhz-9e" = "Active";
+"ww4-sn" = "Stopped";
+"o26-ae" = "No Limit";
+
+"xkq-rt" = "The timer command can be used to perform a command after a specific amount of time and optionally repeat it.";
+"ohr-m0" = " ";
+"ham-fp" = "To learn more, type:";
+"lbg-dy" = " ";
+"lbh-46" = "“/timer help <topic>“";
+"9dz-b4" = " ";
+"s3r-ve" = "Available topics: ADD, REMOVE, LIST, STOP, RESTART";
+
+"6r0-il" = "“/timer <seconds> <repeat> <command>“";
+"ohz-iz" = " ";
+"dxi-nz" = "\002<seconds>\002 is the interval of the timer.";
+"uah-l1" = "The interval must be a \002whole number that is greater than zero (0)\002.";
+"382-83" = " ";
+"9j0-3p" = "\002<repeat>\002 is the repeat count for the timer.";
+"g55-ap" = "• To perform the timer only once, use one (1) as the repeat count.";
+"90m-qy" = "• To repeat the timer until manually stopped, use zero (0) as the repeat count.";
+"my0-q6" = "• To repeat the timer X number of times, use that number as the repeat count.";
+"goz-y6" = " ";
+"e0a-99" = "\002<command>\002 is the command to perform when the timer fires.";
+"9qu-ho" = "\002Example:\002 “msg #textual-testing Hey everyone!”";
+"yds-m4" = "\002Scope:\002 The channel or query that is selected when a timer is added is used as the target for commands that do not take a channel name as an argument.";
+"jik-p7" = " ";
+"1p8-a7" = "\002Example #1:\002 “/timer 10 1 <command>” — perform command one time, after ten seconds.";
+"h1a-gx" = "\002Example #2:\002 “/timer 10 20 <command>” — perform command twenty times, once every ten seconds.";
+"vwi-10" = "\002Example #3:\002 “/timer 10 0 <command>” — perform command every ten seconds until the heat death of the universe.";
+
+"x1n-ve" = "“/timer list“";
+"3ks-34" = " ";
+"96w-fo" = "List timers";
+
+"bx2-n1" = "“/timer stop <identifier>“";
+"t6t-x2" = " ";
+"i3c-vz" = "Stop the timer assigned to \002<identifier>\002.";
+"8h4-ac" = " ";
+"a5z-ot" = "The identifier for a timer can be found using “/timer list”";
+
+"r27-tv" = "“/timer restart <identifier>“";
+"zrf-v2" = " ";
+"wd8-v9" = "Restart the timer assigned to \002<identifier>\002.";
+"6xo-al" = " ";
+"g69-sc" = "The identifier for a timer can be found using “/timer list”";
+"mjg-bn" = " ";
+"xd3-g1" = "When restarting a timer, the iteration count is reset";
+"77t-x9" = "which means a timer that is setup to repeat X number";
+"6bp-ft" = "of times will start over from the beginning.";
+
+"i2d-x5" = "“/timer remove <identifier>“";
+"ip5-lz" = " ";
+"t5d-hd" = "Remove the timer assigned to \002<identifier>\002.";
+"mkz-fb" = " ";
+"7dp-ew" = "To remove all timers, pass “all” as \002<identifier>\002.";
+"0m7-9k" = " ";
+"qa0-8e" = "The identifier for a timer can be found using “/timer list”";
+
+"aox-zz" = "---------------------------------------";
+
+/* /setcolor/ command */
+"026-qv" = "This command cannot be used unless the checkbox labeled “Disable nickname colors” is unchecked in the \002Style\002 section of \002Preferences\002.";
+"8dy-6f" = "Cannot set color for “%@“ because that does not appear to be a valid nickname.";
+
+/* /tage/ command */
+"v9x-18" = "\002Time Since First Commit:\002 %@";
+
+/* /topic/ command errors */
+"1oo-3b" = "You have exceeded the maximum topic length for %1$@ which is %2$ld characters. The end of your topic may have been cut off.";
+
+/* Address type migration warning */
+"w05-ph" = "\0034\002Please take notice:\002\003 The preference labeled “Prefer IPv4”, which you had enabled, no longer exists. \002IPv6 has been disabled for this connection\002 to offer you similar behavior. See the \002Network Socket\002 section of \002Server Properties\002 to change which protocols are enabled (IPv4 and/or IPv6).";
+
+/* Common command errors */
+"atq-93" = "Invalid syntax: “%@“";
+"pxa-ox" = "Cannot find channel named “%@“";
+"1fc-vl" = "Cannot find query named “%@“";
+"zef-q9" = "One or more arguments are not properly formatted for this command.";
+"g01-qn" = "This command can only be used with a channel.";
+"m6o-z1" = "This command can only be used with a query.";
+"sxf-qx" = "This command cannot be used within this window.";
+"z2r-sd" = "Messages cannot be sent to this window.";
+
+/* Miscellaneous messages related to IRC events */
+"xog-in" = "Be back later";
+"bg3-h2" = "\002-CTCP-\002 %1$@ from %2$@ was ignored";
+"jer-ju" = "CLIENTINFO DCC FINGER PING TIME USERINFO VERSION";
+"en6-mw" = "Stop fingering me pervert!";
+"5wa-lb" = "There are no capabilities that are enabled";
+"7p9-rs" = "The following capabilities are currently enabled: %@";
+"obp-ww" = "Mode is \002%@\002";
+"7nm-7v" = "Topic is \002%@\002";
+"y7s-3e" = "Set by \002%1$@\002 on %2$@";
+"8tq-g6" = "Website is \002%@\002";
+"zzj-2h" = "Attempting to rejoin channel in three seconds";
+"qq2-66" = "\002%1$@\002 changed the topic to \002%2$@\002";
+"4vt-ow" = "Connection to host established";
+"l21-p7" = "Connection to host at [%@] established";
+"ex4-f8" = "Connection secured using %@";
+"drg-b7" = "Disconnected for Sleep Mode";
+"wcl-po" = "Disconnected for server redirect";
+"zro-bg" = "Disconnected from server because of an untrusted certificate";
+"isx-fi" = "Disconnected from server because the Internet is not reachable";
+"9b4-10" = "Disconnected";
+"bps-la" = "%.0f minutes have elapsed since last response from this connection. Disconnecting due to timeout.";
+"gzo-54" = "%.0f minutes have elapsed since last response from this connection. It's possible the connection is timing out.";
+"3yo-gw" = "Message(%1$d): %2$@";
+"o77-ls" = "Connecting to [%1$@] on port %2$hu";
+"p7h-un" = "Connecting using SOCKS4 proxy [%1$@] on port %2$hu";
+"ni5-cy" = "Connecting using SOCKS5 proxy [%1$@] on port %2$hu";
+"oby-av" = "Connecting using HTTP proxy [%1$@] on port %2$hu";
+"xxb-y2" = "Reconnecting…";
+"ky3-36" = "Retrying…";
+"v5d-ix" = "\002%1$@\002 sets mode \002%2$@\002";
+"vy7-pk" = "\002-%1$@ CTCP-\002 %2$@ (%3$1.5f sec)";
+"dri-l7" = "\002-%1$@ CTCP-\002 %2$@ %3$@";
+"6o8-eu" = "\002-CTCP-\002 %1$@ from %2$@";
+"tok-st" = "%1$@ (%2$@)";
+"8hg-7k" = "%@ IRC Network";
+"fxw-5s" = "%1$@ is now known as \002%2$@\002";
+"rr6-yo" = "You're now known as \002%2$@\002";
+"53b-dm" = "\002%1$@\002 (%2$@@%3$@) left IRC";
+"8bk-mx" = "\002%1$@\002 left the query by disconnecting from IRC";
+"q0q-ch" = "\002%1$@\002 joined the query by connecting to IRC";
+"ipj-34" = "%@, your user modes are \002%@\002";
+"wk4-rv" = "Inviting %1$@ to join %2$@";
+"qw4-t3" = "%1$@!%2$@@%3$@ invited you to join %4$@";
+"c1h-fq" = "%1$@ is away (%2$@)";
+"6bh-br" = "You are now an IRC Operator on %@";
+"ziu-p9" = "\002%1$@\002 (%2$@@%3$@) joined the channel";
+"9aj-bd" = "\002%1$@\002 kicked \002%2$@\002 from the channel (%3$@)";
+"nkr-kf" = "\002%1$@\002 (%2$@@%3$@) left the channel";
+"ozy-6i" = "%1$@ (%2$@)";
+"onk-l5" = "%1$@ is in %2$@";
+"h19-n2" = "%1$@ is connected on %2$@ (%3$@)";
+"plg-lr" = "%1$@ has userhost %2$@@%3$@ and real name “%4$@”";
+"6hn-o6" = "%1$@ signed on at %2$@ and has been idle for %3$@";
+"cdu-ed" = "%1$@ was connected to %2$@ on %3$@";
+"32c-87" = "%1$@ had userhost %2$@@%3$@ and real name “%4$@”";
+"11i-ev" = "You cannot send private messages to %@. Anything that you send to them will be ignored until you are added to their list of recognized users.";
+"3yj-in" = "%1$@ (%2$@) tried to send you a private message, but it was ignored due to \002umode +g\002. Perform “/accept %1$@” to allow this user to communicate with you.";
+"5i4-qq" = "Reconnecting to proxy to rebuild internal state…"; // irssi proxy
+"5h5-sl" = "Server closed read stream";
+"r5h-fj" = "Joining channels has been delayed because because you haven't identified. Perform “/autojoin” to join channels without identifying.";
+"3oa-mv" = "%1$@ is connected from %2$@ (%3$@)";
+"x69-rz" = "%1$@ was connected from %2$@ (%3$@)";
+"js3-9v" = "Cannot use nickname “%@“ — Trying another…";

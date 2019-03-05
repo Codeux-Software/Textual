@@ -1,0 +1,8 @@
+
+.inlineHTML {
+	overflow: auto;
+	display: block;
+	margin-top: 12px;
+	margin-bottom: 12px;
+	text-indent: 0;
+}

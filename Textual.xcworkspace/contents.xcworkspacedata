@@ -2,24 +2,57 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "container:Main Project (Textual).xcodeproj">
+      location = "group:Sources/App/Textual App.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:Resources/Plugins/Brag Spam/Brag Spam Extension.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Resources/Plugins/ZNC Additions/../Chat Filter/Chat Filter Extension.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Resources/Plugins/Smiley Converter/Smiley Converter Extension.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Resources/Plugins/System Profiler/System Profiler Extension.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Resources/Plugins/ZNC Additions/ZNC Additions Extension.xcodeproj">
-   </FileRef>
+   <Group
+      location = "container:"
+      name = "Frameworks">
+      <FileRef
+         location = "group:Frameworks/Cocoa Extensions/Cocoa Extensions.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Frameworks/Encryption Kit/Encryption Kit.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:/Users/michael/Projects/Textual/Frameworks/Auto Hyperlinks/Hyperlink Processor.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "Extensions">
+      <FileRef
+         location = "group:Sources/Plugins/Brag Spam/Brag Spam Extension.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Sources/Plugins/Chat Filter/Chat Filter Extension.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Sources/Plugins/Smiley Converter/Smiley Converter Extension.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Sources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Sources/Plugins/System Profiler/System Profiler Extension.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Sources/Plugins/ZNC Additions/ZNC Additions Extension.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "XPC Services">
+      <FileRef
+         location = "group:XPC Services/IRC Remote Connection Manager/IRC Remote Connection Manager.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:XPC Services/Inline Content Loader/Inline Content Loader.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:XPC Services/Inline Content Loader/Extensions/Core Media/Inline Content Loader Core Media.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:XPC Services/Historic Log File Manager/Historic Log File Manager.xcodeproj">
+      </FileRef>
+   </Group>
 </Workspace>

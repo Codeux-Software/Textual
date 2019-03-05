@@ -1,0 +1,87 @@
+/* *********************************************************************
+ *                  _____         _               _
+ *                 |_   _|____  _| |_ _   _  __ _| |
+ *                   | |/ _ \ \/ / __| | | |/ _` | |
+ *                   | |  __/>  <| |_| |_| | (_| | |
+ *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
+ *
+ * Copyright (c) 2012 - 2018 Codeux Software, LLC & respective contributors.
+ *       Please see Acknowledgements.pdf for additional information.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *  * Neither the name of Textual, "Codeux Software, LLC", nor the
+ *    names of its contributors may be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ *********************************************************************** */
+
+/* Preferences pane name. */
+"dff-13" = "System Information";
+
+/* /sysinfo/ command. */
+"lxj-ha" = "System Information:";
+"7g5-pf" = " \002Model:\002 %@ \002•\002";
+"mnc-vx" = " \002CPU:\002 %1$@ (%2$lu Threads, %3$lu Cores) @ %4$@ \002•\002";
+"1am-io" = " \002Memory:\002 %@ \002•\002";
+"xb6-bh" = " \002Uptime:\002 %@ \002•\002";
+"yrc-6l" = " \002Disk Space:\002 %@ \002•\002";
+"q5v-uq" = " \002Graphics:\002 %@ \002•\002";
+"b7c-qd" = " \002Display Resolution:\002 %@ \002•\002";
+"g41-p7" = " \002OS:\002 %1$@ (Version %2$@, Build %3$@)";
+
+"8nu-89" = "%@";
+"cmk-ws" = ", %@";
+
+"3iu-k8" = "%.2f GHz";
+"jw7-sg" = "%.2f MHz"; // really?
+
+/* /memory/ command. */
+"scn-br" = "Memory use of Textual: %1$@ • Visible lines: %2$@";
+"ioy-qc" = "\002Top Process (WebKit):\002 Process #%1$i, which is assigned to %2$@, is using %3$@ of memory";
+"a00-8n" = "\002Top Process (WebKit):\002 Process #%1$i, which is assigned to %2$@; is using %3$@ of memory";
+"a5u-m1" = "\002All Processes (WebKit):\002 Process count: %1$lu • Memory use: %2$@";
+
+/* /diskspace/ command. */
+"n6i-xd" = "\002Mounted Drives:\002 %@";
+"bvr-wz" = "%1$@: Total: %2$@; Free: %3$@";
+"lct-7h" = " — %1$@: Total: %2$@; Free: %3$@";
+"ler-a5" = "Error: Unable to find any mounted drives."; // what are we running on?
+
+/* /netstats/ command. */
+"9f8-ej" = "\002Network Traffic:\002%@";
+"ca4-25" = " [%1$@]: %2$@ in, %3$@ out";
+"mjo-o0" = " — [%1$@]: %2$@ in, %3$@ out";
+"li1-vn" = "Error: Unable to locate any network statistics.";
+
+/* /style/ command. */
+"z37-85" = "\002Current Style:\002 %1$@ – (%2$@) \002•\002 \002Inverted sidebars:\002 %3$@ \002•\002 \002WebKit2\002: %4$@";
+
+/* /screens/ command. */
+"vvt-zq" = "\002Display Resolution:\002 #%1$lu: %2$@";
+"fys-ft" = "; #%1$lu: %2$@";
+
+/* Misc., one line commands. */
+"v03-jx" = "System Uptime: %1$@ \002•\002 Textual Uptime: %2$@";
+"cfs-b1" = "\002System Memory:\002 Free: %1$@; Used: %2$@; Total: %3$@; — [%4$@]";
+"6fn-xh" = "Textual has been opened \002%1$@\002 times with a total runtime of %2$@";
+"rua-9r" = "Textual has sent \002%1$@\002 commands since startup with a total of \002%2$@\002 commands received. The last command received on this connection occurred %3$@ ago. This equals roughly \002%4$@ in\002 and \002%5$@ out\002 worth of bandwidth.";
