@@ -103,7 +103,7 @@ ClassWithDesignatedInitializerInitMethod
 	self.networkName = nil;
 	self.networkNameFormatted = nil;
 
-	self.channelNamePrefixes = @[@"#"];
+	self.channelNamePrefixes = @[@"&", @"#", @"+", @"!"];
 
 	self.maximumModeCount = TXMaximumNodesPerModeCommand;
 	self.maximumNicknameLength = IRCProtocolDefaultNicknameMaximumLength;
