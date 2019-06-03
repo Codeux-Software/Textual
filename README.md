@@ -6,6 +6,12 @@ Textual can be customized with styles written in CSS 3, HTML 5, and JavaScript; 
 
 Precompiled versions of Textual can be purchased in the [Mac App Store](http://www.textualapp.com/mac-app-store) or [directly from Codeux Software](https://www.textualapp.com/fastspring-store/).
 
+## Only supported for private builds
+
+As of June 1, 2019, the licensing infrastructure hosted on https://codeux.com is no longer supported, and the domain
+is no longer responding to requests. You are encouraged to build Textual yourself, instead of purchasing a license.
+Any purchased licenses will not be refunded.
+
 ## Screenshots
 
 [![Light Screenshot](https://www.codeux.com/textual/private/images/v600media/YosemiteLightThumbnail.png)](https://www.codeux.com/textual/private/images/v600media/YosemiteLightFullscreen.png) 
