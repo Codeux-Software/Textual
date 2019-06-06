@@ -301,6 +301,8 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 					 accessoryView:accessoryView
 				   completionBlock:completionBlock];
 		}];
+
+		return;
 	}
 
 	/* Prepare suppression */
@@ -469,6 +471,8 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 						 accessoryView:accessoryView
 					   completionBlock:completionBlock];
 		}];
+
+		return;
 	}
 
 	/* Prepare suppression */
