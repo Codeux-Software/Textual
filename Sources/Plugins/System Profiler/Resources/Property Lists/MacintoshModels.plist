@@ -120,6 +120,8 @@
 	<string>MacBook Pro (15-inch, Retina, Touch Bar, Mid-2018)</string>
 	<key>MacBookPro15,2</key>
 	<string>MacBook Pro (13-inch, Retina, Touch Bar, Mid-2018)</string>
+	<key>MacBookPro15,3</key>
+	<string>MacBook Pro (15-inch, Retina, Touch Bar, 2019)</string>
 	<key>MacPro1,1*</key>
 	<string>Mac Pro (Original)</string>
 	<key>MacPro2,1</key>
@@ -198,6 +200,10 @@
 	<string>iMac (21.5-Inch, Retina, Mid-2017)</string>
 	<key>iMac18,3</key>
 	<string>iMac (27-inch, Retina, Mid-2017)</string>
+	<key>iMac19,1</key>
+	<string>iMac (27-inch, Retina, 2019)</string>
+	<key>iMac19,2</key>
+	<string>iMac (21.5-inch, Retina, 2019)</string>
 	<key>iMacPro1,1</key>
 	<string>iMac (27-inch, Retina, Late 2017)</string>
 	<key>iMac4,1</key>
