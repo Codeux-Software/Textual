@@ -61,7 +61,7 @@ final class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol,
 
 	fileprivate var connection: GCDAsyncSocket?
 
-	fileprivate let readDelimiter = Data(bytes: [0x0a]) // \n
+	fileprivate let readDelimiter = Data([0x0a]) // \n
 
 	// MARK: - Grand Centeral Dispatch
 
@@ -911,7 +911,7 @@ final class ConnectionSocketClassic: ConnectionSocket, ConnectionSocketProtocol,
 			return nil
 		}
 
-		guard let resolvedAddresses = try? GCDAsyncSocket.lookupHost(serverAddress, port: config.serverPort) as! [Data] else {
+		guard let resolvedAddresses = try? GCDAsyncSocket.lookupHost(serverAddress, port: config.serverPort) as? [Data] else {
 			return nil
 		}
 

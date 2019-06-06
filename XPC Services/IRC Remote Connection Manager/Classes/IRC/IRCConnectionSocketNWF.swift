@@ -278,6 +278,8 @@ final class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 					return address.rawValue.IPv4Address
 				case .ipv6(let address):
 					return address.rawValue.IPv6Address
+				@unknown default:
+					fatalError("Unexpected switch case")
 			}
 		}
 
@@ -497,6 +499,8 @@ final class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 				return ConnectionError(nwPOSIXError: errorCode.rawValue)
 			case .tls(let errorCode):
 				return ConnectionError(nwTLSError: errorCode)
+			@unknown default:
+				fatalError("Unexpected switch case")
 		}
 	}
 }
