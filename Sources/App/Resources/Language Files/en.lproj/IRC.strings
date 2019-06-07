@@ -149,7 +149,7 @@
 "mqg-wi" = "Okay";
 "ut8-7s" = "Needs work";
 "8fo-ss" = "Slow";
-"4oc-p2" = "Very Slow";
+"4oc-p2" = "Very slow";
 
 /* /mode/ command */
 "dwi-d1" = "The mode \002+%@\002 is not supported on this server";
