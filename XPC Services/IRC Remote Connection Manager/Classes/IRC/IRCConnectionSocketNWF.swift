@@ -452,6 +452,25 @@ final class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 
 		accessTLSTrustRef { (trustRef) in
 			policyName = RCMSecureTransport.policyName(in: trustRef)
+
+			if policyName == nil {
+				/*
+				June 09, 2019 with 10.15 Beta (19A471t):
+
+				Despite us having a trustRef, we do not have a policy name
+				when connecting with modern sockets to an IP address.
+				The IP address itself is what is being matched against the
+				certificate name anyways so let's just return it from config.
+
+				TODO: Revisit this in a later beta or GM.
+				*/
+
+				let serverAddress = config.serverAddress
+
+				if serverAddress.isIPAddress {
+					policyName = serverAddress
+				}
+			} // policyName
 		}
 
 		return policyName
