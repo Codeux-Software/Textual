@@ -254,10 +254,6 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)openSecuredConnectionCertificateModal
 {
-	if (self.isConnected == NO) {
-		return;
-	}
-
 	[[self remoteObjectProxy] exportSecureConnectionInformation:^(NSString * _Nullable policyName, SSLProtocol protocolVersion, SSLCipherSuite cipherSuites, NSArray<NSData *> *certificateChain) {
 		if (policyName == nil) {
 			return;
@@ -314,7 +310,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)openInsecureCertificateTrustPanel:(RCMTrustResponse)trustBlock
 {
-	if (self.isConnecting == NO || self.trustPanel != nil) {
+	if (self.trustPanel != nil) {
 		return;
 	}
 
