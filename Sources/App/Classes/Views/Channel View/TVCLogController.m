@@ -1567,6 +1567,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	templateTokens[@"userConfiguredTextEncoding"] = [NSString charsetRepFromStringEncoding:self.associatedClient.config.primaryEncoding];
 
+	templateTokens[@"userStyleSheetRules"] = [TPCPreferences themeUserStyleSheetRules];
+
 	templateTokens[@"usesCustomScrollers"] = @([self usesCustomScrollers]);
 
 	IRCChannel *channel = self.associatedChannel;
