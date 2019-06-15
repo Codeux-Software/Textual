@@ -260,7 +260,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Connect commands text box better font */
-	self.connectCommandsField.font = [NSFont fontWithName:@"Lucida Grande" size:13.0];
+	self.connectCommandsField.font = [NSFont systemFontOfSize:13.0];
 
 	self.connectCommandsField.textContainerInset = NSMakeSize(1, 3);
 
