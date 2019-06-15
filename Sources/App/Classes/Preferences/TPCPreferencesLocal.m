@@ -689,6 +689,16 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	[RZUserDefaults() registerDefault:@(themeTimestampFormatPreferenceUserConfigurable) forKey:@"Theme -> Timestamp Format Preference Enabled"];
 }
 
++ (nullable NSString *)themeUserStyleSheetRules
+{
+	return [RZUserDefaults() objectForKey:@"Theme -> User Style Sheet Rules"];
+}
+
++ (void)setThemeUserStyleSheetRules:(nullable NSString *)themeUserStyleSheetRules
+{
+	[RZUserDefaults() setObject:themeUserStyleSheetRules forKey:@"Theme -> User Style Sheet Rules"];
+}
+
 + (CGFloat)mainWindowTransparency
 {
 	return [RZUserDefaults() doubleForKey:@"MainWindowTransparencyLevel"];

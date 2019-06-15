@@ -255,6 +255,8 @@ typedef NS_ENUM(NSUInteger, TXPreferredAppearance) {
 + (NSString *)themeTimestampFormat;
 + (NSString *)themeTimestampFormatDefault;
 
++ (nullable NSString *)themeUserStyleSheetRules;
+
 + (CGFloat)mainWindowTransparency;
 
 + (nullable NSFont *)themeChannelViewFont;

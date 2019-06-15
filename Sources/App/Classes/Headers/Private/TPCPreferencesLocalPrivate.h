@@ -80,6 +80,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setThemeTimestampFormatPreferenceUserConfigurable:(BOOL)themeTimestampFormatPreferenceUserConfigurable;
 + (void)setThemeChannelViewFontPreferenceUserConfigurable:(BOOL)themeChannelViewFontPreferenceUserConfigurable;
 
++ (void)setThemeUserStyleSheetRules:(nullable NSString *)themeUserStyleSheetRules;
+
 + (void)setScrollbackSaveLimit:(NSUInteger)scrollbackSaveLimit;
 + (void)setScrollbackVisibleLimit:(NSUInteger)scrollbackVisibleLimit;
 

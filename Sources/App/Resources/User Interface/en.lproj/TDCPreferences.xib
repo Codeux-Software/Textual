@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14810.11" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14810.11"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -2252,13 +2252,33 @@
                                             <accessibilityConnection property="link" destination="OHt-lc-jrk" id="9LG-h0-7Cu"/>
                                         </connections>
                                     </scrollView>
+                                    <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="hcQ-eU-esk">
+                                        <rect key="frame" x="50" y="170" width="443" height="5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="443" id="IBx-3O-WQh"/>
+                                        </constraints>
+                                    </box>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ywg-YX-GQf">
+                                        <rect key="frame" x="151" y="126" width="242" height="32"/>
+                                        <buttonCell key="cell" type="push" title="Modify Custom Style Sheet Rules" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="QFK-n6-IVM">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="onModifyUserStyleSheetRules:" target="-2" id="lNM-SU-jMT"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="z68-wf-cQV" secondAttribute="trailing" constant="90" id="5ab-GB-jMa"/>
                                     <constraint firstItem="OHt-lc-jrk" firstAttribute="top" secondItem="zwO-BD-Weo" secondAttribute="top" constant="18" id="8Do-di-uUR"/>
+                                    <constraint firstItem="hcQ-eU-esk" firstAttribute="centerX" secondItem="zwO-BD-Weo" secondAttribute="centerX" id="Efu-9j-edC"/>
+                                    <constraint firstItem="ywg-YX-GQf" firstAttribute="top" secondItem="hcQ-eU-esk" secondAttribute="bottom" constant="18" id="O8g-Ut-pjn"/>
                                     <constraint firstItem="z68-wf-cQV" firstAttribute="top" secondItem="OHt-lc-jrk" secondAttribute="bottom" constant="8" id="TgU-qN-YN6"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="OHt-lc-jrk" secondAttribute="trailing" constant="20" id="Tqq-0k-MYb"/>
+                                    <constraint firstItem="ywg-YX-GQf" firstAttribute="centerX" secondItem="zwO-BD-Weo" secondAttribute="centerX" id="b0X-0B-gn1"/>
                                     <constraint firstItem="OHt-lc-jrk" firstAttribute="leading" secondItem="zwO-BD-Weo" secondAttribute="leading" constant="90" id="lWq-wB-75e"/>
+                                    <constraint firstItem="hcQ-eU-esk" firstAttribute="top" secondItem="z68-wf-cQV" secondAttribute="bottom" constant="18" id="nuc-Zq-zvw"/>
                                     <constraint firstItem="z68-wf-cQV" firstAttribute="leading" secondItem="zwO-BD-Weo" secondAttribute="leading" constant="103" id="xdC-Gw-8dH"/>
                                 </constraints>
                             </view>

@@ -6,7 +6,7 @@
  *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
  *
  * Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- * Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ * Copyright (c) 2010 - 2019 Codeux Software, LLC & respective contributors.
  *       Please see Acknowledgements.pdf for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -61,6 +61,7 @@
 #import "TDCInAppPurchaseDialogPrivate.h"
 #import "TDCFileTransferDialogPrivate.h"
 #import "TDCPreferencesNotificationConfigurationPrivate.h"
+#import "TDCPreferencesUserStyleSheetPrivate.h"
 #import "TDCPreferencesControllerPrivate.h"
 
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
@@ -161,6 +162,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL reloadingThemeBySelection;
 @property (nonatomic, weak) IBOutlet NSView *notificationControllerHostView;
 @property (nonatomic, strong) IBOutlet TVCNotificationConfigurationViewController *notificationController;
+@property (nonatomic, strong) TDCPreferencesUserStyleSheet *userStyleSheet;
 
 - (IBAction)onAddExcludeKeyword:(id)sender;
 - (IBAction)onAddHighlightKeyword:(id)sender; // changed
@@ -189,6 +191,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)onFileTransferDownloadDestinationFolderChanged:(id)sender;
 - (IBAction)onFileTransferIPAddressDetectionMethodChanged:(id)sender;
 - (IBAction)onManageICloudButtonClicked:(id)sender; // changed
+- (IBAction)onModifyUserStyleSheetRules:(id)sender;
 - (IBAction)onOpenPathToCloudFolder:(id)sender;
 - (IBAction)onOpenPathToScripts:(id)sender;
 - (IBAction)onOpenPathToTheme:(id)sender; // changed
@@ -1277,6 +1280,32 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onChangedTransparency:(id)sender
 {
 	[mainWindow() updateAlphaValueToReflectPreferences];
+}
+
+#pragma mark -
+#pragma mark User Style Sheet Rules
+
+- (void)onModifyUserStyleSheetRules:(id)sender
+{
+	TDCPreferencesUserStyleSheet *sheet = [TDCPreferencesUserStyleSheet new];
+
+	sheet.delegate = (id)self;
+
+	sheet.window = self.window;
+
+	[sheet start];
+
+	self.userStyleSheet = sheet;
+}
+
+- (void)userStyleSheetRulesChanged:(TDCPreferencesUserStyleSheet *)sender
+{
+	[self onChangedTheme:nil];
+}
+
+- (void)userStyleSheetWillClose:(TDCPreferencesUserStyleSheet *)sender
+{
+	self.userStyleSheet = nil;
 }
 
 #pragma mark -
