@@ -240,8 +240,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	}
 	else if ([urlHost isDomainOrSubdomain:@"arxius.io"] ||
-			 [urlHost isDomainOrSubdomain:@"i.arxius.io"] ||
-			 [urlHost isDomainOrSubdomain:@"v.arxius.io"])
+			 [urlHost isDomainOrSubdomain:@"i.arxius.io"])
 	{
 		if (urlPath.length == 0) {
 			return nil;
@@ -253,24 +252,12 @@ NS_ASSUME_NONNULL_BEGIN
 			if (s.alphabeticNumericOnly) {
 				return [NSString stringWithFormat:@"https://i.arxius.io/%@", s];
 			}
-		} else if ([urlHost isDomainOrSubdomain:@"v.arxius.io"]) {
-			NSString *v = [urlPath substringFromIndex:1];
-
-			if (v.alphabeticNumericOnly) {
-				return [NSString stringWithFormat:@"https://v.arxius.io/%@_thumb", v];
-			}
 		} else {
 			if ([urlPath hasPrefix:@"/i/"]) {
 				NSString *s = [urlPath substringFromIndex:3];
 
 				if (s.alphabeticNumericOnly) {
 					return [NSString stringWithFormat:@"https://i.arxius.io/%@", s];
-				}
-			} else if ([urlPath hasPrefix:@"/v/"]) {
-				NSString *v = [urlPath substringFromIndex:3];
-
-				if (v.alphabeticNumericOnly) {
-					return [NSString stringWithFormat:@"https://v.arxius.io/%@_thumb", v];
 				}
 			}
 		}

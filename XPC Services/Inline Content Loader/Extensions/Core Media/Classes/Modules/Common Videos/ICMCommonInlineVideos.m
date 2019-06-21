@@ -87,6 +87,29 @@ NS_ASSUME_NONNULL_BEGIN
 			return [NSString stringWithFormat:@"http://clips.dropcam.com/%@", filename];
 		}
 	}
+	else if ([urlHost isDomainOrSubdomain:@"arxius.io"] ||
+			 [urlHost isDomainOrSubdomain:@"v.arxius.io"])
+	{
+		if (urlPath.length == 0) {
+			return nil;
+		}
+
+		if ([urlHost isDomainOrSubdomain:@"v.arxius.io"]) {
+			NSString *v = [urlPath substringFromIndex:1];
+
+			if (v.alphabeticNumericOnly) {
+				return [NSString stringWithFormat:@"https://v.arxius.io/%@.mp4", v];
+			}
+		} else {
+			if ([urlPath hasPrefix:@"/v/"]) {
+				NSString *v = [urlPath substringFromIndex:3];
+
+				if (v.alphabeticNumericOnly) {
+					return [NSString stringWithFormat:@"https://v.arxius.io/%@.mp4", v];
+				}
+			}
+		}
+	}
 
 	return nil;
 }
