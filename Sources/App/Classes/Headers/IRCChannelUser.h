@@ -79,8 +79,12 @@ typedef NS_OPTIONS(NSUInteger, IRCUserRank) {
 @property (readonly, copy) NSString *modes; // List of all user modes, ranked highest to lowest
 @property (readonly, copy) NSString *mark; // Returns mode symbol for highest rank (-modes)
 
-/* Weight used when completing nicknames */
-@property (readonly) double totalWeight;
+/* Weight used when completing nicknames. */
+/* Accessing totalWeight decays the weight. */
+/* Accessing other weight properties does not. */
+@property (readonly) double totalWeight; // (incoming + outgoing) with decay
+@property (readonly) double incomingWeight;
+@property (readonly) double outgoingWeight;
 @end
 
 #pragma mark -
