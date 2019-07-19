@@ -4826,6 +4826,38 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			break;
 		}
+		case IRCLocalCommandWeights: // Command: WEIGHTS
+		{
+			if (targetChannel == nil || targetChannel.isChannel == NO) {
+				[self printDebugInformation:TXTLS(@"IRC[g01-qn]")];
+
+				break;
+			}
+
+			[self printDebugInformation:TXTLS(@"IRC[zud-u3]", targetChannel.name)];
+
+			BOOL haveWeights = NO;
+
+			for (IRCChannelUser *member in targetChannel.memberList) {
+				double incomingWeight = member.incomingWeight;
+				double outgoingWeight = member.outgoingWeight;
+
+				CGFloat weight = (incomingWeight + outgoingWeight);
+
+				if (weight > 0) {
+					haveWeights = YES;
+
+					[self printDebugInformation:TXTLS(@"IRC[24r-8c]",
+							member.user.nickname, outgoingWeight, incomingWeight, weight)];
+				}
+			}
+
+			if (haveWeights == NO) {
+				[self printDebugInformation:TXTLS(@"IRC[dje-41]")];
+			}
+
+			break;
+		}
 		case IRCLocalCommandWhois: // Command: WHOIS
 		{
 			NSAssertReturnLoopBreak(self.isLoggedIn);

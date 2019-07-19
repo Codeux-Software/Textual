@@ -262,6 +262,11 @@
 /* /topic/ command errors */
 "1oo-3b" = "You have exceeded the maximum topic length for %1$@ which is %2$ld characters. The end of your topic may have been cut off.";
 
+/* /weights/ command */
+"zud-u3" = "Nickname completion weights for %@:";
+"24r-8c" = "\002%1$@\002: Sent: %2$.2f, Receive: %3$.2f, \002Total: %4$.2f\002";
+"dje-41" = "No weights";
+
 /* Address type migration warning */
 "w05-ph" = "\0034\002Please take notice:\002\003 The preference labeled “Prefer IPv4”, which you had enabled, no longer exists. \002IPv6 has been disabled for this connection\002 to offer you similar behavior. See the \002Network Socket\002 section of \002Server Properties\002 to change which protocols are enabled (IPv4 and/or IPv6).";
 

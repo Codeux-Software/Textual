@@ -5,7 +5,7 @@
 	<key>Reserved Information</key>
 	<dict>
 		<key>Next Index Value</key>
-		<real>5118</real>
+		<real>5119</real>
 	</dict>
 	<key>adchat</key>
 	<dict>
@@ -876,6 +876,13 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5097</integer>
+	</dict>
+	<key>weights</key>
+	<dict>
+		<key>developerModeOnly</key>
+		<false/>
+		<key>indexValue</key>
+		<integer>5118</integer>
 	</dict>
 	<key>who</key>
 	<dict>

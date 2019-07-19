@@ -141,6 +141,7 @@ typedef NS_ENUM(NSUInteger, IRCLocalCommand) {
 	IRCLocalCommandVoice = 5076,
 	IRCLocalCommandWallops = 5077,
 	IRCLocalCommandWatch = 5097,
+	IRCLocalCommandWeights = 5118,
 	IRCLocalCommandWho = 5079,
 	IRCLocalCommandWhois = 5080,
 	IRCLocalCommandWhowas = 5081,
