@@ -239,7 +239,7 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 		}
 	}
-	else if ([urlHost isDomainOrSubdomain:@"arxius.io"])
+	else if ([urlHost isDomainOrSubdomain:@"arxius.io"] || [urlHost isDomainOrSubdomain:@"i.arxius.io"])
 	{
 		if (urlPath.length == 0) {
 			return nil;
