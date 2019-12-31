@@ -16,31 +16,17 @@ export PACKAGES_DESTINATION="./Packages"
 
 echo "**************************"
 
-./Installer\ Helpers/Build-Scripts-Package "AudioVideo" \
-"hermes" \
-"music" \
-"np" \
-"qt" \
-"radium" \
-"spotify" \
-"vlc"
+./Installer\ Helpers/Build-Scripts-Package "AudioVideo" "hermes,music,qt,radium,spotify,vlc"
+./Installer\ Helpers/Build-Scripts-Package "AudioVideo-np-iTunes" "np" "np/iTunes/"
+./Installer\ Helpers/Build-Scripts-Package "AudioVideo-np-Music" "np" "np/Music/"
 
 echo "**************************"
 
-./Installer\ Helpers/Build-Scripts-Package "Fun" \
-"banhammer" \
-"ffuu" \
-"o_o" \
-"slap"
+./Installer\ Helpers/Build-Scripts-Package "Fun" "banhammer,ffuu,o_o,slap"
 
 echo "**************************"
 
-./Installer\ Helpers/Build-Scripts-Package "Utilities" \
-"apps" \
-"flip" \
-"page" \
-"reverse" \
-"shell"
+./Installer\ Helpers/Build-Scripts-Package "Utilities" "apps,flip,page,reverse,shell"
 
 echo "**************************"
 

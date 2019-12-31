@@ -7,11 +7,11 @@ echo "${1} - Start";
 
 mkdir -p "${BUILD_PATH_SCRIPTS_STANDALONE}"
 
-for i in ${@:2}
+for i in $(echo $2 | sed "s/,/ /g")
 do
 	echo "Copying ${i}"
  
-	cp "${SOURCE_FILES_SCRIPTS}/${i}.scpt" "${BUILD_PATH_SCRIPTS_STANDALONE}"
+	cp "${SOURCE_FILES_SCRIPTS}/${3}${i}.scpt" "${BUILD_PATH_SCRIPTS_STANDALONE}"
 done
 
 pkgbuild \
@@ -31,9 +31,9 @@ rm -fr "${BUILD_PATH}"
 
 mkdir -p "${BUILD_PATH_SCRIPTS_MACAPPSTORE}"
 
-for i in ${@:2}
+for i in $(echo $2 | sed "s/,/ /g")
 do
-	cp "${SOURCE_FILES_SCRIPTS}/${i}.scpt" "${BUILD_PATH_SCRIPTS_MACAPPSTORE}"
+	cp "${SOURCE_FILES_SCRIPTS}/${3}${i}.scpt" "${BUILD_PATH_SCRIPTS_MACAPPSTORE}"
 done
 
 pkgbuild \
