@@ -2311,6 +2311,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	}];
 	[self.channelListArrayController setSortDescriptors:@[ sortDescriptor ]];
 	[self.channelListArrayController rearrangeObjects];
+	[self.channelListArrayController setSortDescriptors:nil];
 }
 
 #pragma mark -
