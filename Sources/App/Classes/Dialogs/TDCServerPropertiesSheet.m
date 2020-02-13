@@ -508,10 +508,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)populateTabViewList
 {
 #define _groupItem(_label_, _children_) 	\
-[[TVCContentNavigationOutlineViewItem alloc] initWithLabel:TXTLS(_label_) identifier:0 view:nil firstResponder:nil children:(_children_)]
+	[[TVCContentNavigationOutlineViewItem alloc] initWithLabel:TXTLS(_label_) identifier:0 view:nil firstResponder:nil children:(_children_)]
 
 #define _childItem(_label_, _identifier_) 	\
-[[TVCContentNavigationOutlineViewItem alloc] initWithLabel:TXTLS(_label_) identifier:TDCServerPropertiesSheetSelection ##_identifier_ view:self.contentView ##_identifier_ firstResponder:nil]
+	[[TVCContentNavigationOutlineViewItem alloc] initWithLabel:TXTLS(_label_) identifier:TDCServerPropertiesSheetSelection ##_identifier_ view:self.contentView ##_identifier_ firstResponder:nil]
 
 	NSArray *generalSectionChildren = @[
 		_childItem(@"TDCServerPropertiesSheet[8zc-6y]", AddressBook),
@@ -731,11 +731,11 @@ NS_ASSUME_NONNULL_BEGIN
 	 view, remove that from array, then enumerate the rest. */
 	NSMutableArray *remainingSelections =
 	[@[
-		@(TDCServerPropertiesSheetSelectionGeneral),
-		@(TDCServerPropertiesSheetSelectionIdentity),
-		@(TDCServerPropertiesSheetSelectionDisconnectMessages),
-		@(TDCServerPropertiesSheetSelectionProxyServer),
-	] mutableCopy];
+	   @(TDCServerPropertiesSheetSelectionGeneral),
+	   @(TDCServerPropertiesSheetSelectionIdentity),
+	   @(TDCServerPropertiesSheetSelectionDisconnectMessages),
+	   @(TDCServerPropertiesSheetSelectionProxyServer),
+	   ] mutableCopy];
 
 	[remainingSelections removeObject:@(selection)];
 
@@ -873,7 +873,7 @@ NS_ASSUME_NONNULL_BEGIN
 	IRCClient *client = notification.object;
 
 	NSWindow *window = self.sheet.deepestWindow;
-
+	
 	[TDCAlert alertSheetWithWindow:window
 							  body:TXTLS(@"TDCServerPropertiesSheet[oz4-kb]")
 							 title:TXTLS(@"TDCServerPropertiesSheet[bzh-il]")
@@ -881,20 +881,20 @@ NS_ASSUME_NONNULL_BEGIN
 				   alternateButton:TXTLS(@"Prompts[99q-gg]")
 					   otherButton:nil
 				   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
-		if (buttonClicked != TDCAlertResponseDefault) {
-			return;
-		}
-
-		[self close];
-
-		[client updateStoredConfiguration];
-
-		self.config = [client.config mutableCopy];
-
-		[self loadConfig];
-
-		[self start];
-	}];
+					   if (buttonClicked != TDCAlertResponseDefault) {
+						   return;
+					   }
+					   
+					   [self close];
+					   
+					   [client updateStoredConfiguration];
+					   
+					   self.config = [client.config mutableCopy];
+					   
+					   [self loadConfig];
+					   
+					   [self start];
+				   }];
 }
 
 - (void)loadConfig
@@ -1367,7 +1367,7 @@ NS_ASSUME_NONNULL_BEGIN
 	{
 		return;
 	}
-
+	
 	[TDCAlert modalAlertWithMessage:TXTLS(@"TDCServerPropertiesSheet[26u-j8]")
 							  title:TXTLS(@"TDCServerPropertiesSheet[94r-eq]")
 					  defaultButton:TXTLS(@"Prompts[c7s-dq]")
@@ -1484,12 +1484,12 @@ NS_ASSUME_NONNULL_BEGIN
 					   alternateButton:TXTLS(@"Prompts[99q-gg]")
 						   otherButton:nil
 					   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
-			if (buttonClicked == TDCAlertResponseAlternate) {
-				self.requestRemovalFromCloudOnClose = NO;
-			} else {
-				self.requestRemovalFromCloudOnClose = YES;
-			}
-		}];
+						   if (buttonClicked == TDCAlertResponseAlternate) {
+							   self.requestRemovalFromCloudOnClose = NO;
+						   } else {
+							   self.requestRemovalFromCloudOnClose = YES;
+						   }
+					   }];
 	}
 	else // state == NSOnState
 	{
@@ -1500,13 +1500,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)preferredInternetProtocolChanged:(id)sender
 {
-	TEXTUAL_IGNORE_DEPRECATION_BEGIN
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 	/* Changing the property triggers a deprecation log to console
 	 which is just unncessary output when each time we change it. */
 	if (self.config.connectionPrefersIPv4) {
 		self.config.connectionPrefersIPv4 = NO;
 	}
-	TEXTUAL_IGNORE_DEPRECATION_END
+TEXTUAL_IGNORE_DEPRECATION_END
 
 	self.config.addressType = [sender tag];
 }
@@ -2309,8 +2309,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:nil ascending:YES comparator:^NSComparisonResult(IRCChannelConfig *cfg1, IRCChannelConfig *cfg2) {
 		return [cfg1.channelName caseInsensitiveCompare:cfg2.channelName];
 	}];
-	NSArray *sdesc = @[ sortDescriptor ];
-	[self.channelListArrayController setSortDescriptors:sdesc];
+	[self.channelListArrayController setSortDescriptors:@[ sortDescriptor ]];
 	[self.channelListArrayController rearrangeObjects];
 }
 
