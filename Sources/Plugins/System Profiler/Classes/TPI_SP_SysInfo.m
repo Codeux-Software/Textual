@@ -83,6 +83,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSArray<TPI_SP_WebViewProcessInfo *> *)webViewProcessIdentifiers;
 + (pid_t)webViewProcessIdentifierForTreeItem:(IRCTreeItem *)treeItem;
+
++ (nullable NSString *)refreshRateForScreen:(NSScreen *)screen;
 @end
 
 @implementation TPI_SP_CompiledOutput
@@ -266,7 +268,8 @@ NS_ASSUME_NONNULL_BEGIN
 		[rsultString appendString:
 		 TPILocalizedString(localization,
 			screenNumber,
-			screen.screenResolutionString)];
+			screen.screenResolutionString,
+			[TPI_SP_SysInfo refreshRateForScreen:screen])];
 	}];
 
 	return [rsultString copy];
@@ -374,7 +377,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[resultString appendString:
 		 TPILocalizedString(@"BasicLanguage[b7c-qd]",
-			mainScreen.screenResolutionString)];
+			mainScreen.screenResolutionString,
+			[TPI_SP_SysInfo refreshRateForScreen:mainScreen])];
 	}
 
 	if (showOperatingSystem) {
@@ -865,6 +869,15 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	return 0;
+}
+
++ (nullable NSString *)refreshRateForScreen:(NSScreen *)screen
+{
+	NSParameterAssert(screen != nil);
+
+	CGFloat refreshRate = screen.screenRefreshRate;
+
+	return TPILocalizedString(@"BasicLanguage[zpt-sx]", refreshRate);
 }
 
 @end

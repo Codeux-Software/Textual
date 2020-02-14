@@ -38,6 +38,9 @@
 /* Preferences pane name. */
 "dff-13" = "System Information";
 
+/* Screen refresh rate - shared by /sysinfo/ and /screens/ */
+"zpt-sx" = "%.0f Mhz";
+
 /* /sysinfo/ command. */
 "lxj-ha" = "System Information:";
 "7g5-pf" = " \002Model:\002 %@ \002•\002";
@@ -46,7 +49,7 @@
 "xb6-bh" = " \002Uptime:\002 %@ \002•\002";
 "yrc-6l" = " \002Disk Space:\002 %@ \002•\002";
 "q5v-uq" = " \002Graphics:\002 %@ \002•\002";
-"b7c-qd" = " \002Display Resolution:\002 %@ \002•\002";
+"b7c-qd" = " \002Main Display:\002 %1$@ at %2$@ \002•\002";
 "g41-p7" = " \002OS:\002 %1$@ (Version %2$@, Build %3$@)";
 
 "8nu-89" = "%@";
@@ -77,8 +80,8 @@
 "z37-85" = "\002Current Style:\002 %1$@ – (%2$@) \002•\002 \002Inverted sidebars:\002 %3$@ \002•\002 \002WebKit2\002: %4$@";
 
 /* /screens/ command. */
-"vvt-zq" = "\002Display Resolution:\002 #%1$lu: %2$@";
-"fys-ft" = "; #%1$lu: %2$@";
+"vvt-zq" = "\002Display Resolution:\002 #%1$lu: %2$@ at %3$@";
+"fys-ft" = "; #%1$lu: %2$@ at %3$@";
 
 /* Misc., one line commands. */
 "v03-jx" = "System Uptime: %1$@ \002•\002 Textual Uptime: %2$@";
