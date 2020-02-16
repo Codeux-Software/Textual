@@ -39,7 +39,7 @@
 "dff-13" = "System Information";
 
 /* Screen refresh rate - shared by /sysinfo/ and /screens/ */
-"zpt-sx" = "%.0f Mhz";
+"zpt-sx" = "%.0f Hz";
 
 /* /sysinfo/ command. */
 "lxj-ha" = "System Information:";
