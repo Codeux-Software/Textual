@@ -22,6 +22,8 @@
 	<array>
 		<string>8482Q6EPL6.com.codeux.irc.textual</string>
 	</array>
+	<key>com.apple.security.automation.apple-events</key>
+	<true/>
 	<key>com.apple.security.files.bookmarks.app-scope</key>
 	<true/>
 	<key>com.apple.security.files.downloads.read-write</key>
