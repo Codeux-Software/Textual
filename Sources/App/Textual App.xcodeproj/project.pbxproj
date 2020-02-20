@@ -780,8 +780,6 @@
 		4C06E43A20EC539E0055D09A /* EncryptionKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E43B20EC539E0055D09A /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; };
 		4C06E43C20EC539E0055D09A /* GRMustache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4C06E43D20EC539E0055D09A /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
-		4C06E43E20EC539E0055D09A /* Growl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E43F20EC539E0055D09A /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
 		4C06E44020EC539E0055D09A /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E44120EC539E0055D09A /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; };
@@ -794,8 +792,6 @@
 		4C06E44920EC53D70055D09A /* EncryptionKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E44A20EC53D70055D09A /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; };
 		4C06E44B20EC53D70055D09A /* GRMustache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4C06E44C20EC53D70055D09A /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
-		4C06E44D20EC53D70055D09A /* Growl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E44E20EC53D70055D09A /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
 		4C06E44F20EC53D70055D09A /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E45320EC53EE0055D09A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */; };
@@ -812,14 +808,12 @@
 		4C06E47520EC541C0055D09A /* CocoaExtensions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C06E47720EC541C0055D09A /* EncryptionKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E47920EC541C0055D09A /* GRMustache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4C06E47B20EC541C0055D09A /* Growl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E47D20EC541C0055D09A /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E47F20EC541C0055D09A /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E48120EC54260055D09A /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */; };
 		4C06E48220EC54260055D09A /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */; };
 		4C06E48320EC54260055D09A /* EncryptionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; };
 		4C06E48420EC54260055D09A /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; };
-		4C06E48520EC54260055D09A /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
 		4C06E48620EC54260055D09A /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
 		4C06E48720EC54260055D09A /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; };
 		4C06E48820EC542C0055D09A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */; };
@@ -839,8 +833,6 @@
 		4C06E49920EC54610055D09A /* EncryptionKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E49A20EC54610055D09A /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; };
 		4C06E49B20EC54610055D09A /* GRMustache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4C06E49C20EC54610055D09A /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
-		4C06E49D20EC54620055D09A /* Growl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E49E20EC54620055D09A /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
 		4C06E49F20EC54620055D09A /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E4A020EC54620055D09A /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; };
@@ -2643,7 +2635,6 @@
 				4C06E44220EC539E0055D09A /* Sparkle.framework in Embed Frameworks */,
 				4C06E43620EC539E0055D09A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C06E43C20EC539E0055D09A /* GRMustache.framework in Embed Frameworks */,
-				4C06E43E20EC539E0055D09A /* Growl.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2659,7 +2650,6 @@
 				4C06E44F20EC53D70055D09A /* HockeySDK.framework in Embed Frameworks */,
 				4C06E44520EC53D70055D09A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C06E44B20EC53D70055D09A /* GRMustache.framework in Embed Frameworks */,
-				4C06E44D20EC53D70055D09A /* Growl.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2676,7 +2666,6 @@
 				4C06E47F20EC541C0055D09A /* Sparkle.framework in Embed Frameworks */,
 				4C06E47320EC541C0055D09A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C06E47920EC541C0055D09A /* GRMustache.framework in Embed Frameworks */,
-				4C06E47B20EC541C0055D09A /* Growl.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2693,7 +2682,6 @@
 				4C06E4A120EC54620055D09A /* Sparkle.framework in Embed Frameworks */,
 				4C06E49520EC54610055D09A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C06E49B20EC54610055D09A /* GRMustache.framework in Embed Frameworks */,
-				4C06E49D20EC54620055D09A /* Growl.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3603,7 +3591,6 @@
 				4C06E45E20EC53EE0055D09A /* WebKit.framework in Frameworks */,
 				4C06E44620EC53D70055D09A /* CocoaExtensions.framework in Frameworks */,
 				4C06E44420EC53D70055D09A /* AutoHyperlinks.framework in Frameworks */,
-				4C06E44C20EC53D70055D09A /* Growl.framework in Frameworks */,
 				4C06E44820EC53D70055D09A /* EncryptionKit.framework in Frameworks */,
 				4C06E44A20EC53D70055D09A /* GRMustache.framework in Frameworks */,
 				4C06E44E20EC53D70055D09A /* HockeySDK.framework in Frameworks */,
@@ -3628,7 +3615,6 @@
 				4C06E48220EC54260055D09A /* CocoaExtensions.framework in Frameworks */,
 				4C06E48320EC54260055D09A /* EncryptionKit.framework in Frameworks */,
 				4C06E48420EC54260055D09A /* GRMustache.framework in Frameworks */,
-				4C06E48520EC54260055D09A /* Growl.framework in Frameworks */,
 				4C06E48620EC54260055D09A /* HockeySDK.framework in Frameworks */,
 				4C06E48720EC54260055D09A /* Sparkle.framework in Frameworks */,
 			);
@@ -3653,7 +3639,6 @@
 				4C06E4A020EC54620055D09A /* Sparkle.framework in Frameworks */,
 				4C06E49420EC54610055D09A /* AutoHyperlinks.framework in Frameworks */,
 				4C06E49A20EC54610055D09A /* GRMustache.framework in Frameworks */,
-				4C06E49C20EC54610055D09A /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3669,7 +3654,6 @@
 				4C06E42D20EC53620055D09A /* IOKit.framework in Frameworks */,
 				4C06E44120EC539E0055D09A /* Sparkle.framework in Frameworks */,
 				4C06E43920EC539E0055D09A /* EncryptionKit.framework in Frameworks */,
-				4C06E43D20EC539E0055D09A /* Growl.framework in Frameworks */,
 				4C06E42F20EC53620055D09A /* QuartzCore.framework in Frameworks */,
 				4C06E43F20EC539E0055D09A /* HockeySDK.framework in Frameworks */,
 				4C06E43020EC53620055D09A /* Security.framework in Frameworks */,
