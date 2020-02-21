@@ -89,7 +89,7 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 
 	NSArray *pathsToLoad =
 	[RZFileManager() buildPathArray:
-		[TPCPathInfo customExtensions],
+		[TPCPathInfo customExtensions] ?: @"",
 		[TPCPathInfo bundledExtensions],
 		nil];
 
@@ -224,7 +224,7 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 
 	NSArray *scriptPaths =
 	[RZFileManager() buildPathArray:
-		[TPCPathInfo customScripts],
+		[TPCPathInfo customScripts] ?: @"",
 		[TPCPathInfo bundledScripts],
 		nil];
 
@@ -273,7 +273,7 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 
 - (NSArray<NSString *> *)listOfForbiddenCommandNames
 {
-	/* List of commands that cannot be used as the name of a script 
+	/* List of commands that cannot be used as the name of a script
 	 because they would conflict with the commands defined by one or
 	 more standard (RFC) */
 	static NSArray<NSString *> *cachedValue = nil;
@@ -374,7 +374,7 @@ NSString * const THOPluginManagerFinishedLoadingPluginsNotification = @"THOPlugi
 {
 	NSParameterAssert(bundles != nil);
 
-	/* Append the current version to the suppression key so that updates 
+	/* Append the current version to the suppression key so that updates
 	 aren't refused forever. Only until the next verison of Textual is out. */
 	NSString *suppressionKey =
 	[@"plugin_manager_extension_update_dialog_"
