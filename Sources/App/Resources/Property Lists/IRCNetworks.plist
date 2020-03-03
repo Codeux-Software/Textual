@@ -164,15 +164,6 @@
 		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
-	<key>Mozilla</key>
-	<dict>
-		<key>serverAddress</key>
-		<string>irc.mozilla.org</string>
-		<key>serverPort</key>
-		<integer>6697</integer>
-		<key>prefersSecuredConnection</key>
-		<true/>
-	</dict>
 	<key>Mozor</key>
 	<dict>
 		<key>serverAddress</key>
