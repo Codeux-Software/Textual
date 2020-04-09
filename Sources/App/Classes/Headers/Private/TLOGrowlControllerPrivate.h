@@ -36,7 +36,9 @@
  *
  *********************************************************************** */
 
+#if TEXTUAL_BUILT_WITH_GROWL_SDK_ENABLED == 1
 #import <Growl/Growl.h>
+#endif
 
 #import "TLOGrowlController.h"
 

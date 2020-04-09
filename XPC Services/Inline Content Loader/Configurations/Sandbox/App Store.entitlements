@@ -8,7 +8,13 @@
 	<array>
 		<string>8482Q6EPL6.com.codeux.irc.textual</string>
 	</array>
+	<key>com.apple.security.cs.disable-library-validation</key>
+	<true/>
 	<key>com.apple.security.network.client</key>
 	<true/>
+	<key>com.apple.security.application-groups - 2</key>
+	<array>
+		<string>8482Q6EPL6.com.codeux.irc.textual</string>
+	</array>
 </dict>
 </plist>
