@@ -83,7 +83,9 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 {
 	RZUserNotificationCenter().delegate = (id)self;
 
+#if TEXTUAL_BUILT_WITH_GROWL_SDK_ENABLED == 1
 	[GrowlApplicationBridge setGrowlDelegate:(id)self];
+#endif
 
 	[RZNotificationCenter() addObserver:self selector:@selector(mainWindowSelectionChanged:) name:TVCMainWindowSelectionChangedNotification object:nil];
 }
@@ -259,7 +261,10 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 		eventDescription = eventDescription.stripIRCEffects;
 	}
 
+#if TEXTUAL_BUILT_WITH_GROWL_SDK_ENABLED == 1
 	if ([GrowlApplicationBridge isGrowlRunning] == NO) {
+#endif
+
 		NSUserNotification *notification = [NSUserNotification new];
 
 		notification.deliveryDate = [NSDate date];
@@ -285,6 +290,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 
 		[RZUserNotificationCenter() scheduleNotification:notification];
 
+#if TEXTUAL_BUILT_WITH_GROWL_SDK_ENABLED == 1
 		return; // Do not continue to Growl...
 	}
 
@@ -297,6 +303,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 								   priority:(signed int)eventPriority
 								   isSticky:NO
 							   clickContext:eventContext];
+#endif
 }
 
 #pragma mark -
@@ -349,6 +356,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 #pragma mark -
 #pragma mark Growl delegate
 
+#if TEXTUAL_BUILT_WITH_GROWL_SDK_ENABLED == 1
 - (NSString *)applicationNameForGrowl
 {
 	return [TPCApplicationInfo applicationNameWithoutVersion];
@@ -393,6 +401,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 {
 	return YES;
 }
+#endif
 
 #pragma mark -
 #pragma mark Notification Callback

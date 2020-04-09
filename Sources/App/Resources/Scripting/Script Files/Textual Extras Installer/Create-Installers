@@ -9,37 +9,39 @@ export BUILD_PATH_SCRIPTS_STANDALONE="${BUILD_PATH}/Library/Application Scripts/
 export BUILD_PATH_EXTENSIONS_MACAPPSTORE="${BUILD_PATH}/Library/Group Containers/8482Q6EPL6.com.codeux.irc.textual/Library/Application Support/Textual/Extensions"
 export BUILD_PATH_EXTENSIONS_STANDALONE="${BUILD_PATH}/Library/Group Containers/com.codeux.apps.textual/Library/Application Support/Textual/Extensions"
 
-export SOURCE_FILES_SCRIPTS="./Installation Files/Scripts"
-export SOURCE_FILES_EXTENSIONS="./Installation Files/Extensions"
+export CURRENT_DIRECTORY=$(cd `dirname $0` && pwd)
 
-export PACKAGES_DESTINATION="./Packages"
+export SOURCE_FILES_SCRIPTS="${CURRENT_DIRECTORY}/Installation Files/Scripts"
+export SOURCE_FILES_EXTENSIONS="${CURRENT_DIRECTORY}/Installation Files/Extensions"
 
-echo "**************************"
-
-./Installer\ Helpers/Build-Scripts-Package "AudioVideo" "hermes,music,qt,radium,spotify,vlc"
-./Installer\ Helpers/Build-Scripts-Package "AudioVideo-np-iTunes" "np" "np/iTunes/"
-./Installer\ Helpers/Build-Scripts-Package "AudioVideo-np-Music" "np" "np/Music/"
+export PACKAGES_DESTINATION="${CURRENT_DIRECTORY}/Packages"
 
 echo "**************************"
 
-./Installer\ Helpers/Build-Scripts-Package "Fun" "banhammer,ffuu,o_o,slap"
+"${CURRENT_DIRECTORY}/Installer Helpers/Build-Scripts-Package" "AudioVideo" "hermes,music,qt,radium,spotify,vlc"
+"${CURRENT_DIRECTORY}/Installer Helpers/Build-Scripts-Package" "AudioVideo-np-iTunes" "np" "np/iTunes/"
+"${CURRENT_DIRECTORY}/Installer Helpers/Build-Scripts-Package" "AudioVideo-np-Music" "np" "np/Music/"
 
 echo "**************************"
 
-./Installer\ Helpers/Build-Scripts-Package "Utilities" "apps,flip,page,reverse,shell"
+"${CURRENT_DIRECTORY}/Installer Helpers/Build-Scripts-Package" "Fun" "banhammer,ffuu,o_o,slap"
 
 echo "**************************"
 
-./Installer\ Helpers/Build-Extension-Package "BlowfishEncryption"
+"${CURRENT_DIRECTORY}/Installer Helpers/Build-Scripts-Package" "Utilities" "apps,flip,page,reverse,shell"
 
 echo "**************************"
 
-./Installer\ Helpers/Build-Extension-Package "Caffeine"
+"${CURRENT_DIRECTORY}/Installer Helpers/Build-Extension-Package" "BlowfishEncryption"
 
 echo "**************************"
 
-./Installer\ Helpers/Build-Extension-Package "WikiStyleLinkParser" 
+"${CURRENT_DIRECTORY}/Installer Helpers/Build-Extension-Package" "Caffeine"
 
 echo "**************************"
 
-./Installer\ Helpers/Build-Final-Package
+"${CURRENT_DIRECTORY}/Installer Helpers/Build-Extension-Package" "WikiStyleLinkParser" 
+
+echo "**************************"
+
+"${CURRENT_DIRECTORY}/Installer Helpers/Build-Final-Package"

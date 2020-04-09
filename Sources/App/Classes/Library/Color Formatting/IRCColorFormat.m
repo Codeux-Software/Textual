@@ -458,14 +458,26 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 	// Length of result without formatters
 	__block NSUInteger deletionLength  = 0;
 
-	[self enumerateAttributesInRange:self.range
-							 options:0
-						  usingBlock:^(NSDictionary<NSString *, id> *attributes, NSRange segmentRange, BOOL *stop)
-	{
+	// Range of attribute segment being worked on
+	NSRange segmentRange;
+
+	// Maximum range to find next attribute segment within.
+	// Defaults to string length because we don't know where
+	// the first attribute segment may be until first pass.
+	NSRange limitRange = NSMakeRange(0, string.length);
+
+	/* Enumerate attributes */
+	while (limitRange.length > 0) {
+		BOOL breakLoopAfterAppend = NO;
+
 		/* ///////////////////////////////////////////////////// */
 		/* Gather information about the formatters and calculate
 		 the total number of bytes necessary to support them. */
 		/* ///////////////////////////////////////////////////// */
+
+		NSDictionary *attributes = [self attributesAtIndex:limitRange.location
+									 longestEffectiveRange:&segmentRange
+												   inRange:limitRange];
 
 		IRCTextFormatterEffects *formatters = [IRCTextFormatterEffects effectsInAttributes:attributes];
 
@@ -498,7 +510,7 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 			/* Will this new segment exceed the maximum size? */
 			if (newLength > maximumLength) {
-				return;
+				break;
 			}
 		}
 
@@ -540,8 +552,9 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 					deletionLength -= indexDifference;
 				}
 
-				/* Nothing more to append */
-				*stop = YES;
+				/* Break attribute enumeration using stater variable
+				 because we are in nested statements. */
+				breakLoopAfterAppend = YES;
 
 				break; // Break instead of return so that we can close formatters
 			}
@@ -557,7 +570,25 @@ NSString * const IRCTextFormatterSpoilerAttributeName = @"IRCTextFormatterSpoile
 
 		/* Close formatters */
 		[formatters appendToEndOf:result];
-	}]; // attribute enumeration
+
+		/* Break from enumeration */
+		if (breakLoopAfterAppend) {
+			break;
+		}
+
+		/* Calculate next range to find an attribute segment within. */
+		NSUInteger segmentRangeNewLength = (string.length - deletionLength);
+
+		if (segmentRangeNewLength <= 0) {
+			break;
+		}
+
+		segmentRange.location = deletionLength;
+
+		segmentRange.length = segmentRangeNewLength;
+
+		limitRange = segmentRange;
+	} // attribute enumeration
 
 	/* Return length that can be deleted to occupy the result */
 	if ( effectiveRange) {
