@@ -9096,14 +9096,23 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		{
 			NSAssertReturn([m paramsCount] >= 3);
 
-			NSString *configuration = [m sequence:1];
+			NSMutableArray *params = [m.params mutableCopy];
+
+			[params removeObjectAtIndex:0]; // Remove nickname
+
+			NSString *message = params.lastObject;
+
+			[params removeLastObject]; // Remove "are supported by this server"
+
+			NSString *configuration = [params componentsJoinedByString:@" "];
 
 			[self.supportInfo processConfigurationData:configuration];
 
 			if (printMessage) {
 				NSString *configurationFormatted = self.supportInfo.stringValueForLastUpdate;
 
-				[self printDebugInformationToConsole:configurationFormatted asCommand:m.command];
+				[self printDebugInformationToConsole:TXTLS(@"IRC[u51-nn]", configurationFormatted, message)
+										   asCommand:m.command];
 			}
 
 			break;

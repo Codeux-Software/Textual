@@ -48,8 +48,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define _channelUserModeValue		100
 
-NSString * const IRCISupportRawSuffix = @"are supported by this server";
-
 @interface IRCISupportInfo ()
 @property (nonatomic, weak) IRCClient *client;
 @property (nonatomic, copy) NSArray<NSDictionary *> *cachedConfiguration;
@@ -124,10 +122,6 @@ ClassWithDesignatedInitializerInitMethod
 - (void)processConfigurationData:(NSString *)configurationData
 {
 	NSParameterAssert(configurationData != nil);
-
-	if ([configurationData hasSuffix:IRCISupportRawSuffix]) {
-		configurationData = [configurationData substringToIndex:(configurationData.length - IRCISupportRawSuffix.length)];
-	}
 
 	configurationData = configurationData.trim;
 
@@ -302,8 +296,6 @@ ClassWithDesignatedInitializerInitMethod
 			[stringValue appendFormat:@"\002%@ \002", key];
 		}
 	}
-
-	[stringValue appendString:IRCISupportRawSuffix];
 
 	return [stringValue copy];
 }
