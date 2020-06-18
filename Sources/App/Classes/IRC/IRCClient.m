@@ -7704,6 +7704,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				}
 			}
 
+			[mainWindow() updateTitleFor:channel];
+
 			if (printMessage == NO) {
 				return;
 			}
