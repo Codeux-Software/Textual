@@ -122,6 +122,12 @@
 	<string>MacBook Pro (13-inch, Retina, Touch Bar, Mid-2018)</string>
 	<key>MacBookPro15,3</key>
 	<string>MacBook Pro (15-inch, Retina, Touch Bar, 2019)</string>
+	<key>MacBookPro16,1</key>
+	<string>MacBook Pro (16-inch, 2019)</string>
+	<key>MacBookPro16,2</key>
+	<string>MacBook Pro (13-inch, 2020, Four Thunderbolt 3 ports)</string>
+	<key>MacBookPro16,3</key>
+	<string>MacBook Pro (13-inch, 2020, Two Thunderbolt 3 ports)</string>
 	<key>MacPro1,1*</key>
 	<string>Mac Pro (Original)</string>
 	<key>MacPro2,1</key>
