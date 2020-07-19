@@ -560,7 +560,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = ICP;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Codeux Software, LLC";
 				TargetAttributes = {
 					4CA1FE571FA606890095901F = {

@@ -6502,7 +6502,7 @@
 		4C1DC5491580420500A47BC9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Codeux Software, LLC";
 				TargetAttributes = {
 					4C0BA4F81990798800857343 = {
