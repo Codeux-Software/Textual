@@ -21,7 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		4C06DF1F20EC49A50055D09A /* 3rdPartyStaticStoreHockeyAppFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A720EB676400448776 /* 3rdPartyStaticStoreHockeyAppFramework.plist */; };
+		4C06DF1F20EC49A50055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A720EB676400448776 /* 3rdPartyStaticStoreAppCenterFramework.plist */; };
 		4C06DF2120EC49A50055D09A /* IRCCommandIndexLocalData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A020EB676400448776 /* IRCCommandIndexLocalData.plist */; };
 		4C06DF2220EC49A50055D09A /* IRCCommandIndexRemoteData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31539F20EB676400448776 /* IRCCommandIndexRemoteData.plist */; };
 		4C06DF2320EC49A50055D09A /* IRCNetworks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A220EB676400448776 /* IRCNetworks.plist */; };
@@ -29,7 +29,7 @@
 		4C06DF2520EC49A50055D09A /* RegisteredUserDefaultsInContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A620EB676400448776 /* RegisteredUserDefaultsInContainer.plist */; };
 		4C06DF2620EC49A50055D09A /* StaticStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A420EB676400448776 /* StaticStore.plist */; };
 		4C06DF2720EC49A50055D09A /* TemplateLineTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A120EB676400448776 /* TemplateLineTypes.plist */; };
-		4C06DF2820EC49A60055D09A /* 3rdPartyStaticStoreHockeyAppFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A720EB676400448776 /* 3rdPartyStaticStoreHockeyAppFramework.plist */; };
+		4C06DF2820EC49A60055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A720EB676400448776 /* 3rdPartyStaticStoreAppCenterFramework.plist */; };
 		4C06DF2920EC49A60055D09A /* 3rdPartyStaticStoreSparkleFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A320EB676400448776 /* 3rdPartyStaticStoreSparkleFramework.plist */; };
 		4C06DF2A20EC49A60055D09A /* IRCCommandIndexLocalData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A020EB676400448776 /* IRCCommandIndexLocalData.plist */; };
 		4C06DF2B20EC49A60055D09A /* IRCCommandIndexRemoteData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31539F20EB676400448776 /* IRCCommandIndexRemoteData.plist */; };
@@ -38,7 +38,7 @@
 		4C06DF2E20EC49A60055D09A /* RegisteredUserDefaultsInContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A620EB676400448776 /* RegisteredUserDefaultsInContainer.plist */; };
 		4C06DF2F20EC49A60055D09A /* StaticStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A420EB676400448776 /* StaticStore.plist */; };
 		4C06DF3020EC49A60055D09A /* TemplateLineTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A120EB676400448776 /* TemplateLineTypes.plist */; };
-		4C06DF3120EC49A60055D09A /* 3rdPartyStaticStoreHockeyAppFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A720EB676400448776 /* 3rdPartyStaticStoreHockeyAppFramework.plist */; };
+		4C06DF3120EC49A60055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A720EB676400448776 /* 3rdPartyStaticStoreAppCenterFramework.plist */; };
 		4C06DF3220EC49A60055D09A /* 3rdPartyStaticStoreSparkleFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A320EB676400448776 /* 3rdPartyStaticStoreSparkleFramework.plist */; };
 		4C06DF3320EC49A60055D09A /* IRCCommandIndexLocalData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A020EB676400448776 /* IRCCommandIndexLocalData.plist */; };
 		4C06DF3420EC49A60055D09A /* IRCCommandIndexRemoteData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31539F20EB676400448776 /* IRCCommandIndexRemoteData.plist */; };
@@ -47,7 +47,7 @@
 		4C06DF3720EC49A60055D09A /* RegisteredUserDefaultsInContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A620EB676400448776 /* RegisteredUserDefaultsInContainer.plist */; };
 		4C06DF3820EC49A60055D09A /* StaticStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A420EB676400448776 /* StaticStore.plist */; };
 		4C06DF3920EC49A60055D09A /* TemplateLineTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A120EB676400448776 /* TemplateLineTypes.plist */; };
-		4C06DF3A20EC49A70055D09A /* 3rdPartyStaticStoreHockeyAppFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A720EB676400448776 /* 3rdPartyStaticStoreHockeyAppFramework.plist */; };
+		4C06DF3A20EC49A70055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A720EB676400448776 /* 3rdPartyStaticStoreAppCenterFramework.plist */; };
 		4C06DF3B20EC49A70055D09A /* 3rdPartyStaticStoreSparkleFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A320EB676400448776 /* 3rdPartyStaticStoreSparkleFramework.plist */; };
 		4C06DF3C20EC49A70055D09A /* IRCCommandIndexLocalData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A020EB676400448776 /* IRCCommandIndexLocalData.plist */; };
 		4C06DF3D20EC49A70055D09A /* IRCCommandIndexRemoteData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31539F20EB676400448776 /* IRCCommandIndexRemoteData.plist */; };
@@ -780,8 +780,6 @@
 		4C06E43A20EC539E0055D09A /* EncryptionKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E43B20EC539E0055D09A /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; };
 		4C06E43C20EC539E0055D09A /* GRMustache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4C06E43F20EC539E0055D09A /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
-		4C06E44020EC539E0055D09A /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E44120EC539E0055D09A /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; };
 		4C06E44220EC539E0055D09A /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E44420EC53D70055D09A /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */; };
@@ -792,8 +790,6 @@
 		4C06E44920EC53D70055D09A /* EncryptionKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E44A20EC53D70055D09A /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; };
 		4C06E44B20EC53D70055D09A /* GRMustache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4C06E44E20EC53D70055D09A /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
-		4C06E44F20EC53D70055D09A /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E45320EC53EE0055D09A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */; };
 		4C06E45420EC53EE0055D09A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBC1580469E00846B64 /* Cocoa.framework */; };
 		4C06E45520EC53EE0055D09A /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA8EC621B63C2970087BF72 /* CoreServices.framework */; };
@@ -808,13 +804,11 @@
 		4C06E47520EC541C0055D09A /* CocoaExtensions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C06E47720EC541C0055D09A /* EncryptionKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E47920EC541C0055D09A /* GRMustache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4C06E47D20EC541C0055D09A /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E47F20EC541C0055D09A /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E48120EC54260055D09A /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */; };
 		4C06E48220EC54260055D09A /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */; };
 		4C06E48320EC54260055D09A /* EncryptionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; };
 		4C06E48420EC54260055D09A /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; };
-		4C06E48620EC54260055D09A /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
 		4C06E48720EC54260055D09A /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; };
 		4C06E48820EC542C0055D09A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */; };
 		4C06E48920EC542C0055D09A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBC1580469E00846B64 /* Cocoa.framework */; };
@@ -833,8 +827,6 @@
 		4C06E49920EC54610055D09A /* EncryptionKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E49A20EC54610055D09A /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; };
 		4C06E49B20EC54610055D09A /* GRMustache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC4A7371F8A1404008FF15F /* GRMustache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4C06E49E20EC54620055D09A /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
-		4C06E49F20EC54620055D09A /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E4A020EC54620055D09A /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; };
 		4C06E4A120EC54620055D09A /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C06E4A320EC546A0055D09A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */; };
@@ -2578,6 +2570,20 @@
 		4C9A93461FA659FE003C3DB5 /* RemoteConnectionManager.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C9A933F1FA659ED003C3DB5 /* RemoteConnectionManager.xpc */; settings = {ATTRIBUTES = (); }; };
 		4C9A93471FA659FE003C3DB5 /* InlineContentLoader.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C9A933E1FA659ED003C3DB5 /* InlineContentLoader.xpc */; settings = {ATTRIBUTES = (); }; };
 		4C9A93481FA659FE003C3DB5 /* HistoricLogFileManager.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C9A933D1FA659ED003C3DB5 /* HistoricLogFileManager.xpc */; settings = {ATTRIBUTES = (); }; };
+		4CA3866D24C42142005F66F4 /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866B24C42142005F66F4 /* AppCenter.framework */; };
+		4CA3866E24C42142005F66F4 /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866B24C42142005F66F4 /* AppCenter.framework */; };
+		4CA3866F24C42142005F66F4 /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866B24C42142005F66F4 /* AppCenter.framework */; };
+		4CA3867024C42142005F66F4 /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866B24C42142005F66F4 /* AppCenter.framework */; };
+		4CA3867124C42142005F66F4 /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866C24C42142005F66F4 /* AppCenterCrashes.framework */; };
+		4CA3867224C42142005F66F4 /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866C24C42142005F66F4 /* AppCenterCrashes.framework */; };
+		4CA3867324C42142005F66F4 /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866C24C42142005F66F4 /* AppCenterCrashes.framework */; };
+		4CA3867424C42142005F66F4 /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866C24C42142005F66F4 /* AppCenterCrashes.framework */; };
+		4CA3867524C42161005F66F4 /* AppCenter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866B24C42142005F66F4 /* AppCenter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4CA3867624C42161005F66F4 /* AppCenterCrashes.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866C24C42142005F66F4 /* AppCenterCrashes.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4CA3867924C4216B005F66F4 /* AppCenter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866B24C42142005F66F4 /* AppCenter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4CA3867A24C4216B005F66F4 /* AppCenterCrashes.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866C24C42142005F66F4 /* AppCenterCrashes.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4CA3867B24C42196005F66F4 /* AppCenter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866B24C42142005F66F4 /* AppCenter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4CA3867C24C42196005F66F4 /* AppCenterCrashes.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866C24C42142005F66F4 /* AppCenterCrashes.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CAC9D7B1F2B076100AD5F12 /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0C701F2AF3860017D3B7 /* Textual-Extras.pkg */; };
 		4CAC9D831F2B076400AD5F12 /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0C701F2AF3860017D3B7 /* Textual-Extras.pkg */; };
 		4CAC9D841F2B076800AD5F12 /* Textual-Extras-MAS.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0C711F2AF38E0017D3B7 /* Textual-Extras-MAS.pkg */; };
@@ -2629,12 +2635,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				4C06E43620EC539E0055D09A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C06E43820EC539E0055D09A /* CocoaExtensions.framework in Embed Frameworks */,
 				4C06E43A20EC539E0055D09A /* EncryptionKit.framework in Embed Frameworks */,
-				4C06E44020EC539E0055D09A /* HockeySDK.framework in Embed Frameworks */,
-				4C06E44220EC539E0055D09A /* Sparkle.framework in Embed Frameworks */,
-				4C06E43620EC539E0055D09A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C06E43C20EC539E0055D09A /* GRMustache.framework in Embed Frameworks */,
+				4C06E44220EC539E0055D09A /* Sparkle.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2645,10 +2650,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				4CA3867524C42161005F66F4 /* AppCenter.framework in Embed Frameworks */,
+				4CA3867624C42161005F66F4 /* AppCenterCrashes.framework in Embed Frameworks */,
+				4C06E44520EC53D70055D09A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C06E44720EC53D70055D09A /* CocoaExtensions.framework in Embed Frameworks */,
 				4C06E44920EC53D70055D09A /* EncryptionKit.framework in Embed Frameworks */,
-				4C06E44F20EC53D70055D09A /* HockeySDK.framework in Embed Frameworks */,
-				4C06E44520EC53D70055D09A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C06E44B20EC53D70055D09A /* GRMustache.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -2660,12 +2666,13 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				4CA3867924C4216B005F66F4 /* AppCenter.framework in Embed Frameworks */,
+				4CA3867A24C4216B005F66F4 /* AppCenterCrashes.framework in Embed Frameworks */,
+				4C06E47320EC541C0055D09A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C06E47520EC541C0055D09A /* CocoaExtensions.framework in Embed Frameworks */,
 				4C06E47720EC541C0055D09A /* EncryptionKit.framework in Embed Frameworks */,
-				4C06E47D20EC541C0055D09A /* HockeySDK.framework in Embed Frameworks */,
-				4C06E47F20EC541C0055D09A /* Sparkle.framework in Embed Frameworks */,
-				4C06E47320EC541C0055D09A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C06E47920EC541C0055D09A /* GRMustache.framework in Embed Frameworks */,
+				4C06E47F20EC541C0055D09A /* Sparkle.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2676,12 +2683,13 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				4CA3867B24C42196005F66F4 /* AppCenter.framework in Embed Frameworks */,
+				4CA3867C24C42196005F66F4 /* AppCenterCrashes.framework in Embed Frameworks */,
+				4C06E49520EC54610055D09A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C06E49720EC54610055D09A /* CocoaExtensions.framework in Embed Frameworks */,
 				4C06E49920EC54610055D09A /* EncryptionKit.framework in Embed Frameworks */,
-				4C06E49F20EC54620055D09A /* HockeySDK.framework in Embed Frameworks */,
-				4C06E4A120EC54620055D09A /* Sparkle.framework in Embed Frameworks */,
-				4C06E49520EC54610055D09A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C06E49B20EC54610055D09A /* GRMustache.framework in Embed Frameworks */,
+				4C06E4A120EC54620055D09A /* Sparkle.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3480,7 +3488,7 @@
 		4C3153A420EB676400448776 /* StaticStore.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = StaticStore.plist; sourceTree = "<group>"; };
 		4C3153A520EB676400448776 /* RegisteredUserDefaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = RegisteredUserDefaults.plist; sourceTree = "<group>"; };
 		4C3153A620EB676400448776 /* RegisteredUserDefaultsInContainer.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = RegisteredUserDefaultsInContainer.plist; sourceTree = "<group>"; };
-		4C3153A720EB676400448776 /* 3rdPartyStaticStoreHockeyAppFramework.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = 3rdPartyStaticStoreHockeyAppFramework.plist; sourceTree = "<group>"; };
+		4C3153A720EB676400448776 /* 3rdPartyStaticStoreAppCenterFramework.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = 3rdPartyStaticStoreAppCenterFramework.plist; sourceTree = "<group>"; };
 		4C3154B720EB685700448776 /* Textual App.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Textual App.xcconfig"; sourceTree = "<group>"; };
 		4C3154B820EB685700448776 /* Textual.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
 		4C3154B920EB685700448776 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Textual Extensions.xcconfig"; sourceTree = "<group>"; };
@@ -3555,6 +3563,8 @@
 		4C9A933D1FA659ED003C3DB5 /* HistoricLogFileManager.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; name = HistoricLogFileManager.xpc; path = "../../../.tmp/SharedBuildProducts-XPCServices/HistoricLogFileManager.xpc"; sourceTree = "<group>"; };
 		4C9A933E1FA659ED003C3DB5 /* InlineContentLoader.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; name = InlineContentLoader.xpc; path = "../../../.tmp/SharedBuildProducts-XPCServices/InlineContentLoader.xpc"; sourceTree = "<group>"; };
 		4C9A933F1FA659ED003C3DB5 /* RemoteConnectionManager.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; name = RemoteConnectionManager.xpc; path = "../../../.tmp/SharedBuildProducts-XPCServices/RemoteConnectionManager.xpc"; sourceTree = "<group>"; };
+		4CA3866B24C42142005F66F4 /* AppCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenter.framework; path = "../../Frameworks/Static Libraries/Libraries/AppCenter.framework"; sourceTree = "<group>"; };
+		4CA3866C24C42142005F66F4 /* AppCenterCrashes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenterCrashes.framework; path = "../../Frameworks/Static Libraries/Libraries/AppCenterCrashes.framework"; sourceTree = "<group>"; };
 		4CA8EC621B63C2970087BF72 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		4CB873D622B4A497005AB046 /* TDCPreferencesUserStyleSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCPreferencesUserStyleSheetPrivate.h; sourceTree = "<group>"; };
 		4CB873DB22B4A56B005AB046 /* TDCPreferencesUserStyleSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDCPreferencesUserStyleSheet.m; sourceTree = "<group>"; };
@@ -3564,7 +3574,6 @@
 		4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4CCF2EE1158046F9006FFE21 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = "../../Frameworks/Static Libraries/Libraries/Growl.framework"; sourceTree = SOURCE_ROOT; };
 		4CD6F7BB1CA7747600842597 /* ExportArchive.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = ExportArchive.sh; path = "Build Scripts/ExportArchive.sh"; sourceTree = "<group>"; };
-		4CDB24A018CAB914007EF6DE /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HockeySDK.framework; path = "../../Frameworks/Static Libraries/Libraries/HockeySDK.framework"; sourceTree = SOURCE_ROOT; };
 		4CEFEDAF22B4B6E8002CEE19 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TDCPreferencesUserStyleSheet.strings; sourceTree = "<group>"; };
 		4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AutoHyperlinks.framework; path = "../../.tmp/SharedBuildProducts-Frameworks/AutoHyperlinks.framework"; sourceTree = SOURCE_ROOT; };
@@ -3579,7 +3588,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CA3867124C42142005F66F4 /* AppCenterCrashes.framework in Frameworks */,
 				4C06E45320EC53EE0055D09A /* AudioToolbox.framework in Frameworks */,
+				4CA3866D24C42142005F66F4 /* AppCenter.framework in Frameworks */,
 				4C06E45420EC53EE0055D09A /* Cocoa.framework in Frameworks */,
 				4C06E45520EC53EE0055D09A /* CoreServices.framework in Frameworks */,
 				4C06E45720EC53EE0055D09A /* IOKit.framework in Frameworks */,
@@ -3593,7 +3604,6 @@
 				4C06E44420EC53D70055D09A /* AutoHyperlinks.framework in Frameworks */,
 				4C06E44820EC53D70055D09A /* EncryptionKit.framework in Frameworks */,
 				4C06E44A20EC53D70055D09A /* GRMustache.framework in Frameworks */,
-				4C06E44E20EC53D70055D09A /* HockeySDK.framework in Frameworks */,
 				4C43A60520EBEBD10058D62E /* libreceipt.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3603,6 +3613,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C06E48820EC542C0055D09A /* AudioToolbox.framework in Frameworks */,
+				4CA3867324C42142005F66F4 /* AppCenterCrashes.framework in Frameworks */,
+				4CA3866F24C42142005F66F4 /* AppCenter.framework in Frameworks */,
 				4C06E48920EC542C0055D09A /* Cocoa.framework in Frameworks */,
 				4C06E48A20EC542C0055D09A /* CoreServices.framework in Frameworks */,
 				4C06E48C20EC542C0055D09A /* IOKit.framework in Frameworks */,
@@ -3615,7 +3627,6 @@
 				4C06E48220EC54260055D09A /* CocoaExtensions.framework in Frameworks */,
 				4C06E48320EC54260055D09A /* EncryptionKit.framework in Frameworks */,
 				4C06E48420EC54260055D09A /* GRMustache.framework in Frameworks */,
-				4C06E48620EC54260055D09A /* HockeySDK.framework in Frameworks */,
 				4C06E48720EC54260055D09A /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3625,6 +3636,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C06E4A320EC546A0055D09A /* AudioToolbox.framework in Frameworks */,
+				4CA3867424C42142005F66F4 /* AppCenterCrashes.framework in Frameworks */,
+				4CA3867024C42142005F66F4 /* AppCenter.framework in Frameworks */,
 				4C06E4A420EC546A0055D09A /* Cocoa.framework in Frameworks */,
 				4C06E4A520EC546A0055D09A /* CoreServices.framework in Frameworks */,
 				4C06E4A720EC546A0055D09A /* IOKit.framework in Frameworks */,
@@ -3635,7 +3648,6 @@
 				4C06E4AD20EC546A0055D09A /* WebKit.framework in Frameworks */,
 				4C06E49620EC54610055D09A /* CocoaExtensions.framework in Frameworks */,
 				4C06E49820EC54610055D09A /* EncryptionKit.framework in Frameworks */,
-				4C06E49E20EC54620055D09A /* HockeySDK.framework in Frameworks */,
 				4C06E4A020EC54620055D09A /* Sparkle.framework in Frameworks */,
 				4C06E49420EC54610055D09A /* AutoHyperlinks.framework in Frameworks */,
 				4C06E49A20EC54610055D09A /* GRMustache.framework in Frameworks */,
@@ -3647,6 +3659,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C06E42920EC53620055D09A /* AudioToolbox.framework in Frameworks */,
+				4CA3867224C42142005F66F4 /* AppCenterCrashes.framework in Frameworks */,
+				4CA3866E24C42142005F66F4 /* AppCenter.framework in Frameworks */,
 				4C06E43B20EC539E0055D09A /* GRMustache.framework in Frameworks */,
 				4C06E42A20EC53620055D09A /* Cocoa.framework in Frameworks */,
 				4C06E42B20EC53620055D09A /* CoreServices.framework in Frameworks */,
@@ -3655,7 +3669,6 @@
 				4C06E44120EC539E0055D09A /* Sparkle.framework in Frameworks */,
 				4C06E43920EC539E0055D09A /* EncryptionKit.framework in Frameworks */,
 				4C06E42F20EC53620055D09A /* QuartzCore.framework in Frameworks */,
-				4C06E43F20EC539E0055D09A /* HockeySDK.framework in Frameworks */,
 				4C06E43020EC53620055D09A /* Security.framework in Frameworks */,
 				4C06E43120EC53620055D09A /* SecurityInterface.framework in Frameworks */,
 				4C06E43320EC53620055D09A /* SystemConfiguration.framework in Frameworks */,
@@ -5027,7 +5040,7 @@
 		4C31539B20EB676400448776 /* Property Lists */ = {
 			isa = PBXGroup;
 			children = (
-				4C3153A720EB676400448776 /* 3rdPartyStaticStoreHockeyAppFramework.plist */,
+				4C3153A720EB676400448776 /* 3rdPartyStaticStoreAppCenterFramework.plist */,
 				4C3153A320EB676400448776 /* 3rdPartyStaticStoreSparkleFramework.plist */,
 				4C3153A020EB676400448776 /* IRCCommandIndexLocalData.plist */,
 				4C31539F20EB676400448776 /* IRCCommandIndexRemoteData.plist */,
@@ -5218,12 +5231,13 @@
 		4C46CCCC158046BE00846B64 /* External Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4CA3866B24C42142005F66F4 /* AppCenter.framework */,
+				4CA3866C24C42142005F66F4 /* AppCenterCrashes.framework */,
 				4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */,
 				4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */,
 				4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */,
 				4CC4A7371F8A1404008FF15F /* GRMustache.framework */,
 				4CCF2EE1158046F9006FFE21 /* Growl.framework */,
-				4CDB24A018CAB914007EF6DE /* HockeySDK.framework */,
 				4C24DC751A93C9CE0098D1BE /* Sparkle.framework */,
 			);
 			name = "External Frameworks";
@@ -6686,7 +6700,7 @@
 				4C06E0AC20EC4A540055D09A /* FormattingColor_2.png in Resources */,
 				4C06E1A220EC4AC40055D09A /* TDCFileTransferDialog.xib in Resources */,
 				4C06E2F820EC4FF00055D09A /* TDCChannelBanListSheet.strings in Resources */,
-				4C06DF1F20EC49A50055D09A /* 3rdPartyStaticStoreHockeyAppFramework.plist in Resources */,
+				4C06DF1F20EC49A50055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */,
 				4C06E04620EC4A100055D09A /* DIGreenBadgeCenterYosemite.png in Resources */,
 				4C06E34020EC4FF00055D09A /* TDCChannelModifyTopicSheet.strings in Resources */,
 				4C06E19620EC4AC40055D09A /* TDCServerEndpointListSheet.xib in Resources */,
@@ -6817,7 +6831,7 @@
 				4C06E1A820EC4AC40055D09A /* TDCServerChannelListDialog.xib in Resources */,
 				4C06E0C820EC4A5B0055D09A /* channelRoomStatusIconYosemiteDarkActive@2x.tif in Resources */,
 				4C06E30620EC4FF00055D09A /* TDCChannelInviteSheet.strings in Resources */,
-				4C06DF3120EC49A60055D09A /* 3rdPartyStaticStoreHockeyAppFramework.plist in Resources */,
+				4C06DF3120EC49A60055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */,
 				4C06E22820EC4AC50055D09A /* TVCMainWindowAppearance.plist in Resources */,
 				4C06E05D20EC4A4C0055D09A /* encryptionLockIconLight.tif in Resources */,
 				4C06DFF820EC49FB0055D09A /* MavericksDarkServerCellSelection@2x.tif in Resources */,
@@ -6997,7 +7011,7 @@
 				4C06E1A920EC4AC40055D09A /* TDCServerChannelListDialog.xib in Resources */,
 				4C06E0DA20EC4A5B0055D09A /* channelRoomStatusIconYosemiteDarkActive@2x.tif in Resources */,
 				4C06E30720EC4FF00055D09A /* TDCChannelInviteSheet.strings in Resources */,
-				4C06DF3A20EC49A70055D09A /* 3rdPartyStaticStoreHockeyAppFramework.plist in Resources */,
+				4C06DF3A20EC49A70055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */,
 				4C06E22920EC4AC50055D09A /* TVCMainWindowAppearance.plist in Resources */,
 				4C06E05920EC4A4C0055D09A /* encryptionLockIconLight.tif in Resources */,
 				4C06E01320EC49FB0055D09A /* MavericksDarkServerCellSelection@2x.tif in Resources */,
@@ -7177,7 +7191,7 @@
 				4C06E1A720EC4AC40055D09A /* TDCServerChannelListDialog.xib in Resources */,
 				4C06E0B620EC4A5A0055D09A /* channelRoomStatusIconYosemiteDarkActive@2x.tif in Resources */,
 				4C06E30520EC4FF00055D09A /* TDCChannelInviteSheet.strings in Resources */,
-				4C06DF2820EC49A60055D09A /* 3rdPartyStaticStoreHockeyAppFramework.plist in Resources */,
+				4C06DF2820EC49A60055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */,
 				4C06E22720EC4AC50055D09A /* TVCMainWindowAppearance.plist in Resources */,
 				4C06E06120EC4A4C0055D09A /* encryptionLockIconLight.tif in Resources */,
 				4C06DFDD20EC49FA0055D09A /* MavericksDarkServerCellSelection@2x.tif in Resources */,

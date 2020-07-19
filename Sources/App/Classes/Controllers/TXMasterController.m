@@ -67,8 +67,9 @@
 #import "TXMasterControllerPrivate.h"
 #import "IRCClient.h"
 
-#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
-#import <HockeySDK/HockeySDK.h>
+#if TEXTUAL_BUILT_WITH_APPCENTER_SDK_ENABLED == 1
+#import <AppCenter/AppCenter.h>
+#import <AppCenterCrashes/AppCenterCrashes.h>
 #endif
 
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
@@ -254,18 +255,46 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Services
 
-- (void)prepareThirdPartyServiceHockeyAppFramework
+- (void)prepareThirdPartyServiceAppCenterFramework
 {
-#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
-	NSDictionary *hockeyAppData = [TPCResourceManager loadContentsOfPropertyListInResources:@"3rdPartyStaticStoreHockeyAppFramework"];
+#if TEXTUAL_BUILT_WITH_APPCENTER_SDK_ENABLED == 1
+	NSDictionary *acData = [TPCResourceManager loadContentsOfPropertyListInResources:@"3rdPartyStaticStoreAppCenterFramework"];
 
-	NSString *applicationIdentifier = hockeyAppData[@"Application Identifier"];
+	NSString *applicationIdentifier = acData[@"Application Identifier"];
 
-	[[BITHockeyManager sharedHockeyManager] configureWithIdentifier:applicationIdentifier delegate:(id)self];
+	[MSAppCenter start:applicationIdentifier withServices:@[[MSCrashes class]]];
 
-	[BITHockeyManager sharedHockeyManager].disableMetricsManager = YES;
+	[MSCrashes setUserConfirmationHandler:^BOOL(NSArray<MSErrorReport *> *errorReports) {
+		TDCAlertResponse response =
+		[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[oe3-i3]")
+								  title:TXTLS(@"Prompts[h49-h5]")
+						  defaultButton:TXTLS(@"Prompts[arr-yb]")
+						alternateButton:TXTLS(@"Prompts[98a-kj]")
+							otherButton:TXTLS(@"Prompts[6j7-hw]")];
 
-	[[BITHockeyManager sharedHockeyManager] startManager];
+		switch (response) {
+			case TDCAlertResponseDefault:
+			{
+				[MSCrashes notifyWithUserConfirmation:MSUserConfirmationSend];
+
+				break;
+			}
+			case TDCAlertResponseAlternate:
+			{
+				[MSCrashes notifyWithUserConfirmation:MSUserConfirmationDontSend];
+
+				break;
+			}
+			case TDCAlertResponseOther:
+			{
+				[MSCrashes notifyWithUserConfirmation:MSUserConfirmationAlways];
+
+				break;
+			}
+		} // switch
+
+		return YES;
+	}];
 #endif
 }
 
@@ -298,7 +327,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareThirdPartyServices
 {
-	[self prepareThirdPartyServiceHockeyAppFramework];
+	[self prepareThirdPartyServiceAppCenterFramework];
 
 	[self prepareThirdPartyServiceSparkleFramework];
 }
@@ -406,6 +435,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)queryTerminate
 {
+	[MSCrashes generateTestCrash];
+
 	if (self.applicationIsTerminating) {
 		return YES;
 	}

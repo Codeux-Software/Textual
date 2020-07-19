@@ -95,6 +95,22 @@ typedef void (^TDCAlertCompletionBlock)(TDCAlertResponse buttonClicked, BOOL sup
 				accessoryView:(nullable NSView *)accessoryView
 		  suppressionResponse:(nullable BOOL *)suppressionResponse;
 
++ (TDCAlertResponse)modalAlertWithMessage:(NSString *)bodyText
+									title:(NSString *)titleText
+							defaultButton:(NSString *)buttonDefault
+						  alternateButton:(nullable NSString *)buttonAlternate
+							  otherButton:(nullable NSString *)otherButton;
+
++ (TDCAlertResponse)modalAlertWithMessage:(NSString *)bodyText
+									title:(NSString *)titleText
+							defaultButton:(NSString *)buttonDefault
+						  alternateButton:(nullable NSString *)buttonAlternate
+							  otherButton:(nullable NSString *)otherButton
+						   suppressionKey:(nullable NSString *)suppressKey
+						  suppressionText:(nullable NSString *)suppressText
+							accessoryView:(nullable NSView *)accessoryView
+					  suppressionResponse:(nullable BOOL *)suppressionResponse;
+
 #pragma mark -
 #pragma mark Non-blocking Alerts (Panel)
 

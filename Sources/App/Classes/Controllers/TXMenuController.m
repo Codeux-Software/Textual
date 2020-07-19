@@ -87,10 +87,6 @@
 #import "TXWindowControllerPrivate.h"
 #import "TXMenuControllerPrivate.h"
 
-#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
-#import <HockeySDK/HockeySDK.h>
-#endif
-
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
 #import <Sparkle/Sparkle.h>
 #endif
@@ -3054,13 +3050,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Developer
-
-- (void)simulateCrash:(id)sender
-{
-#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
-	[[BITHockeyManager sharedHockeyManager].crashManager generateTestCrash];
-#endif
-}
 
 - (void)toggleDeveloperMode:(id)sender
 {

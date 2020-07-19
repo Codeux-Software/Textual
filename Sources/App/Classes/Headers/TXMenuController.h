@@ -505,8 +505,6 @@ enum
 - (IBAction)manageLicense:(id)sender;
 - (IBAction)manageInAppPurchase:(id)sender;
 
-- (IBAction)simulateCrash:(id)sender;
-
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (IBAction)encryptionWhatIsThisInformation:(id)sender;
 - (IBAction)encryptionStartPrivateConversation:(id)sender;

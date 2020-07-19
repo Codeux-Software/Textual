@@ -134,13 +134,55 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 				accessoryView:(nullable NSView *)accessoryView
 		  suppressionResponse:(nullable BOOL *)suppressionResponse
 {
+	TDCAlertResponse response =
+	[self modalAlertWithMessage:bodyText
+						  title:titleText
+				  defaultButton:buttonDefault
+				alternateButton:buttonAlternate
+					otherButton:nil
+				 suppressionKey:suppressKey
+				suppressionText:suppressText
+				  accessoryView:nil
+			suppressionResponse:nil];
+
+	return (response == TDCAlertResponseDefault);
+}
+
++ (TDCAlertResponse)modalAlertWithMessage:(NSString *)bodyText
+									title:(NSString *)titleText
+							defaultButton:(NSString *)buttonDefault
+						  alternateButton:(nullable NSString *)buttonAlternate
+							  otherButton:(nullable NSString *)otherButton
+{
+	return
+	[self modalAlertWithMessage:bodyText
+						  title:titleText
+				  defaultButton:buttonDefault
+				alternateButton:buttonAlternate
+					otherButton:otherButton
+				 suppressionKey:nil
+				suppressionText:nil
+				  accessoryView:nil
+			suppressionResponse:nil];
+}
+
++ (TDCAlertResponse)modalAlertWithMessage:(NSString *)bodyText
+									title:(NSString *)titleText
+							defaultButton:(NSString *)buttonDefault
+						  alternateButton:(nullable NSString *)buttonAlternate
+							  otherButton:(nullable NSString *)otherButton
+						   suppressionKey:(nullable NSString *)suppressKey
+						  suppressionText:(nullable NSString *)suppressText
+							accessoryView:(nullable NSView *)accessoryView
+					  suppressionResponse:(nullable BOOL *)suppressionResponse
+{
 	NSParameterAssert(bodyText != nil);
 	NSParameterAssert(titleText != nil);
 	NSParameterAssert(buttonDefault != nil);
 
 	/* Require main thread */
 	if ([NSThread isMainThread] == NO) {
-		__block BOOL result = NO;
+		__block TDCAlertResponse result = TDCAlertResponseAlternate;
 
 		[self performBlockOnMainThread:^{
 			result =
@@ -148,6 +190,7 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 								  title:titleText
 						  defaultButton:buttonDefault
 						alternateButton:buttonAlternate
+							otherButton:otherButton
 						 suppressionKey:suppressKey
 						suppressionText:suppressText
 						  accessoryView:accessoryView
@@ -183,6 +226,10 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 		[alert addButtonWithTitle:buttonAlternate];
 	}
 
+	if (otherButton) {
+		[alert addButtonWithTitle:otherButton];
+	}
+
 	if (suppressKey || suppressText) {
 		alert.showsSuppressionButton = YES;
 
@@ -204,7 +251,7 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 		  suppressionKey:suppressKey
 	 suppressionResponse:suppressionResponse];
 
-	return (response == TDCAlertResponseDefault);
+	return response;
 }
 
 #pragma mark -

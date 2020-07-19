@@ -1352,10 +1352,10 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[dynamicDefaults setBool:TEXTUAL_RUNNING_ON_HIGHSIERRA		forKey:@"System -> Running Mac OS High Sierra Or Newer"];
 	[dynamicDefaults setBool:TEXTUAL_RUNNING_ON_MOJAVE			forKey:@"System -> Running Mac OS Mojave Or Newer"];
 
-#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
-	[dynamicDefaults setBool:YES forKey:@"System -> 3rd-party Services -> Built with HockeyApp Framework"];
+#if TEXTUAL_BUILT_WITH_APPCENTER_SDK_ENABLED == 1
+	[dynamicDefaults setBool:YES forKey:@"System -> 3rd-party Services -> Built with AppCenter Framework"];
 #else
-	[dynamicDefaults setBool:NO forKey:@"System -> 3rd-party Services -> Built with HockeyApp Framework"];
+	[dynamicDefaults setBool:NO forKey:@"System -> 3rd-party Services -> Built with AppCenter Framework"];
 #endif
 
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1

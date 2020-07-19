@@ -163,3 +163,9 @@
 
 "ujw-64" = "The “Inspect Element” feature of WebKit2 cannot be accessed on this version of macOS.";
 "kig-m1" = "Disable WebKit2 or upgrade to a newer version of macOS.";
+
+"h49-h5" = "Textual quit unexpectedly last time it was open. Would you like to send an anonymous crash report?";
+"oe3-i3" = "The crash report will be sent to “App Center”, a 3rd-party service hosted by Microsoft Corporation, to be reviewed by Codeux Software.\n\nThe privacy policy for this service can be found at https://privacy.microsoft.com/en-us/PrivacyStatement";
+"arr-yb" = "Send";
+"98a-kj" = "Don't Send";
+"6j7-hw" = "Always Send";
