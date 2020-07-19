@@ -3572,7 +3572,6 @@
 		4CC70202171E1CB400BDFAE0 /* BuildConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuildConfig.h; path = ../../.tmp/BuildConfig.h; sourceTree = SOURCE_ROOT; };
 		4CCD93FC1CA7291300335381 /* JavaScript */ = {isa = PBXFileReference; lastKnownFileType = folder; name = JavaScript; path = Resources/Styling/JavaScript; sourceTree = SOURCE_ROOT; };
 		4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		4CCF2EE1158046F9006FFE21 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = "../../Frameworks/Static Libraries/Libraries/Growl.framework"; sourceTree = SOURCE_ROOT; };
 		4CD6F7BB1CA7747600842597 /* ExportArchive.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = ExportArchive.sh; path = "Build Scripts/ExportArchive.sh"; sourceTree = "<group>"; };
 		4CEFEDAF22B4B6E8002CEE19 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TDCPreferencesUserStyleSheet.strings; sourceTree = "<group>"; };
 		4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -5237,7 +5236,6 @@
 				4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */,
 				4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */,
 				4CC4A7371F8A1404008FF15F /* GRMustache.framework */,
-				4CCF2EE1158046F9006FFE21 /* Growl.framework */,
 				4C24DC751A93C9CE0098D1BE /* Sparkle.framework */,
 			);
 			name = "External Frameworks";
