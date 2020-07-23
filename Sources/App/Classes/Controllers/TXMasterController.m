@@ -436,10 +436,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)queryTerminate
 {
 	if (self.applicationIsTerminating) {
+		LogToConsoleTerminationProgress("A termination is already in progress.");
+
 		return YES;
 	}
 
 	BOOL stillConnected = NO;
+
 	for (IRCClient *u in worldController().clientList) {
 		if (u.isConnecting || u.isConnected) {
 			stillConnected = YES;
@@ -452,6 +455,8 @@ NS_ASSUME_NONNULL_BEGIN
 										defaultButton:TXTLS(@"Prompts[1bf-k0]")
 									  alternateButton:TXTLS(@"Prompts[qso-2g]")];
 
+		LogToConsoleTerminationProgress("Perform termination: %@", StringFromBOOL(result));
+
 		return result;
 	}
 
@@ -460,53 +465,72 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
 {
-	if ([self queryTerminate]) {
-		XRPerformBlockAsynchronouslyOnMainQueue(^{
-			[self performApplicationTerminationStepOne];
-		});
-
-		return NSTerminateLater;
-	} else {
+	if ([self queryTerminate] == NO) {
 		return NSTerminateCancel;
 	}
+
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[self performApplicationTerminationStepOne];
+	});
+
+	return NSTerminateLater;
 }
 
 - (BOOL)isSafeToPerformApplicationTermination
 {
-	return (
-		/* Clients are still disconnecting */
-		self.terminatingClientCount == 0 &&
+	/* Clients are still disconnecting */
+	BOOL condition1 = (self.terminatingClientCount == 0);
 
-		/* Core Data is saving */
-		TVCLogControllerHistoricLogSharedInstance().isSaving == NO &&
-			self.terminateHistoricLogSaveFinished
+	/* Core Data is saving */
+	BOOL condition2 = (TVCLogControllerHistoricLogSharedInstance().isSaving == NO &&
+							self.terminateHistoricLogSaveFinished);
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-		&&
-
-		/* iCloud is syncing */
-		sharedCloudManager().isTerminated
+	/* iCloud is syncing */
+	BOOL condition3 = sharedCloudManager().isTerminated;
+#else
+	BOOL condition3 = YES;
 #endif
-	);
+
+	LogToConsoleTerminationProgress("Conditions: %@ %@ %@",
+					  StringFromBOOL(condition1),
+					  StringFromBOOL(condition2),
+					  StringFromBOOL(condition3));
+
+	return (condition1 && condition2 && condition3);
 }
 
 - (void)performApplicationTerminationStepOne
 {
+	LogToConsoleTerminationProgress("Step one entry.");
+
 	self.applicationIsTerminating = YES;
 
 	[[TXSharedApplication sharedAppearance] prepareForApplicationTermination];
 
 	[self.mainWindow prepareForApplicationTermination];
 
+	LogToConsoleTerminationProgress("Giving up shared application delegation.");
+
 	[[NSApplication sharedApplication] setDelegate:nil];
+
+	LogToConsoleTerminationProgress("Removing workspace notification center observer.");
 
 	[RZWorkspaceNotificationCenter() removeObserver:self];
 
+	LogToConsoleTerminationProgress("Removing shared notification center observer.");
+
 	[RZNotificationCenter() removeObserver:self];
+
+	LogToConsoleTerminationProgress("Removing AppleScript event observer.");
 
 	[RZAppleEventManager() removeEventHandlerForEventClass:kInternetEventClass andEventID:kAEGetURL];
 
+	LogToConsoleTerminationProgress("Stopping reachability notifier.");
+
 	[[TXSharedApplication sharedNetworkReachabilityNotifier] stopNotifier];
+
+	LogToConsoleTerminationProgress("Stopping speech synthesizer.");
 
 	[[TXSharedApplication sharedSpeechSynthesizer] setIsStopped:YES];
 
@@ -534,6 +558,8 @@ NS_ASSUME_NONNULL_BEGIN
 	if (self.applicationIsTerminating == NO) {
 		return;
 	}
+
+	LogToConsoleTerminationProgress("Step two entry.");
 
 	self.terminatingClientCount = worldController().clientCount;
 
@@ -564,7 +590,9 @@ NS_ASSUME_NONNULL_BEGIN
 			[NSThread sleepForTimeInterval:0.5];
 		} while (self.isSafeToPerformApplicationTermination == NO);
 
-		[self performApplicationTerminationStepThree];
+		XRPerformBlockAsynchronouslyOnMainQueue(^{
+			[self performApplicationTerminationStepThree];
+		});
 	}, DISPATCH_QUEUE_PRIORITY_HIGH);
 }
 
@@ -574,11 +602,19 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
+	LogToConsoleTerminationProgress("Step three entry.");
+
 	if (self.skipTerminateSave == NO) {
+		LogToConsoleTerminationProgress("Saving IRC world.");
+
 		[self.world save];
 	}
 
+	LogToConsoleTerminationProgress("Suspending member list dispatch queue.");
+
 	[IRCChannel suspendMemberListSerialQueues];
+
+	LogToConsoleTerminationProgress("Unloading plugins.");
 
 	[sharedPluginManager() unloadPlugins];
 
@@ -586,7 +622,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[themeController() prepareForApplicationTermination];
 
+	LogToConsoleTerminationProgress("Saving running internal.");
+
 	[TPCApplicationInfo saveTimeIntervalSinceApplicationInstall];
+
+	LogToConsoleTerminationProgress("Terminate.");
 
 	[NSApp replyToApplicationShouldTerminate:YES];
 }

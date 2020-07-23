@@ -191,11 +191,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareForApplicationTermination
 {
+	LogToConsoleTerminationProgress("Stopping access to download destination bookmark.");
+
 	if (self.downloadDestinationURLPrivate) {
 		[self.downloadDestinationURLPrivate stopAccessingSecurityScopedResource];
 	}
 
+	LogToConsoleTerminationProgress("Closing file transfer window.");
+
 	[self close];
+
+	LogToConsoleTerminationProgress("Preparing all file transfers for destruction.");
 
 	[self enumerateFileTransfers:^(TDCFileTransferDialogTransferController *fileTransfer, BOOL *stop) {
 		[fileTransfer prepareForPermanentDestruction];

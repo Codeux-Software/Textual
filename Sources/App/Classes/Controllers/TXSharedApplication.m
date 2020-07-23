@@ -35,6 +35,8 @@
  *
  *********************************************************************** */
 
+#import "BuildConfig.h"
+
 #import "OELReachability.h"
 #import "TXAppearance.h"
 #import "TXMasterController.h"
@@ -102,6 +104,19 @@ _defineSharedInstance(sharedInAppPurchaseDialog, TDCInAppPurchaseDialog, new)
 _defineSharedInstance(sharedFileTransferDialog, TDCFileTransferDialog, new)
 
 @end
+
+os_log_t ApplicationTerminationLogSubsystem(void)
+{
+	static os_log_t cachedValue = NULL;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		cachedValue = os_log_create(TXBundleBuildProductIdentifierCString, "Termination");
+	});
+
+	return cachedValue;
+}
 
 #pragma mark -
 

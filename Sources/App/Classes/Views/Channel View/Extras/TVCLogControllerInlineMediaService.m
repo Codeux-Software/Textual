@@ -142,6 +142,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareForApplicationTermination
 {
+	LogToConsoleTerminationProgress("Invalidating media service process.");
+
 	[self invalidateProcess];
 }
 

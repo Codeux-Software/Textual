@@ -100,4 +100,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setGlobalMasterControllerClassReference:(TXMasterController *)masterController;
 @end
 
+TEXTUAL_EXTERN os_log_t ApplicationTerminationLogSubsystem(void);
+
+#define LogToConsoleTerminationProgress(_message, ...)	\
+	LogToConsoleDebugWithSubsystem(ApplicationTerminationLogSubsystem(), _message, ##__VA_ARGS__)	\
+
 NS_ASSUME_NONNULL_END

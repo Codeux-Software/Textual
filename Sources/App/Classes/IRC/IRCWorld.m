@@ -174,7 +174,13 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 
 - (void)prepareForApplicationTermination
 {
+	LogToConsoleTerminationProgress("Preparing IRC world.");
+
+	LogToConsoleTerminationProgress("Removing IRC world observers.");
+
 	[RZNotificationCenter() removeObserver:self];
+
+	LogToConsoleTerminationProgress("Preparing clients: %ld", self.clientCount);
 
 	for (IRCClient *u in self.clientList) {
 		[u prepareForApplicationTermination];

@@ -101,6 +101,8 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 		return;
 	}
 
+	LogToConsoleTerminationProgress("Removing appearance change observers.");
+
 	[RZNotificationCenter() removeObserver:self];
 
 	if (TEXTUAL_RUNNING_ON_MOJAVE) {

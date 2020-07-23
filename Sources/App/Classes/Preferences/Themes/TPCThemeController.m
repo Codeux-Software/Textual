@@ -111,7 +111,13 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 - (void)prepareForApplicationTermination
 {
+	LogToConsoleTerminationProgress("Preparing theme controller.");
+
+	LogToConsoleTerminationProgress("Removing theme change observers.");
+
 	[self stopMonitoringActiveThemePath];
+
+	LogToConsoleTerminationProgress("Empty theme cache.");
 
 	[self removeTemporaryCopyOfTheme];
 }

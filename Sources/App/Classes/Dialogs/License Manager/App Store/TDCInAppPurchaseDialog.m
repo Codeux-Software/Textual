@@ -135,7 +135,11 @@ enum {
 
 - (void)prepareForApplicationTermination
 {
+	LogToConsoleTerminationProgress("Stopping in-app purchase trial timer.");
+
 	[self stopTrialTimer];
+
+	LogToConsoleTerminationProgress("Removing in-app purchase payment queue observer.");
 
 	[self removePaymentQueueObserver];
 }

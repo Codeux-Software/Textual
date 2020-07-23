@@ -504,15 +504,25 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)prepareForApplicationTermination
 {
+	LogToConsoleTerminationProgress("Preparing channel: <%@>", self.uniqueIdentifier);
+
 	self.statusChangedByAction = YES;
 
+	LogToConsoleTerminationProgress("[#%@] Resetting status to terminated.", self.uniqueIdentifier);
+
 	[self resetStatus:IRCChannelStatusTerminated];
+
+	LogToConsoleTerminationProgress("[#%@] Closing log file.", self.uniqueIdentifier);
 
 	[self closeLogFile];
 
 	if (self.isPrivateMessage) {
+		LogToConsoleTerminationProgress("[#%@] Destroying keychain items for private message.", self.uniqueIdentifier);
+
 		[self.config destroySecretKeyKeychainItem];
 	}
+
+	LogToConsoleTerminationProgress("[#%@] Preparing view controller: <%@>", self.uniqueIdentifier, self.viewController.uniqueIdentifier);
 
 	[self.viewController prepareForApplicationTermination];
 }

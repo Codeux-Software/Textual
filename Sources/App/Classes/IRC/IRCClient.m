@@ -713,9 +713,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	self.isTerminating = YES;
 
+	LogToConsoleTerminationProgress("Preparing client: <%@>", self.uniqueIdentifier);
+
+	LogToConsoleTerminationProgress("[%@] Closing dialogs.", self.uniqueIdentifier);
+
 	[self closeDialogs];
 
 	if (self.isConnecting || self.isConnected) {
+		LogToConsoleTerminationProgress("[%@] Performing disconnect.", self.uniqueIdentifier);
+
 		__weak IRCClient *weakSelf = self;
 
 		self.disconnectCallback = ^{
@@ -732,19 +738,34 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)prepareForApplicationTerminationPostflight
 {
+	LogToConsoleTerminationProgress("[%@] Closing log file.", self.uniqueIdentifier);
+
 	[self closeLogFile];
+
+	LogToConsoleTerminationProgress("[%@] Removing unspoken messages from speech synthesizer.", self.uniqueIdentifier);
 
 	[self clearEventsToSpeak];
 
+	LogToConsoleTerminationProgress("[%@] Emptying Address Book cache.", self.uniqueIdentifier);
+
 	[self clearAddressBookCache];
 
+	LogToConsoleTerminationProgress("[%@] Removing all tracked users.", self.uniqueIdentifier);
+
 	[self clearTrackedUsers];
+
+	LogToConsoleTerminationProgress("[%@] Preparing channels: %ld", self.uniqueIdentifier, self.channelCount);
 
 	for (IRCChannel *c in self.channelList) {
 		[c prepareForApplicationTermination];
 	}
 
+	LogToConsoleTerminationProgress("[%@] Preparing view controller: <%@>",
+					self.uniqueIdentifier, self.viewController.uniqueIdentifier);
+
 	[self.viewController prepareForApplicationTermination];
+
+	LogToConsoleTerminationProgress("[%@] Decrementing client count.", self.uniqueIdentifier);
 
 	masterController().terminatingClientCount -= 1;
 }

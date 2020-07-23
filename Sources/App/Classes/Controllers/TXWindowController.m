@@ -65,6 +65,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareForApplicationTermination
 {
+	LogToConsoleTerminationProgress("Preparing window controller.");
+
 	@synchronized(self.windowObjects) {
 		[self.windowObjects removeAllObjects];
 		 self.windowObjects = nil;

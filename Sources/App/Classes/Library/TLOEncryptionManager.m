@@ -158,7 +158,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareForApplicationTermination
 {
-
+	LogToConsoleTerminationProgress("Preparing encryption manager.");
 }
 
 #pragma mark -

@@ -185,6 +185,8 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)prepareForApplicationTermination
 {
+	LogToConsoleTerminationProgress("Preparing view controller: %@", self.uniqueIdentifier);
+
 	[self prepareForTermination:YES];
 }
 

@@ -376,9 +376,15 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 
 - (void)prepareForApplicationTermination
 {
+	LogToConsoleTerminationProgress("Removing main window observers.");
+
 	[RZNotificationCenter() removeObserver:self];
 
+	LogToConsoleTerminationProgress("Saving window state.");
+
 	[self saveWindowState];
+
+	LogToConsoleTerminationProgress("Giving up server list & member list delegation.");
 
 	self.memberList.dataSource = nil;
 	self.memberList.delegate = nil;
@@ -392,6 +398,8 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 
 	self.selectedItems = nil;
 	self.selectedItem = nil;
+
+	LogToConsoleTerminationProgress("Closing main window.");
 
 	[self close];
 }
