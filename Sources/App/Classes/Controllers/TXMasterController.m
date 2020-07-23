@@ -435,8 +435,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)queryTerminate
 {
-	[MSCrashes generateTestCrash];
-
 	if (self.applicationIsTerminating) {
 		return YES;
 	}
