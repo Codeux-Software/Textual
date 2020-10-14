@@ -35,6 +35,7 @@
  *
  *********************************************************************** */
 
+#if 0
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 NS_ASSUME_NONNULL_BEGIN
 
@@ -72,4 +73,5 @@ TEXTUAL_EXTERN NSArray<NSString *> *TLOAppStorePurchasedProducts(void);
 TEXTUAL_EXTERN TLOAppStoreIAPProduct TLOAppStoreProductFromProductIdentifier(TLOAppStoreIAPProductIdentifier productIdentifier);
 
 NS_ASSUME_NONNULL_END
+#endif
 #endif

@@ -35,6 +35,7 @@
  *
  *********************************************************************** */
 
+#if 0
 #if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
 #import "BuildConfig.h"
 
@@ -239,4 +240,5 @@ NSTimeInterval TLOAppStoreTimeReaminingInTrial(void)
 
 NS_ASSUME_NONNULL_END
 
+#endif
 #endif
