@@ -42,7 +42,6 @@
 #import "TPCPathInfoPrivate.h"
 #import "TPCPreferencesUserDefaultsLocal.h"
 #import "TPCPreferencesUserDefaultsMigratePrivate.h"
-#import "TPCPreferencesReloadPrivate.h"
 #import "TPCResourceManager.h"
 #import "TPCThemeController.h"
 #import "TPCThemeSettings.h"
@@ -1433,8 +1432,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	[self _loadExcludeKeywords];
 	[self _loadMatchKeywords];
-
-	[self observeReloadableNotifications];
 }
 
 #pragma mark -

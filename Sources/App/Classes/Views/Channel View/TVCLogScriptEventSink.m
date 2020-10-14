@@ -48,7 +48,6 @@
 #import "THOPluginDispatcherPrivate.h"
 #import "THOPluginManagerPrivate.h"
 #import "THOPluginProtocolPrivate.h"
-#import "TDCInAppPurchaseDialogPrivate.h"
 #import "IRCClient.h"
 #import "IRCChannel.h"
 #import "IRCUserNicknameColorStyleGeneratorPrivate.h"
@@ -853,16 +852,6 @@ ClassWithDesignatedInitializerInitMethod
 			}];
 }
 
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-- (void)showInAppPurchaseWindow:(id)inputData inWebView:(id)webView
-{
-	[self processInputData:inputData
-				 forCaller:@"app.showInAppPurchaseWindow()"
-				 inWebView:webView
-			  withSelector:@selector(_showInAppPurchaseWindow:)];
-}
-#endif
-
 - (void)sidebarInversionIsEnabled:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
@@ -1492,13 +1481,6 @@ ClassWithDesignatedInitializerInitMethod
 
 	context.webViewPolicy.anchorURL = value;
 }
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-- (void)_showInAppPurchaseWindow:(TVCLogScriptEventSinkContext *)context
-{
-	[[TXSharedApplication sharedInAppPurchaseDialog] show];
-}
-#endif
 
 - (void)_sidebarInversionIsEnabled:(TVCLogScriptEventSinkContext *)context
 {

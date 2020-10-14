@@ -53,44 +53,9 @@
 #import "TVCServerListPrivate.h"
 #import "TVCMemberListPrivate.h"
 #import "TVCMemberListAppearance.h"
-#import "TDCInAppPurchaseDialogPrivate.h"
 #import "TPCPreferencesReload.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
-#pragma mark -
-#pragma mark Private
-
-@implementation TPCPreferences (TPCPreferencesReloadPrivate)
-
-+ (void)observeReloadableNotifications
-{
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	[RZNotificationCenter() addObserver:self.class
-							   selector:@selector(onInAppPurchaseTrialExpired:)
-								   name:TDCInAppPurchaseDialogTrialExpiredNotification
-								 object:nil];
-
-	[RZNotificationCenter() addObserver:self.class
-							   selector:@selector(onInAppPurchaseTransactionFinished:)
-								   name:TDCInAppPurchaseDialogTransactionFinishedNotification
-								 object:nil];
-#endif
-}
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-+ (void)onInAppPurchaseTrialExpired:(NSNotification *)notification
-{
-	[self performReloadAction:TPCPreferencesReloadActionLogTranscripts];
-}
-
-+ (void)onInAppPurchaseTransactionFinished:(NSNotification *)notification
-{
-	[self performReloadAction:TPCPreferencesReloadActionLogTranscripts];
-}
-#endif
-
-@end
 
 #pragma mark -
 #pragma mark Public

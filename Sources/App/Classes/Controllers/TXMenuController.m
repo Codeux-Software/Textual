@@ -55,14 +55,12 @@
 #import "TVCMainWindowPrivate.h"
 #import "TVCMainWindowSplitView.h"
 #import "TVCMainWindowTextView.h"
-#import "TLOAppStoreManagerPrivate.h"
 #import "TLOEncryptionManagerPrivate.h"
 #import "TLOLicenseManagerPrivate.h"
 #import "TLOLocalization.h"
 #import "TLOpenLink.h"
 #import "TDCAboutDialogPrivate.h"
 #import "TDCAlert.h"
-#import "TDCInAppPurchaseDialogPrivate.h"
 #import "TDCChannelInviteSheetPrivate.h"
 #import "TDCChannelModifyModesSheetPrivate.h"
 #import "TDCChannelModifyTopicSheetPrivate.h"
@@ -266,42 +264,22 @@ NS_ASSUME_NONNULL_BEGIN
 		validationResult = NO;
 	}
 
-	/* If trial is expired, or app has not finished launching,
+	/* If the app has not finished launching,
 	 then default everything to disabled. */
+	if (masterController().applicationIsLaunched == NO) {
+		validationResult = NO;
+	}
+
+	/* If trial is expired, then default everything to disabled. */
 	BOOL isTrialExpired = NO;
 
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1 || TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	if (
-
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-		(TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired())
-#elif TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-		masterController().applicationIsLaunched == NO
-#endif
-
-		)
-	{
+	if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {
 		/* Set flag letting logic know trial expired */
 		isTrialExpired = YES;
 
-		/* Disable everything by default */
-		validationResult = NO;
-
-		/* Enable specific items after it has been disabled. */
-		/* Other always-required items are enabled further
-		 below this switch statement. */
-		if (
-
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-			tag == MTMMAppManageLicense // "Manage license…"
-#elif TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-			tag == MTMMAppInAppPurchase // "In-app Purchase…"
-#endif
-
-			)
-		{
-			validationResult = YES;
-		} // if
+		/* Disable everything by default except "Manage license…" */
+		validationResult = (tag == MTMMAppManageLicense);
 	} // if
 #endif
 
@@ -311,8 +289,7 @@ NS_ASSUME_NONNULL_BEGIN
 		switch (tag) {
 			case MTMMAppAboutApp: // "About Textual"
 			case MTMMAppPreferences: // "Preferences…"
-			case MTMMAppManageLicense: // "Manage license…"
-			case MTMMAppInAppPurchase: // "In-app Purchase…"
+			case MTMMAppManageLicense: // "Manage license…"0
 			case MTMMAppCheckForUpdates: // "Check for updates…"
 			case MTMMHelpAdvancedMenuEnableDeveloperMode: // "Enable Developer Mode"
 			case MTMMHelpAdvancedMenuHiddenPreferences: // "Hidden Preferences…"
@@ -418,14 +395,6 @@ NS_ASSUME_NONNULL_BEGIN
 		case MTMMAppCheckForUpdates: // "Check for Updates"
 		{
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 0
-			menuItem.hidden = YES;
-#endif
-
-			return YES;
-		}
-		case MTMMAppInAppPurchase: // "In-app Purchase…"
-		{
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 0
 			menuItem.hidden = YES;
 #endif
 
@@ -3041,16 +3010,6 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 
 #pragma mark -
-#pragma mark In-app Purchase
-
-- (void)manageInAppPurchase:(id)sender
-{
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	[[TXSharedApplication sharedInAppPurchaseDialog] show];
-#endif
-}
-
-#pragma mark -
 #pragma mark Developer
 
 - (void)toggleDeveloperMode:(id)sender
@@ -3787,14 +3746,6 @@ NS_ASSUME_NONNULL_BEGIN
 		 @"This feature requires OS X Yosemite or later");
 
 	_popWindowViewIfExists(@"TDCChannelSpotlightController");
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	if (TLOAppStoreTextualIsRegistered() == NO && TLOAppStoreIsTrialExpired()) {
-		[[TXSharedApplication sharedInAppPurchaseDialog] showFeatureIsLimitedMessageInWindow:mainWindow()];
-
-		return;
-	}
-#endif
 
 	TDCChannelSpotlightController *dialog = [TDCChannelSpotlightController new];
 

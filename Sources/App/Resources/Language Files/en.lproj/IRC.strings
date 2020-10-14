@@ -63,10 +63,6 @@
 /* Version info */
 "vzu-u7" = "%1$@ IRC Client: www.textualapp.com — v%2$@";
 
-/* Software trial (Mac App Store) */
-"t8r-ak" = "Disconnected from server due to trial period limit. Please unlock the Standard Edition of Textual 7, or simply reconnect.";
-"v4t-zw" = "You will be disconnected in %.0f minutes due to trial period limit. You can remove this limitation by unlocking the Standard Edition of Textual 7. <a href='#' onclick='appPrivate.showInAppPurchaseWindow(); return false;'>Click here</a> to do this.";
-
 /* Specific IRC related, app-specific errors */
 "iaa-0u" = "There are no servers configured to connect to.";
 

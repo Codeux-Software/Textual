@@ -50,7 +50,6 @@
 #import "TLOGrowlController.h"
 #import "TLOSpeechSynthesizerPrivate.h"
 #import "TDCFileTransferDialogPrivate.h"
-#import "TDCInAppPurchaseDialogPrivate.h"
 #import "TDCLicenseManagerDialogPrivate.h"
 #import "TVCLogControllerOperationQueuePrivate.h"
 #import "TXSharedApplicationPrivate.h"
@@ -95,10 +94,6 @@ _defineSharedInstance(sharedWindowController, TXWindowController, new)
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 _defineSharedInstance(sharedLicenseManagerDialog, TDCLicenseManagerDialog, new)
-#endif
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-_defineSharedInstance(sharedInAppPurchaseDialog, TDCInAppPurchaseDialog, new)
 #endif
 
 _defineSharedInstance(sharedFileTransferDialog, TDCFileTransferDialog, new)

@@ -64,7 +64,7 @@ enum
 	MTMMAppAboutAppSeparator = 101, // "-"
 	MTMMAppPreferences = 102, // "Preferences…"
 	MTMMAppManageLicense = 103, // "Manage license…"
-	MTMMAppInAppPurchase = 104, // "In-app Purchase…"
+//	MTMMAppInAppPurchase = 104, // "In-app Purchase…"
 	MTMMAppCheckForUpdates = 105, // "Check for updates…"
 	MTMMAppCheckForUpdatesSeparator = 106, // "-"
 	MTMMAppServices = 107, // "Services"
@@ -503,7 +503,6 @@ enum
 - (IBAction)toggleMuteOnNotificationSounds:(id)sender;
 
 - (IBAction)manageLicense:(id)sender;
-- (IBAction)manageInAppPurchase:(id)sender;
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (IBAction)encryptionWhatIsThisInformation:(id)sender;

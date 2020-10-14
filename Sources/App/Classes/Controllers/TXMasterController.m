@@ -46,7 +46,6 @@
 #import "TLOLocalization.h"
 #import "TLOSpeechSynthesizerPrivate.h"
 #import "THOPluginManagerPrivate.h"
-#import "TDCInAppPurchaseDialogPrivate.h"
 #import "TDCLicenseManagerDialogPrivate.h"
 #import "TVCLogControllerHistoricLogFilePrivate.h"
 #import "TVCLogControllerInlineMediaServicePrivate.h"
@@ -190,10 +189,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[RZNotificationCenter() addObserver:self selector:@selector(pluginsFinishedLoading:) name:THOPluginManagerFinishedLoadingPluginsNotification object:nil];
 
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	[RZNotificationCenter() addObserver:self selector:@selector(inAppPurchaseDialogFinishedLoading:) name:TDCInAppPurchaseDialogFinishedLoadingNotification object:nil];
-#endif
-
 	[RZAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
 
 	[NSColorPanel setPickerMask:(NSColorPanelRGBModeMask | NSColorPanelGrayModeMask | NSColorPanelColorListModeMask | NSColorPanelWheelModeMask | NSColorPanelCrayonModeMask)];
@@ -218,10 +213,6 @@ NS_ASSUME_NONNULL_BEGIN
 	[self prepareLicenseManager];
 #endif
 
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	[self prepareInAppPurchases];
-#endif
-
 	[self prepareThirdPartyServices];
 
 	/* Load plugins last so that -applicationDidFinishLaunching is posted
@@ -242,15 +233,6 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	self.applicationLaunchRemainder -= 1;
 }
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-- (void)inAppPurchaseDialogFinishedLoading:(NSNotification *)notification
-{
-	self.applicationLaunchRemainder -= 1;
-
-	[[TXSharedApplication sharedInAppPurchaseDialog] showTrialIsExpiredMessageInWindow:mainWindow()];
-}
-#endif
 
 #pragma mark -
 #pragma mark Services
@@ -353,15 +335,6 @@ NS_ASSUME_NONNULL_BEGIN
 	TLOLicenseManagerSetup();
 
 	[[TXSharedApplication sharedLicenseManagerDialog] applicationDidFinishLaunching];
-}
-#endif
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-- (void)prepareInAppPurchases
-{
-	self.applicationLaunchRemainder += 1; // Add to count
-
-	[[TXSharedApplication sharedInAppPurchaseDialog] applicationDidFinishLaunching];
 }
 #endif
 
@@ -535,10 +508,6 @@ NS_ASSUME_NONNULL_BEGIN
 	[[TXSharedApplication sharedSpeechSynthesizer] setIsStopped:YES];
 
 	[TVCLogControllerInlineMediaSharedInstance() prepareForApplicationTermination];
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	[[TXSharedApplication sharedInAppPurchaseDialog] prepareForApplicationTermination];
-#endif
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[sharedCloudManager() prepareForApplicationTermination];

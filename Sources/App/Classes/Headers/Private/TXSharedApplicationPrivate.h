@@ -65,10 +65,6 @@ NS_ASSUME_NONNULL_BEGIN
 @class TDCLicenseManagerDialog;
 #endif
 
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-@class TDCInAppPurchaseDialog;
-#endif
-
 @interface TXSharedApplication ()
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 + (TPCPreferencesCloudSync *)sharedCloudSyncManager;
@@ -87,10 +83,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 + (TDCLicenseManagerDialog *)sharedLicenseManagerDialog;
-#endif
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-+ (TDCInAppPurchaseDialog *)sharedInAppPurchaseDialog;
 #endif
 
 + (TDCFileTransferDialog *)sharedFileTransferDialog;

@@ -69,7 +69,6 @@
 #import "TXMasterControllerPrivate.h"
 #import "TXMenuControllerPrivate.h"
 #import "THOPluginDispatcherPrivate.h"
-#import "TLOAppStoreManagerPrivate.h"
 #import "TLOEncryptionManagerPrivate.h"
 #import "TLOGrowlControllerPrivate.h"
 #import "TLOKeyEventHandler.h"
@@ -78,7 +77,6 @@
 #import "TLOLicenseManagerPrivate.h"
 #import "TLONicknameCompletionStatusPrivate.h"
 #import "TLOSpeechSynthesizerPrivate.h"
-#import "TDCInAppPurchaseDialogPrivate.h"
 #import "TDCLicenseManagerDialogPrivate.h"
 #import "TVCMainWindowPrivate.h"
 
@@ -117,10 +115,6 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 @property (nonatomic, copy, nullable) NSValue *cachedSwipeOriginPoint;
 @property (nonatomic, assign, readwrite) double textSizeMultiplier;
 @property (nonatomic, assign, readwrite) BOOL reloadingTheme;
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-@property (nonatomic, assign) BOOL disabledByLackOfInAppPurchase;
-#endif
 @end
 
 #define _treeDragItemType		TVCServerListDragType
@@ -227,28 +221,6 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(licenseManagerTrialExpired:)
 								   name:TDCLicenseManagerTrialExpiredNotification
-								 object:nil];
-#endif
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	[RZNotificationCenter() addObserver:self
-							   selector:@selector(loadingDelayedByLackOfInAppPurchase:)
-								   name:TDCInAppPurchaseDialogFinishedLoadingDelayedByLackOfPurchaseNotification
-								 object:nil];
-
-	[RZNotificationCenter() addObserver:self
-							   selector:@selector(loadingInAppPurchaseDialogFinished:)
-								   name:TDCInAppPurchaseDialogFinishedLoadingNotification
-								 object:nil];
-
-	[RZNotificationCenter() addObserver:self
-							   selector:@selector(onInAppPurchaseTrialExpired:)
-								   name:TDCInAppPurchaseDialogTrialExpiredNotification
-								 object:nil];
-
-	[RZNotificationCenter() addObserver:self
-							   selector:@selector(onInAppPurchaseTransactionFinished:)
-								   name:TDCInAppPurchaseDialogTransactionFinishedNotification
 								 object:nil];
 #endif
 
@@ -1512,17 +1484,6 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 	}
 }
 
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-- (BOOL)canBecomeKeyWindow
-{
-	return (self.disabledByLackOfInAppPurchase == NO);
-}
-
-- (BOOL)canBecomeMainWindow
-{
-	return (self.disabledByLackOfInAppPurchase == NO);
-}
-#else
 - (BOOL)canBecomeKeyWindow
 {
 	return YES;
@@ -1532,16 +1493,9 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 {
 	return YES;
 }
-#endif
 
 - (BOOL)isDisabled
 {
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	if (self.disabledByLackOfInAppPurchase) {
-		return YES;
-	}
-#endif
-
 	return NO;
 }
 
@@ -1877,52 +1831,6 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 - (void)licenseManagerTrialExpired:(NSNotification *)notification
 {
 	[self reloadLoadingScreen];
-}
-#endif
-
-#pragma mark -
-#pragma mark In-app Purchase
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-- (void)loadingDelayedByLackOfInAppPurchase:(NSNotification *)notification
-{
-	self.disabledByLackOfInAppPurchase = YES;
-
-	[self setLoadingScreenProgressViewReason:TXTLS(@"TVCMainWindow[8ek-hm]")];
-
-	[self close];
-}
-
-- (void)loadingInAppPurchaseDialogFinished:(NSNotification *)notification
-{
-	if (self.disabledByLackOfInAppPurchase == NO) {
-		[self reloadInAppPurchaseFeatures];
-
-		return;
-	}
-
-	self.disabledByLackOfInAppPurchase = NO;
-
-	[self makeKeyAndOrderFront:nil];
-}
-
-- (void)reloadInAppPurchaseFeatures
-{
-	if (TLOAppStoreTextualIsRegistered() == NO && TLOAppStoreIsTrialExpired()) {
-		self.serverList.allowsMultipleSelection = NO;
-	} else {
-		self.serverList.allowsMultipleSelection = YES;
-	}
-}
-
-- (void)onInAppPurchaseTrialExpired:(NSNotification *)notification
-{
-	[self reloadInAppPurchaseFeatures];
-}
-
-- (void)onInAppPurchaseTransactionFinished:(NSNotification *)notification
-{
-	[self reloadInAppPurchaseFeatures];
 }
 #endif
 

@@ -45,7 +45,6 @@
 #import "TLOLicenseManagerPrivate.h"
 #import "TLOLocalization.h"
 #import "TVCMainWindowPrivate.h"
-#import "TDCInAppPurchaseDialogPrivate.h"
 #import "TDCLicenseManagerDialogPrivate.h"
 #import "TDCChannelSpotlightAppearanceInternal.h"
 #import "TDCChannelSpotlightSearchResultPrivate.h"
@@ -109,10 +108,6 @@ NS_ASSUME_NONNULL_BEGIN
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 	[RZNotificationCenter() addObserver:self selector:@selector(licenseManagerDeactivatedLicense:) name:TDCLicenseManagerDeactivatedLicenseNotification object:nil];
 	[RZNotificationCenter() addObserver:self selector:@selector(licenseManagerTrialExpired:) name:TDCLicenseManagerTrialExpiredNotification object:nil];
-#endif
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	[RZNotificationCenter() addObserver:self selector:@selector(onInAppPurchaseTrialExpired:) name:TDCInAppPurchaseDialogTrialExpiredNotification object:nil];
 #endif
 
 	[self populateArrayController];
@@ -594,13 +589,6 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)licenseManagerTrialExpired:(NSNotification *)notification
-{
-	[self close];
-}
-#endif
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-- (void)onInAppPurchaseTrialExpired:(NSNotification *)notification
 {
 	[self close];
 }

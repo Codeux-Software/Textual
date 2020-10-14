@@ -207,12 +207,6 @@
                                     <action selector="manageLicense:" target="267" id="9xt-Qu-8UP"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="In-app Purchase…" tag="104" id="CES-gF-e9x">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="manageInAppPurchase:" target="267" id="c2m-fH-Kci"/>
-                                </connections>
-                            </menuItem>
                             <menuItem title="Check for updates…" tag="105" id="SKm-yR-9hI">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>

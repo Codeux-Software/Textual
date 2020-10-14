@@ -52,13 +52,11 @@
 #import "IRCClient.h"
 #import "IRCConnectionConfig.h"
 #import "IRCWorld.h"
-#import "TLOAppStoreManagerPrivate.h"
 #import "TLOEncryptionManagerPrivate.h"
 #import "TLOLocalization.h"
 #import "TVCMainWindowPrivate.h"
 #import "TVCNotificationConfigurationViewControllerPrivate.h"
 #import "TDCAlert.h"
-#import "TDCInAppPurchaseDialogPrivate.h"
 #import "TDCFileTransferDialogPrivate.h"
 #import "TDCPreferencesNotificationConfigurationPrivate.h"
 #import "TDCPreferencesUserStyleSheetPrivate.h"
@@ -299,18 +297,6 @@ NS_ASSUME_NONNULL_BEGIN
 							   selector:@selector(onThemeReloadComplete:)
 								   name:TVCMainWindowDidReloadThemeNotification
 								 object:nil];
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	[RZNotificationCenter() addObserver:self
-							   selector:@selector(onInAppPurchaseTrialExpired:)
-								   name:TDCInAppPurchaseDialogTrialExpiredNotification
-								 object:nil];
-
-	[RZNotificationCenter() addObserver:self
-							   selector:@selector(onInAppPurchaseTransactionFinished:)
-								   name:TDCInAppPurchaseDialogTransactionFinishedNotification
-								 object:nil];
-#endif
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 0
 	/* Hide "Share data between devices" when iCloud support is not enabled
@@ -810,35 +796,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)logTranscript
 {
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	if ([self disableInAppPurchaseCheckbox:@"logTranscript"]) {
-		return NO;
-	}
-#endif
-
 	return [TPCPreferences logToDisk];
 }
 
 - (void)setLogTranscript:(BOOL)logTranscript
 {
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	if ([self allowInAppPurchaseCheckboxToChange:@"logTranscript"] == NO) {
-		return;
-	}
-#endif
-
 	[TPCPreferences setLogToDisk:logTranscript];
 }
 
 - (BOOL)syncPreferencesToTheCloud
 {
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	if ([self disableInAppPurchaseCheckbox:@"syncPreferencesToTheCloud"]) {
-		return NO;
-	}
-#endif
-
 	return [TPCPreferences syncPreferencesToTheCloud];
 #else
 	return NO;
@@ -848,12 +816,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setSyncPreferencesToTheCloud:(BOOL)syncPreferencesToTheCloud
 {
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-	if ([self allowInAppPurchaseCheckboxToChange:@"syncPreferencesToTheCloud"] == NO) {
-		return;
-	}
-#endif
-
 	[TPCPreferences setSyncPreferencesToTheCloud:syncPreferencesToTheCloud];
 #endif
 }
@@ -1768,64 +1730,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[RZWorkspace() openFile:filepath];
 }
-
-#pragma mark -
-#pragma mark In-App Purchase
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-- (BOOL)disableInAppPurchaseCheckbox:(NSString *)defaultsKey
-{
-	NSParameterAssert(defaultsKey != nil);
-
-	return (TLOAppStoreTextualIsRegistered() == NO && TLOAppStoreIsTrialExpired());
-}
-
-- (BOOL)allowInAppPurchaseCheckboxToChange:(NSString *)defaultsKey
-{
-	NSParameterAssert(defaultsKey != nil);
-
-	if ([self disableInAppPurchaseCheckbox:defaultsKey]) {
-		[self showInAppPurchaseFeatureIsDisabledMessage];
-
-		/* Undo change user made by faking change to property
-		 on next pass to main thread. We have to do this next
-		 pass because KVO wont recognize the change when the
-		 change is made within itself. */
-		XRPerformBlockAsynchronouslyOnMainQueue(^{
-			[self willChangeValueForKey:defaultsKey]; // Refresh check box back to NO
-			[self didChangeValueForKey:defaultsKey];
-		});
-
-		return NO;
-	}
-
-	return YES;
-}
-
-- (void)showInAppPurchaseFeatureIsDisabledMessage
-{
-	[[TXSharedApplication sharedInAppPurchaseDialog] showFeatureIsLimitedMessageInWindow:self.window];
-}
-
-- (void)reloadInAppPurchaseDependentPreferences
-{
-	[self willChangeValueForKey:@"logTranscript"];
-	[self didChangeValueForKey:@"logTranscript"];
-
-	[self willChangeValueForKey:@"syncPreferencesToTheCloud"];
-	[self didChangeValueForKey:@"syncPreferencesToTheCloud"];
-}
-
-- (void)onInAppPurchaseTrialExpired:(NSNotification *)notification
-{
-	[self reloadInAppPurchaseDependentPreferences];
-}
-
-- (void)onInAppPurchaseTransactionFinished:(NSNotification *)notification
-{
-	[self reloadInAppPurchaseDependentPreferences];
-}
-#endif
 
 #pragma mark -
 #pragma mark Cloud Work

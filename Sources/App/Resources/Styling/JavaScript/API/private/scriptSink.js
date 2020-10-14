@@ -195,15 +195,6 @@ appPrivate.displayContextMenu = function()
 	window.webkit.messageHandlers.displayContextMenu.postMessage(null);
 };
 
-appPrivate.showInAppPurchaseWindow = function()
-{
-	if (app.isWebKit2()) {
-		window.webkit.messageHandlers.showInAppPurchaseWindow.postMessage(null);
-	} else {
-		TextualScriptSink.showInAppPurchaseWindow();
-	}
-};
-
 appPrivate.renderMessagesBefore = function(lineNumber, maximumNumberOfLines, callbackFunction)
 {
 	var promiseIndex = appInternal.makePromise(callbackFunction);

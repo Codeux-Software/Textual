@@ -49,7 +49,6 @@
 #import "TDCSharedProtocolDefinitionsPrivate.h"
 #import "TDCSheetBase.h"
 #import "TPCPreferencesLocal.h"
-#import "TLOAppStoreManagerPrivate.h"
 #import "TLOEncryptionManagerPrivate.h"
 #import "TLOFileLoggerPrivate.h"
 #import "TLOInputHistoryPrivate.h"
@@ -532,15 +531,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)reopenLogFileIfNeeded
 {
-	if ([TPCPreferences logToDiskIsEnabled] && self.isUtility == NO
-
-#if TEXTUAL_BUILT_FOR_APP_STORE_DISTRIBUTION == 1
-		&&
-		(TLOAppStoreTextualIsRegistered() || TLOAppStoreIsTrialExpired() == NO)
-#endif
-
-		)
-	{
+	if ([TPCPreferences logToDiskIsEnabled] && self.isUtility == NO) {
 		if ( self.logFile) {
 			[self.logFile reopenIfNeeded];
 		}
