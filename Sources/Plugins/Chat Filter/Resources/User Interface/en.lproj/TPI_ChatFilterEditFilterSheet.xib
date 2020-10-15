@@ -21,12 +21,15 @@
                 <outlet property="filterActionTokenSenderNickname" destination="hz3-ib-naL" id="lTr-TP-eWR"/>
                 <outlet property="filterActionTokenSenderUsername" destination="bEr-mb-T5p" id="2Cf-jr-JUh"/>
                 <outlet property="filterActionTokenServerAddress" destination="Jah-Fc-rje" id="oPJ-5V-cvy"/>
+                <outlet property="filterEventActionMessageCheck" destination="hzt-Z8-IHO" id="ueg-uJ-vIM"/>
                 <outlet property="filterEventChannelModeChangedCheck" destination="OCm-2d-5iT" id="9u7-xF-6cs"/>
                 <outlet property="filterEventChannelModeReceivedCheck" destination="gIz-IY-KJJ" id="D7m-7T-DVF"/>
                 <outlet property="filterEventChannelTopicChangedCheck" destination="qMR-Qk-TTO" id="Fuf-Sz-Qwn"/>
                 <outlet property="filterEventChannelTopicReceivedCheck" destination="pwj-AW-O7i" id="UCP-62-6vB"/>
+                <outlet property="filterEventNoticeMessageCheck" destination="xne-lV-wM3" id="ORX-77-cNT"/>
                 <outlet property="filterEventNumericTextField" destination="qe2-po-Vne" id="Sfj-VH-LNV"/>
                 <outlet property="filterEventPlainTextMessageCheck" destination="Q49-5O-3FE" id="7zM-aP-c4Y"/>
+                <outlet property="filterEventUserChangedNicknameCheck" destination="cWl-lx-QR8" id="Hy6-6p-55p"/>
                 <outlet property="filterEventUserDisconnectedCheck" destination="HN3-2G-7vP" id="YMo-l4-NP8"/>
                 <outlet property="filterEventUserJoinedChannelCheck" destination="HPO-EK-Lr9" id="oHg-N7-q9n"/>
                 <outlet property="filterEventUserKickedFromChannelCheck" destination="3ux-y8-g4s" id="Njo-DE-Qsf"/>
