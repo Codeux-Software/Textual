@@ -485,8 +485,8 @@ Gw
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <gridView xPlacement="leading" yPlacement="top" rowAlignment="firstBaseline" rowSpacing="8" columnSpacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="LKj-pX-fVV">
-                                            <rect key="frame" x="95" y="230" width="354" height="188"/>
+                                        <gridView xPlacement="leading" yPlacement="top" rowAlignment="firstBaseline" rowSpacing="8" columnSpacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="LKj-pX-fVV">
+                                            <rect key="frame" x="84" y="230" width="376" height="188"/>
                                             <rows>
                                                 <gridRow id="8yt-Sa-HhN"/>
                                                 <gridRow height="30" id="8db-Xv-Tfg"/>
@@ -517,7 +517,7 @@ Gw
                                                 </gridCell>
                                                 <gridCell row="8yt-Sa-HhN" column="Pzv-gy-qqg" id="RdB-GQ-Tr0">
                                                     <button key="contentView" translatesAutoresizingMaskIntoConstraints="NO" id="hzt-Z8-IHO">
-                                                        <rect key="frame" x="173" y="171" width="123" height="18"/>
+                                                        <rect key="frame" x="195" y="171" width="123" height="18"/>
                                                         <buttonCell key="cell" type="check" title="Action message" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="aRj-zZ-lw0">
                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
@@ -554,7 +554,7 @@ Gw
                                                 </gridCell>
                                                 <gridCell row="cWl-lx-QR8" column="Pzv-gy-qqg" id="BNg-cu-2Wh">
                                                     <button key="contentView" translatesAutoresizingMaskIntoConstraints="NO" id="Gsz-VT-x8W">
-                                                        <rect key="frame" x="173" y="109" width="173" height="18"/>
+                                                        <rect key="frame" x="195" y="109" width="173" height="18"/>
                                                         <buttonCell key="cell" type="check" title="User changed nickname" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="vR5-nX-6DC">
                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
@@ -574,7 +574,7 @@ Gw
                                                 </gridCell>
                                                 <gridCell row="IU8-mA-DDK" column="Pzv-gy-qqg" id="lcE-wW-afW">
                                                     <button key="contentView" translatesAutoresizingMaskIntoConstraints="NO" id="3ux-y8-g4s">
-                                                        <rect key="frame" x="173" y="85" width="181" height="18"/>
+                                                        <rect key="frame" x="195" y="85" width="181" height="18"/>
                                                         <buttonCell key="cell" type="check" title="User kicked from channel" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Y4O-Oc-VRk">
                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
@@ -605,7 +605,7 @@ Gw
                                                 </gridCell>
                                                 <gridCell row="yee-Xv-GYg" column="Pzv-gy-qqg" id="2Jx-uP-Fcq">
                                                     <button key="contentView" translatesAutoresizingMaskIntoConstraints="NO" id="qMR-Qk-TTO">
-                                                        <rect key="frame" x="173" y="23" width="166" height="18"/>
+                                                        <rect key="frame" x="195" y="23" width="166" height="18"/>
                                                         <buttonCell key="cell" type="check" title="Channel topic changed" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="FMM-bN-tPd">
                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
@@ -625,7 +625,7 @@ Gw
                                                 </gridCell>
                                                 <gridCell row="YI6-Xu-Ov2" column="Pzv-gy-qqg" id="Hkd-eA-ZOA">
                                                     <button key="contentView" translatesAutoresizingMaskIntoConstraints="NO" id="OCm-2d-5iT">
-                                                        <rect key="frame" x="173" y="-1" width="170" height="18"/>
+                                                        <rect key="frame" x="195" y="-1" width="170" height="18"/>
                                                         <buttonCell key="cell" type="check" title="Channel mode changed" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="diO-yQ-tF1">
                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
@@ -772,10 +772,10 @@ Gw
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gvj-AU-dTW">
-                                            <rect key="frame" x="78" y="369" width="375" height="45"/>
+                                            <rect key="frame" x="78" y="369" width="363" height="45"/>
                                             <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="tBf-Xx-fOd">
                                                 <font key="font" metaFont="cellTitle"/>
-                                                <string key="title">Not all events can be narrowed to only you. Filters only act on incoming data, so you wont be able to use this option to self-bot. The most common event this option is used for is Channel Join.</string>
+                                                <string key="title">Not all events can be narrowed to only you. Filters act on incoming data. You wont be able to use this option to self-bot. The most common event this option is used for is Channel Join.</string>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -813,7 +813,7 @@ Gw
                                             <rect key="frame" x="18" y="404" width="507" height="64"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="JCT-z8-69i">
                                                 <font key="font" metaFont="system"/>
-                                                <string key="title">Use the box presented below to keep notes specific to this filter such as examples of messages it will trigger for.
+                                                <string key="title">Use the box presented below to keep notes specific to this filter such as examples of messages that will trigger it.
 
 This information is for your records and does not alter the behavior of the filter.</string>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>

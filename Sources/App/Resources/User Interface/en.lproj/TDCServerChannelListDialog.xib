@@ -187,7 +187,7 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <tableHeaderView key="headerView" wantsLayer="YES" id="sQg-9H-gSH">
-                            <rect key="frame" x="0.0" y="0.0" width="598" height="28"/>
+                            <rect key="frame" x="0.0" y="0.0" width="598" height="23"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                         <accessibility description="Channel List"/>

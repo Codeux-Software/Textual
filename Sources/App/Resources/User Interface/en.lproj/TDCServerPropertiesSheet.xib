@@ -105,7 +105,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="382" y="280" width="706" height="350"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="720"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="6">
                 <rect key="frame" x="0.0" y="0.0" width="706" height="350"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -908,7 +908,7 @@ Gw
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JCf-aC-VgE">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="JCf-aC-VgE">
                     <rect key="frame" x="84" y="86" width="252" height="15"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="This option requires the “playback” module." id="DES-Fw-k4c">
                         <font key="font" metaFont="cellTitle"/>
@@ -1185,7 +1185,7 @@ Gw
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn identifier="keyword" editable="NO" width="181.111083984375" minWidth="40" maxWidth="1000" id="2456">
+                                    <tableColumn identifier="keyword" editable="NO" width="180.111083984375" minWidth="40" maxWidth="1000" id="2456">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Keyword">
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -1401,11 +1401,11 @@ Gw
                 <constraint firstItem="2358" firstAttribute="top" secondItem="1817" secondAttribute="top" constant="25" id="9z4-Kb-aMe"/>
                 <constraint firstItem="1844" firstAttribute="top" secondItem="1842" secondAttribute="bottom" constant="8" symbolic="YES" id="H7n-ny-Oa6"/>
                 <constraint firstItem="2358" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="1842" secondAttribute="trailing" id="HJR-XB-yIn"/>
+                <constraint firstItem="1845" firstAttribute="firstBaseline" secondItem="1843" secondAttribute="firstBaseline" id="In6-si-fQf"/>
                 <constraint firstItem="1845" firstAttribute="width" secondItem="1843" secondAttribute="width" id="Mld-X8-TVW"/>
                 <constraint firstItem="1844" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1845" secondAttribute="trailing" constant="20" id="PyA-u7-Bx7"/>
                 <constraint firstItem="1843" firstAttribute="top" secondItem="1842" secondAttribute="bottom" constant="8" id="Uz3-NU-geK"/>
                 <constraint firstItem="1844" firstAttribute="trailing" secondItem="1842" secondAttribute="trailing" id="WVJ-uY-BnM"/>
-                <constraint firstItem="1845" firstAttribute="firstBaseline" secondItem="1843" secondAttribute="firstBaseline" id="WW5-zo-PuX"/>
                 <constraint firstItem="1845" firstAttribute="height" secondItem="1843" secondAttribute="height" id="mAz-MO-PcL"/>
                 <constraint firstItem="1842" firstAttribute="top" secondItem="2358" secondAttribute="bottom" constant="8" symbolic="YES" id="o17-Ew-zWm"/>
                 <constraint firstItem="1842" firstAttribute="leading" secondItem="1817" secondAttribute="leading" constant="54" id="p2B-pY-CwL"/>
@@ -1909,7 +1909,7 @@ Gw
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" spacing="7" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bJz-Am-LvT">
+                <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="7" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bJz-Am-LvT">
                     <rect key="frame" x="47" y="96" width="436" height="20"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9b4-kF-7N0">
@@ -1951,7 +1951,7 @@ Gw
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
-                <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lqs-Qy-WoE">
+                <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lqs-Qy-WoE">
                     <rect key="frame" x="47" y="153" width="438" height="20"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kGJ-aW-aWu">
@@ -2098,7 +2098,7 @@ Gw
                     </connections>
                 </popUpButton>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BoR-WW-sT2">
-                    <rect key="frame" x="373" y="61" width="89" height="32"/>
+                    <rect key="frame" x="373" y="61" width="90" height="32"/>
                     <buttonCell key="cell" type="push" title="View List" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LuK-ZI-qT9">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -2444,7 +2444,7 @@ Gw
         <arrayController objectClassName="IRCServer" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" automaticallyRearrangesObjects="YES" id="Wea-hF-mxO"/>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="14" height="13"/>
-        <image name="NSRemoveTemplate" width="14" height="4"/>
+        <image name="NSAddTemplate" width="15" height="13"/>
+        <image name="NSRemoveTemplate" width="15" height="4"/>
     </resources>
 </document>

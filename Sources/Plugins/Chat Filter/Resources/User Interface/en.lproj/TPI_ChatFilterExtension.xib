@@ -19,7 +19,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Age-ET-si9">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Age-ET-si9">
             <rect key="frame" x="0.0" y="0.0" width="670" height="455"/>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1xp-tp-X2E">
@@ -51,10 +51,10 @@ Drag and drop filters to change their priority. The table is ranked highest prio
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1aY-QC-Kzo">
-                    <rect key="frame" x="533" y="26" width="45" height="23"/>
+                    <rect key="frame" x="533" y="27" width="45" height="25"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="45" id="NnH-eU-lfK"/>
-                        <constraint firstAttribute="height" constant="21" id="en9-1C-Qoe"/>
+                        <constraint firstAttribute="height" constant="23" id="en9-1C-Qoe"/>
                     </constraints>
                     <buttonCell key="cell" type="smallSquare" title="Edit" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yxL-c7-9D2">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -80,11 +80,11 @@ Drag and drop filters to change their priority. The table is ranked highest prio
                 </button>
                 <scrollView borderType="line" autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="10" verticalLineScroll="20" verticalPageScroll="10" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="gPh-Vf-Ty1">
                     <rect key="frame" x="93" y="59" width="485" height="220"/>
-                    <clipView key="contentView" ambiguous="YES" id="seO-3c-oh7">
+                    <clipView key="contentView" id="seO-3c-oh7">
                         <rect key="frame" x="1" y="1" width="483" height="218"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="18" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" headerView="KyR-f3-84p" viewBased="YES" floatsGroupRows="NO" id="xhh-gD-9rb" customClass="TVCBasicTableView">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="18" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" headerView="KyR-f3-84p" viewBased="YES" floatsGroupRows="NO" id="xhh-gD-9rb" customClass="TVCBasicTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="483" height="195"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="2" height="2"/>
@@ -168,7 +168,7 @@ Drag and drop filters to change their priority. The table is ranked highest prio
                 <constraint firstItem="1xp-tp-X2E" firstAttribute="leading" secondItem="xhh-gD-9rb" secondAttribute="leading" id="Anq-1T-fDX"/>
                 <constraint firstItem="p1g-v9-KVk" firstAttribute="firstBaseline" secondItem="un4-9j-DSX" secondAttribute="firstBaseline" id="Dy0-A0-Enh"/>
                 <constraint firstItem="1xp-tp-X2E" firstAttribute="trailing" secondItem="gPh-Vf-Ty1" secondAttribute="trailing" id="FzP-tm-pUj"/>
-                <constraint firstItem="1aY-QC-Kzo" firstAttribute="top" secondItem="gPh-Vf-Ty1" secondAttribute="bottom" constant="11" id="GqI-Un-LNC"/>
+                <constraint firstItem="1aY-QC-Kzo" firstAttribute="top" secondItem="gPh-Vf-Ty1" secondAttribute="bottom" constant="8" id="GqI-Un-LNC"/>
                 <constraint firstItem="p1g-v9-KVk" firstAttribute="height" secondItem="un4-9j-DSX" secondAttribute="height" id="HTZ-Xw-SbN"/>
                 <constraint firstAttribute="bottom" secondItem="un4-9j-DSX" secondAttribute="bottom" constant="30" id="LUH-JP-vpY"/>
                 <constraint firstItem="un4-9j-DSX" firstAttribute="leading" secondItem="gPh-Vf-Ty1" secondAttribute="leading" id="Qck-pT-anC"/>
@@ -228,7 +228,7 @@ Drag and drop filters to change their priority. The table is ranked highest prio
         <menuItem isSeparatorItem="YES" id="01e-IR-FUy"/>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="14" height="13"/>
-        <image name="NSRemoveTemplate" width="14" height="4"/>
+        <image name="NSAddTemplate" width="15" height="13"/>
+        <image name="NSRemoveTemplate" width="15" height="4"/>
     </resources>
 </document>

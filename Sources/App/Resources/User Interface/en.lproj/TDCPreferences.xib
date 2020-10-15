@@ -56,7 +56,7 @@
         <window title="Textual Preferences" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" tabbingMode="disallowed" toolbarStyle="preference" id="4929" userLabel="Toolbar Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="367" y="318" width="670" height="240"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="720"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <value key="minSize" type="size" width="670" height="240"/>
             <view key="contentView" id="4930">
                 <rect key="frame" x="0.0" y="0.0" width="670" height="240"/>
@@ -466,7 +466,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="250" height="160"/>
                                 <clipView key="contentView" id="QyB-ni-plT">
                                     <rect key="frame" x="1" y="1" width="248" height="158"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="nIO-jH-FEm">
                                             <rect key="frame" x="0.0" y="0.0" width="248" height="158"/>
@@ -524,7 +524,7 @@
                                 <rect key="frame" x="258" y="0.0" width="250" height="160"/>
                                 <clipView key="contentView" id="73A-Qg-29i">
                                     <rect key="frame" x="1" y="1" width="248" height="158"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="Vqz-0J-ajG">
                                             <rect key="frame" x="0.0" y="0.0" width="248" height="158"/>
@@ -1129,9 +1129,9 @@
                                         <rect key="frame" x="40" y="393" width="544" height="5"/>
                                     </box>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="INb-El-pAB">
-                                        <rect key="frame" x="58" y="106" width="419" height="14"/>
+                                        <rect key="frame" x="58" y="105" width="451" height="15"/>
                                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Hold the Option key (⌥) while selecting text to temporarily disable this feature." id="8Nk-L2-mjZ">
-                                            <font key="font" metaFont="smallSystem"/>
+                                            <font key="font" metaFont="system" size="12"/>
                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -2193,7 +2193,7 @@
                                                 </connections>
                                             </textField>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RCg-fG-WEB">
-                                                <rect key="frame" x="227" y="1" width="58" height="19"/>
+                                                <rect key="frame" x="227" y="0.0" width="58" height="19"/>
                                                 <buttonCell key="cell" type="roundRect" title="Change" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Oyi-xz-dDf">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="cellTitle"/>
@@ -2238,7 +2238,7 @@
                                                 </textFieldCell>
                                             </textField>
                                             <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ICa-wc-PBy">
-                                                <rect key="frame" x="40" y="-4" width="240" height="25"/>
+                                                <rect key="frame" x="40" y="-4" width="239" height="25"/>
                                                 <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" id="hFg-IF-B8g">
                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="menu"/>
@@ -2255,7 +2255,7 @@
                                                 </connections>
                                             </popUpButton>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wmq-Ee-waL">
-                                                <rect key="frame" x="284" y="1" width="117" height="19"/>
+                                                <rect key="frame" x="283" y="0.0" width="118" height="19"/>
                                                 <buttonCell key="cell" type="roundRect" title="Browse Style Files" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gtM-zH-PMU">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="cellTitle"/>
@@ -2875,7 +2875,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                     <rect key="frame" x="199" y="30" width="272" height="18"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UuX-nP-keM">
-                            <rect key="frame" x="-2" y="1" width="170" height="16"/>
+                            <rect key="frame" x="-2" y="2" width="170" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Custom Addons Location:" id="aKI-dl-dpt">
                                 <font key="font" metaFont="systemBold"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -3223,7 +3223,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                         </binding>
                     </connections>
                 </textField>
-                <stackView distribution="equalSpacing" orientation="horizontal" alignment="firstBaseline" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wIq-2E-v60">
+                <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wIq-2E-v60">
                     <rect key="frame" x="83" y="30" width="504" height="16"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ovt-cD-DOK">
@@ -3347,7 +3347,7 @@ A lower value is always better especially when in a large number of channels.</s
                                 </binding>
                             </connections>
                         </textField>
-                        <stackView distribution="fill" orientation="horizontal" alignment="bottom" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8gi-yj-GXQ">
+                        <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8gi-yj-GXQ">
                             <rect key="frame" x="23" y="0.0" width="314" height="16"/>
                             <subviews>
                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="boi-EW-JP6">
@@ -3414,7 +3414,7 @@ A lower value is always better especially when in a large number of channels.</s
                                 </binding>
                             </connections>
                         </textField>
-                        <stackView distribution="fill" orientation="horizontal" alignment="bottom" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ulc-ga-rFe">
+                        <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ulc-ga-rFe">
                             <rect key="frame" x="23" y="0.0" width="314" height="16"/>
                             <subviews>
                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nUX-Py-gGJ">
@@ -4822,7 +4822,7 @@ You should therefore not rely solely on this preference.</string>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="guD-BE-Zzc">
-                    <rect key="frame" x="121" y="144" width="281" height="32"/>
+                    <rect key="frame" x="121" y="144" width="282" height="32"/>
                     <buttonCell key="cell" type="push" title="Learn more about how it works in Textual" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8KP-Mk-tom">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -4898,7 +4898,7 @@ You should therefore not rely solely on this preference.</string>
                     <rect key="frame" x="40" y="66" width="590" height="5"/>
                 </box>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c4l-gT-o8c">
-                    <rect key="frame" x="198" y="23" width="275" height="32"/>
+                    <rect key="frame" x="197" y="23" width="276" height="32"/>
                     <buttonCell key="cell" type="push" title="Remove data saved to iCloud by Textual" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yvu-CD-znG">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -5262,8 +5262,8 @@ You should therefore not rely solely on this preference.</string>
         <customObject id="k8n-cT-p4s" customClass="TVCNotificationConfigurationViewController"/>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="14" height="13"/>
-        <image name="NSRemoveTemplate" width="14" height="4"/>
+        <image name="NSAddTemplate" width="15" height="13"/>
+        <image name="NSRemoveTemplate" width="15" height="4"/>
         <image name="TPWTB_Addons" width="32" height="32"/>
         <image name="TPWTB_Advanced" width="32" height="32"/>
         <image name="TPWTB_Controls" width="32" height="32"/>
