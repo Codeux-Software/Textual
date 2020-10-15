@@ -122,7 +122,7 @@
                         <popUpButton key="view" tag="108" id="J0J-90-PIH">
                             <rect key="frame" x="2" y="14" width="55" height="35"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="TPWTB_Advanced" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="o4H-Er-8Yy">
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="o4H-Er-8Yy">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="W9G-v3-1hY">
@@ -255,15 +255,15 @@
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="ye6-2h-R4p"/>
-                    <toolbarItem reference="QvU-QG-4EI"/>
+                    <toolbarItem reference="4tt-rO-NHB"/>
                     <toolbarItem reference="6P8-n2-nNV"/>
                     <toolbarItem reference="z3r-Sc-CPs"/>
-                    <toolbarItem reference="QvU-QG-4EI"/>
+                    <toolbarItem reference="4tt-rO-NHB"/>
                     <toolbarItem reference="5Zi-85-Fdl"/>
                     <toolbarItem reference="e6N-0C-9Eo"/>
                     <toolbarItem reference="fzQ-55-v97"/>
                     <toolbarItem reference="Ggd-0D-rbs"/>
-                    <toolbarItem reference="QvU-QG-4EI"/>
+                    <toolbarItem reference="4tt-rO-NHB"/>
                     <toolbarItem reference="BVW-Pf-3Qn"/>
                     <toolbarItem reference="Ljh-iZ-r98"/>
                 </defaultToolbarItems>
@@ -1131,7 +1131,7 @@
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="INb-El-pAB">
                                         <rect key="frame" x="58" y="105" width="451" height="15"/>
                                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Hold the Option key (⌥) while selecting text to temporarily disable this feature." id="8Nk-L2-mjZ">
-                                            <font key="font" metaFont="system" size="12"/>
+                                            <font key="font" metaFont="cellTitle"/>
                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
