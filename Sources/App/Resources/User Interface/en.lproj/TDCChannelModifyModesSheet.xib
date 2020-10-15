@@ -318,7 +318,7 @@
                             <action selector="onChangeCheck:" target="-2" id="240"/>
                         </connections>
                     </button>
-                    <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="13" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ao3-gh-ieE">
+                    <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="13" verticalStackHuggingPriority="750" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ao3-gh-ieE">
                         <rect key="frame" x="20" y="139" width="247" height="161"/>
                         <subviews>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="171">

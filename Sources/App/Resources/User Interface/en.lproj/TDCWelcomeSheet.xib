@@ -25,9 +25,9 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="821" y="627" width="400" height="469"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="720"/>
-            <view key="contentView" id="144">
-                <rect key="frame" x="0.0" y="0.0" width="400" height="480"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
+            <view key="contentView" misplaced="YES" id="144">
+                <rect key="frame" x="0.0" y="0.0" width="400" height="482"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="154">
@@ -63,7 +63,7 @@ Gw
                         </connections>
                     </button>
                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="zqh-Vb-fjj">
-                        <rect key="frame" x="20" y="391" width="69" height="69"/>
+                        <rect key="frame" x="20" y="393" width="69" height="69"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="69" id="3sw-im-CB0"/>
                             <constraint firstAttribute="width" secondItem="zqh-Vb-fjj" secondAttribute="height" multiplier="1:1" id="udu-Tc-oQa"/>
@@ -110,10 +110,10 @@ Gw
                         </textFieldCell>
                     </textField>
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Rdf-pc-4oE">
-                        <rect key="frame" x="20" y="362" width="360" height="5"/>
+                        <rect key="frame" x="20" y="364" width="360" height="5"/>
                     </box>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="I1L-Fi-uaP">
-                        <rect key="frame" x="111" y="383" width="267" height="45"/>
+                        <rect key="frame" x="111" y="385" width="267" height="45"/>
                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="UqM-De-aP8">
                             <font key="font" metaFont="cellTitle"/>
                             <string key="title">To get started, select a network to connect to using the the control labeled “Destination”, or manually enter the desired server address.</string>
@@ -122,7 +122,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="157">
-                        <rect key="frame" x="138" y="436" width="214" height="24"/>
+                        <rect key="frame" x="138" y="438" width="214" height="24"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="Welcome to Textual 7!" id="163">
                             <font key="font" metaFont="systemBold" size="20"/>
                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -130,7 +130,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <gridView xPlacement="fill" yPlacement="fill" rowAlignment="firstBaseline" rowSpacing="8" columnSpacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ybn-lr-Sxh">
-                        <rect key="frame" x="28" y="176" width="352" height="170"/>
+                        <rect key="frame" x="28" y="176" width="352" height="172"/>
                         <rows>
                             <gridRow id="HT5-3A-iCq"/>
                             <gridRow id="TTO-Me-jbU"/>
@@ -143,7 +143,7 @@ Gw
                         <gridCells>
                             <gridCell row="HT5-3A-iCq" column="P0R-YZ-1Eo" id="QmP-4Z-Hrh">
                                 <textField key="contentView" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="148">
-                                    <rect key="frame" x="-2" y="153" width="77" height="16"/>
+                                    <rect key="frame" x="-2" y="155" width="77" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Destination:" id="176">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -153,9 +153,9 @@ Gw
                             </gridCell>
                             <gridCell row="HT5-3A-iCq" column="O86-lf-hU6" id="bzS-k7-Y6G">
                                 <comboBox key="contentView" translatesAutoresizingMaskIntoConstraints="NO" id="216" customClass="TVCValidatedComboBox">
-                                    <rect key="frame" x="81" y="146" width="274" height="26"/>
+                                    <rect key="frame" x="81" y="146" width="274" height="28"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="20" id="Rb3-E6-GR7"/>
+                                        <constraint firstAttribute="height" constant="22" id="Rb3-E6-GR7"/>
                                     </constraints>
                                     <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="irc.example.com" usesSingleLineMode="YES" numberOfVisibleItems="5" id="217" customClass="TVCValidatedComboBoxCell">
                                         <font key="font" metaFont="system"/>
@@ -304,8 +304,8 @@ Gw
         </window>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="14" height="13"/>
-        <image name="NSRemoveTemplate" width="14" height="4"/>
+        <image name="NSAddTemplate" width="15" height="13"/>
+        <image name="NSRemoveTemplate" width="15" height="4"/>
         <image name="applicationIcon" width="512" height="512"/>
     </resources>
 </document>

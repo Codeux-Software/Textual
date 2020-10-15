@@ -255,7 +255,7 @@ Gw
             <rect key="frame" x="0.0" y="0.0" width="520" height="314"/>
             <subviews>
                 <gridView xPlacement="trailing" yPlacement="fill" rowAlignment="firstBaseline" rowSpacing="14" columnSpacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="eEd-eF-L1L">
-                    <rect key="frame" x="80" y="152" width="360" height="127"/>
+                    <rect key="frame" x="80" y="149" width="360" height="130"/>
                     <rows>
                         <gridRow id="uAb-uY-dJ9"/>
                         <gridRow id="hUK-uO-DWz"/>
@@ -269,7 +269,7 @@ Gw
                     <gridCells>
                         <gridCell row="uAb-uY-dJ9" column="4RY-Yh-h0w" id="vk7-v2-TLn">
                             <textField key="contentView" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1538">
-                                <rect key="frame" x="-2" y="109" width="117" height="16"/>
+                                <rect key="frame" x="-2" y="112" width="117" height="16"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Connection Name:" id="1559">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -279,7 +279,7 @@ Gw
                         </gridCell>
                         <gridCell row="uAb-uY-dJ9" column="kwW-4Q-r7S" id="xlG-iw-qu0">
                             <textField key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1539" customClass="TVCValidatedTextField">
-                                <rect key="frame" x="121" y="105" width="239" height="22"/>
+                                <rect key="frame" x="121" y="108" width="239" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="9j5-dY-0rN"/>
                                 </constraints>
@@ -295,7 +295,7 @@ Gw
                         </gridCell>
                         <gridCell row="hUK-uO-DWz" column="4RY-Yh-h0w" id="NPD-Vl-B1D">
                             <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1540">
-                                <rect key="frame" x="-2" y="74" width="117" height="16"/>
+                                <rect key="frame" x="-2" y="77" width="117" height="16"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Server Address:" id="1557">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -305,9 +305,9 @@ Gw
                         </gridCell>
                         <gridCell row="hUK-uO-DWz" column="kwW-4Q-r7S" id="ZvZ-NZ-lR2">
                             <comboBox key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1548" customClass="TVCValidatedComboBox">
-                                <rect key="frame" x="121" y="68" width="242" height="25"/>
+                                <rect key="frame" x="121" y="68" width="242" height="28"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="19" id="6ls-al-2Lu"/>
+                                    <constraint firstAttribute="height" constant="22" id="6ls-al-2Lu"/>
                                 </constraints>
                                 <comboBoxCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="irc.example.com" usesSingleLineMode="YES" numberOfVisibleItems="5" id="1549" customClass="TVCValidatedComboBoxCell">
                                     <font key="font" metaFont="system"/>
@@ -403,8 +403,8 @@ Gw
                         </gridCell>
                     </gridCells>
                 </gridView>
-                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="6" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z7k-zB-mgb">
-                    <rect key="frame" x="113" y="50" width="295" height="82"/>
+                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="6" verticalStackHuggingPriority="750" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z7k-zB-mgb">
+                    <rect key="frame" x="113" y="47" width="295" height="82"/>
                     <subviews>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="1531">
                             <rect key="frame" x="-2" y="65" width="201" height="18"/>
@@ -1127,6 +1127,7 @@ Gw
                 </button>
             </subviews>
             <constraints>
+                <constraint firstItem="1796" firstAttribute="bottom" secondItem="1794" secondAttribute="bottom" id="3CB-cO-9Wm"/>
                 <constraint firstItem="1793" firstAttribute="leading" secondItem="1738" secondAttribute="leading" constant="54" id="7P5-yt-Gy7"/>
                 <constraint firstItem="1796" firstAttribute="leading" secondItem="1794" secondAttribute="trailing" constant="1" id="AhU-jJ-QCP"/>
                 <constraint firstItem="1793" firstAttribute="top" secondItem="1738" secondAttribute="top" constant="26" id="Cg3-9G-9AE"/>
@@ -1134,12 +1135,11 @@ Gw
                 <constraint firstAttribute="bottom" secondItem="1794" secondAttribute="bottom" constant="25" id="RYG-k2-25d"/>
                 <constraint firstItem="1793" firstAttribute="centerX" secondItem="1738" secondAttribute="centerX" id="TQZ-eV-n5G"/>
                 <constraint firstItem="1796" firstAttribute="width" secondItem="1794" secondAttribute="width" id="VZJ-av-h0X"/>
-                <constraint firstItem="1796" firstAttribute="firstBaseline" secondItem="1794" secondAttribute="firstBaseline" id="aLZ-By-3YS"/>
+                <constraint firstItem="1796" firstAttribute="top" secondItem="1794" secondAttribute="top" id="dhU-XE-MRV"/>
                 <constraint firstItem="1795" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1796" secondAttribute="trailing" constant="20" id="f3u-Fq-vmd"/>
                 <constraint firstItem="1795" firstAttribute="trailing" secondItem="1793" secondAttribute="trailing" id="lgN-jH-Ueo"/>
                 <constraint firstItem="1794" firstAttribute="top" secondItem="1793" secondAttribute="bottom" constant="8" id="yTY-mh-QIc"/>
                 <constraint firstItem="1795" firstAttribute="top" secondItem="1793" secondAttribute="bottom" constant="8" symbolic="YES" id="yTc-nj-WbL"/>
-                <constraint firstItem="1796" firstAttribute="height" secondItem="1794" secondAttribute="height" id="zyU-Hx-v6R"/>
             </constraints>
             <point key="canvasLocation" x="535" y="2825"/>
         </customView>
@@ -1266,14 +1266,14 @@ Gw
             <constraints>
                 <constraint firstItem="2448" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2447" secondAttribute="trailing" constant="20" id="0ku-ns-r90"/>
                 <constraint firstItem="2449" firstAttribute="leading" secondItem="2450" secondAttribute="leading" id="5yE-f7-nQa"/>
+                <constraint firstItem="2447" firstAttribute="top" secondItem="2449" secondAttribute="top" id="CGm-la-UE1"/>
                 <constraint firstItem="2450" firstAttribute="centerX" secondItem="2445" secondAttribute="centerX" id="QIC-47-BcF"/>
                 <constraint firstItem="2449" firstAttribute="top" secondItem="2450" secondAttribute="bottom" constant="8" id="Wzs-A3-HoP"/>
-                <constraint firstItem="2447" firstAttribute="height" secondItem="2449" secondAttribute="height" id="aqA-JB-IYC"/>
-                <constraint firstItem="2447" firstAttribute="firstBaseline" secondItem="2449" secondAttribute="firstBaseline" id="hGL-KA-tik"/>
                 <constraint firstItem="2447" firstAttribute="width" secondItem="2449" secondAttribute="width" id="jMv-Cc-vXT"/>
                 <constraint firstItem="2450" firstAttribute="top" secondItem="2445" secondAttribute="top" constant="26" id="pQz-Md-S0m"/>
                 <constraint firstItem="2448" firstAttribute="top" secondItem="2450" secondAttribute="bottom" constant="8" symbolic="YES" id="pbg-Nb-XC1"/>
                 <constraint firstAttribute="bottom" secondItem="2449" secondAttribute="bottom" constant="25" id="qde-FB-0Rv"/>
+                <constraint firstItem="2447" firstAttribute="bottom" secondItem="2449" secondAttribute="bottom" id="rIG-3n-2DT"/>
                 <constraint firstItem="2447" firstAttribute="leading" secondItem="2449" secondAttribute="trailing" constant="1" id="uGv-Ro-tW3"/>
                 <constraint firstItem="2450" firstAttribute="leading" secondItem="2445" secondAttribute="leading" constant="54" id="uWX-aV-Mxo"/>
                 <constraint firstItem="2448" firstAttribute="trailing" secondItem="2450" secondAttribute="trailing" id="wG9-PY-Mbb"/>
@@ -1399,17 +1399,17 @@ Gw
                 <constraint firstAttribute="bottom" secondItem="1843" secondAttribute="bottom" constant="25" id="2Gi-2g-Nwu"/>
                 <constraint firstItem="1845" firstAttribute="leading" secondItem="1843" secondAttribute="trailing" constant="1" id="2qb-yz-69l"/>
                 <constraint firstItem="2358" firstAttribute="top" secondItem="1817" secondAttribute="top" constant="25" id="9z4-Kb-aMe"/>
+                <constraint firstItem="1845" firstAttribute="top" secondItem="1843" secondAttribute="top" id="BOv-nN-UoS"/>
                 <constraint firstItem="1843" firstAttribute="top" secondItem="1842" secondAttribute="bottom" constant="8" id="FUk-OU-ysM"/>
                 <constraint firstItem="1844" firstAttribute="top" secondItem="1842" secondAttribute="bottom" constant="8" symbolic="YES" id="H7n-ny-Oa6"/>
                 <constraint firstItem="2358" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="1842" secondAttribute="trailing" id="HJR-XB-yIn"/>
-                <constraint firstItem="1845" firstAttribute="firstBaseline" secondItem="1843" secondAttribute="firstBaseline" id="In6-si-fQf"/>
                 <constraint firstItem="1845" firstAttribute="width" secondItem="1843" secondAttribute="width" id="Mld-X8-TVW"/>
                 <constraint firstItem="1844" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1845" secondAttribute="trailing" constant="20" id="PyA-u7-Bx7"/>
                 <constraint firstItem="1844" firstAttribute="trailing" secondItem="1842" secondAttribute="trailing" id="WVJ-uY-BnM"/>
-                <constraint firstItem="1845" firstAttribute="height" secondItem="1843" secondAttribute="height" id="mAz-MO-PcL"/>
                 <constraint firstItem="1842" firstAttribute="top" secondItem="2358" secondAttribute="bottom" constant="8" symbolic="YES" id="o17-Ew-zWm"/>
                 <constraint firstItem="1842" firstAttribute="leading" secondItem="1817" secondAttribute="leading" constant="54" id="p2B-pY-CwL"/>
                 <constraint firstItem="2358" firstAttribute="leading" secondItem="1842" secondAttribute="leading" id="r8y-Mt-bwu"/>
+                <constraint firstItem="1845" firstAttribute="bottom" secondItem="1843" secondAttribute="bottom" id="tKH-Xg-wDW"/>
                 <constraint firstItem="1842" firstAttribute="centerX" secondItem="1817" secondAttribute="centerX" id="uSN-bT-G7e"/>
                 <constraint firstItem="1843" firstAttribute="leading" secondItem="1842" secondAttribute="leading" id="wno-Xo-qg1"/>
             </constraints>
@@ -2035,7 +2035,7 @@ Gw
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
-                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="6" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p7D-wU-ocI">
+                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="6" verticalStackHuggingPriority="750" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p7D-wU-ocI">
                     <rect key="frame" x="35" y="138" width="357" height="60"/>
                     <subviews>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="2531">
