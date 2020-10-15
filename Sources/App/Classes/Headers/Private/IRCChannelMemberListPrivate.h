@@ -5,7 +5,7 @@
  *                   | |  __/>  <| |_| |_| | (_| | |
  *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
  *
- * Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ * Copyright (c) 2010 - 2020 Codeux Software, LLC & respective contributors.
  *       Please see Acknowledgements.pdf for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,20 +35,40 @@
  *
  *********************************************************************** */
 
+#import "IRCChannelMemberList.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-@class IRCChannelUser;
+@class IRCChannel, IRCChannelMemberListController;
 
-TEXTUAL_EXTERN NSString * const TVCMemberListDragType;
+@protocol IRCChannelMemberListPrivatePrototype <NSObject>
+- (void)addMember:(IRCChannelUser *)member checkForDuplicates:(BOOL)checkForDuplicates;
 
-@interface TVCMemberList : NSTableView
-@property (nonatomic, assign) BOOL isHiddenByUser;
+/* The replaceInAllChannels: flag should only be used in extreme cases because there is A LOT
+ of overhead to setting it. Textual only does it when the user list is configured to sort IRCop
+ at top and IRCop status changes. That change requires the user to be resorted in every channel
+ they are in. Knowing which channels they are in is easy because of IRCUserRelations, but the
+ actual process of finding where to sort them at is very expensive. */
+- (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2;
+- (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2 resort:(BOOL)resort;
+- (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2 resort:(BOOL)resort replaceInAllChannels:(BOOL)replaceInAllChannels;
 
-- (void)refreshDrawingForMember:(IRCChannelUser *)cellItem;
-- (void)refreshDrawingForRow:(NSInteger)rowIndex;
+- (void)changeMember:(NSString *)nickname mode:(NSString *)mode value:(BOOL)value;
 
-- (nullable id)itemAtRow:(NSInteger)row;
-- (NSInteger)rowForItem:(nullable id)item; // -1 = not found
+- (void)resortMember:(IRCChannelUser *)member;
+
+- (void)clearMembers;
+
+- (NSData *)pasteboardDataForMembers:(NSArray<IRCChannelUser *> *)members;
++ (BOOL)readNicknamesFromPasteboardData:(NSData *)pasteboardData withBlock:(void (NS_NOESCAPE ^)(IRCChannel *channel, NSArray<NSString *> *nicknames))callbackBlock;
++ (BOOL)readMembersFromPasteboardData:(NSData *)pasteboardData withBlock:(void (NS_NOESCAPE ^)(IRCChannel *channel, NSArray<IRCChannelUser *> *members))callbackBlock;
+@end
+
+@interface IRCChannelMemberList () <IRCChannelMemberListPrivatePrototype>
+- (instancetype)initWithChannel:(IRCChannel *)channel NS_DESIGNATED_INITIALIZER;
+
++ (void)suspendMemberListSerialQueues;
++ (void)resumeMemberListSerialQueues;
 @end
 
 NS_ASSUME_NONNULL_END

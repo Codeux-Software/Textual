@@ -2444,6 +2444,26 @@
 		4CA3867A24C4216B005F66F4 /* AppCenterCrashes.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866C24C42142005F66F4 /* AppCenterCrashes.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CA3867B24C42196005F66F4 /* AppCenter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866B24C42142005F66F4 /* AppCenter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CA3867C24C42196005F66F4 /* AppCenterCrashes.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866C24C42142005F66F4 /* AppCenterCrashes.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4CAB27512537EE44009B1F07 /* IRCChannelMemberList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB27502537EE43009B1F07 /* IRCChannelMemberList.m */; };
+		4CAB27522537EE44009B1F07 /* IRCChannelMemberList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB27502537EE43009B1F07 /* IRCChannelMemberList.m */; };
+		4CAB27532537EE44009B1F07 /* IRCChannelMemberList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB27502537EE43009B1F07 /* IRCChannelMemberList.m */; };
+		4CAB27542537EE44009B1F07 /* IRCChannelMemberList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB27502537EE43009B1F07 /* IRCChannelMemberList.m */; };
+		4CAB27572537EE66009B1F07 /* IRCChannelMemberListPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB27562537EE66009B1F07 /* IRCChannelMemberListPrivate.h */; };
+		4CAB27582537EE66009B1F07 /* IRCChannelMemberListPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB27562537EE66009B1F07 /* IRCChannelMemberListPrivate.h */; };
+		4CAB27592537EE66009B1F07 /* IRCChannelMemberListPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB27562537EE66009B1F07 /* IRCChannelMemberListPrivate.h */; };
+		4CAB275A2537EE66009B1F07 /* IRCChannelMemberListPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB27562537EE66009B1F07 /* IRCChannelMemberListPrivate.h */; };
+		4CAB275E2537F71B009B1F07 /* IRCChannelMemberList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB275D2537F71B009B1F07 /* IRCChannelMemberList.h */; };
+		4CAB275F2537F71B009B1F07 /* IRCChannelMemberList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB275D2537F71B009B1F07 /* IRCChannelMemberList.h */; };
+		4CAB27602537F71B009B1F07 /* IRCChannelMemberList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB275D2537F71B009B1F07 /* IRCChannelMemberList.h */; };
+		4CAB27612537F71B009B1F07 /* IRCChannelMemberList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB275D2537F71B009B1F07 /* IRCChannelMemberList.h */; };
+		4CAB2765253863BF009B1F07 /* IRCChannelMemberListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB2764253863BF009B1F07 /* IRCChannelMemberListController.m */; };
+		4CAB2766253863BF009B1F07 /* IRCChannelMemberListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB2764253863BF009B1F07 /* IRCChannelMemberListController.m */; };
+		4CAB2767253863BF009B1F07 /* IRCChannelMemberListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB2764253863BF009B1F07 /* IRCChannelMemberListController.m */; };
+		4CAB2768253863BF009B1F07 /* IRCChannelMemberListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB2764253863BF009B1F07 /* IRCChannelMemberListController.m */; };
+		4CAB276B253863D9009B1F07 /* IRCChannelMemberListControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB276A253863D9009B1F07 /* IRCChannelMemberListControllerPrivate.h */; };
+		4CAB276C253863D9009B1F07 /* IRCChannelMemberListControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB276A253863D9009B1F07 /* IRCChannelMemberListControllerPrivate.h */; };
+		4CAB276D253863D9009B1F07 /* IRCChannelMemberListControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB276A253863D9009B1F07 /* IRCChannelMemberListControllerPrivate.h */; };
+		4CAB276E253863D9009B1F07 /* IRCChannelMemberListControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB276A253863D9009B1F07 /* IRCChannelMemberListControllerPrivate.h */; };
 		4CAC9D7B1F2B076100AD5F12 /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0C701F2AF3860017D3B7 /* Textual-Extras.pkg */; };
 		4CAC9D831F2B076400AD5F12 /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0C701F2AF3860017D3B7 /* Textual-Extras.pkg */; };
 		4CAC9D841F2B076800AD5F12 /* Textual-Extras-MAS.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0C711F2AF38E0017D3B7 /* Textual-Extras-MAS.pkg */; };
@@ -3369,6 +3389,11 @@
 		4CA3866B24C42142005F66F4 /* AppCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenter.framework; path = "../../Frameworks/Static Libraries/Libraries/AppCenter.framework"; sourceTree = "<group>"; };
 		4CA3866C24C42142005F66F4 /* AppCenterCrashes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenterCrashes.framework; path = "../../Frameworks/Static Libraries/Libraries/AppCenterCrashes.framework"; sourceTree = "<group>"; };
 		4CA8EC621B63C2970087BF72 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		4CAB27502537EE43009B1F07 /* IRCChannelMemberList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCChannelMemberList.m; sourceTree = "<group>"; };
+		4CAB27562537EE66009B1F07 /* IRCChannelMemberListPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCChannelMemberListPrivate.h; sourceTree = "<group>"; };
+		4CAB275D2537F71B009B1F07 /* IRCChannelMemberList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCChannelMemberList.h; sourceTree = "<group>"; };
+		4CAB2764253863BF009B1F07 /* IRCChannelMemberListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IRCChannelMemberListController.m; sourceTree = "<group>"; };
+		4CAB276A253863D9009B1F07 /* IRCChannelMemberListControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCChannelMemberListControllerPrivate.h; sourceTree = "<group>"; };
 		4CB873D622B4A497005AB046 /* TDCPreferencesUserStyleSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCPreferencesUserStyleSheetPrivate.h; sourceTree = "<group>"; };
 		4CB873DB22B4A56B005AB046 /* TDCPreferencesUserStyleSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDCPreferencesUserStyleSheet.m; sourceTree = "<group>"; };
 		4CC4A7371F8A1404008FF15F /* GRMustache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GRMustache.framework; path = "../../Frameworks/Static Libraries/Libraries/GRMustache.framework"; sourceTree = SOURCE_ROOT; };
@@ -3800,6 +3825,8 @@
 				4C31513E20EB673E00448776 /* IRCAddressBookUserTracking.m */,
 				4C31512820EB673E00448776 /* IRCChannel.m */,
 				4C31512420EB673E00448776 /* IRCChannelConfig.m */,
+				4CAB27502537EE43009B1F07 /* IRCChannelMemberList.m */,
+				4CAB2764253863BF009B1F07 /* IRCChannelMemberListController.m */,
 				4C31514020EB673E00448776 /* IRCChannelMode.m */,
 				4C31513B20EB673E00448776 /* IRCClient.m */,
 				4C31513C20EB673E00448776 /* IRCClientConfig.m */,
@@ -3937,6 +3964,7 @@
 				4C31517620EB673E00448776 /* IRCAddressBookUserTracking.h */,
 				4C31524B20EB673E00448776 /* IRCChannel.h */,
 				4C3151A420EB673E00448776 /* IRCChannelConfig.h */,
+				4CAB275D2537F71B009B1F07 /* IRCChannelMemberList.h */,
 				4C31519A20EB673E00448776 /* IRCChannelMode.h */,
 				4C31517920EB673E00448776 /* IRCChannelUser.h */,
 				4C31517C20EB673E00448776 /* IRCClient.h */,
@@ -4071,6 +4099,8 @@
 				4C3151E020EB673E00448776 /* IRCAddressBookMatchCachePrivate.h */,
 				4C3151EA20EB673E00448776 /* IRCAddressBookUserTrackingPrivate.h */,
 				4C31522120EB673E00448776 /* IRCChannelConfigPrivate.h */,
+				4CAB276A253863D9009B1F07 /* IRCChannelMemberListControllerPrivate.h */,
+				4CAB27562537EE66009B1F07 /* IRCChannelMemberListPrivate.h */,
 				4C31522920EB673E00448776 /* IRCChannelModePrivate.h */,
 				4C31520220EB673E00448776 /* IRCChannelPrivate.h */,
 				4C31521120EB673E00448776 /* IRCChannelUserPrivate.h */,
@@ -5001,8 +5031,10 @@
 				4C31580D20EB6D0700448776 /* IRCAddressBookUserTrackingPrivate.h in Headers */,
 				4C31589E20EB6D0F00448776 /* IRCUserInternal.h in Headers */,
 				4C31585320EB6D0700448776 /* TDCSharedProtocolDefinitionsPrivate.h in Headers */,
+				4CAB276B253863D9009B1F07 /* IRCChannelMemberListControllerPrivate.h in Headers */,
 				4C31550120EB6CB300448776 /* IRCHighlightLogEntry.h in Headers */,
 				4C3158A920EB6D0F00448776 /* IRCMessageInternal.h in Headers */,
+				4CAB27572537EE66009B1F07 /* IRCChannelMemberListPrivate.h in Headers */,
 				4C31554820EB6CB300448776 /* TXGlobalModels.h in Headers */,
 				4C31588E20EB6D0700448776 /* TVCNotificationConfigurationViewControllerPrivate.h in Headers */,
 				4C31553F20EB6CB300448776 /* TVCMemberList.h in Headers */,
@@ -5195,6 +5227,7 @@
 				4C31553B20EB6CB300448776 /* TVCMainWindowLoadingScreen.h in Headers */,
 				4C3158A620EB6D0F00448776 /* TVCLogLineInternal.h in Headers */,
 				4C31550D20EB6CB300448776 /* IRCUserRelations.h in Headers */,
+				4CAB275E2537F71B009B1F07 /* IRCChannelMemberList.h in Headers */,
 				4C31588220EB6D0700448776 /* TVCMainWindowLoadingScreenPrivate.h in Headers */,
 				4C31550A20EB6CB300448776 /* IRCServer.h in Headers */,
 				4C31582820EB6D0700448776 /* SwiftBridgingHeaderPrivate.h in Headers */,
@@ -5399,6 +5432,7 @@
 				4C3156E220EB6D0500448776 /* TXWindowControllerPrivate.h in Headers */,
 				4C3156AE20EB6D0500448776 /* TPCPathInfoPrivate.h in Headers */,
 				4CEFEDAA22B4AF41002CEE19 /* TDCPreferencesUserStyleSheetPrivate.h in Headers */,
+				4CAB27612537F71B009B1F07 /* IRCChannelMemberList.h in Headers */,
 				4C31564520EB6CB400448776 /* TVCMemberListAppearance.h in Headers */,
 				4C3158E120EB6D1600448776 /* GTMEncodeHTML.h in Headers */,
 				4C31569820EB6D0500448776 /* TDCServerHighlightListSheetPrivate.h in Headers */,
@@ -5474,6 +5508,7 @@
 				4C31560C20EB6CB400448776 /* IRCNumerics.h in Headers */,
 				4C31560D20EB6CB400448776 /* IRCPrefix.h in Headers */,
 				4C3156BD20EB6D0500448776 /* TVCLogControllerHistoricLogFilePrivate.h in Headers */,
+				4CAB276E253863D9009B1F07 /* IRCChannelMemberListControllerPrivate.h in Headers */,
 				4C06E41920EC52D60055D09A /* ICLPayloadLocalPrivate.h in Headers */,
 				4C31562D20EB6CB400448776 /* TPCPreferencesReload.h in Headers */,
 				4C31562020EB6CB400448776 /* TLOGrowlController.h in Headers */,
@@ -5507,6 +5542,7 @@
 				4C31565A20EB6D0400448776 /* IRCClientPrivate.h in Headers */,
 				4C31569420EB6D0500448776 /* TDCServerChangeNicknameSheetPrivate.h in Headers */,
 				4C31562C20EB6CB400448776 /* TPCPreferencesLocal.h in Headers */,
+				4CAB275A2537EE66009B1F07 /* IRCChannelMemberListPrivate.h in Headers */,
 				4C31562920EB6CB400448776 /* TPCPreferencesCloudSync.h in Headers */,
 				4C31568E20EB6D0400448776 /* TDCLicenseUpgradeDialogPrivate.h in Headers */,
 				4C31563320EB6CB400448776 /* TVCAppearance.h in Headers */,
@@ -5669,6 +5705,7 @@
 				4C31580820EB6D0600448776 /* TXWindowControllerPrivate.h in Headers */,
 				4C3157D420EB6D0600448776 /* TPCPathInfoPrivate.h in Headers */,
 				4CEFEDAC22B4AF42002CEE19 /* TDCPreferencesUserStyleSheetPrivate.h in Headers */,
+				4CAB275F2537F71B009B1F07 /* IRCChannelMemberList.h in Headers */,
 				4C31559720EB6CB300448776 /* TVCMemberListAppearance.h in Headers */,
 				4C3158E520EB6D1600448776 /* GTMEncodeHTML.h in Headers */,
 				4C3157BE20EB6D0600448776 /* TDCServerHighlightListSheetPrivate.h in Headers */,
@@ -5744,6 +5781,7 @@
 				4C31555E20EB6CB300448776 /* IRCNumerics.h in Headers */,
 				4C31555F20EB6CB300448776 /* IRCPrefix.h in Headers */,
 				4C3157E320EB6D0600448776 /* TVCLogControllerHistoricLogFilePrivate.h in Headers */,
+				4CAB276C253863D9009B1F07 /* IRCChannelMemberListControllerPrivate.h in Headers */,
 				4C06E41720EC52D60055D09A /* ICLPayloadLocalPrivate.h in Headers */,
 				4C31557F20EB6CB300448776 /* TPCPreferencesReload.h in Headers */,
 				4C31557220EB6CB300448776 /* TLOGrowlController.h in Headers */,
@@ -5777,6 +5815,7 @@
 				4C31578020EB6D0600448776 /* IRCClientPrivate.h in Headers */,
 				4C3157BA20EB6D0600448776 /* TDCServerChangeNicknameSheetPrivate.h in Headers */,
 				4C31557E20EB6CB300448776 /* TPCPreferencesLocal.h in Headers */,
+				4CAB27582537EE66009B1F07 /* IRCChannelMemberListPrivate.h in Headers */,
 				4C31557B20EB6CB300448776 /* TPCPreferencesCloudSync.h in Headers */,
 				4C3157B420EB6D0600448776 /* TDCLicenseUpgradeDialogPrivate.h in Headers */,
 				4C31558520EB6CB300448776 /* TVCAppearance.h in Headers */,
@@ -5939,6 +5978,7 @@
 				4C31577520EB6D0500448776 /* TXWindowControllerPrivate.h in Headers */,
 				4C31574120EB6D0500448776 /* TPCPathInfoPrivate.h in Headers */,
 				4CEFEDAB22B4AF42002CEE19 /* TDCPreferencesUserStyleSheetPrivate.h in Headers */,
+				4CAB27602537F71B009B1F07 /* IRCChannelMemberList.h in Headers */,
 				4C3155EE20EB6CB400448776 /* TVCMemberListAppearance.h in Headers */,
 				4C3158E320EB6D1600448776 /* GTMEncodeHTML.h in Headers */,
 				4C31572B20EB6D0500448776 /* TDCServerHighlightListSheetPrivate.h in Headers */,
@@ -6014,6 +6054,7 @@
 				4C3155B520EB6CB400448776 /* IRCNumerics.h in Headers */,
 				4C3155B620EB6CB400448776 /* IRCPrefix.h in Headers */,
 				4C31575020EB6D0500448776 /* TVCLogControllerHistoricLogFilePrivate.h in Headers */,
+				4CAB276D253863D9009B1F07 /* IRCChannelMemberListControllerPrivate.h in Headers */,
 				4C06E41820EC52D60055D09A /* ICLPayloadLocalPrivate.h in Headers */,
 				4C3155D620EB6CB400448776 /* TPCPreferencesReload.h in Headers */,
 				4C3155C920EB6CB400448776 /* TLOGrowlController.h in Headers */,
@@ -6047,6 +6088,7 @@
 				4C3156ED20EB6D0500448776 /* IRCClientPrivate.h in Headers */,
 				4C31572720EB6D0500448776 /* TDCServerChangeNicknameSheetPrivate.h in Headers */,
 				4C3155D520EB6CB400448776 /* TPCPreferencesLocal.h in Headers */,
+				4CAB27592537EE66009B1F07 /* IRCChannelMemberListPrivate.h in Headers */,
 				4C3155D220EB6CB400448776 /* TPCPreferencesCloudSync.h in Headers */,
 				4C31572120EB6D0500448776 /* TDCLicenseUpgradeDialogPrivate.h in Headers */,
 				4C3155DC20EB6CB400448776 /* TVCAppearance.h in Headers */,
@@ -7049,11 +7091,13 @@
 				4C06E59020EC553A0055D09A /* TDCFileTransferDialogTransferController.m in Sources */,
 				4C06E59120EC553A0055D09A /* TDCFileTransferDialogTableCell.m in Sources */,
 				4C06E59220EC553A0055D09A /* TDCLicenseUpgradeDialog.m in Sources */,
+				4CAB27522537EE44009B1F07 /* IRCChannelMemberList.m in Sources */,
 				4C06E59320EC553A0055D09A /* TDCLicenseUpgradeEligibilitySheet.m in Sources */,
 				4C06E59420EC553A0055D09A /* TDCLicenseManagerMigrateAppStoreSheet.m in Sources */,
 				4C06E59520EC553A0055D09A /* TDCLicenseUpgradeCommonActions.m in Sources */,
 				4C06E59620EC553A0055D09A /* TDCLicenseManagerRecoverLostLicenseSheet.m in Sources */,
 				4C06E59720EC553A0055D09A /* TDCLicenseUpgradeActivateSheet.m in Sources */,
+				4CAB2766253863BF009B1F07 /* IRCChannelMemberListController.m in Sources */,
 				4C06E59820EC553A0055D09A /* TDCLicenseManagerDialog.m in Sources */,
 				4C06E59D20EC553A0055D09A /* TDCPreferencesNotificationConfiguration.m in Sources */,
 				4C06E59E20EC553A0055D09A /* TDCPreferencesController.m in Sources */,
@@ -7268,9 +7312,11 @@
 				4C06E50020EC551C0055D09A /* NSViewHelper.m in Sources */,
 				4C06E50120EC551C0055D09A /* TXAppearanceHelper.m in Sources */,
 				4C06E50220EC551C0055D09A /* WebScriptObjectHelper.m in Sources */,
+				4CAB2765253863BF009B1F07 /* IRCChannelMemberListController.m in Sources */,
 				4C06E50320EC551C0055D09A /* GTMEncodeHTML.m in Sources */,
 				4C06E50420EC551C0055D09A /* THOPluginDispatcher.m in Sources */,
 				4C06E50520EC551C0055D09A /* THOPluginManager.m in Sources */,
+				4CAB27512537EE44009B1F07 /* IRCChannelMemberList.m in Sources */,
 				4C06E50620EC551C0055D09A /* THOPluginItem.m in Sources */,
 				4C06E50720EC551C0055D09A /* THOUnicodeHelper.m in Sources */,
 				4C06E50820EC551C0055D09A /* IRCAddressBook.m in Sources */,
@@ -7415,11 +7461,13 @@
 				4C06E64920EC55B90055D09A /* TDCFileTransferDialogTransferController.m in Sources */,
 				4C06E64A20EC55B90055D09A /* TDCFileTransferDialogTableCell.m in Sources */,
 				4C06E64B20EC55B90055D09A /* TDCLicenseUpgradeDialog.m in Sources */,
+				4CAB27532537EE44009B1F07 /* IRCChannelMemberList.m in Sources */,
 				4C06E64C20EC55B90055D09A /* TDCLicenseUpgradeEligibilitySheet.m in Sources */,
 				4C06E64D20EC55B90055D09A /* TDCLicenseManagerMigrateAppStoreSheet.m in Sources */,
 				4C06E64E20EC55B90055D09A /* TDCLicenseUpgradeCommonActions.m in Sources */,
 				4C06E64F20EC55B90055D09A /* TDCLicenseManagerRecoverLostLicenseSheet.m in Sources */,
 				4C06E65020EC55B90055D09A /* TDCLicenseUpgradeActivateSheet.m in Sources */,
+				4CAB2767253863BF009B1F07 /* IRCChannelMemberListController.m in Sources */,
 				4C06E65120EC55B90055D09A /* TDCLicenseManagerDialog.m in Sources */,
 				4C06E65620EC55B90055D09A /* TDCPreferencesNotificationConfiguration.m in Sources */,
 				4C06E65720EC55B90055D09A /* TDCPreferencesController.m in Sources */,
@@ -7601,11 +7649,13 @@
 				4C06E70220EC55DA0055D09A /* TDCFileTransferDialogTransferController.m in Sources */,
 				4C06E70320EC55DA0055D09A /* TDCFileTransferDialogTableCell.m in Sources */,
 				4C06E70420EC55DA0055D09A /* TDCLicenseUpgradeDialog.m in Sources */,
+				4CAB27542537EE44009B1F07 /* IRCChannelMemberList.m in Sources */,
 				4C06E70520EC55DA0055D09A /* TDCLicenseUpgradeEligibilitySheet.m in Sources */,
 				4C06E70620EC55DA0055D09A /* TDCLicenseManagerMigrateAppStoreSheet.m in Sources */,
 				4C06E70720EC55DA0055D09A /* TDCLicenseUpgradeCommonActions.m in Sources */,
 				4C06E70820EC55DA0055D09A /* TDCLicenseManagerRecoverLostLicenseSheet.m in Sources */,
 				4C06E70920EC55DA0055D09A /* TDCLicenseUpgradeActivateSheet.m in Sources */,
+				4CAB2768253863BF009B1F07 /* IRCChannelMemberListController.m in Sources */,
 				4C06E70A20EC55DA0055D09A /* TDCLicenseManagerDialog.m in Sources */,
 				4C06E70F20EC55DA0055D09A /* TDCPreferencesNotificationConfiguration.m in Sources */,
 				4C06E71020EC55DA0055D09A /* TDCPreferencesController.m in Sources */,

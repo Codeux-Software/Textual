@@ -356,8 +356,8 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 
 	LogToConsoleTerminationProgress("Giving up server list & member list delegation.");
 
-	self.memberList.dataSource = nil;
-	self.memberList.delegate = nil;
+	[self.memberList assignToChannel:nil];
+
 	self.memberList.keyDelegate = nil;
 
 	self.serverList.dataSource = nil;
@@ -1687,10 +1687,7 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 
 	/* Destroy member list if we have no selection */
 	if (itemChangedTo == nil) {
-		self.memberList.delegate = nil;
-		self.memberList.dataSource = nil;
-
-		[self.memberList reloadData];
+		[self.memberList assignToChannel:nil];
 
 		self.serverList.menu = nil;
 
@@ -1716,19 +1713,9 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 
 	/* Update table view data sources */
 	if (isChannel) {
-		self.memberList.delegate = (id)itemChangedTo;
-		self.memberList.dataSource = (id)itemChangedTo;
-
-		[self.memberList deselectAll:nil];
-
-		[self.memberList scrollRowToVisible:0];
-
-		[(id)self.selectedItem reloadDataForTableView];
+		[self.memberList assignToChannel:(id)itemChangedTo];
 	} else {
-		self.memberList.delegate = nil;
-		self.memberList.dataSource = nil;
-
-		[self.memberList reloadData];
+		[self.memberList assignToChannel:nil];
 	}
 
 	/* Begin work on text field */
@@ -2173,8 +2160,6 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 	self.memberList.target = menuController();
 	self.memberList.doubleAction = @selector(memberInMemberListDoubleClicked:);
 
-	self.memberList.stronglyReferencesItems = NO;
-
 	self.serverList.keyDelegate = self;
 
 	self.serverList.delegate = (id)self;
@@ -2182,8 +2167,6 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 
 	self.serverList.target = self;
 	self.serverList.doubleAction = @selector(outlineViewDoubleClicked:);
-
-	self.serverList.stronglyReferencesItems = NO;
 
 	/* Inform the table we want drag events */
 	[self.serverList registerForDraggedTypes:_treeDragItemTypes];

@@ -37,6 +37,7 @@
  *********************************************************************** */
 
 #import "IRCChannelConfig.h"
+#import "IRCChannelMemberList.h"
 #import "IRCTreeItem.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -53,7 +54,7 @@ typedef NS_ENUM(NSUInteger, IRCChannelStatus) {
 
 TEXTUAL_EXTERN NSNotificationName const IRCChannelConfigurationWasUpdatedNotification;
 
-@interface IRCChannel : IRCTreeItem
+@interface IRCChannel : IRCTreeItem <IRCChannelMemberListPrototype>
 @property (readonly, copy) IRCChannelConfig *config;
 @property (nonatomic, copy) NSString *name; // -setName: will do nothing if type != IRCChannelTypePrivateMessage
 @property (nonatomic, copy, nullable) NSString *topic;
@@ -68,6 +69,7 @@ TEXTUAL_EXTERN NSNotificationName const IRCChannelConfigurationWasUpdatedNotific
 @property (readonly) NSTimeInterval channelJoinTime;
 @property (readonly, copy) NSString *channelTypeString;
 @property (readonly, strong, nullable) IRCChannelMode *modeInfo;
+@property (readonly, strong, nullable) IRCChannelMemberList *memberInfo;
 @property (readonly, copy, nullable) NSString *secretKey;
 @property (readonly, copy, nullable) NSURL *logFilePath;
 @property (readonly) NSUInteger logFileSessionCount; // Number of lines sent to channel log file for session (from connect to disconnect)
@@ -79,28 +81,6 @@ TEXTUAL_EXTERN NSNotificationName const IRCChannelConfigurationWasUpdatedNotific
 
 - (void)activate;
 - (void)deactivate;
-
-/* Member changes (adding, removing, modifying) are done so asynchronously.
- This means that changes wont be immediately reflected by -memberList. */
-/* It is safe to call -memberExists: and -findMember: immediately after 
- changing a member because those methods do not require the member to 
- be present in the member list to produce a result. */
-- (void)addUser:(IRCUser *)user;
-
-- (void)addMember:(IRCChannelUser *)member;
-
-- (void)removeMember:(IRCChannelUser *)member;
-- (void)removeMemberWithNickname:(NSString *)nickname;
-
-- (BOOL)memberExists:(NSString *)nickname;
-
-- (nullable IRCChannelUser *)findMember:(NSString *)nickname;
-
-/* -memberList and -numberOfMembers are KVO complient
- which means you can observe their values to know when modified. */
-@property (readonly) NSUInteger numberOfMembers;
-
-@property (readonly, copy) NSArray<IRCChannelUser *> *memberList; // Automatically sorted by channel rank
 @end
 
 NS_ASSUME_NONNULL_END

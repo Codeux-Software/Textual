@@ -36,13 +36,14 @@
  *********************************************************************** */
 
 #import "IRCChannel.h"
+#import "IRCChannelMemberListPrivate.h"
 #import "TVCLogController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class TVCLogLine;
 
-@interface IRCChannel ()
+@interface IRCChannel () <IRCChannelMemberListPrivatePrototype>
 @property (nonatomic, assign, readwrite) IRCChannelStatus status;
 @property (nonatomic, assign) BOOL sentInitialWhoRequest;
 @property (nonatomic, assign) BOOL channelModesReceived;
@@ -63,33 +64,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)noteEncryptionStateDidChange;
 #endif
 
-- (void)addMember:(IRCChannelUser *)member checkForDuplicates:(BOOL)checkForDuplicates;
-
-- (void)changeMember:(NSString *)nickname mode:(NSString *)mode value:(BOOL)value;
-
-- (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2;
-- (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2 resort:(BOOL)resort;
-- (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2 resort:(BOOL)resort replaceInAllChannels:(BOOL)replaceInAllChannels;
-
-- (void)clearMembers; // This will not reload table view
-
-- (void)resortMember:(IRCChannelUser *)member;
-
-- (void)reloadDataForTableView;
-- (void)reloadDataForTableViewBySortingMembers;
-
 - (void)writeToLogLineToLogFile:(TVCLogLine *)logLine;
 - (void)logFileWriteSessionBegin;
 - (void)logFileWriteSessionEnd;
 
 - (void)print:(TVCLogLine *)logLine;
 - (void)print:(TVCLogLine *)logLine completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock;
-
-+ (BOOL)readNicknamesFromPasteboardData:(NSData *)pasteboardData withBlock:(void (NS_NOESCAPE ^)(IRCChannel *channel, NSArray<NSString *> *nicknames))callbackBlock;
-+ (BOOL)readMembersFromPasteboardData:(NSData *)pasteboardData withBlock:(void (NS_NOESCAPE ^)(IRCChannel *channel, NSArray<IRCChannelUser *> *members))callbackBlock;
-
-+ (void)resumeMemberListSerialQueues;
-+ (void)suspendMemberListSerialQueues;
 
 - (void)reopenLogFileIfNeeded;
 - (void)closeLogFile;

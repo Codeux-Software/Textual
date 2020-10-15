@@ -56,6 +56,7 @@
 #import "IRCClientPrivate.h"
 #import "IRCChannelConfigPrivate.h"
 #import "IRCChannelModePrivate.h"
+#import "IRCChannelMemberListPrivate.h"
 #import "IRCChannelUserPrivate.h"
 #import "IRCISupportInfo.h"
 #import "IRCTreeItemPrivate.h"
@@ -71,16 +72,12 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 @interface IRCChannel ()
 @property (readonly) BOOL isSelectedChannel;
 @property (nonatomic, assign) BOOL statusChangedByAction;
-@property (nonatomic, assign) BOOL reloadingMemberList;
 @property (nonatomic, copy, readwrite) IRCChannelConfig *config;
 @property (nonatomic, assign, readwrite) NSTimeInterval channelJoinTime;
 @property (nonatomic, strong, readwrite, nullable) IRCChannelMode *modeInfo;
+@property (nonatomic, strong, readwrite, nullable) IRCChannelMemberList *memberInfo;
 @property (nonatomic, strong, nullable) TLOFileLogger *logFile;
 @property (nonatomic, assign, readwrite) NSUInteger logFileSessionCount;
-
-/* memberListStandardSortedContainer is a copy of the member list sorted by the channel
- rank of each member.*/
-@property (nonatomic, strong) NSMutableArray<IRCChannelUser *> *memberListStandardSortedContainer;
 @end
 
 @implementation IRCChannel
@@ -106,16 +103,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		self.config = config;
 
 		[self.config writeSecretKeyToKeychain];
-
-		[self prepareInitialState];
 	}
 
 	return self;
-}
-
-- (void)prepareInitialState
-{
-	self.memberListStandardSortedContainer = [NSMutableArray array];
 }
 
 - (void)updateConfig:(IRCChannelConfig *)config
@@ -425,9 +415,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self.topic = nil;
 
+	/* Clearing members, instead of just declaring memberInfo nil,
+	 is important so that all users can be properly disassociated
+	 with this channel. There are many relations. */
 	[self clearMembers];
 
-	[self reloadDataForTableView];
+	self.memberInfo = nil;
 }
 
 - (void)activate
@@ -437,6 +430,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self resetStatus:IRCChannelStatusJoined];
 
 	IRCClient *client = self.associatedClient;
+
+	if (self.isUtility == NO) {
+		self.memberInfo = [[IRCChannelMemberList alloc] initWithChannel:self];
+	}
 
 	if (self.isChannel) {
 		[client postEventToViewController:@"channelJoined" forChannel:self];
@@ -601,683 +598,123 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 }
 
 #pragma mark -
-#pragma mark Grand Central Dispatch
-
-/* All modifications to the member list occur on this serial queue to
- gurantee that there is only ever one person accessing the mutable 
- store at any given time. */
-+ (dispatch_queue_t)modifyMembmerListSerialQueue
-{
-	static dispatch_queue_t workerQueue = NULL;
-
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		workerQueue =
-		XRCreateDispatchQueueWithPriority("IRCChannel.modifyMembmerListSerialQueue", DISPATCH_QUEUE_SERIAL, QOS_CLASS_DEFAULT);
-	});
-
-	return workerQueue;
-}
-
-+ (void)resumeMemberListSerialQueues
-{
-	dispatch_resume([self modifyMembmerListSerialQueue]);
-}
-
-+ (void)suspendMemberListSerialQueues
-{
-	dispatch_suspend([self modifyMembmerListSerialQueue]);
-}
-
-+ (void)accessMemberListUsingBlock:(dispatch_block_t)block
-{
-	NSCParameterAssert(block != NULL);
-
-	dispatch_queue_t workerQueue = [self modifyMembmerListSerialQueue];
-
-	static void *IsOnWorkerQueueKey = NULL;
-
-	if (IsOnWorkerQueueKey == NULL) {
-		IsOnWorkerQueueKey = &IsOnWorkerQueueKey;
-
-		dispatch_queue_set_specific(workerQueue, IsOnWorkerQueueKey, (void *)1, NULL);
-	}
-
-	if (dispatch_get_specific(IsOnWorkerQueueKey)) {
-		block();
-
-		return;
-	}
-
-	dispatch_sync(workerQueue, ^{
-		@autoreleasepool {
-			block();
-		}
-	});
-}
-
-#pragma mark -
 #pragma mark Member List
-
-- (NSUInteger)_sortedIndexForMember:(IRCChannelUser *)member
-{
-	NSParameterAssert(member != nil);
-
-	NSUInteger index = [self.memberListStandardSortedContainer
-							indexOfObject:member
-							inSortedRange:self.memberListStandardSortedContainer.range
-								  options:NSBinarySearchingInsertionIndex
-						  usingComparator:[IRCChannelUser channelRankComparator]];
-
-	return index;
-}
-
-- (NSInteger)_sortedInsert:(IRCChannelUser *)member
-{
-	NSParameterAssert(member != nil);
-
-	NSInteger insertedIndex = [self _sortedIndexForMember:member];
-
-	[self.memberListStandardSortedContainer insertObject:member atIndex:insertedIndex];
-
-	return insertedIndex;
-}
-
-- (NSInteger)_replaceMemberInMemberList:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2
-{
-	NSParameterAssert(member1 != nil);
-	NSParameterAssert(member2 != nil);
-
-	NSInteger replacedIndex = (-1);
-
-	NSUInteger standardSortedMemberIndex =
-	[self.memberListStandardSortedContainer indexOfObjectIdenticalTo:member1];
-
-	if (standardSortedMemberIndex != NSNotFound) {
-		replacedIndex = standardSortedMemberIndex;
-
-		self.memberListStandardSortedContainer[standardSortedMemberIndex] = member2;
-	}
-
-	return replacedIndex;
-}
-
-- (void)_removeMemberFromTableView:(IRCChannelUser *)member
-{
-	NSParameterAssert(member != nil);
-
-	NSInteger rowIndex = [mainWindowMemberList() rowForItem:member];
-
-	if (rowIndex >= 0) {
-		[mainWindowMemberList() removeItemFromListAtIndex:rowIndex];
-	}
-}
-
-- (BOOL)_removeMemberFromMemberList:(IRCChannelUser *)member
-{
-	NSParameterAssert(member != nil);
-
-	BOOL removedMember = NO;
-
-	NSUInteger standardSortedMemberIndex =
-	[self.memberListStandardSortedContainer indexOfObjectIdenticalTo:member];
-
-	if (standardSortedMemberIndex != NSNotFound) {
-		removedMember = YES;
-
-		[self.memberListStandardSortedContainer removeObjectAtIndex:standardSortedMemberIndex];
-	}
-
-	return removedMember;
-}
 
 - (void)addUser:(IRCUser *)user
 {
-	NSParameterAssert(user != nil);
-
-	IRCChannelUser *member = [[IRCChannelUser alloc] initWithUser:user];
-
-	[self addMember:member];
+	[self.memberInfo addUser:user];
 }
 
 - (void)addMember:(IRCChannelUser *)member
 {
-	/* checkForDuplicates defaults to NO to avoid extra work */
-
-	[self addMember:member checkForDuplicates:NO];
+	[self.memberInfo addMember:member];
 }
 
 - (void)addMember:(IRCChannelUser *)member checkForDuplicates:(BOOL)checkForDuplicates
 {
-	NSParameterAssert(member != nil);
-
-	if (checkForDuplicates) {
-		IRCChannelUser *oldMember = [member.user userAssociatedWithChannel:self];
-
-		if (oldMember != nil) {
-			[self replaceMember:oldMember withMember:member];
-
-			return;
-		}
-	}
-
-	if ([member isKindOfClass:[IRCChannelUserMutable class]]) {
-		member = [member copy];
-	}
-
-	[member associateWithChannel:self];
-
-	[self willChangeValueForKey:@"numberOfMembers"];
-	[self willChangeValueForKey:@"memberList"];
-
-	__block NSInteger sortedIndex = (-1);
-
-	[self.class accessMemberListUsingBlock:^{
-		sortedIndex = [self _sortedInsert:member];
-	}];
-
-	[self didChangeValueForKey:@"numberOfMembers"];
-	[self didChangeValueForKey:@"memberList"];
-
-	if (self.isChannel == NO) {
-		return;
-	}
-
-	XRPerformBlockSynchronouslyOnMainQueue(^{
-		if (self.isSelectedChannel) {
-			[self _informMemberListViewOfAdditionalMemberAtIndex:sortedIndex];
-		}
-
-		[self.associatedClient postEventToViewController:@"channelMemberAdded" forChannel:self];
-	});
+	[self.memberInfo addMember:member checkForDuplicates:checkForDuplicates];
 }
 
 - (void)removeMemberWithNickname:(NSString *)nickname
 {
-	NSParameterAssert(nickname != nil);
-
-	IRCChannelUser *member = [self findMember:nickname];
-
-	if (member) {
-		[self removeMember:member];
-	}
+	[self.memberInfo removeMemberWithNickname:nickname];
 }
 
 - (void)removeMember:(IRCChannelUser *)member
 {
-	NSParameterAssert(member != nil);
-
-	[member disassociateWithChannel:self];
-
-	__block BOOL memberRemoved = NO;
-
-	[self.class accessMemberListUsingBlock:^{
-		memberRemoved = [self _removeMemberFromMemberList:member];
-	}];
-
-	if (memberRemoved == NO || self.isChannel == NO) {
-		return;
-	}
-
-	XRPerformBlockSynchronouslyOnMainQueue(^{
-		if (self.isSelectedChannel) {
-			[self _removeMemberFromTableView:member];
-		}
-
-		[self.associatedClient postEventToViewController:@"channelMemberRemoved" forChannel:self];
-	});
+	[self.memberInfo removeMember:member];
 }
-
-#pragma mark -
 
 - (void)resortMember:(IRCChannelUser *)member
 {
-	NSParameterAssert(member != nil);
-
-	if ([member isKindOfClass:[IRCChannelUserMutable class]]) {
-		member = [member copy];
-	}
-
-	[self _replaceMember:member withMember:member resort:YES];
-}
-
-- (void)_replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2 resort:(BOOL)resort
-{
-	NSParameterAssert(member1 != nil);
-	NSParameterAssert(member2 != nil);
-
-	if (member1 != member2) {
-		[member1 disassociateWithChannel:self];
-
-		[member2 associateWithChannel:self];
-	}
-
-	__block NSInteger sortedIndex = (-1);
-
-	[self.class accessMemberListUsingBlock:^{
-		if (resort) {
-			[self _removeMemberFromMemberList:member1];
-
-			sortedIndex = [self _sortedInsert:member2];
-		} else {
-			sortedIndex = [self _replaceMemberInMemberList:member1 withMember:member2];
-		}
-	}];
-
-	if (sortedIndex < 0 || self.isChannel == NO) {
-		return;
-	}
-
-	XRPerformBlockSynchronouslyOnMainQueue(^{
-		if (self.isSelectedChannel == NO) {
-			return;
-		}
-
-		[mainWindowMemberList() beginUpdates];
-
-		if (resort) {
-			[self _removeMemberFromTableView:member1];
-
-			[self _informMemberListViewOfAdditionalMemberAtIndex:sortedIndex];
-		} else {
-			/* We reload the old member because the new member has not been
-			 added to the table yet. By reloading it, we request the index 
-			 that the old member is at, replacing it with the new member. */
-			[self _reloadMemberInMemberList:member1];
-		}
-
-		[mainWindowMemberList() endUpdates];
-	});
+	[self.memberInfo resortMember:member];
 }
 
 - (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2
 {
-	[self replaceMember:member1 withMember:member2 resort:YES replaceInAllChannels:NO];
+	[self.memberInfo replaceMember:member1 withMember:member2];
 }
 
 - (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2 resort:(BOOL)resort
 {
-	[self replaceMember:member1 withMember:member2 resort:YES replaceInAllChannels:NO];
+	[self.memberInfo replaceMember:member1 withMember:member2 resort:resort];
 }
 
-/* The replaceInAllChannels: flag should only be used in extreme cases because there is A LOT 
- of overhead to setting it. Textual only does it when the user list is configured to sort IRCop 
- at top and IRCop status changes. That change requires the user to be resorted in every channel 
- they are in. Knowing which channels they are in is easy because of IRCUserRelations, but the 
- actual process of finding where to sort them at is very costly. */
 - (void)replaceMember:(IRCChannelUser *)member1 withMember:(IRCChannelUser *)member2 resort:(BOOL)resort replaceInAllChannels:(BOOL)replaceInAllChannels
 {
-	NSParameterAssert(member1 != nil);
-	NSParameterAssert(member2 != nil);
-
-	if ([member2 isKindOfClass:[IRCChannelUserMutable class]]) {
-		member2 = [member2 copy];
-	}
-
-	[self _replaceMember:member1 withMember:member2 resort:resort];
-
-	if (replaceInAllChannels) {
-		NSDictionary *relations = member2.user.relations;
-
-		[relations enumerateKeysAndObjectsUsingBlock:^(IRCChannel *channel, IRCChannelUser *member, BOOL *stop) {
-			if (channel == self) {
-				return;
-			}
-
-			[channel _replaceMember:member withMember:member resort:resort];
-		}];
-	}
+	[self.memberInfo replaceMember:member1 withMember:member2 resort:resort replaceInAllChannels:replaceInAllChannels];
 }
 
 - (void)changeMember:(NSString *)nickname mode:(NSString *)mode value:(BOOL)value
 {
-	NSParameterAssert(nickname != nil);
-	NSParameterAssert(mode.length == 1);
-
-	// Find member and create mutable copy for editing
-	IRCChannelUser *member = [self findMember:nickname];
-
-	if (member == nil) {
-		return;
-	}
-
-	IRCChannelUserMutable *memberMutable = [member mutableCopy];
-
-	NSString *oldMemberModes = memberMutable.modes;
-
-	// If the member has no modes already and we are setting a mode, then
-	// all we have to do is set the value of -modes to new mode
-	BOOL processModes = YES;
-
-	if (oldMemberModes.length == 0) {
-		if (value) {
-			processModes = NO;
-
-			memberMutable.modes = mode;
-		} else {
-			return; // Can't remove mode from empty string
-		}
-	} else {
-		if (value && [oldMemberModes contains:mode]) {
-			return; // Mode is already in string
-		}
-	}
-
-	// Split up the current user modes into an array of characters.
-	// Enumerate over the array of characters to find which mode in the
-	// current set has a rank lower than the mode being inserted.
-	// Insert before the lower ranked mode or insert at end.
-	if (processModes) {
-		IRCISupportInfo *clientSupportInfo = self.associatedClient.supportInfo;
-
-		NSArray *oldModeSymbols = oldMemberModes.characterStringBuffer;
-
-		NSMutableArray *newModeSymbols = [oldModeSymbols mutableCopy];
-
-		if (value == NO) {
-			[newModeSymbols removeObject:mode];
-		} else {
-			NSUInteger rankOfNewMode = [clientSupportInfo rankForUserPrefixWithMode:mode];
-
-			NSUInteger lowerRankedMode =
-			[oldModeSymbols indexOfObjectPassingTest:^BOOL(NSString *oldModeSymbol, NSUInteger index, BOOL *stop) {
-				NSInteger rankOfOldMode = [clientSupportInfo rankForUserPrefixWithMode:oldModeSymbol];
-
-				if (rankOfOldMode < rankOfNewMode) {
-					return YES;
-				} else {
-					return NO;
-				}
-			}];
-
-			if (lowerRankedMode != NSNotFound) {
-				[newModeSymbols insertObject:mode atIndex:lowerRankedMode];
-			} else {
-				[newModeSymbols addObject:mode];
-			}
-		}
-
-		NSString *newMemberModes = [newModeSymbols componentsJoinedByString:@""];
-
-		memberMutable.modes = newMemberModes;
-	}
-
-	BOOL replaceInAllChannels = NO;
-
-	if (value && [mode isEqualToString:@"Y"] && member.user.isIRCop == NO) {
-		/* InspIRCd treats +Y as an IRCop. */
-		/* If the user wasn't already marked as an IRCop, then we
-		 mark them at this point. */
-
-		[self.associatedClient modifyUser:member.user withBlock:^(IRCUserMutable *userMutable) {
-			userMutable.isIRCop = YES;
-		}];
-
-		if ([TPCPreferences memberListSortFavorsServerStaff]) {
-			replaceInAllChannels = YES;
-		}
-	}
-
-	// Remove the user from the member list and insert sorted
-	[self replaceMember:member
-			 withMember:memberMutable
-				 resort:YES
-   replaceInAllChannels:replaceInAllChannels];
+	[self.memberInfo changeMember:nickname mode:mode value:value];
 }
-
-#pragma mark -
 
 - (void)clearMembers
 {
-	[self.class accessMemberListUsingBlock:^{
-		[self willChangeValueForKey:@"numberOfMembers"];
-		[self willChangeValueForKey:@"memberList"];
-
-		[self.memberListStandardSortedContainer makeObjectsPerformSelector:@selector(disassociateWithChannel:) withObject:self];
-
-		[self.memberListStandardSortedContainer removeAllObjects];
-
-		[self didChangeValueForKey:@"numberOfMembers"];
-		[self didChangeValueForKey:@"memberList"];
-	}];
+	[self.memberInfo clearMembers];
 }
 
 - (NSUInteger)numberOfMembers
 {
-	__block NSUInteger memberCount = 0;
-
-	[self.class accessMemberListUsingBlock:^{
-		memberCount = self.memberListStandardSortedContainer.count;
-	}];
-
-	return memberCount;
+	return self.memberInfo.numberOfMembers;
 }
 
-- (NSArray<IRCChannelUser *> *)memberList
+- (nullable NSArray<IRCChannelUser *> *)memberList
 {
-	__block NSArray<IRCChannelUser *> *memberList = nil;
-
-	[self.class accessMemberListUsingBlock:^{
-		memberList = [self.memberListStandardSortedContainer copy];
-	}];
-
-	return memberList;
+	return self.memberInfo.memberList;
 }
-
-#pragma mark -
 
 - (NSData *)pasteboardDataForMembers:(NSArray<IRCChannelUser *> *)members
 {
-	NSParameterAssert(members != nil);
-
-	NSString *channelId = self.uniqueIdentifier;
-
-	NSMutableArray<NSString *> *nicknames = [NSMutableArray arrayWithCapacity:members.count];
-
-	for (IRCChannelUser *member in members) {
-		[nicknames addObject:member.user.nickname];
-	}
-
-	NSDictionary *pasteboardDictionary = @{
-	   @"channelId" : channelId,
-	   @"nicknames" : nicknames
-	};
-
-	NSData *pasteboardData = [NSKeyedArchiver archivedDataWithRootObject:pasteboardDictionary];
-
-	return pasteboardData;
+	return [self.memberInfo pasteboardDataForMembers:members];
 }
 
 + (BOOL)readNicknamesFromPasteboardData:(NSData *)pasteboardData withBlock:(void (NS_NOESCAPE ^)(IRCChannel *channel, NSArray<NSString *> *nicknames))callbackBlock
 {
-	NSParameterAssert(pasteboardData != nil);
-	NSParameterAssert(callbackBlock != nil);
-
-	/* This is a private method which means that we are very lazy about
-	 validating the input, but this is a TODO to myself: add strict type
-	 checks if you end up making this method public. */
-	NSDictionary *pasteboardDictionary = [NSKeyedUnarchiver unarchiveObjectWithData:pasteboardData];
-
-	if ([pasteboardDictionary isKindOfClass:[NSDictionary class]] == NO) {
-		return NO;
-	}
-
-	NSString *channelId = pasteboardDictionary[@"channelId"];
-
-	IRCChannel *channel = (IRCChannel *)[worldController() findItemWithId:channelId];
-
-	if (channel == nil) {
-		return NO;
-	}
-
-	NSArray *nicknames = pasteboardDictionary[@"nicknames"];
-
-	callbackBlock(channel, nicknames);
-
-	return YES;
+	return [IRCChannelMemberList readNicknamesFromPasteboardData:pasteboardData withBlock:callbackBlock];
 }
 
 + (BOOL)readMembersFromPasteboardData:(NSData *)pasteboardData withBlock:(void (NS_NOESCAPE ^)(IRCChannel *channel, NSArray<IRCChannelUser *> *members))callbackBlock
 {
-	NSParameterAssert(pasteboardData != nil);
-	NSParameterAssert(callbackBlock != nil);
-
-	return
-	[self readNicknamesFromPasteboardData:pasteboardData withBlock:^(IRCChannel *channel, NSArray<NSString *> *nicknames) {
-		NSMutableArray *members = [NSMutableArray arrayWithCapacity:nicknames.count];
-
-		for (NSString *nickname in nicknames) {
-			IRCChannelUser *member = [channel findMember:nickname];
-
-			if (member == nil) {
-				continue;
-			}
-
-			[members addObject:member];
-		}
-
-		callbackBlock(channel, [members copy]);
-	}];
+	return [IRCChannelMemberList readMembersFromPasteboardData:pasteboardData withBlock:callbackBlock];
 }
-
-#pragma mark -
-#pragma mark User Search
 
 - (BOOL)memberExists:(NSString *)nickname
 {
-	return ([self findMember:nickname] != nil);
+	return [self.memberInfo memberExists:nickname];
 }
 
 - (nullable IRCChannelUser *)findMember:(NSString *)nickname
 {
-	NSParameterAssert(nickname != nil);
-
-	IRCUser *user = [self.associatedClient findUser:nickname];
-
-	if (user == nil) {
-		return nil;
-	}
-
-	IRCChannelUser *member = [user userAssociatedWithChannel:self];
-
-	if (member == nil) {
-		return nil;
-	}
-
-	return member;
+	return [self.memberInfo findMember:nickname];
 }
 
-- (IRCChannelUser *)memberAtIndex:(NSUInteger)index
+- (void)sortMembers
 {
-	__block IRCChannelUser *member = nil;
-
-	[self.class accessMemberListUsingBlock:^{
-		member = self.memberListStandardSortedContainer[index];
-	}];
-
-	return member;
-}
-
-#pragma mark -
-#pragma mark Table View Internal Management
-
-- (void)_reloadMemberInMemberList:(IRCChannelUser *)member
-{
-	[mainWindowMemberList() reloadItem:member];
-}
-
-- (void)_informMemberListViewOfAdditionalMemberAtIndex:(NSUInteger)insertedIndex
-{
-	[mainWindowMemberList() addItemToList:insertedIndex];
-}
-
-- (void)reloadDataForTableViewBySortingMembers
-{
-	if (self.isChannel == NO) {
-		return;
-	}
-
-	[self.class accessMemberListUsingBlock:^{
-		[self.memberListStandardSortedContainer sortUsingComparator:[IRCChannelUser channelRankComparator]];
-	}];
-
-	[self reloadDataForTableView];
-}
-
-- (void)reloadDataForTableView
-{
-	if (self.isChannel == NO) {
-		return;
-	}
-
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		if (self.isSelectedChannel == NO) {
-			return;
-		}
-
-		[mainWindowMemberList() reloadData];
-	});
+	[self.memberInfo sortMembers];
 }
 
 #pragma mark -
 #pragma mark Table View Delegate
 
-- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(nullable id)item
+- (nullable NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(nullable NSTableColumn *)tableColumn row:(NSInteger)row
 {
-	return self.numberOfMembers;
-}
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
-{
-	return NO;
-}
-
-- (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
-{
-	TVCMemberListAppearance *appearance = mainWindowMemberList().userInterfaceObjects;
-
-	return appearance.cellRowHeight;
-}
-
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(nullable id)item
-{
-	return [self memberAtIndex:index];
-}
-
-- (nullable id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(nullable NSTableColumn *)tableColumn byItem:(nullable id)item
-{
-	return item;
-}
-
-- (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(id)item
-{
-	NSView *newView = [outlineView makeViewWithIdentifier:@"GroupView" owner:self];
+	NSView *newView = [tableView makeViewWithIdentifier:@"GroupView" owner:self];
 
 	return newView;
 }
 
-- (nullable NSTableRowView *)outlineView:(NSOutlineView *)outlineView rowViewForItem:(id)item
+- (nullable NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row
 {
-	TVCMemberListRowCell *rowView = [[TVCMemberListRowCell alloc] initWithMemberList:(id)outlineView];
+	TVCMemberListRowCell *rowView = [[TVCMemberListRowCell alloc] initWithMemberList:(id)tableView];
 
 	return rowView;
 }
 
-- (void)outlineView:(NSOutlineView *)outlineView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
+- (void)tableView:(NSTableView *)tableView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
 {
 	[mainWindowMemberList() refreshDrawingForRow:row];
-}
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pasteboard
-{
-	NSData *draggedData = [self pasteboardDataForMembers:items];
-
-	[pasteboard declareTypes:@[TVCMemberListDragType] owner:self];
-
-	[pasteboard setData:draggedData forType:TVCMemberListDragType];
-
-	return YES;
 }
 
 #pragma mark -

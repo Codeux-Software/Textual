@@ -5,7 +5,7 @@
  *                   | |  __/>  <| |_| |_| | (_| | |
  *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
  *
- * Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+ * Copyright (c) 2010 - 2020 Codeux Software, LLC & respective contributors.
  *       Please see Acknowledgements.pdf for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,34 +35,60 @@
  *
  *********************************************************************** */
 
-#import "TVCMainWindowAppearance.h"
-#import "TVCMemberList.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-@class TVCMemberListUserInfoPopover;
-@class IRCChannel;
-@class IRCChannelMemberListController;
+@class IRCChannelUser, IRCUser;
 
-@interface TVCMemberList ()
-@property (nonatomic, weak) id keyDelegate;
+#pragma mark -
+#pragma mark Prototype
 
-- (TVCMemberListAppearance *)userInterfaceObjects;
-- (nullable NSVisualEffectView *)visualEffectView;
-- (TVCMemberListUserInfoPopover *)memberListUserInfoPopover;
-- (IRCChannelMemberListController *)contentController;
+/* IRCChannel proxies many methods declared by IRCChannelMemberList
+ for backwards compatibility and convenience through the use of
+ IRCChannelMemberListPrototype protocol. It's atypical to access
+ IRCChannelMemberList directly. The declaration for it is only
+ public to allow KVO binding to -memberList and -numberOfMembers. */
 
-- (void)refreshAllDrawings;
+/* In context of IRCChannel proxied methods:
 
-- (void)refreshDrawingForChangesToPreference:(NSString *)preferenceKey;
+ An instance of IRCChannel will only have a member list when in
+ active state. This includes regular channels and private messages.
+ Utility channels will never have a member list.
 
-- (void)assignToChannel:(nullable IRCChannel *)channel;
+ All proxied methods will do nothing when there is no member list.
+ */
+@protocol IRCChannelMemberListPrototype <NSObject>
+/* Member changes (adding, removing, modifying) are done so asynchronously.
+ This means that changes wont be immediately reflected by -memberList. */
+/* It is safe to call -memberExists: and -findMember: immediately after
+ changing a member because those methods do not require the member to
+ be present in the member list to produce a result. */
+- (void)addUser:(IRCUser *)user;
+
+- (void)addMember:(IRCChannelUser *)member;
+
+- (void)removeMember:(IRCChannelUser *)member;
+- (void)removeMemberWithNickname:(NSString *)nickname;
+
+- (BOOL)memberExists:(NSString *)nickname;
+
+- (nullable IRCChannelUser *)findMember:(NSString *)nickname;
+
+/* -memberList and -numberOfMembers are KVO compliant when
+ bound directly to an instance of IRCChannelMemberList.
+ The methods that IRCChannel proxy will not post KVO changes. */
+@property (readonly) NSUInteger numberOfMembers;
+
+@property (readonly, copy, nullable) NSArray<IRCChannelUser *> *memberList; // Automatically sorted by channel rank
+
+/* Resort the entire member list using all known conditions. */
+/* This can be an expensive task for large channels. */
+- (void)sortMembers;
 @end
 
-@protocol TVCMemberListDelegate <NSObject>
-@required
+#pragma mark -
+#pragma mark Interface
 
-- (void)memberListKeyDown:(NSEvent *)e;
+@interface IRCChannelMemberList : NSObject <IRCChannelMemberListPrototype>
 @end
 
 NS_ASSUME_NONNULL_END

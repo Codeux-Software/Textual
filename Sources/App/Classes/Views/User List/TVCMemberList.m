@@ -37,6 +37,7 @@
 
 #import "IRCUser.h"
 #import "IRCChannelUser.h"
+#import "IRCChannelMemberListControllerPrivate.h"
 #import "NSViewHelperPrivate.h"
 #import "TXMasterController.h"
 #import "TXMenuControllerPrivate.h"
@@ -60,6 +61,7 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 @property (nonatomic, strong, readwrite) TVCMemberListAppearance *userInterfaceObjects;
 @property (nonatomic, weak, readwrite) IBOutlet NSVisualEffectView *visualEffectView;
 @property (nonatomic, strong, readwrite) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
+@property (nonatomic, strong, readwrite) IBOutlet IRCChannelMemberListController *contentController;
 @end
 
 @implementation TVCMemberList
@@ -107,44 +109,44 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 }
 
 #pragma mark -
-#pragma mark Additions/Removal
+#pragma mark Utilities
 
-- (void)addItemToList:(NSUInteger)rowIndex
+- (void)assignToChannel:(nullable IRCChannel *)channel
 {
-	@try {
-		[self insertItemsAtIndexes:[NSIndexSet indexSetWithIndex:rowIndex]
-						  inParent:nil
-					 withAnimation:NSTableViewAnimationEffectNone];
-	} @catch (NSException *exception) {
-		LogToConsoleError("Caught exception: %@", exception.reason);
-		LogStackTrace();
+	self.delegate = (id)channel;
+	self.dataSource = (id)channel;
+
+	[self.contentController assignToChannel:channel];
+}
+
+- (nullable id)itemAtRow:(NSInteger)row
+{
+	NSParameterAssert(row >= 0);
+
+	NSArray *rows = self.contentController.arrangedObjects;
+
+	if (row >= rows.count) {
+		return nil;
 	}
+
+	return rows[row];
 }
 
-- (void)removeItemFromList:(id)object
+- (NSInteger)rowForItem:(nullable id)item
 {
-	NSInteger rowIndex = [self rowForItem:object];
-
-	NSAssert((rowIndex >= 0),
-		@"Object does not exist on outline view");
-
-	[self removeItemFromListAtIndex:rowIndex];
-}
-
-- (void)removeItemFromListAtIndex:(NSUInteger)rowIndex
-{
-	[self removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:rowIndex]
-					  inParent:nil
-				 withAnimation:NSTableViewAnimationEffectNone];
-}
-
-- (void)moveItemAtIndex:(NSInteger)fromIndex inParent:(nullable id)oldParent toIndex:(NSInteger)toIndex inParent:(nullable id)newParent
-{
-	if (fromIndex < toIndex) {
-		[super moveItemAtIndex:fromIndex inParent:oldParent toIndex:(toIndex - 1) inParent:newParent];
-	} else {
-		[super moveItemAtIndex:fromIndex inParent:oldParent toIndex:toIndex inParent:newParent];
+	if (item == nil) {
+		return (-1);
 	}
+
+	NSArray *rows = self.contentController.arrangedObjects;
+
+	NSInteger index = [rows indexOfObjectIdenticalTo:item];
+
+	if (index == NSNotFound) {
+		return (-1);
+	}
+
+	return index;
 }
 
 #pragma mark -
@@ -431,17 +433,17 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 {
 	TVCMemberListAppearance *appearance = self.userInterfaceObjects;
 
-	for (NSUInteger i = 0; i < self.numberOfRows; i++) {
-		IRCChannelUser *member = [self itemAtRow:i];
+	NSArray *rows = self.contentController.arrangedObjects;
 
+	[rows enumerateObjectsUsingBlock:^(IRCChannelUser *member, NSUInteger index, BOOL *stop) {
 		if ((member.ranks & rank) == 0 && (isIRCop && isIRCop != member.user.isIRCop)) {
-			continue;
+			return;
 		}
 
 		[appearance invalidateUserMarkBadgeCacheForSymbol:member.mark rank:rank];
 
-		[self refreshDrawingForRow:i];
-	}
+		[self refreshDrawingForRow:index];
+	}];
 }
 
 - (void)drawContextMenuHighlightForRow:(int)row

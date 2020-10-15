@@ -5,7 +5,7 @@
  *                   | |  __/>  <| |_| |_| | (_| | |
  *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
  *
- * Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ * Copyright (c) 2010 - 2020 Codeux Software, LLC & respective contributors.
  *       Please see Acknowledgements.pdf for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,18 +37,21 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class IRCChannelUser;
+@class IRCChannel;
 
-TEXTUAL_EXTERN NSString * const TVCMemberListDragType;
+/* The member list controller is the controller bound to the view in the
+ main window. IRCChannelMemberList, when assigned to it, will maintain a
+ 1:1 relation to its internal list and the content of the controller. */
+/* DO NOT modify the controller directly. Allow IRCChannelMemberList to
+ do the work for you to maintain the integrity of the internal list and
+ the content of the controller. */
+@interface IRCChannelMemberListController : NSArrayController
+/* A controller can be assigned to only one channel or none. */
+/* TVCMainWindow is responsible for assignment using TVCMemberList
+ as a proxy. */
+- (void)assignToChannel:(nullable IRCChannel *)channel;
 
-@interface TVCMemberList : NSTableView
-@property (nonatomic, assign) BOOL isHiddenByUser;
-
-- (void)refreshDrawingForMember:(IRCChannelUser *)cellItem;
-- (void)refreshDrawingForRow:(NSInteger)rowIndex;
-
-- (nullable id)itemAtRow:(NSInteger)row;
-- (NSInteger)rowForItem:(nullable id)item; // -1 = not found
+- (void)replaceContents:(NSArray<IRCChannelUser *> *)contents;
 @end
 
 NS_ASSUME_NONNULL_END

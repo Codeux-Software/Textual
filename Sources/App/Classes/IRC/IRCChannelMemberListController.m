@@ -5,21 +5,21 @@
  *                   | |  __/>  <| |_| |_| | (_| | |
  *                   |_|\___/_/\_\\__|\__,_|\__,_|_|
  *
- * Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ * Copyright (c) 2010 - 2020 Codeux Software, LLC & respective contributors.
  *       Please see Acknowledgements.pdf for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
  *
- *  * Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *  * Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *  * Neither the name of Textual, "Codeux Software, LLC", nor the
- *    names of its contributors may be used to endorse or promote products
- *    derived from this software without specific prior written permission.
+ *	* Redistributions of source code must retain the above copyright
+ *	  notice, this list of conditions and the following disclaimer.
+ *	* Redistributions in binary form must reproduce the above copyright
+ *	  notice, this list of conditions and the following disclaimer in the
+ *	  documentation and/or other materials provided with the distribution.
+ *  * Neither the name of Textual and/or Codeux Software, nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ * 	  from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -35,20 +35,42 @@
  *
  *********************************************************************** */
 
+#import "IRCChannelPrivate.h"
+#import "IRCChannelMemberList.h"
+#import "IRCChannelMemberListControllerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-@class IRCChannelUser;
+@interface IRCChannelMemberList ()
+- (void)assignController:(nullable IRCChannelMemberListController *)controller;
+@end
 
-TEXTUAL_EXTERN NSString * const TVCMemberListDragType;
+@interface IRCChannelMemberListController ()
+@property (nonatomic, strong, nullable) IRCChannelMemberList *memberList;
+@end
 
-@interface TVCMemberList : NSTableView
-@property (nonatomic, assign) BOOL isHiddenByUser;
+@implementation IRCChannelMemberListController
 
-- (void)refreshDrawingForMember:(IRCChannelUser *)cellItem;
-- (void)refreshDrawingForRow:(NSInteger)rowIndex;
+- (void)assignToChannel:(nullable IRCChannel *)channel
+{
+	if ( self.memberList) {
+		[self.memberList assignController:nil];
+	}
 
-- (nullable id)itemAtRow:(NSInteger)row;
-- (NSInteger)rowForItem:(nullable id)item; // -1 = not found
+	IRCChannelMemberList *newList = channel.memberInfo;
+
+	[newList assignController:self];
+
+	self.memberList = newList;
+}
+
+- (void)replaceContents:(NSArray<IRCChannelUser *> *)contents
+{
+	NSParameterAssert(contents != nil);
+
+	self.content = [contents mutableCopy];
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

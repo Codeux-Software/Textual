@@ -532,7 +532,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* =============================================== */
 
-	NSInteger rowIndex = [memberList rowForItem:cellItem];
+	NSInteger rowIndex = [memberList rowForView:self];
 
 	NSRect cellFrame = [memberList frameOfCellAtColumn:0 row:rowIndex];
 
@@ -573,7 +573,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	TVCMemberList *memberList = self.memberList;
 
-	NSInteger rowIndex = [memberList rowForItem:self.objectValue];
+	NSInteger rowIndex = [memberList rowForView:self];
 
 	TVCMemberListAppearance *appearance = self.userInterfaceObjects;
 
