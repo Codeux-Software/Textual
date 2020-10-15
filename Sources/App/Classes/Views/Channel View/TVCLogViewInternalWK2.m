@@ -78,18 +78,12 @@ static TVCLogScriptEventSink *_sharedWebViewScriptSink = nil;
 
 		_sharedWebViewConfiguration.processPool = _sharedProcessPool;
 
-		BOOL runningOnSierra = TEXTUAL_RUNNING_ON_SIERRA;
+		_sharedWebViewConfiguration._allowUniversalAccessFromFileURLs = YES;
 
-		if (runningOnSierra) {
-			_sharedWebViewConfiguration._allowUniversalAccessFromFileURLs = YES;
-		}
+		WKPreferences *preferences = _sharedWebViewConfiguration.preferences;
 
-		if (TEXTUAL_RUNNING_ON_ELCAPITAN) {
-			WKPreferences *preferences = _sharedWebViewConfiguration.preferences;
-
-			preferences._allowFileAccessFromFileURLs = YES;
-			preferences._developerExtrasEnabled = YES;
-		}
+		preferences._allowFileAccessFromFileURLs = YES;
+		preferences._developerExtrasEnabled = YES;
 
 		_sharedWebViewScriptSink = [[TVCLogScriptEventSink alloc] initWithWebView:nil];
 
@@ -100,11 +94,7 @@ static TVCLogScriptEventSink *_sharedWebViewScriptSink = nil;
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"channelMemberCount"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"channelName"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"channelNameDoubleClicked"];
-
-		if (runningOnSierra == NO) {
-			[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"displayContextMenu"];
-		}
-
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"displayContextMenu"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"copySelectionWhenPermitted"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"encryptionAuthenticateUser"];
 		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"inlineMediaEnabledForView"];
@@ -206,11 +196,9 @@ create_normal_pool:
 
 	self.translatesAutoresizingMaskIntoConstraints = NO;
 
-	if (TEXTUAL_RUNNING_ON_ELCAPITAN) {
-		self.allowsLinkPreview = [TPCPreferences webKit2PreviewLinks];
+	self.allowsLinkPreview = [TPCPreferences webKit2PreviewLinks];
 
-		self.customUserAgent = TVCLogViewCommonUserAgentString;
-	}
+	self.customUserAgent = TVCLogViewCommonUserAgentString;
 
 	self.navigationDelegate = (id)self;
 
@@ -527,10 +515,6 @@ create_normal_pool:
 
 + (void)load
 {
-	if (TEXTUAL_RUNNING_ON_YOSEMITE == NO) {
-		return;
-	}
-
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{

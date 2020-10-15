@@ -1364,19 +1364,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (NSString *)label
 {
-	__block BOOL usesUppercaseLabel = NO;
-
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		usesUppercaseLabel = (TEXTUAL_RUNNING_ON_YOSEMITE == NO);
-	});
-
-	if (usesUppercaseLabel) {
-		return self.config.connectionName.uppercaseString;
-	} else {
-		return self.config.connectionName;
-	}
+	return self.config.connectionName;
 }
 
 #pragma mark -

@@ -43,8 +43,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCContentNavigationOutlineView () <NSOutlineViewDelegate, NSOutlineViewDataSource>
 @property (nonatomic, strong) IBOutlet NSView *contentView;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
 @property (nonatomic, weak, nullable, readwrite) TVCContentNavigationOutlineViewItem *selectedItem;
 @property (nonatomic, weak, nullable) TVCContentNavigationOutlineViewItem *lastSelection;
 @property (readonly, nullable) TVCContentNavigationOutlineViewItem *parentOfLastSelection;
@@ -234,9 +232,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)presentView:(NSView *)newView
 {
-	[self.contentView attachSubview:newView
-			adjustedWidthConstraint:self.contentViewWidthConstraint
-		   adjustedHeightConstraint:self.contentViewHeightConstraint];
+	[self.contentView replaceFirstSubview:newView];
 }
 
 @end

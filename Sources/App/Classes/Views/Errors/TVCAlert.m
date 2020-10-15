@@ -139,11 +139,10 @@ typedef NS_ENUM(NSUInteger, TVCAlertType) {
 	if (window) {
 		self.alertType = TVCAlertTypeSheet;
 
-		[NSApp beginSheet:self.panel
-		   modalForWindow:window
-			modalDelegate:self
-		   didEndSelector:@selector(_alertSheetDidEnd:returnCode:contextInfo:)
-			  contextInfo:nil];
+		[window beginSheet:self.panel
+		 completionHandler:^(NSModalResponse returnCode) {
+			[self _alertSheetDidEndWithReturnCode:returnCode];
+		}];
 	} else {
 		self.alertType = TVCAlertTypeNonblockingPanel;
 
@@ -251,7 +250,7 @@ typedef NS_ENUM(NSUInteger, TVCAlertType) {
 
 		firstButtonAnchor = suppressionButton;
 	} else {
-		[suppressionButton removeFromSuperview];
+		[suppressionButton removeFromSuperviewWithoutNeedingDisplay];
 	}
 
 	/* Add first button */
@@ -275,11 +274,11 @@ typedef NS_ENUM(NSUInteger, TVCAlertType) {
 	NSUInteger buttonsCount = self.buttons.count;
 
 	if (buttonsCount < 3) {
-		[self.thirdButton removeFromSuperview];
+		[self.thirdButton removeFromSuperviewWithoutNeedingDisplay];
 	}
 
 	if (buttonsCount < 2) {
-		[self.secondButton removeFromSuperview];
+		[self.secondButton removeFromSuperviewWithoutNeedingDisplay];
 	}
 
 	/* Update state */
@@ -357,7 +356,7 @@ typedef NS_ENUM(NSUInteger, TVCAlertType) {
 
 		button.title = title;
 
-		[XRAccessibility setAccessibilityTitle:TXTLS(@"Accessibility[wbj-gr]", title) forObject:button];
+		[button setAccessibilityTitle:TXTLS(@"Accessibility[wbj-gr]", title)];
 
 		[self.buttonsInt addObject:button];
 
@@ -453,11 +452,11 @@ typedef NS_ENUM(NSUInteger, TVCAlertType) {
 #pragma mark -
 #pragma mark Panel Delegate
 
-- (void)_alertSheetDidEnd:(NSWindow *)sender returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+- (void)_alertSheetDidEndWithReturnCode:(NSInteger)returnCode
 {
 	[self _postCompletionBlockWithResponse:returnCode];
 
-	[sender orderOut:nil];
+	[self.panel orderOut:nil];
 }
 
 @end

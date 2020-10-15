@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -13,176 +13,22 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="1">
-            <rect key="frame" x="0.0" y="0.0" width="589" height="348"/>
+        <customView id="1">
+            <rect key="frame" x="0.0" y="0.0" width="670" height="398"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="432" affinity="minY"/>
-                <userLayoutGuide location="144" affinity="minX"/>
                 <userLayoutGuide location="380" affinity="minY"/>
             </userGuides>
             <subviews>
-                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="92">
-                    <rect key="frame" x="110" y="304" width="370" height="16"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="qvj-NF-uPO">
-                        <rect key="frame" x="0.0" y="0.0" width="370" height="16"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" allowsNonContiguousLayout="YES" id="96">
-                                <rect key="frame" x="1" y="0.0" width="371" height="16"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="370" height="16"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                                <attributedString key="textStorage">
-                                    <fragment content="Select each item to show as part of the ">
-                                        <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" metaFont="cellTitle"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="/sysinfo">
-                                        <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" metaFont="systemBold" size="12"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" command:">
-                                        <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" metaFont="cellTitle"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            </textView>
-                        </subviews>
-                    </clipView>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="370" id="03I-1m-lRp"/>
-                        <constraint firstAttribute="height" constant="16" id="gi2-gU-wES"/>
-                    </constraints>
-                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="94">
-                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="93">
-                        <rect key="frame" x="224" y="1" width="15" height="133"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                </scrollView>
                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="97">
-                    <rect key="frame" x="67" y="82" width="455" height="5"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="455" id="pMp-n4-cOu"/>
-                    </constraints>
+                    <rect key="frame" x="100" y="115" width="470" height="5"/>
                 </box>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="3">
-                    <rect key="frame" x="158" y="269" width="221" height="18"/>
-                    <buttonCell key="cell" type="check" title="CPU model and related information" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="114" name="value" keyPath="values.System Profiler Extension -&gt; Feature Disabled -&gt; CPU Model" id="119">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="5">
-                    <rect key="frame" x="158" y="241" width="114" height="18"/>
-                    <buttonCell key="cell" type="check" title="System memory" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="114" name="value" keyPath="values.System Profiler Extension -&gt; Feature Disabled -&gt; Memory Information" id="Z3t-Rb-FgZ">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="12">
-                    <rect key="frame" x="158" y="213" width="165" height="18"/>
-                    <buttonCell key="cell" type="check" title="Operating system uptime" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="13">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="114" name="value" keyPath="values.System Profiler Extension -&gt; Feature Disabled -&gt; System Uptime" id="yeE-rE-0DI">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="14">
-                    <rect key="frame" x="158" y="185" width="187" height="18"/>
-                    <buttonCell key="cell" type="check" title="Boot volume disk information" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="15">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="114" name="value" keyPath="values.System Profiler Extension -&gt; Feature Disabled -&gt; Disk Information" id="VwK-aB-tHR">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="16">
-                    <rect key="frame" x="158" y="157" width="102" height="18"/>
-                    <buttonCell key="cell" type="check" title="Graphics card" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="17">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="114" name="value" keyPath="values.System Profiler Extension -&gt; Feature Disabled -&gt; GPU Model" id="rqk-4j-e6W">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="18">
-                    <rect key="frame" x="158" y="129" width="202" height="18"/>
-                    <buttonCell key="cell" type="check" title="Active display screen resolution" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="19">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="114" name="value" keyPath="values.System Profiler Extension -&gt; Feature Disabled -&gt; Screen Resolution" id="FyL-Q6-iAG">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="22">
-                    <rect key="frame" x="158" y="101" width="167" height="18"/>
-                    <buttonCell key="cell" type="check" title="Operating system version" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="23">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="114" name="value" keyPath="values.System Profiler Extension -&gt; Feature Disabled -&gt; OS Version" id="Uzm-ov-IK8">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="98">
-                    <rect key="frame" x="158" y="50" width="240" height="18"/>
+                    <rect key="frame" x="215" y="82" width="260" height="18"/>
                     <buttonCell key="cell" type="check" title="Request model information from Apple" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="99">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
+                        <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
                         <action selector="didChangePreferenceToUseRemoteRequestForModelID:" target="-2" id="110"/>
@@ -190,49 +36,161 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6bj-fu-TKI">
-                    <rect key="frame" x="176" y="30" width="254" height="14"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Whether to ask apple.com which Mac you have." id="mTb-3O-ZNG">
-                        <font key="font" metaFont="smallSystem"/>
+                    <rect key="frame" x="233" y="30" width="306" height="45"/>
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="mTb-3O-ZNG">
+                        <font key="font" metaFont="system" size="12"/>
+                        <string key="title">The last four characters of your Mac's serial number, which do not identify you in any way, will be sent to apple.com to retrieve model information.</string>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tag-MJ-P9h">
+                    <rect key="frame" x="130" y="352" width="411" height="16"/>
+                    <textFieldCell key="cell" title="Select each item to appear in the output of the “sysinfo” command:" id="Mun-t6-pSD">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fcU-ye-s1H">
+                    <rect key="frame" x="217" y="136" width="237" height="196"/>
+                    <subviews>
+                        <button translatesAutoresizingMaskIntoConstraints="NO" id="3">
+                            <rect key="frame" x="-2" y="179" width="239" height="18"/>
+                            <buttonCell key="cell" type="check" title="CPU model and related information" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="114" name="value" keyPath="values.System Profiler Extension -&gt; Feature Disabled -&gt; CPU Model" id="119">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </button>
+                        <button translatesAutoresizingMaskIntoConstraints="NO" id="5">
+                            <rect key="frame" x="-2" y="149" width="124" height="18"/>
+                            <buttonCell key="cell" type="check" title="System memory" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="114" name="value" keyPath="values.System Profiler Extension -&gt; Feature Disabled -&gt; Memory Information" id="Z3t-Rb-FgZ">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </button>
+                        <button translatesAutoresizingMaskIntoConstraints="NO" id="12">
+                            <rect key="frame" x="-2" y="119" width="179" height="18"/>
+                            <buttonCell key="cell" type="check" title="Operating system uptime" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="13">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="114" name="value" keyPath="values.System Profiler Extension -&gt; Feature Disabled -&gt; System Uptime" id="yeE-rE-0DI">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </button>
+                        <button translatesAutoresizingMaskIntoConstraints="NO" id="14">
+                            <rect key="frame" x="-2" y="89" width="203" height="18"/>
+                            <buttonCell key="cell" type="check" title="Boot volume disk information" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="15">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="114" name="value" keyPath="values.System Profiler Extension -&gt; Feature Disabled -&gt; Disk Information" id="VwK-aB-tHR">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </button>
+                        <button translatesAutoresizingMaskIntoConstraints="NO" id="16">
+                            <rect key="frame" x="-2" y="59" width="111" height="18"/>
+                            <buttonCell key="cell" type="check" title="Graphics card" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="17">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="114" name="value" keyPath="values.System Profiler Extension -&gt; Feature Disabled -&gt; GPU Model" id="rqk-4j-e6W">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </button>
+                        <button translatesAutoresizingMaskIntoConstraints="NO" id="18">
+                            <rect key="frame" x="-2" y="29" width="218" height="18"/>
+                            <buttonCell key="cell" type="check" title="Active display screen resolution" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="19">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="114" name="value" keyPath="values.System Profiler Extension -&gt; Feature Disabled -&gt; Screen Resolution" id="FyL-Q6-iAG">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </button>
+                        <button translatesAutoresizingMaskIntoConstraints="NO" id="22">
+                            <rect key="frame" x="-2" y="-1" width="181" height="18"/>
+                            <buttonCell key="cell" type="check" title="Operating system version" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="23">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="114" name="value" keyPath="values.System Profiler Extension -&gt; Feature Disabled -&gt; OS Version" id="Uzm-ov-IK8">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
             </subviews>
             <constraints>
+                <constraint firstItem="98" firstAttribute="leading" secondItem="fcU-ye-s1H" secondAttribute="leading" id="08e-gI-Syf"/>
                 <constraint firstItem="97" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="1hl-wt-fGE"/>
-                <constraint firstItem="3" firstAttribute="top" secondItem="92" secondAttribute="bottom" constant="19" id="2xv-2g-xxg"/>
-                <constraint firstItem="3" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="160" id="4fg-70-ieJ"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="14" secondAttribute="trailing" constant="20" id="4gm-2x-wbi"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="18" secondAttribute="trailing" constant="20" id="6EA-ui-clT"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="98" secondAttribute="trailing" constant="20" id="7yl-zH-oAH"/>
-                <constraint firstItem="14" firstAttribute="top" secondItem="12" secondAttribute="bottom" constant="14" id="Cqq-tW-rrq"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="22" secondAttribute="trailing" constant="20" id="DL3-4N-JNH"/>
-                <constraint firstItem="12" firstAttribute="leading" secondItem="5" secondAttribute="leading" id="DaV-SE-lzH"/>
-                <constraint firstItem="18" firstAttribute="leading" secondItem="16" secondAttribute="leading" id="E3p-0W-CWO"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="5" secondAttribute="trailing" constant="20" id="FxO-gV-ubb"/>
-                <constraint firstItem="12" firstAttribute="leading" secondItem="14" secondAttribute="leading" id="Gc3-57-Hcg"/>
-                <constraint firstItem="16" firstAttribute="top" secondItem="14" secondAttribute="bottom" constant="14" id="HUN-fa-hhY"/>
+                <constraint firstAttribute="bottom" secondItem="6bj-fu-TKI" secondAttribute="bottom" constant="30" id="8pm-a5-DE1"/>
+                <constraint firstItem="Tag-MJ-P9h" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="IhP-Fe-PaF"/>
                 <constraint firstItem="6bj-fu-TKI" firstAttribute="top" secondItem="98" secondAttribute="bottom" constant="8" id="Ixu-Kj-Kve"/>
-                <constraint firstItem="92" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="K0o-J1-NfJ"/>
-                <constraint firstItem="92" firstAttribute="top" secondItem="1" secondAttribute="top" constant="28" id="LcK-yq-TdT"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="12" secondAttribute="trailing" constant="20" id="MqS-xh-hrb"/>
-                <constraint firstItem="12" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="14" id="Olx-0n-2Ss"/>
+                <constraint firstItem="97" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="100" id="RBY-yo-hYl"/>
                 <constraint firstItem="98" firstAttribute="top" secondItem="97" secondAttribute="bottom" constant="18" id="Tfk-11-JcR"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="16" secondAttribute="trailing" constant="20" id="X8O-vf-9yq"/>
-                <constraint firstItem="5" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="14" id="YN8-Sk-bDj"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3" secondAttribute="trailing" constant="20" id="b9p-Gr-p3G"/>
-                <constraint firstItem="18" firstAttribute="top" secondItem="16" secondAttribute="bottom" constant="14" id="c9O-La-C2b"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6bj-fu-TKI" secondAttribute="trailing" constant="140" id="cbc-ys-DMR"/>
-                <constraint firstItem="22" firstAttribute="top" secondItem="18" secondAttribute="bottom" constant="14" id="fdL-9S-zVb"/>
-                <constraint firstItem="98" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="160" id="gvY-pJ-Aqe"/>
-                <constraint firstItem="22" firstAttribute="leading" secondItem="18" secondAttribute="leading" id="huX-hj-Car"/>
-                <constraint firstItem="16" firstAttribute="leading" secondItem="14" secondAttribute="leading" id="kku-SS-yIh"/>
+                <constraint firstItem="97" firstAttribute="top" secondItem="fcU-ye-s1H" secondAttribute="bottom" constant="18" id="VBg-20-az6"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6bj-fu-TKI" secondAttribute="trailing" constant="20" id="cbc-ys-DMR"/>
+                <constraint firstItem="fcU-ye-s1H" firstAttribute="top" secondItem="Tag-MJ-P9h" secondAttribute="bottom" constant="20" id="fE8-G7-1s8"/>
+                <constraint firstItem="fcU-ye-s1H" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="jI2-8x-fdm"/>
                 <constraint firstItem="6bj-fu-TKI" firstAttribute="leading" secondItem="98" secondAttribute="leading" constant="18" id="lmT-vP-6Kc"/>
-                <constraint firstItem="3" firstAttribute="leading" secondItem="5" secondAttribute="leading" id="qWh-kV-gCg"/>
-                <constraint firstAttribute="bottom" secondItem="6bj-fu-TKI" secondAttribute="bottom" constant="30" id="scM-rb-FFG"/>
-                <constraint firstItem="97" firstAttribute="top" secondItem="22" secondAttribute="bottom" constant="18" id="yY3-HT-8Kf"/>
+                <constraint firstItem="Tag-MJ-P9h" firstAttribute="top" secondItem="1" secondAttribute="top" constant="30" id="ziw-vl-9X4"/>
             </constraints>
-            <point key="canvasLocation" x="190" y="385"/>
+            <point key="canvasLocation" x="115" y="443"/>
         </customView>
         <userDefaultsController id="114" customClass="TPCPreferencesUserDefaultsController"/>
     </objects>

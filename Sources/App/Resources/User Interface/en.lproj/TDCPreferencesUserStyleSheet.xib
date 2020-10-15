@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,13 +20,13 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="207" width="480" height="348"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
             <view key="contentView" id="0hQ-Ce-Oet">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="348"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="R62-Gq-GYv">
-                        <rect key="frame" x="396" y="13" width="70" height="32"/>
+                        <rect key="frame" x="403" y="13" width="64" height="32"/>
                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="imu-oU-gSh">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -39,7 +39,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oqB-ts-Ci1">
-                        <rect key="frame" x="314" y="13" width="82" height="32"/>
+                        <rect key="frame" x="329" y="13" width="76" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sLE-U1-Q3L">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -52,17 +52,17 @@ Gw
                         </connections>
                     </button>
                     <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ut5-0A-XXN">
-                        <rect key="frame" x="20" y="61" width="440" height="242"/>
+                        <rect key="frame" x="20" y="60" width="440" height="244"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="rRP-WY-EZw">
-                            <rect key="frame" x="1" y="1" width="438" height="240"/>
+                            <rect key="frame" x="1" y="1" width="438" height="242"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" smartInsertDelete="YES" id="JXg-rs-7MF">
-                                    <rect key="frame" x="0.0" y="0.0" width="438" height="240"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="438" height="242"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="minSize" width="438" height="240"/>
+                                    <size key="minSize" width="438" height="242"/>
                                     <size key="maxSize" width="440" height="10000000"/>
                                     <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <connections>
@@ -80,12 +80,12 @@ Gw
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="kQD-yZ-kuG">
-                            <rect key="frame" x="423" y="1" width="16" height="240"/>
+                            <rect key="frame" x="423" y="1" width="16" height="242"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="vmy-l2-xRs">
-                        <rect key="frame" x="18" y="311" width="444" height="17"/>
+                        <rect key="frame" x="19" y="312" width="306" height="16"/>
                         <textFieldCell key="cell" selectable="YES" title="Enter one or more rules to modify the active style." id="IwR-xy-eUH">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -94,11 +94,11 @@ Gw
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="vmy-l2-xRs" secondAttribute="trailing" constant="20" id="35p-y1-OU5"/>
                     <constraint firstItem="Ut5-0A-XXN" firstAttribute="top" secondItem="vmy-l2-xRs" secondAttribute="bottom" constant="8" id="5N9-Dz-gG6"/>
-                    <constraint firstItem="vmy-l2-xRs" firstAttribute="leading" secondItem="0hQ-Ce-Oet" secondAttribute="leading" constant="20" id="5vb-BO-ql6"/>
                     <constraint firstItem="oqB-ts-Ci1" firstAttribute="firstBaseline" secondItem="R62-Gq-GYv" secondAttribute="firstBaseline" id="5xO-qo-wNH"/>
+                    <constraint firstItem="vmy-l2-xRs" firstAttribute="leading" secondItem="JXg-rs-7MF" secondAttribute="leading" id="8rS-49-fDE"/>
                     <constraint firstItem="oqB-ts-Ci1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0hQ-Ce-Oet" secondAttribute="leading" constant="20" id="FhZ-B2-Axe"/>
+                    <constraint firstItem="vmy-l2-xRs" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="JXg-rs-7MF" secondAttribute="trailing" constant="20" id="JCZ-PF-xue"/>
                     <constraint firstItem="R62-Gq-GYv" firstAttribute="leading" secondItem="oqB-ts-Ci1" secondAttribute="trailing" constant="12" id="MsP-Zb-EHv"/>
                     <constraint firstAttribute="trailing" secondItem="R62-Gq-GYv" secondAttribute="trailing" constant="20" id="Tg7-AS-xbN"/>
                     <constraint firstAttribute="bottom" secondItem="R62-Gq-GYv" secondAttribute="bottom" constant="20" id="cAg-fH-npM"/>

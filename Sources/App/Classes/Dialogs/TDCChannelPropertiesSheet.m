@@ -83,8 +83,7 @@ typedef NS_ENUM(NSUInteger, TDCChannelPropertiesSheetSelection)
 @property (nonatomic, strong) IBOutlet NSView *contentViewDefaultsView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewGeneralView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewNotifications;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
+@property (nonatomic, strong) IBOutlet NSView *contentViewNotificationsHost;
 @property (nonatomic, strong) IBOutlet TVCNotificationConfigurationViewController *notificationsController;
 
 - (IBAction)onMenuBarItemChanged:(id)sender;
@@ -232,7 +231,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	self.notificationsController.notifications = notifications;
 
-	[self.notificationsController attachToView:self.contentViewNotifications];
+	[self.notificationsController attachToView:self.contentViewNotificationsHost];
 }
 
 - (void)reloadNotificationsController
@@ -298,9 +297,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)selectPane:(NSView *)view
 {
-	[self.contentView attachSubview:view
-			adjustedWidthConstraint:self.contentViewWidthConstraint
-		   adjustedHeightConstraint:self.contentViewHeightConstraint];
+	[self.contentView replaceFirstSubview:view];
 }
 
 - (void)start

@@ -59,8 +59,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable, readwrite) NSColor *searchResultChannelNameTextColor;
 @property (nonatomic, copy, nullable, readwrite) NSColor *searchResultChannelDescriptionTextColor;
 @property (nonatomic, copy, nullable, readwrite) NSColor *searchResultKeyboardShortcutTextColor;
-@property (nonatomic, assign, readwrite) CGFloat searchResultKeyboardShortcutDeselectedTopOffset;
-@property (nonatomic, assign, readwrite) CGFloat searchResultKeyboardShortcutSelectedTopOffset;
+@property (nonatomic, assign, readwrite) CGFloat searchResultKeyboardShortcutDeselectedOffset;
+@property (nonatomic, assign, readwrite) CGFloat searchResultKeyboardShortcutSelectedOffset;
 @property (nonatomic, copy, nullable, readwrite) NSColor *searchResultSelectedTextColor;
 @end
 
@@ -109,8 +109,8 @@ NS_ASSUME_NONNULL_BEGIN
 	self.searchResultChannelNameTextColor = [self colorInGroup:searchResult withKey:@"channelNameTextColor"];
 	self.searchResultChannelDescriptionTextColor = [self colorInGroup:searchResult withKey:@"channelDescriptionTextColor"];
 	self.searchResultKeyboardShortcutTextColor = [self colorInGroup:searchResult withKey:@"keyboardShortcutTextColor"];
-	self.searchResultKeyboardShortcutDeselectedTopOffset = [self measurementInGroup:searchResult withKey:@"keyboardShortcutDeselectedTopOffset"];
-	self.searchResultKeyboardShortcutSelectedTopOffset = [self measurementInGroup:searchResult withKey:@"keyboardShortcutSelectedTextOffset"];
+	self.searchResultKeyboardShortcutDeselectedOffset = [self measurementInGroup:searchResult withKey:@"keyboardShortcutDeselectedOffset"];
+	self.searchResultKeyboardShortcutSelectedOffset = [self measurementInGroup:searchResult withKey:@"keyboardShortcutSelectedOffset"];
 	self.searchResultSelectedTextColor = [self colorInGroup:searchResult withKey:@"selectedTextColor"];
 
 	[self flushAppearanceProperties];

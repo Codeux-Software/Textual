@@ -64,25 +64,21 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeGenericError = 2000
 NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 2000001;
 
 /* Private header */
+typedef void (^TLOLicenseManagerDownloaderConnectionCompletionBlock)(TLOLicenseManagerDownloaderRequestType requestType, NSURLResponse * _Nullable response, NSData * _Nullable data);
+
 @interface TLOLicenseManagerDownloaderConnection : NSObject <NSURLConnectionDelegate>
 @property (nonatomic, weak) TLOLicenseManagerDownloader *delegate; // To be set by caller
 @property (nonatomic, assign) TLOLicenseManagerDownloaderRequestType requestType; // To be set by caller
 @property (nonatomic, copy) NSDictionary<NSString *, id> *requestContextInfo; // Information set by caller such as license key or e-mail address
-@property (nonatomic, strong) NSURLConnection *requestConnection; // Will be set by the object, readonly
-@property (nonatomic, strong) NSHTTPURLResponse *requestResponse; // Will be set by the object, readonly
-@property (nonatomic, strong) NSMutableData *requestResponseData; // Will be set by the object, readonly
+@property (nonatomic, strong) NSURLSessionTask *sessionTask;
 
-- (BOOL)setupConnectionRequest;
+- (void)performRequest:(TLOLicenseManagerDownloaderConnectionCompletionBlock)completionBlock;
 
 - (void)cancelRequest;
 @end
 
 @interface TLOLicenseManagerDownloader ()
 @property (nonatomic, strong, nullable) TLOLicenseManagerDownloaderConnection *activeConnection;
-
-- (void)processResponseForRequestType:(TLOLicenseManagerDownloaderRequestType)requestType
-					   httpStatusCode:(NSUInteger)requestHttpStatusCode
-							 contents:(nullable NSData *)requestContents;
 @end
 
 #define _connectionTimeoutInterval			30.0
@@ -98,8 +94,8 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 
 	NSDictionary *contextInfo = @{@"licenseKey" : licenseKey};
 
-	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestTypeActivation
-								context:contextInfo];
+	[self performRequestType:TLOLicenseManagerDownloaderRequestTypeActivation
+					 context:contextInfo];
 }
 
 - (void)deactivateLicense
@@ -117,8 +113,8 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 
 	NSDictionary *contextInfo = @{@"licenseKey" : licenseKey};
 
-	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestTypeLicenseUpgradeEligibility
-								context:contextInfo];
+	[self performRequestType:TLOLicenseManagerDownloaderRequestTypeLicenseUpgradeEligibility
+					 context:contextInfo];
 }
 
 - (void)checkUpgradeEligibilityOfReceipt:(NSString *)receiptData
@@ -134,8 +130,8 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 		@"licenseOwnerMacAddress" : macAddress
 	};
 
-	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestTypeReceiptUpgradeEligibility
-								context:contextInfo];
+	[self performRequestType:TLOLicenseManagerDownloaderRequestTypeReceiptUpgradeEligibility
+					 context:contextInfo];
 }
 
 - (void)requestLostLicenseKeyForContactAddress:(NSString *)contactAddress
@@ -144,8 +140,8 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 
 	NSDictionary *contextInfo = @{@"licenseOwnerContactAddress" : contactAddress};
 
-	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestTypeSendLostLicense
-								context:contextInfo];
+	[self performRequestType:TLOLicenseManagerDownloaderRequestTypeSendLostLicense
+					 context:contextInfo];
 }
 
 - (void)migrateMacAppStorePurchase:(NSString *)receiptData licenseOwnerName:(NSString *)licenseOwnerName licenseOwnerContactAddress:(NSString *)licenseOwnerContactAddress
@@ -165,15 +161,15 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 		@"licenseOwnerMacAddress" : macAddress
 	};
 
-	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestTypeMigrateAppStore
-								context:contextInfo];
+	[self performRequestType:TLOLicenseManagerDownloaderRequestTypeMigrateAppStore
+					 context:contextInfo];
 }
 
-- (void)setupNewActionWithRequestType:(TLOLicenseManagerDownloaderRequestType)requestType context:(NSDictionary<NSString *, id> *)requestContext
+- (void)performRequestType:(TLOLicenseManagerDownloaderRequestType)requestType context:(NSDictionary<NSString *, id> *)requestContext
 {
 	NSParameterAssert(requestContext != nil);
 
-	if (self.activeConnection != nil) {
+	if ( self.activeConnection != nil) {
 		[self.activeConnection cancelRequest];
 	}
 
@@ -185,9 +181,20 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 
 	connectionObject.requestType = requestType;
 
-	self.activeConnection = connectionObject;
+	__weak TLOLicenseManagerDownloader *weakSelf = self;
 
-	[connectionObject setupConnectionRequest];
+	[connectionObject performRequest:^(TLOLicenseManagerDownloaderRequestType requestType, NSURLResponse *response, NSData *data) {
+		/* Connection uses NSURLSession which is a background task. */
+		/* The result of processing the response will update the UI
+		 which must always take place on the main thread. */
+		XRPerformBlockAsynchronouslyOnMainQueue(^{
+			[weakSelf processResponse:response forRequestType:requestType contents:data];
+		});
+
+		weakSelf.activeConnection = nil;
+	}];
+
+	self.activeConnection = connectionObject;
 }
 
 - (void)cancelRequest
@@ -205,43 +212,49 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 	self.completionBlock = nil;
 }
 
-- (void)processResponseForRequestType:(TLOLicenseManagerDownloaderRequestType)requestType httpStatusCode:(NSUInteger)requestHttpStatusCode contents:(nullable NSData *)requestContents
+- (void)processResponse:(nullable NSURLResponse *)response forRequestType:(TLOLicenseManagerDownloaderRequestType)requestType contents:(nullable NSData *)responseContents
+{
+	/* We assume the response failed until proven otherwise. */
+	NSUInteger responseStatusCode = TLOLicenseManagerDownloaderRequestHTTPStatusTryAgainLater;
+
+	if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+		responseStatusCode = ((NSHTTPURLResponse *)response).statusCode;
+	}
+
+	[self processResponseForRequestType:requestType
+						 httpStatusCode:responseStatusCode
+							   contents:responseContents];
+}
+
+- (void)processResponseForRequestType:(TLOLicenseManagerDownloaderRequestType)requestType httpStatusCode:(NSUInteger)responseStatusCode contents:(nullable NSData *)responseContents
 {
 	/* The license API returns content as property lists, including errors. This method
 	 will try to convert the returned contents into an NSDictionary (assuming its a valid
 	 property list). If that fails, then the method shows generic failure reason and
 	 logs to the console that the contents could not parsed. */
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		self.activeConnection = nil;
-	});
-
-#define _performCompletionBlockAndReturn(operationResult) \
-	if (self.completionBlock) { 	\
-		self.completionBlock((operationResult), (statusCode), (statusContext)); 	\
-	} 	\
-		\
-	return;
 
 	/* Define defaults */
 	id propertyList = nil;
 
-	NSUInteger statusCode = 0;
+	BOOL errorBlockPerformed = NO;
 
-	id statusContext = nil;
+	NSUInteger apiStatusCode = 0;
 
-	if (requestHttpStatusCode == TLOLicenseManagerDownloaderRequestHTTPStatusTryAgainLater) {
-		statusCode = TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater;
+	id apiStatusContext = nil;
+
+	if (responseStatusCode == TLOLicenseManagerDownloaderRequestHTTPStatusTryAgainLater) {
+		apiStatusCode = TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater;
 
 		goto present_fatal_error;
 	} else {
-		statusCode = TLOLicenseManagerDownloaderRequestStatusCodeGenericError;
+		apiStatusCode = TLOLicenseManagerDownloaderRequestStatusCodeGenericError;
 	}
 
 	/* Attempt to convert contents into a property list dictionary */
-	if (requestContents) {
+	if (responseContents) {
 		NSError *propertyListReadError = nil;
 
-		propertyList = [NSPropertyListSerialization propertyListWithData:requestContents
+		propertyList = [NSPropertyListSerialization propertyListWithData:responseContents
 																 options:NSPropertyListImmutable
 																  format:NULL
 																   error:&propertyListReadError];
@@ -263,22 +276,22 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 			goto present_fatal_error;
 		}
 		
-		statusCode = [l_statusCode unsignedIntegerValue];
+		apiStatusCode = [l_statusCode unsignedIntegerValue];
 		
-		statusContext = propertyList[@"Status Context"];
+		apiStatusContext = propertyList[@"Status Context"];
 		
-		if (requestHttpStatusCode == TLOLicenseManagerDownloaderRequestHTTPStatusSuccess)
+		if (responseStatusCode == TLOLicenseManagerDownloaderRequestHTTPStatusSuccess)
 		{
 			/* Process successful results */
-			if (requestType == TLOLicenseManagerDownloaderRequestTypeActivation && statusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
+			if (requestType == TLOLicenseManagerDownloaderRequestTypeActivation && apiStatusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
 			{
-				if (statusContext == nil || [statusContext isKindOfClass:[NSData class]] == NO) {
+				if (apiStatusContext == nil || [apiStatusContext isKindOfClass:[NSData class]] == NO) {
 					LogToConsoleError("'Status Context' is nil or not of kind 'NSData'");
 					
 					goto present_fatal_error;
 				}
 				
-				if (self.actionBlock != nil && self.actionBlock(statusCode, statusContext) == NO) {
+				if (self.actionBlock != nil && self.actionBlock(apiStatusCode, apiStatusContext) == NO) {
 					LogToConsoleError("Failed to write user license file contents");
 					
 					goto present_fatal_error;
@@ -291,21 +304,21 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 									alternateButton:nil];
 				}
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestTypeSendLostLicense && statusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
+			else if (requestType == TLOLicenseManagerDownloaderRequestTypeSendLostLicense && apiStatusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
 			{
-				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
+				if (apiStatusContext == nil || [apiStatusContext isKindOfClass:[NSDictionary class]] == NO) {
 					LogToConsoleError("'Status Context' is nil or not of kind 'NSDictionary'");
 					
 					goto present_fatal_error;
 				}
 				
-				if (self.actionBlock != nil && self.actionBlock(statusCode, statusContext) == NO) {
+				if (self.actionBlock != nil && self.actionBlock(apiStatusCode, apiStatusContext) == NO) {
 					LogToConsoleError("Action blocked returned error");
 					
 					goto present_fatal_error;
 				}
 				
-				NSString *licenseOwnerContactAddress = statusContext[@"licenseOwnerContactAddress"];
+				NSString *licenseOwnerContactAddress = apiStatusContext[@"licenseOwnerContactAddress"];
 				
 				if (licenseOwnerContactAddress.length == 0) {
 					LogToConsoleError("'licenseOwnerContactAddress' is nil or of zero length");
@@ -320,21 +333,21 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 									alternateButton:nil];
 				}
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestTypeMigrateAppStore && statusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
+			else if (requestType == TLOLicenseManagerDownloaderRequestTypeMigrateAppStore && apiStatusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
 			{
-				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
+				if (apiStatusContext == nil || [apiStatusContext isKindOfClass:[NSDictionary class]] == NO) {
 					LogToConsoleError("'Status Context' is nil or not of kind 'NSDictionary'");
 					
 					goto present_fatal_error;
 				}
 				
-				if (self.actionBlock != nil && self.actionBlock(statusCode, statusContext) == NO) {
+				if (self.actionBlock != nil && self.actionBlock(apiStatusCode, apiStatusContext) == NO) {
 					LogToConsoleError("Action blocked returned error");
 					
 					goto present_fatal_error;
 				}
 				
-				NSString *licenseOwnerContactAddress = statusContext[@"licenseOwnerContactAddress"];
+				NSString *licenseOwnerContactAddress = apiStatusContext[@"licenseOwnerContactAddress"];
 				
 				if (licenseOwnerContactAddress.length == 0) {
 					LogToConsoleError("'licenseOwnerContactAddress' is nil or of zero length");
@@ -349,37 +362,45 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 									alternateButton:nil];
 				}
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestTypeLicenseUpgradeEligibility && statusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
+			else if (requestType == TLOLicenseManagerDownloaderRequestTypeLicenseUpgradeEligibility && apiStatusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
 			{
-				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
+				if (apiStatusContext == nil || [apiStatusContext isKindOfClass:[NSDictionary class]] == NO) {
 					LogToConsoleError("'Status Context' is nil or not of kind 'NSDictionary'");
 					
 					goto present_fatal_error;
 				}
 				
 				if (self.actionBlock != nil) {
-					(void)self.actionBlock(statusCode, statusContext);
+					(void)self.actionBlock(apiStatusCode, apiStatusContext);
 				}
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestTypeReceiptUpgradeEligibility && statusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
+			else if (requestType == TLOLicenseManagerDownloaderRequestTypeReceiptUpgradeEligibility && apiStatusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
 			{
-				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
+				if (apiStatusContext == nil || [apiStatusContext isKindOfClass:[NSDictionary class]] == NO) {
 					LogToConsoleError("'Status Context' is nil or not of kind 'NSDictionary'");
 					
 					goto present_fatal_error;
 				}
 				
 				if (self.actionBlock != nil) {
-					(void)self.actionBlock(statusCode, statusContext);
+					(void)self.actionBlock(apiStatusCode, apiStatusContext);
 				}
 			}
-			
-			_performCompletionBlockAndReturn(YES)
+
+			if (self.completionBlock) {
+				self.completionBlock(YES, apiStatusCode, apiStatusContext);
+			}
+
+			return;
 		}
 		else // TLOLicenseManagerDownloaderRequestStatusCodeSuccess
 		{
-			if (self.errorBlock != nil && self.errorBlock(statusCode, statusContext)) {
-				goto perform_return;
+			if (self.errorBlock != nil) {
+				errorBlockPerformed = YES;
+
+				if (self.errorBlock(apiStatusCode, apiStatusContext)) {
+					goto perform_return;
+				}
 			}
 			
 			if (self.isSilentOnFailure) {
@@ -387,22 +408,22 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 			}
 			
 			/* Errors related to license activation. */
-			if (requestType == TLOLicenseManagerDownloaderRequestTypeActivation && statusCode == 6500000)
+			if (requestType == TLOLicenseManagerDownloaderRequestTypeActivation && apiStatusCode == 6500000)
 			{
 				[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[wc7-mn]")
 										  title:TXTLS(@"TLOLicenseManager[fg6-gf]")
 								  defaultButton:TXTLS(@"Prompts[c7s-dq]")
 								alternateButton:nil];
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestTypeActivation && statusCode == 6500001)
+			else if (requestType == TLOLicenseManagerDownloaderRequestTypeActivation && apiStatusCode == 6500001)
 			{
-				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
+				if (apiStatusContext == nil || [apiStatusContext isKindOfClass:[NSDictionary class]] == NO) {
 					LogToConsoleError("'Status Context' kind is not of 'NSDictionary'");
 					
 					goto present_fatal_error;
 				}
 				
-				NSString *licenseKey = statusContext[@"licenseKey"];
+				NSString *licenseKey = apiStatusContext[@"licenseKey"];
 				
 				if (licenseKey.length == 0) {
 					LogToConsoleError("'licenseKey' is nil or of zero length");
@@ -419,15 +440,15 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 					[self contactSupport];
 				}
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestTypeActivation && statusCode == 6500002)
+			else if (requestType == TLOLicenseManagerDownloaderRequestTypeActivation && apiStatusCode == 6500002)
 			{
-				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
+				if (apiStatusContext == nil || [apiStatusContext isKindOfClass:[NSDictionary class]] == NO) {
 					LogToConsoleError("'Status Context' kind is not of 'NSDictionary'");
 					
 					goto present_fatal_error;
 				}
 				
-				NSString *licenseKey = statusContext[@"licenseKey"];
+				NSString *licenseKey = apiStatusContext[@"licenseKey"];
 				
 				if (licenseKey.length == 0) {
 					LogToConsoleError("'licenseKey' is nil or of zero length");
@@ -435,7 +456,7 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 					goto present_fatal_error;
 				}
 				
-				NSInteger licenseKeyActivationLimit = [statusContext integerForKey:@"licenseKeyActivationLimit"];
+				NSInteger licenseKeyActivationLimit = [apiStatusContext integerForKey:@"licenseKeyActivationLimit"];
 				
 				[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[6aa-ow]", licenseKeyActivationLimit)
 										  title:TXTLS(@"TLOLicenseManager[o66-ox]", licenseKey.prettyLicenseKey)
@@ -444,22 +465,22 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 			}
 			
 			/* Errors related to lost license recovery. */
-			else if (requestType == TLOLicenseManagerDownloaderRequestTypeSendLostLicense && statusCode == 6400000)
+			else if (requestType == TLOLicenseManagerDownloaderRequestTypeSendLostLicense && apiStatusCode == 6400000)
 			{
 				[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[dio-y9]")
 										  title:TXTLS(@"TLOLicenseManager[ocm-03]")
 								  defaultButton:TXTLS(@"Prompts[c7s-dq]")
 								alternateButton:nil];
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestTypeSendLostLicense && statusCode == 6400001)
+			else if (requestType == TLOLicenseManagerDownloaderRequestTypeSendLostLicense && apiStatusCode == 6400001)
 			{
-				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
+				if (apiStatusContext == nil || [apiStatusContext isKindOfClass:[NSDictionary class]] == NO) {
 					LogToConsoleError("'Status Context' kind is not of 'NSDictionary'");
 					
 					goto present_fatal_error;
 				}
 				
-				NSString *originalInput = statusContext[@"originalInput"];
+				NSString *originalInput = apiStatusContext[@"originalInput"];
 				
 				if (originalInput.length == 0) {
 					LogToConsoleError("'originalInput' is nil or of zero length");
@@ -474,24 +495,24 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 			}
 			
 			/* Error messages related to Mac App Store migration. */
-			else if (requestType == TLOLicenseManagerDownloaderRequestTypeMigrateAppStore && statusCode == 6600002)
+			else if (requestType == TLOLicenseManagerDownloaderRequestTypeMigrateAppStore && apiStatusCode == 6600002)
 			{
 				[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[bu4-zk]")
 										  title:TXTLS(@"TLOLicenseManager[ztd-5y]")
 								  defaultButton:TXTLS(@"Prompts[c7s-dq]")
 								alternateButton:nil];
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestTypeMigrateAppStore && statusCode == 6600003)
+			else if (requestType == TLOLicenseManagerDownloaderRequestTypeMigrateAppStore && apiStatusCode == 6600003)
 			{
 				/* We do not present a custom dialog for this error, but we still log
 				 the contents of the context to the console to help diagnose issues. */
-				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
+				if (apiStatusContext == nil || [apiStatusContext isKindOfClass:[NSDictionary class]] == NO) {
 					LogToConsoleError("'Status Context' kind is not of 'NSDictionary'");
 					
 					goto present_fatal_error;
 				}
 				
-				NSString *errorMessage = statusContext[@"Error Message"];
+				NSString *errorMessage = apiStatusContext[@"Error Message"];
 				
 				if (errorMessage.length == 0) {
 					LogToConsoleError("'errorMessage' is nil or of zero length");
@@ -506,44 +527,48 @@ NSUInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 200
 								  defaultButton:TXTLS(@"Prompts[c7s-dq]")
 								alternateButton:nil];
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestTypeMigrateAppStore && statusCode == 6600004)
+			else if (requestType == TLOLicenseManagerDownloaderRequestTypeMigrateAppStore && apiStatusCode == 6600004)
 			{
 				[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[36y-49]")
 										  title:TXTLS(@"TLOLicenseManager[enb-hw]")
 								  defaultButton:TXTLS(@"Prompts[c7s-dq]")
 								alternateButton:nil];
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestTypeMigrateAppStore && statusCode == 6600006)
+			else if (requestType == TLOLicenseManagerDownloaderRequestTypeMigrateAppStore && apiStatusCode == 6600006)
 			{
 				[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[do9-8x]")
 										  title:TXTLS(@"TLOLicenseManager[f49-rk]")
 								  defaultButton:TXTLS(@"Prompts[c7s-dq]")
 								alternateButton:nil];
 			}
-			else if (requestType == TLOLicenseManagerDownloaderRequestTypeMigrateAppStore && statusCode == 6600007)
+			else if (requestType == TLOLicenseManagerDownloaderRequestTypeMigrateAppStore && apiStatusCode == 6600007)
 			{
 				[TDCAlert modalAlertWithMessage:TXTLS(@"TLOLicenseManager[4n2-ps]")
 										  title:TXTLS(@"TLOLicenseManager[t28-j9]")
 								  defaultButton:TXTLS(@"Prompts[c7s-dq]")
 								alternateButton:nil];
 			}
-			
-			_performCompletionBlockAndReturn(NO)
 		}
 	}
 
-present_fatal_error:
-	if ((self.errorBlock == nil ||
-		 self.errorBlock(statusCode, statusContext) == NO) &&
+present_fatal_error: ;
+	if (
+		/* Perform error block if it was not performed
+		 by some other condition presented below. */
+		(errorBlockPerformed ||
+		 self.errorBlock == nil ||
+		 self.errorBlock(apiStatusCode, apiStatusContext) == NO) &&
+
+		/* Do we even present an error? */
 		self.isSilentOnFailure == NO)
 	{
 		[self presentTryAgainLaterErrorDialog];
 	}
 
 perform_return:
-	_performCompletionBlockAndReturn(NO)
-
-#undef _performCompletionBlockAndReturn
+	if (self.completionBlock) {
+		self.completionBlock(NO, apiStatusCode, apiStatusContext);
+	}
 }
 
 - (void)presentTryAgainLaterErrorDialog
@@ -673,32 +698,20 @@ perform_return:
 	self.delegate = nil;
 }
 
-- (void)destroyConnectionRequest
-{
-	if ( self.requestConnection) {
-		[self.requestConnection cancel];
-	}
-
-	self.requestConnection = nil;
-	self.requestResponse = nil;
-	self.requestResponseData = nil;
-}
-
 - (void)cancelRequest
 {
-	[self destroyConnectionRequest];
+	if ( self.sessionTask) {
+		[self.sessionTask cancel];
+	}
 }
 
-- (BOOL)setupConnectionRequest
+- (void)performRequest:(TLOLicenseManagerDownloaderConnectionCompletionBlock)completionBlock
 {
-	/* Destroy any cached data that may be defined */
-	[self destroyConnectionRequest];
-
 	/* Setup request including HTTP POST data. Return NO on failure */
 	NSURL *requestURL = [self requestURL];
 
 	if (requestURL == nil) {
-		return NO;
+		return;
 	}
 
 	NSMutableURLRequest *baseRequest = [NSMutableURLRequest requestWithURL:requestURL
@@ -706,61 +719,37 @@ perform_return:
 														   timeoutInterval:_connectionTimeoutInterval];
 
 	if ([self populateRequestPostData:baseRequest] == NO) {
-		return NO;
+		return;
 	}
 
 	/* Create the connection and start it */
-	self.requestResponseData = [NSMutableData data];
+	TLOLicenseManagerDownloaderRequestType requestType = self.requestType;
 
-	self.requestConnection = [[NSURLConnection alloc] initWithRequest:baseRequest delegate:self startImmediately:NO];
+	__weak TLOLicenseManagerDownloaderConnection *weakSelf = self;
 
-	[self.requestConnection start];
+	NSURLSession *session = [NSURLSession sharedSession];
 
-	/* Return a successful result */
-	return YES;
-}
+	NSURLSessionTask *task = [session dataTaskWithRequest:baseRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+	{
+		if (data == nil) {
+			if (error) {
+				LogToConsoleError("Request failed with error: %@",
+					error.localizedDescription);
+			}
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-	NSUInteger requestStatusCode = self.requestResponse.statusCode;
+			completionBlock(requestType, nil, nil);
 
-	NSData *requestContentsCopy = [self.requestResponseData copy];
+			return;
+		}
 
-	[self destroyConnectionRequest];
+		completionBlock(requestType, response, data);
 
-	if ( self.delegate) {
-		[self.delegate processResponseForRequestType:self.requestType
-									  httpStatusCode:requestStatusCode
-											contents:requestContentsCopy];
-	}
-}
+		weakSelf.sessionTask = nil;
+	}];
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-	[self destroyConnectionRequest]; // Destroy the existing request
+	[task resume];
 
-	LogToConsoleError("Failed to complete connection request with error: %@", error.localizedDescription);
-
-	if ( self.delegate) {
-		[self.delegate processResponseForRequestType:self.requestType
-									  httpStatusCode:TLOLicenseManagerDownloaderRequestHTTPStatusTryAgainLater
-											contents:nil];
-	}
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-	[self.requestResponseData appendData:data];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-	self.requestResponse = (id)response;
-}
-
-- (nullable NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
-{
-	return nil;
+	self.sessionTask = task;
 }
 
 @end

@@ -18,10 +18,10 @@
 		<dict>
 			<key>rowEmphasized</key>
 			<true/>
-			<key>keyboardShortcutDeselectedTopOffset</key>
-			<integer>11</integer>
-			<key>keyboardShortcutSelectedTextOffset</key>
-			<integer>14</integer>
+			<key>keyboardShortcutDeselectedOffset</key>
+			<integer>0</integer>
+			<key>keyboardShortcutSelectedOffset</key>
+			<integer>3</integer>
 		</dict>
 	</dict>
 	<key>Mojave</key>

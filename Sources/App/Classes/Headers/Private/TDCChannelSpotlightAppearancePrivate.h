@@ -56,8 +56,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy, nullable) NSColor *searchResultChannelNameTextColor;
 @property (readonly, copy, nullable) NSColor *searchResultChannelDescriptionTextColor;
 @property (readonly, copy, nullable) NSColor *searchResultKeyboardShortcutTextColor;
-@property (readonly) CGFloat searchResultKeyboardShortcutDeselectedTopOffset;
-@property (readonly) CGFloat searchResultKeyboardShortcutSelectedTopOffset;
+@property (readonly) CGFloat searchResultKeyboardShortcutDeselectedOffset;
+@property (readonly) CGFloat searchResultKeyboardShortcutSelectedOffset;
 @property (readonly, copy, nullable) NSColor *searchResultSelectedTextColor;
 @end
 

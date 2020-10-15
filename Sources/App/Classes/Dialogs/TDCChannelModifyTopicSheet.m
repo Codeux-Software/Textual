@@ -36,6 +36,9 @@
  *
  *********************************************************************** */
 
+#warning TODO: Continuing entering text that exceeds the height \
+	of the text field will grow the window.
+
 #import "NSObjectHelperPrivate.h"
 #import "TLOLocalization.h"
 #import "IRCClient.h"

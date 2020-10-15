@@ -40,7 +40,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class TVCMemberListMavericksBackgroundBox;
 @class TVCMemberListUserInfoPopover;
 
 @interface TVCMemberList ()
@@ -48,7 +47,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (TVCMemberListAppearance *)userInterfaceObjects;
 - (nullable NSVisualEffectView *)visualEffectView;
-- (nullable TVCMemberListMavericksBackgroundBox *)backgroundView;
 - (TVCMemberListUserInfoPopover *)memberListUserInfoPopover;
 
 - (void)addItemToList:(NSUInteger)rowIndex;

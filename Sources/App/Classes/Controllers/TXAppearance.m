@@ -48,7 +48,6 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 @property (nonatomic, copy, readwrite) NSString *appearanceName;
 @property (nonatomic, assign, readwrite) TXAppearanceType appearanceType;
 @property (nonatomic, assign, readwrite) BOOL isDarkAppearance;
-@property (nonatomic, assign, readwrite) BOOL isModernAppearance;
 @property (nonatomic, assign, readwrite) TXAppKitAppearanceTarget appKitAppearanceTarget;
 @end
 
@@ -76,10 +75,6 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 {
 	[self updateAppearance];
 
-	if (TEXTUAL_RUNNING_ON_YOSEMITE == NO) {
-		return;
-	}
-
 	[RZWorkspaceNotificationCenter() addObserver:self
 										selector:@selector(accessibilityDisplayOptionsDidChange:)
 											name:NSWorkspaceAccessibilityDisplayOptionsDidChangeNotification
@@ -97,10 +92,6 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 
 - (void)prepareForApplicationTermination
 {
-	if (TEXTUAL_RUNNING_ON_YOSEMITE == NO) {
-		return;
-	}
-
 	LogToConsoleTerminationProgress("Removing appearance change observers.");
 
 	[RZNotificationCenter() removeObserver:self];
@@ -116,22 +107,6 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 + (nullable NSString *)appearanceNameForType:(TXAppearanceType)type
 {
 	switch (type) {
-		case TXAppearanceTypeMavericksAquaLight:
-		{
-			return @"MavericksLightAqua";
-		}
-		case TXAppearanceTypeMavericksAquaDark:
-		{
-			return @"MavericksDarkAqua";
-		}
-		case TXAppearanceTypeMavericksGraphiteLight:
-		{
-			return @"MavericksLightGraphite";
-		}
-		case TXAppearanceTypeMavericksGraphiteDark:
-		{
-			return @"MavericksDarkGraphite";
-		}
 		case TXAppearanceTypeYosemiteLight:
 		{
 			return @"YosemiteLight";
@@ -197,11 +172,9 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 {
 	TXAppearanceType appearanceType;
 
-	BOOL onYosemite = TEXTUAL_RUNNING_ON_YOSEMITE;
 	BOOL onMojave = TEXTUAL_RUNNING_ON_MOJAVE;
 
 	BOOL isAppearanceDark = NO;
-	BOOL isAppearanceModern = YES; // good default
 
 	TXPreferredAppearance preferredAppearance = [TPCPreferences appearance];
 
@@ -253,7 +226,7 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 			appKitAppearanceTarget = TXAppKitAppearanceTargetWindow;
 		}
 	}
-	else if (onYosemite)
+	else
 	{
 		if (isAppearanceDark) {
 			appearanceType = TXAppearanceTypeYosemiteDark;
@@ -265,27 +238,6 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 		 object on individual views. We do this for dark and light
 		 appearance because we want to set vibrant light. Not aqua. */
 		appKitAppearanceTarget = TXAppKitAppearanceTargetView;
-	}
-	else
-	{
-		isAppearanceModern = NO;
-
-		if ([NSColor currentControlTint] == NSGraphiteControlTint) {
-			if (isAppearanceDark) {
-				appearanceType = TXAppearanceTypeMavericksGraphiteDark;
-			} else {
-				appearanceType = TXAppearanceTypeMavericksGraphiteLight;
-			} // isAppearanceDark
-		} else {
-			if (isAppearanceDark) {
-				appearanceType = TXAppearanceTypeMavericksAquaDark;
-			} else {
-				appearanceType = TXAppearanceTypeMavericksAquaLight;
-			} // isAppearanceDark
-		} // Graphite
-
-		/* Mavericks doesn't have vibrancy or dark which means there
-		 is no need to change the AppKit appearance target for it. */
 	} // macOS Version
 
 	/* Test for changes */
@@ -320,8 +272,7 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 	newProperties.appearanceType = appearanceType;
 
 	newProperties.isDarkAppearance = isAppearanceDark;
-	newProperties.isModernAppearance = isAppearanceModern;
-
+	
 	newProperties.appKitAppearanceTarget = appKitAppearanceTarget;
 
 	self.properties = newProperties;

@@ -134,8 +134,6 @@ static NSInteger _cachedMessageCount = (-1);
 	BOOL showRedBadge = (messageCount >= 1);
 	BOOL showGreenBadge = (highlightCount >= 1);
 
-	BOOL onYosemite = TEXTUAL_RUNNING_ON_YOSEMITE;
-
 	/* ////////////////////////////////////////////////////////// */
 	/* Define Text Drawing Globals */
 	/* ////////////////////////////////////////////////////////// */
@@ -144,25 +142,12 @@ static NSInteger _cachedMessageCount = (-1);
 
 	NSMutableAttributedString *badgeText = [NSMutableAttributedString alloc];
 
-	NSDictionary *badgeTextAttributes = nil;
+	CGFloat badgeTextFrameCorrection = 2.0;
 
-	CGFloat badgeTextFrameCorrection = 0.0;
-
-	if (onYosemite) {
-		badgeTextFrameCorrection = 2.0;
-
-		badgeTextAttributes = @{
-			NSFontAttributeName				: [NSFont fontWithName:@"Helvetica" size:24.0],
-			NSForegroundColorAttributeName	: [NSColor whiteColor]
-		};
-	} else {
-		badgeTextFrameCorrection = 1.0;
-
-		badgeTextAttributes = @{
-			NSFontAttributeName				: [NSFont fontWithName:@"Helvetica" size:22.0],
-			NSForegroundColorAttributeName	: [NSColor whiteColor]
-		};
-	}
+	NSDictionary *badgeTextAttributes = @{
+		NSFontAttributeName				: [NSFont fontWithName:@"Helvetica" size:24.0],
+		NSForegroundColorAttributeName	: [NSColor whiteColor]
+	};
 
 	/* ////////////////////////////////////////////////////////// */
 	/* Load Drawing Images */
@@ -170,34 +155,13 @@ static NSInteger _cachedMessageCount = (-1);
 
 	NSImage *appIcon = [[self applicationIcon] copy];
 
-	NSImage *redBadgeLeft = nil;
-	NSImage *redBadgeCenter = nil;
-	NSImage *redBadgeRight = nil;
+	NSImage *redBadgeLeft = [NSImage imageNamed:@"DIRedBadgeLeft.ping"];
+	NSImage *redBadgeCenter = [NSImage imageNamed:@"DIRedBadgeCenter.ping"];
+	NSImage *redBadgeRight = [NSImage imageNamed:@"DIRedBadgeRight.ping"];
 
-	NSImage *greenBadgeLeft = nil;
-	NSImage *greenBadgeCenter = nil;
-	NSImage *greenBadgeRight = nil;
-
-	if (onYosemite)
-	{
-		redBadgeLeft = [NSImage imageNamed:@"DIRedBadgeLeftYosemite.png"];
-		redBadgeCenter = [NSImage imageNamed:@"DIRedBadgeCenterYosemite.png"];
-		redBadgeRight = [NSImage imageNamed:@"DIRedBadgeRightYosemite.png"];
-
-		greenBadgeLeft = [NSImage imageNamed:@"DIGreenBadgeLeftYosemite.png"];
-		greenBadgeCenter = [NSImage imageNamed:@"DIGreenBadgeCenterYosemite.png"];
-		greenBadgeRight	= [NSImage imageNamed:@"DIGreenBadgeRightYosemite.png"];
-	}
-	else
-	{
-		redBadgeLeft = [NSImage imageNamed:@"DIRedBadgeLeftMavericks.png"];
-		redBadgeCenter = [NSImage imageNamed:@"DIRedBadgeCenterMavericks.png"];
-		redBadgeRight = [NSImage imageNamed:@"DIRedBadgeRightMavericks.png"];
-
-		greenBadgeLeft = [NSImage imageNamed:@"DIGreenBadgeLeftMavericks.png"];
-		greenBadgeCenter = [NSImage imageNamed:@"DIGreenBadgeCenterMavericks.png"];
-		greenBadgeRight = [NSImage imageNamed:@"DIGreenBadgeRightMavericks.png"];
-	}
+	NSImage *greenBadgeLeft = [NSImage imageNamed:@"DIGreenBadgeLeft.ping"];
+	NSImage *greenBadgeCenter = [NSImage imageNamed:@"DIGreenBadgeCenter.ping"];
+	NSImage *greenBadgeRight	= [NSImage imageNamed:@"DIGreenBadgeRight.ping"];
 
 	/* ////////////////////////////////////////////////////////// */
 	/* Build Scaling Frames */
@@ -209,46 +173,23 @@ static NSInteger _cachedMessageCount = (-1);
 
 	[appIcon lockFocus];
 
-	if (onYosemite)
-	{
-		/* Red Badge Size */
-		redBadgeRightFrame.size.height = 53.0;
-		redBadgeCenterFrame.size.height = 53.0;
-		redBadgeLeftFrame.size.height = 53.0;
+	/* Red Badge Size */
+	redBadgeRightFrame.size.height = 53.0;
+	redBadgeCenterFrame.size.height = 53.0;
+	redBadgeLeftFrame.size.height = 53.0;
 
-		redBadgeLeftFrame.size.width = 27.0;
-		redBadgeCenterFrame.size.width = [self badgeCenterTileWidthForYosemite:messageCount];
-		redBadgeRightFrame.size.width = 26.0;
+	redBadgeLeftFrame.size.width = 27.0;
+	redBadgeCenterFrame.size.width = [self badgeCenterTileWidth:messageCount];
+	redBadgeRightFrame.size.width = 26.0;
 
-		/* Green Badge Size */
-		greenBadgeRightFrame.size.height = 53.0;
-		greenBadgeCenterFrame.size.height = 53.0;
-		greenBadgeLeftFrame.size.height	= 53.0;
+	/* Green Badge Size */
+	greenBadgeRightFrame.size.height = 53.0;
+	greenBadgeCenterFrame.size.height = 53.0;
+	greenBadgeLeftFrame.size.height	= 53.0;
 
-		greenBadgeLeftFrame.size.width = 27.0;
-		greenBadgeCenterFrame.size.width = [self badgeCenterTileWidthForYosemite:highlightCount];
-		greenBadgeRightFrame.size.width	= 26.0;
-	}
-	else
-	{
-		/* Red Badge Size */
-		redBadgeRightFrame.size.height = 44.0;
-		redBadgeCenterFrame.size.height = 44.0;
-		redBadgeLeftFrame.size.height = 44.0;
-
-		redBadgeLeftFrame.size.width = 21.0;
-		redBadgeCenterFrame.size.width = [self badgeCenterTileWidthForMavericks:messageCount];
-		redBadgeRightFrame.size.width = 20.0;
-
-		/* Green Badge Size */
-		greenBadgeRightFrame.size.height = 44.0;
-		greenBadgeCenterFrame.size.height = 44.0;
-		greenBadgeLeftFrame.size.height	= 44.0;
-
-		greenBadgeLeftFrame.size.width = 21.0;
-		greenBadgeCenterFrame.size.width = [self badgeCenterTileWidthForMavericks:highlightCount];
-		greenBadgeRightFrame.size.width	= 20.0;
-	}
+	greenBadgeLeftFrame.size.width = 27.0;
+	greenBadgeCenterFrame.size.width = [self badgeCenterTileWidth:highlightCount];
+	greenBadgeRightFrame.size.width	= 26.0;
 
 	/* ////////////////////////////////////////////////////////// */
 
@@ -314,9 +255,9 @@ static NSInteger _cachedMessageCount = (-1);
 
 	/* Red Badge */
 	if (showRedBadge) {
-		[redBadgeLeft drawInRect:redBadgeLeftFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-		[redBadgeCenter drawInRect:redBadgeCenterFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-		[redBadgeRight drawInRect:redBadgeRightFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+		[redBadgeLeft drawInRect:redBadgeLeftFrame fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
+		[redBadgeCenter drawInRect:redBadgeCenterFrame fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
+		[redBadgeRight drawInRect:redBadgeRightFrame fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
 
 		/* Red Badge Text */
 		badgeText = [badgeText initWithString:[NSString stringWithInteger:messageCount] attributes:badgeTextAttributes];
@@ -341,9 +282,9 @@ static NSInteger _cachedMessageCount = (-1);
 
 	if (showGreenBadge) {
 		/* Green Badge */
-		[greenBadgeLeft	drawInRect:greenBadgeLeftFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-		[greenBadgeCenter drawInRect:greenBadgeCenterFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-		[greenBadgeRight drawInRect:greenBadgeRightFrame fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+		[greenBadgeLeft	drawInRect:greenBadgeLeftFrame fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
+		[greenBadgeCenter drawInRect:greenBadgeCenterFrame fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
+		[greenBadgeRight drawInRect:greenBadgeRightFrame fromRect:NSZeroRect operation:NSCompositingOperationSourceOver fraction:1.0];
 
 		/* Green Badge Text */
 		badgeText = [badgeText initWithString:[NSString stringWithInteger:highlightCount] attributes:badgeTextAttributes];
@@ -379,31 +320,7 @@ static NSInteger _cachedMessageCount = (-1);
 	[NSApp setApplicationIconImage:appIcon];
 }
 
-+ (CGFloat)badgeCenterTileWidthForMavericks:(NSUInteger)badgeCount
-{
-	switch (badgeCount) {
-		case 1 ... 9:
-		{
-			return 5.0;
-		}
-		case 10 ... 99:
-		{
-			return 16.0;
-		}
-		case 100 ... 999:
-		{
-			return 28.0;
-		}
-		case 1000 ... 9999:
-		{
-			return 38.0;
-		}
-	}
-
-	return 1.0;
-}
-
-+ (CGFloat)badgeCenterTileWidthForYosemite:(NSUInteger)badgeCount
++ (CGFloat)badgeCenterTileWidth:(NSUInteger)badgeCount
 {
 	switch (badgeCount) {
 		case 1 ... 9:

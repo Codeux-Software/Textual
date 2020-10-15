@@ -152,7 +152,7 @@ ClassWithDesignatedInitializerInitMethod
 		return NO;
 	}
 
-	NSUInteger modifiers = (e.modifierFlags & (NSShiftKeyMask | NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask));
+	NSUInteger modifiers = (e.modifierFlags & (NSEventModifierFlagShift | NSEventModifierFlagControl | NSEventModifierFlagOption | NSEventModifierFlagCommand));
 
 	NSNumber *modifierKeys = @(modifiers);
 

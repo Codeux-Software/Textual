@@ -241,15 +241,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Other Colors
 
-+ (NSColor *)labelColorBackwardsCompat
-{
-	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
-		return [NSColor labelColor];
-	} else {
-		return [NSColor controlTextColor];
-	}
-}
-
 + (NSColor *)outlineViewHeaderTextColor
 {
 	return [self colorWithCalibratedRed:0.439216 green:0.494118 blue:0.54902 alpha:1.0];

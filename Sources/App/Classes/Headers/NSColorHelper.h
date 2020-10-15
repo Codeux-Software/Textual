@@ -58,8 +58,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (class, readonly) NSColor *formatterNormalGrayColor;
 @property (class, readonly) NSColor *formatterLightGrayColor;
 
-@property (class, readonly) NSColor *labelColorBackwardsCompat;
-
 @property (class, readonly) NSColor *outlineViewHeaderTextColor;
 @property (class, readonly) NSColor *outlineViewHeaderDisabledTextColor;
 @end

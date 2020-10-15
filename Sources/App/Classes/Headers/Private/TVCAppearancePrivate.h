@@ -41,8 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCAppearance ()
 /* TVCListAppearance will take care of all the hard work such as
- inheritance and retina. You only need to specify "MavericksDark"
- for example, not "MavericksDarkRetina" */
+ inheritance and retina. You only need to specify "MojaveDark"
+ for example, not "MojaveDarkRetina" */
 - (nullable instancetype)initWithAppearanceNamed:(NSString *)appearanceName
 										   atURL:(NSURL *)appearanceLocation
 								forRetinaDisplay:(BOOL)forRetinaDisplay NS_DESIGNATED_INITIALIZER;

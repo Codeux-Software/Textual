@@ -51,7 +51,6 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 @interface TVCServerList ()
 @property (nonatomic, strong, readwrite) TVCServerListAppearance *userInterfaceObjects;
 @property (nonatomic, weak, readwrite) IBOutlet NSVisualEffectView *visualEffectView;
-@property (nonatomic, weak, readwrite) IBOutlet TVCServerListMavericksBackgroundBox *backgroundView;
 @property (nonatomic, assign, readwrite) BOOL leftMouseIsDownInView;
 @end
 
@@ -186,13 +185,7 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 
 	__kindof TVCServerListCell *rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
 
-	BOOL isGroupItem = [rowView isKindOfClass:[TVCServerListCellGroupItem class]];
-
-	if (isGroupItem) {
-		[rowView updateGroupDisclosureTriangle]; // Calls setNeedsDisplay: for item
-	} else {
-		rowView.needsDisplay = YES;
-	}
+	rowView.needsDisplay = YES;
 }
 
 - (void)refreshDrawingForItem:(IRCTreeItem *)cellItem
@@ -337,22 +330,16 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 {
 	NSParameterAssert(appearance != nil);
 
-	BOOL onYosemite = TEXTUAL_RUNNING_ON_YOSEMITE;
-
 	/* We assign a strong reference to these instead of returning the original
 	 value every time so that there are no race conditions for when it changes. */
 	self.userInterfaceObjects = appearance;
 
-	if (onYosemite) {
-		[self updateVibrancyWithAppearance:appearance];
-	}
+	[self updateVibrancyWithAppearance:appearance];
 
-	if (onYosemite == NO) {
-		if (appearance.isDarkAppearance) {
-			self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleLight;
-		} else {
-			self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleDark;
-		}
+	if (appearance.isDarkAppearance) {
+		self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleLight;
+	} else {
+		self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleDark;
 	}
 
 	self.needsDisplay = YES;
@@ -380,10 +367,6 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 
 - (void)respondToRequiresRedraw
 {
-	if (self.backgroundView) {
-		self.backgroundView.needsDisplay = YES;
-	}
-
 	[self refreshAllDrawings:YES];
 }
 

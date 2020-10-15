@@ -35,7 +35,7 @@
  *
  *********************************************************************** */
 
-#import "TPISystemProfilerModelIDRequestController.h"
+#import "TPISystemProfilerModelRequest.h"
 #import "TPISystemProfiler.h"
 #import "TPI_SP_SysInfo.h"
 
@@ -106,7 +106,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (_performedRequest == NO) {
 		_performedRequest = YES;
 
-		[[TPISystemProfilerModelIDRequestController sharedController] requestIdentifier];
+		[[TPISystemProfilerModelRequest sharedController] requestIdentifier];
 	}
 }
 

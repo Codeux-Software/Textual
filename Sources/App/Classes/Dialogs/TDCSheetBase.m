@@ -64,11 +64,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)startSheetWithWindow:(NSWindow *)window
 {
-	[NSApp beginSheet:self.sheet
-	   modalForWindow:window
-		modalDelegate:self
-	   didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:)
-		  contextInfo:nil];
+	[window beginSheet:self.sheet
+	 completionHandler:^(NSModalResponse returnCode) {
+		[self sheetDidEndWithReturnCode:returnCode];
+	}];
 }
 
 - (void)endSheet
@@ -76,7 +75,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[NSApp endSheet:self.sheet];
 }
 
-- (void)sheetDidEnd:(NSWindow *)sender returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+- (void)sheetDidEndWithReturnCode:(NSInteger)returnCode
 {
 	[self.sheet close];
 }

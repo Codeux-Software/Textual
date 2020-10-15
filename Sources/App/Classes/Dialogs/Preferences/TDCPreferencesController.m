@@ -54,6 +54,7 @@
 #import "IRCWorld.h"
 #import "TLOEncryptionManagerPrivate.h"
 #import "TLOLocalization.h"
+#import "TLOpenLink.h"
 #import "TVCMainWindowPrivate.h"
 #import "TVCNotificationConfigurationViewControllerPrivate.h"
 #import "TDCAlert.h"
@@ -147,13 +148,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) IBOutlet NSView *contentViewICloud;
 @property (nonatomic, strong) IBOutlet NSView *contentViewHiddenPreferences;
 
-@property (nonatomic, strong) IBOutlet NSView *contentView;
-@property (nonatomic, strong) IBOutlet NSView *shareDataBetweenDevicesView;
 @property (nonatomic, weak) IBOutlet NSMatrix *checkForUpdatesMatrix;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *checkForUpdatesHeightConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *shareDataBetweenDevicesViewHeightConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
+@property (nonatomic, weak) IBOutlet NSStackView *contentViewGeneralStackView;
+@property (nonatomic, weak) IBOutlet NSView *contentViewGeneralCheckForUpdatesView;
+@property (nonatomic, weak) IBOutlet NSView *contentViewGeneralShareDataView;
 @property (nonatomic, strong) IBOutlet NSToolbar *navigationToolbar;
 @property (nonatomic, strong) IBOutlet NSMenu *installedAddonsMenu;
 @property (nonatomic, assign) BOOL reloadingTheme;
@@ -201,6 +199,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (IBAction)offRecordMessagingPolicyChanged:(id)sender;
+- (IBAction)offRecordMessagingOpenOfficialWebsite:(id)sender;
+- (IBAction)offRecordMessagingOpenHelpDocument:(id)sender;
 #endif
 @end
 
@@ -299,14 +299,15 @@ NS_ASSUME_NONNULL_BEGIN
 								 object:nil];
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 0
-	/* Hide "Share data between devices" when iCloud support is not enabled
-	 by setting the subview height to 0. Set height before calling firstPane:
-	 so that firstPane: can calculate the correct total height. */
-	self.shareDataBetweenDevicesViewHeightConstraint.constant = 0.0;
+	/* Hide "Share data between devices" when iCloud support is not enabled. */
+	[self.contentViewGeneralStackView setVisibilityPriority:NSStackViewVisibilityPriorityNotVisible
+													forView:self.contentViewGeneralShareDataView];
 #endif
 
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 0
-	self.checkForUpdatesHeightConstraint.constant = 0.0;
+	/* Hide preferences for updates when support is not enabled. */
+	[self.contentViewGeneralStackView setVisibilityPriority:NSStackViewVisibilityPriorityNotVisible
+													forView:self.contentViewGeneralCheckForUpdatesView];
 #endif
 
 	[self.contentViewGeneral layoutSubtreeIfNeeded];
@@ -437,9 +438,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)firstPane:(NSView *)view selectedItem:(NSInteger)selectedItem
 {
-	[self.contentView attachSubview:view
-			adjustedWidthConstraint:self.contentViewWidthConstraint
-		   adjustedHeightConstraint:self.contentViewHeightConstraint];
+	[self.window replaceContentView:view];
 
 	if (selectedItem >= 0) {
 		self.navigationToolbar.selectedItemIdentifier = _unsignedIntegerString(selectedItem);
@@ -459,14 +458,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)saveWindowFrame
 {
-	/* When saving the final window frame, we remove the content view
-	 before doing so then manually set the frame because if we were
-	 to restore the original constant to the content view's height,
-	 that will require a layout pass before window registers it.
-	 We have no use for the content view or its constraints once
-	 we know the height difference, so let's just discard it and go. */
-	[self.contentView removeFromSuperview];
-
 	NSWindow *window = self.window;
 
 	[window restoreDefaultSizeAndDisplay:NO];
@@ -1336,6 +1327,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)offRecordMessagingPolicyChanged:(id)sender
 {
 	[TPCPreferences performReloadAction:TPCPreferencesReloadActionEncryptionPolicy];
+}
+
+- (void)offRecordMessagingOpenOfficialWebsite:(id)sender
+{
+	[TLOpenLink openWithString:@"https://otr.cypherpunks.ca/"];
+}
+
+- (void)offRecordMessagingOpenHelpDocument:(id)sender
+{
+	[TLOpenLink openWithString:@"https://help.codeux.com/textual/Off-the-Record-Messaging.kb"];
 }
 #endif
 

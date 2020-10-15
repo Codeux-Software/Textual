@@ -107,37 +107,5 @@
 		<key>inheritFrom</key>
 		<string>Yosemite</string>
 	</dict>
-	<key>Mavericks</key>
-	<dict>
-		<key>inheritFrom</key>
-		<string>Common</string>
-		<key>loadingScreenBackgroundColor</key>
-		<dict>
-			<key>type</key>
-			<integer>1</integer>
-			<key>value</key>
-			<string>1.0</string>
-		</dict>
-	</dict>
-	<key>MavericksDarkAqua</key>
-	<dict>
-		<key>inheritFrom</key>
-		<string>Mavericks</string>
-	</dict>
-	<key>MavericksLightAqua</key>
-	<dict>
-		<key>inheritFrom</key>
-		<string>Mavericks</string>
-	</dict>
-	<key>MavericksDarkGraphite</key>
-	<dict>
-		<key>inheritFrom</key>
-		<string>MavericksDarkAqua</string>
-	</dict>
-	<key>MavericksLightGraphite</key>
-	<dict>
-		<key>inheritFrom</key>
-		<string>MavericksLightAqua</string>
-	</dict>
 </dict>
 </plist>

@@ -1252,9 +1252,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(id)item
 {
-	NSString *viewIdentifier = ((TEXTUAL_RUNNING_ON_MOJAVE) ? @"GroupViewMojave" : @"GroupView");
-
-	NSView *newView = [outlineView makeViewWithIdentifier:viewIdentifier owner:self];
+	NSView *newView = [outlineView makeViewWithIdentifier:@"GroupView" owner:self];
 
 	return newView;
 }

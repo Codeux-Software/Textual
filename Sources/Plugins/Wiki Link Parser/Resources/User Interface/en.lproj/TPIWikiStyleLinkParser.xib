@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,76 +22,10 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="1">
-            <rect key="frame" x="0.0" y="0.0" width="588" height="446"/>
+            <rect key="frame" x="0.0" y="0.0" width="670" height="456"/>
             <subviews>
-                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="60">
-                    <rect key="frame" x="40" y="296" width="508" height="120"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="pdQ-DS-ILK">
-                        <rect key="frame" x="0.0" y="0.0" width="508" height="120"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" allowsNonContiguousLayout="YES" id="61">
-                                <rect key="frame" x="0.0" y="0.0" width="508" height="120"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="508" height="120"/>
-                                <size key="maxSize" width="509" height="10000000"/>
-                                <attributedString key="textStorage">
-                                    <fragment content="This addon replaces Wiki markup title blocks, similar to ">
-                                        <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" metaFont="system"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="[[&lt;title&gt;]]">
-                                        <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" size="13" name=".AppleSystemUIFontBold"/>
-                                            <font key="NSOriginalFont" size="13" name=".AppleSystemUIFontBold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment>
-                                        <string key="content">, with a link to the article they represent.
-
-Each channel is assigned a “Link Prefix” which is the URL prepended to the title of the article that will be linked to.
-
-</string>
-                                        <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" metaFont="system"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="Title blocks that are replaced are only visible to you.">
-                                        <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" size="13" name=".AppleSystemUIFontBold"/>
-                                            <font key="NSOriginalFont" size="13" name=".AppleSystemUIFontBold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            </textView>
-                        </subviews>
-                    </clipView>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="120" id="n6P-Qd-B2v"/>
-                    </constraints>
-                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="62">
-                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="63">
-                        <rect key="frame" x="452" y="0.0" width="16" height="136"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                </scrollView>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="64">
-                    <rect key="frame" x="63" y="272" width="105" height="18"/>
+                    <rect key="frame" x="79" y="277" width="109" height="18"/>
                     <buttonCell key="cell" type="check" title="Enable parser" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="65">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -100,7 +35,7 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="68">
-                    <rect key="frame" x="38" y="243" width="85" height="17"/>
+                    <rect key="frame" x="79" y="242" width="85" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Link Prefixes:" id="69">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -108,21 +43,20 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                     </textFieldCell>
                 </textField>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="273">
-                    <rect key="frame" x="40" y="59" width="508" height="176"/>
+                    <rect key="frame" x="81" y="58" width="508" height="176"/>
                     <clipView key="contentView" id="K0X-dB-5Eh">
-                        <rect key="frame" x="1" y="0.0" width="506" height="175"/>
+                        <rect key="frame" x="1" y="1" width="506" height="174"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="276" id="274">
-                                <rect key="frame" x="0.0" y="0.0" width="506" height="152"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                                <rect key="frame" x="0.0" y="0.0" width="506" height="151"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn identifier="channel" editable="NO" width="125.55560302734375" minWidth="40" maxWidth="1000" id="279">
+                                    <tableColumn identifier="channel" editable="NO" width="120.55560302734375" minWidth="40" maxWidth="1000" id="279">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Channel">
-                                            <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
                                         </tableHeaderCell>
@@ -133,9 +67,8 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
-                                    <tableColumn identifier="link" editable="NO" width="374.34393310546875" minWidth="10" maxWidth="3.4028234663852886e+38" id="282">
+                                    <tableColumn identifier="link" editable="NO" width="370.34393310546875" minWidth="10" maxWidth="3.4028234663852886e+38" id="282">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Link Prefix">
-                                            <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                         </tableHeaderCell>
@@ -159,22 +92,22 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                         <constraint firstAttribute="height" constant="176" id="5gT-nk-eUH"/>
                     </constraints>
                     <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="275">
-                        <rect key="frame" x="1" y="159" width="491" height="16"/>
+                        <rect key="frame" x="1" y="159" width="506" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="277">
                         <rect key="frame" x="478" y="23" width="16" height="0.0"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <tableHeaderView key="headerView" id="276">
+                    <tableHeaderView key="headerView" wantsLayer="YES" id="276">
                         <rect key="frame" x="0.0" y="0.0" width="506" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="284">
-                    <rect key="frame" x="40" y="31" width="30" height="21"/>
+                    <rect key="frame" x="81" y="29" width="30" height="22"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="19" id="1l7-Ov-5ZI"/>
+                        <constraint firstAttribute="height" constant="20" id="1l7-Ov-5ZI"/>
                         <constraint firstAttribute="width" constant="30" id="FlJ-4n-sQu"/>
                     </constraints>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="285">
@@ -187,7 +120,7 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="286">
-                    <rect key="frame" x="71" y="31" width="30" height="21"/>
+                    <rect key="frame" x="112" y="29" width="30" height="22"/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="287">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -197,78 +130,131 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                         <binding destination="ak5-9U-7uX" name="enabled" keyPath="values.Wiki-style Link Parser Extension -&gt; Service Enabled" id="8iU-1p-dSO"/>
                     </connections>
                 </button>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qFq-B6-Sdv">
+                    <rect key="frame" x="79" y="314" width="512" height="112"/>
+                    <textFieldCell key="cell" selectable="YES" id="m2E-Ta-egB">
+                        <font key="font" metaFont="system"/>
+                        <string key="title">This addon replaces Wiki-markup title blocks, similar to [[&lt;title&gt;]], with a link to the article they represent.
+
+Each channel is assigned a “Link Prefix” which is the URL prepended to the title of the article that will be linked to.
+
+Replaced title blocks are only visible to you.</string>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
                 <constraint firstItem="284" firstAttribute="leading" secondItem="273" secondAttribute="leading" id="2WC-Lo-2fz"/>
                 <constraint firstItem="68" firstAttribute="leading" secondItem="273" secondAttribute="leading" id="C5s-UU-9dL"/>
                 <constraint firstItem="286" firstAttribute="firstBaseline" secondItem="284" secondAttribute="firstBaseline" id="C69-dS-W8g"/>
-                <constraint firstAttribute="trailing" secondItem="60" secondAttribute="trailing" constant="40" id="CcQ-q1-Mzl"/>
+                <constraint firstAttribute="bottom" secondItem="284" secondAttribute="bottom" constant="30" id="G6R-Uv-lcI"/>
                 <constraint firstItem="286" firstAttribute="width" secondItem="284" secondAttribute="width" id="Gqx-fv-H1t"/>
-                <constraint firstItem="64" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="65" id="IWA-VD-5ft"/>
+                <constraint firstItem="64" firstAttribute="top" secondItem="qFq-B6-Sdv" secondAttribute="bottom" constant="20" id="OOw-0e-jCs"/>
                 <constraint firstItem="286" firstAttribute="leading" secondItem="284" secondAttribute="trailing" constant="1" id="Oty-ql-PE0"/>
                 <constraint firstItem="284" firstAttribute="top" secondItem="273" secondAttribute="bottom" constant="8" id="QPW-qE-PSp"/>
-                <constraint firstItem="60" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="40" id="Qwf-8t-mVI"/>
                 <constraint firstItem="273" firstAttribute="top" secondItem="68" secondAttribute="bottom" constant="8" symbolic="YES" id="TUc-iM-2d5"/>
-                <constraint firstItem="64" firstAttribute="top" secondItem="60" secondAttribute="bottom" constant="8" symbolic="YES" id="Taf-Ox-BPO"/>
                 <constraint firstItem="286" firstAttribute="height" secondItem="284" secondAttribute="height" id="Zck-bD-8Jd"/>
-                <constraint firstItem="273" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="40" id="aYl-YB-IJi"/>
-                <constraint firstAttribute="trailing" secondItem="273" secondAttribute="trailing" constant="40" id="c4y-is-j1d"/>
-                <constraint firstItem="60" firstAttribute="top" secondItem="1" secondAttribute="top" constant="30" id="jGq-yp-ByY"/>
+                <constraint firstItem="68" firstAttribute="leading" secondItem="64" secondAttribute="leading" id="gBt-IL-Ihl"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="64" secondAttribute="trailing" constant="20" id="jkb-3Q-SkS"/>
+                <constraint firstItem="64" firstAttribute="leading" secondItem="qFq-B6-Sdv" secondAttribute="leading" id="mIH-qW-iRM"/>
                 <constraint firstItem="68" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="273" secondAttribute="trailing" id="nQx-1v-XfB"/>
-                <constraint firstItem="68" firstAttribute="top" secondItem="64" secondAttribute="bottom" constant="14" id="uzQ-tN-oSt"/>
+                <constraint firstItem="qFq-B6-Sdv" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="pLH-QH-EYT"/>
+                <constraint firstItem="qFq-B6-Sdv" firstAttribute="top" secondItem="1" secondAttribute="top" constant="30" id="uYO-VT-br3"/>
+                <constraint firstItem="68" firstAttribute="top" secondItem="64" secondAttribute="bottom" constant="20" id="uzQ-tN-oSt"/>
+                <constraint firstItem="273" firstAttribute="leading" relation="lessThanOrEqual" secondItem="286" secondAttribute="trailing" id="xkR-8E-Fa4"/>
+                <constraint firstItem="273" firstAttribute="trailing" secondItem="qFq-B6-Sdv" secondAttribute="trailing" id="zF7-IU-IQm"/>
             </constraints>
             <point key="canvasLocation" x="593" y="460"/>
         </customView>
         <window title="New Condition" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="224">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="283" y="305" width="449" height="127"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="contentRect" x="283" y="305" width="448" height="127"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
             <view key="contentView" id="225">
-                <rect key="frame" x="0.0" y="0.0" width="449" height="127"/>
+                <rect key="frame" x="0.0" y="0.0" width="448" height="127"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="242">
-                        <rect key="frame" x="17" y="90" width="114" height="17"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Use the link prefix" id="243">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="244" customClass="TVCValidatedTextField">
-                        <rect key="frame" x="137" y="88" width="292" height="22"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="https://en.wikipedia.org/wiki/" id="245" customClass="TVCValidatedTextFieldCell">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                        <connections>
-                            <action selector="updateNewConditionWindowSaveButton:" target="-2" id="300"/>
-                        </connections>
-                    </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="246">
-                        <rect key="frame" x="17" y="64" width="89" height="17"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="in the channel" id="247">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="262">
-                        <rect key="frame" x="110" y="58" width="320" height="25"/>
-                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" id="263">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu"/>
-                            <menu key="menu" title="OtherViews" autoenablesItems="NO" id="264"/>
-                        </popUpButtonCell>
-                        <connections>
-                            <action selector="updateNewConditionWindowSaveButton:" target="-2" id="309"/>
-                        </connections>
-                    </popUpButton>
+                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GxG-ac-8fm">
+                        <rect key="frame" x="20" y="60" width="410" height="47"/>
+                        <subviews>
+                            <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0qA-7x-CeJ">
+                                <rect key="frame" x="0.0" y="26" width="410" height="21"/>
+                                <subviews>
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="242">
+                                        <rect key="frame" x="-2" y="3" width="114" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Use the link prefix" id="243">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="244" customClass="TVCValidatedTextField">
+                                        <rect key="frame" x="118" y="0.0" width="292" height="21"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="https://en.wikipedia.org/wiki/" id="245" customClass="TVCValidatedTextFieldCell">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <connections>
+                                            <action selector="updateNewConditionWindowSaveButton:" target="-2" id="300"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
+                            <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yR3-ER-cgo">
+                                <rect key="frame" x="0.0" y="0.0" width="410" height="20"/>
+                                <subviews>
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="246">
+                                        <rect key="frame" x="-2" y="3" width="89" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="in the channel" id="247">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="262">
+                                        <rect key="frame" x="90" y="-4" width="324" height="25"/>
+                                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" id="263">
+                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="menu"/>
+                                            <menu key="menu" title="OtherViews" autoenablesItems="NO" id="264"/>
+                                        </popUpButtonCell>
+                                        <connections>
+                                            <action selector="updateNewConditionWindowSaveButton:" target="-2" id="309"/>
+                                        </connections>
+                                    </popUpButton>
+                                </subviews>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
+                        </subviews>
+                        <visibilityPriorities>
+                            <integer value="1000"/>
+                            <integer value="1000"/>
+                        </visibilityPriorities>
+                        <customSpacing>
+                            <real value="3.4028234663852886e+38"/>
+                            <real value="3.4028234663852886e+38"/>
+                        </customSpacing>
+                    </stackView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="258">
-                        <rect key="frame" x="365" y="13" width="70" height="32"/>
+                        <rect key="frame" x="373" y="13" width="64" height="32"/>
                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="259">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -281,7 +267,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="260">
-                        <rect key="frame" x="283" y="13" width="82" height="32"/>
+                        <rect key="frame" x="299" y="13" width="76" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="261">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -295,22 +281,15 @@ Gw
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="262" firstAttribute="baseline" secondItem="246" secondAttribute="baseline" id="2ud-3H-mWK"/>
                     <constraint firstAttribute="trailing" secondItem="258" secondAttribute="trailing" constant="20" id="3K6-md-ogp"/>
-                    <constraint firstItem="242" firstAttribute="top" secondItem="244" secondAttribute="top" constant="3" id="65a-Co-2Ud"/>
-                    <constraint firstItem="244" firstAttribute="top" secondItem="225" secondAttribute="top" constant="17" id="9xM-YK-c59"/>
-                    <constraint firstItem="258" firstAttribute="top" secondItem="262" secondAttribute="bottom" constant="20" id="EGf-FQ-VAF"/>
+                    <constraint firstItem="GxG-ac-8fm" firstAttribute="top" secondItem="225" secondAttribute="top" constant="20" id="Hbo-RH-CLI"/>
                     <constraint firstAttribute="bottom" secondItem="258" secondAttribute="bottom" constant="20" id="ISX-Ln-AKB"/>
-                    <constraint firstItem="262" firstAttribute="leading" secondItem="246" secondAttribute="trailing" constant="8" symbolic="YES" id="XF4-Fj-tK4"/>
-                    <constraint firstAttribute="trailing" secondItem="262" secondAttribute="trailing" constant="22" id="Z1p-RR-CLO"/>
+                    <constraint firstAttribute="trailing" secondItem="GxG-ac-8fm" secondAttribute="trailing" constant="20" id="MDt-ef-feW"/>
+                    <constraint firstItem="GxG-ac-8fm" firstAttribute="leading" secondItem="225" secondAttribute="leading" constant="20" id="Tjs-bL-sW7"/>
                     <constraint firstItem="258" firstAttribute="leading" secondItem="260" secondAttribute="trailing" constant="12" symbolic="YES" id="aFj-4x-amE"/>
-                    <constraint firstItem="246" firstAttribute="leading" secondItem="225" secondAttribute="leading" constant="19" id="aKM-Rh-WVv"/>
-                    <constraint firstItem="242" firstAttribute="leading" secondItem="225" secondAttribute="leading" constant="19" id="cHA-Qn-BqW"/>
-                    <constraint firstItem="244" firstAttribute="leading" secondItem="242" secondAttribute="trailing" constant="8" symbolic="YES" id="mqD-EF-bqC"/>
-                    <constraint firstItem="262" firstAttribute="top" secondItem="244" secondAttribute="bottom" constant="6" id="nZF-y4-eDq"/>
-                    <constraint firstAttribute="trailing" secondItem="244" secondAttribute="trailing" constant="20" symbolic="YES" id="nlH-IK-rw9"/>
+                    <constraint firstItem="258" firstAttribute="top" secondItem="GxG-ac-8fm" secondAttribute="bottom" constant="20" id="ej6-TM-tKi"/>
                     <constraint firstItem="260" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="225" secondAttribute="leading" constant="20" id="oc0-NC-bRR"/>
-                    <constraint firstItem="260" firstAttribute="baseline" secondItem="258" secondAttribute="baseline" id="qhq-pI-9ag"/>
+                    <constraint firstItem="260" firstAttribute="firstBaseline" secondItem="258" secondAttribute="firstBaseline" id="qhq-pI-9ag"/>
                 </constraints>
             </view>
             <point key="canvasLocation" x="165.5" y="110.5"/>
@@ -318,7 +297,7 @@ Gw
         <userDefaultsController id="ak5-9U-7uX" customClass="TPCPreferencesUserDefaultsController"/>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="11" height="11"/>
-        <image name="NSRemoveTemplate" width="11" height="11"/>
+        <image name="NSAddTemplate" width="14" height="13"/>
+        <image name="NSRemoveTemplate" width="14" height="4"/>
     </resources>
 </document>

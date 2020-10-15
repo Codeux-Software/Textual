@@ -84,7 +84,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)performedCustomKeyboardEvent:(NSEvent *)event
 {
-	if (event.type != NSKeyDown) {
+	if (event.type != NSEventTypeKeyDown) {
 		return NO;
 	}
 

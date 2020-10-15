@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14295.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14295.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -13,13 +13,10 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="1">
-            <rect key="frame" x="0.0" y="0.0" width="589" height="406"/>
+            <rect key="frame" x="0.0" y="0.0" width="670" height="406"/>
             <subviews>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2">
-                    <rect key="frame" x="252" y="224" width="94" height="17"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="90" id="32"/>
-                    </constraints>
+                    <rect key="frame" x="290" y="225" width="90" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Do Something" id="3">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -27,7 +24,7 @@
                     </textFieldCell>
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="17">
-                    <rect key="frame" x="231" y="163" width="128" height="18"/>
+                    <rect key="frame" x="268" y="163" width="132" height="18"/>
                     <buttonCell key="cell" type="check" title="Check something" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="18">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -40,9 +37,10 @@
             </subviews>
             <constraints>
                 <constraint firstItem="17" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="28"/>
-                <constraint firstItem="2" firstAttribute="top" secondItem="1" secondAttribute="top" constant="165" id="29"/>
-                <constraint firstItem="2" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="254" id="30"/>
-                <constraint firstAttribute="bottom" secondItem="17" secondAttribute="bottom" constant="165" id="31"/>
+                <constraint firstItem="17" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="0sE-rw-xR4"/>
+                <constraint firstItem="2" firstAttribute="top" secondItem="1" secondAttribute="top" constant="165" id="69s-Mq-Or8"/>
+                <constraint firstItem="17" firstAttribute="top" secondItem="2" secondAttribute="bottom" constant="45" id="JeF-w3-50M"/>
+                <constraint firstItem="2" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="nQG-KC-Kp3"/>
             </constraints>
             <point key="canvasLocation" x="373.5" y="362"/>
         </customView>

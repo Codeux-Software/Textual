@@ -88,81 +88,29 @@ _Textual.copySelectionOnMouseUpEvent = function() /* PRIVATE */
 	);
 };
 
-/* Contextual menu management */
-_Textual.usesCustomMenuConstructor = function() /* PRIVATE */
-{
-	if (app.isWebKit2() === false) {
-		return false;
-	}
-
-	/* macOS Sierra has an Objective-C API to modify the menus in 
-	WebKit2 which isn't too difficult to use which means we only
-	need a custom menu constructor on WebKit2 + OS X El Capitan. */
-	if (typeof window.webkit.messageHandlers.displayContextMenu === "object") {
-		return true;
-	} else {
-		return false;
-	}
-};
-
 _Textual._openGenericContextualMenu = function() /* PRIVATE */
 {
-	/* Do not block if target element already has a callback. */
-	if (event.target.oncontextmenu !== null) {
-		return;
-	}
 
-	if (_Textual.usesCustomMenuConstructor()) {
-		event.preventDefault();
-
-		_Textual.recordSelection();
-
-		appPrivate.displayContextMenu();
-	}
 };
 
 Textual.openChannelNameContextualMenu = function() /* PUBLIC */
 {
 	_Textual.setPolicyChannelName();
-
-	if (_Textual.usesCustomMenuConstructor()) {
-		_Textual.clearSelectionAndPreventDefault();
-
-		appPrivate.displayContextMenu();
-	}
 };
 
 Textual.openURLManagementContextualMenu = function() /* PUBLIC */
 {
 	_Textual.setPolicyURLAddress();
-
-	if (_Textual.usesCustomMenuConstructor()) {
-		_Textual.clearSelectionAndPreventDefault();
-
-		appPrivate.displayContextMenu();
-	}
 };
 
 Textual.openStandardNicknameContextualMenu = function() /* PUBLIC */
 {
 	_Textual.setPolicyStandardNickname();
-
-	if (_Textual.usesCustomMenuConstructor()) {
-		_Textual.clearSelectionAndPreventDefault();
-
-		appPrivate.displayContextMenu();
-	}
 };
 
 Textual.openInlineNicknameContextualMenu = function() /* PUBLIC */
 {
 	_Textual.setPolicyInlineNickname();
-
-	if (_Textual.usesCustomMenuConstructor()) {
-		_Textual.clearSelectionAndPreventDefault();
-
-		appPrivate.displayContextMenu();
-	}
 };
 
 _Textual.setPolicyStandardNickname = function() /* PRIVATE */

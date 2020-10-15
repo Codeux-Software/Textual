@@ -45,8 +45,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) CGFloat minimumWidth;
 @property (readonly) CGFloat maximumWidth;
 
-@property (readonly, copy, nullable) NSColor *backgroundColorActiveWindow;
-@property (readonly, copy, nullable) NSColor *backgroundColorInactiveWindow;
 @property (readonly, copy, nullable) NSColor *rowSelectionColorActiveWindow;
 @property (readonly, copy, nullable) NSColor *rowSelectionColorInactiveWindow;
 
@@ -54,24 +52,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Member Cell
 
 @property (readonly) BOOL cellRowEmphasized;
-@property (readonly) CGFloat cellRowHeight;
-@property (readonly, copy, nullable) NSImage *cellSelectionImageActiveWindow;
-@property (readonly, copy, nullable) NSImage *cellSelectionImageInactiveWindow;
 @property (readonly, copy, nullable) NSColor *cellTextColorActiveWindow;
 @property (readonly, copy, nullable) NSColor *cellTextColorInactiveWindow;
-@property (readonly, copy, nullable) NSColor *cellTextShadowColorActiveWindow;
-@property (readonly, copy, nullable) NSColor *cellTextShadowColorInactiveWindow;
 @property (readonly, copy, nullable) NSColor *cellAwayTextColorActiveWindow;
 @property (readonly, copy, nullable) NSColor *cellAwayTextColorInactiveWindow;
-@property (readonly, copy, nullable) NSColor *cellAwayTextShadowColorActiveWindow;
-@property (readonly, copy, nullable) NSColor *cellAwayTextShadowColorInactiveWindow;
 @property (readonly, copy, nullable) NSColor *cellSelectedTextColorActiveWindow;
 @property (readonly, copy, nullable) NSColor *cellSelectedTextColorInactiveWindow;
-@property (readonly, copy, nullable) NSColor *cellSelectedTextShadowColorActiveWindow;
-@property (readonly, copy, nullable) NSColor *cellSelectedTextShadowColorInactiveWindow;
 @property (readonly, copy, nullable) NSFont *cellFont;
 @property (readonly, copy, nullable) NSFont *cellFontSelected;
-@property (readonly) CGFloat cellTopOffset;
 
 #pragma mark -
 #pragma mark Mark Badge
@@ -84,13 +72,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy, nullable) NSColor *markBadgeTextColorInactiveWindow;
 @property (readonly, copy, nullable) NSColor *markBadgeSelectedTextColorActiveWindow;
 @property (readonly, copy, nullable) NSColor *markBadgeSelectedTextColorInactiveWindow;
-@property (readonly, copy, nullable) NSColor *markBadgeShadowColorActiveWindow;
-@property (readonly, copy, nullable) NSColor *markBadgeShadowColorInactiveWindow;
 @property (readonly, copy, nullable) NSFont *markBadgeFont;
 @property (readonly, copy, nullable) NSFont *markBadgeFontSelected;
-@property (readonly) CGFloat markBadgeWidth;
-@property (readonly) CGFloat markBadgeHeight;
-@property (readonly) CGFloat markBadgeTopOffset;
 
 #pragma mark -
 #pragma mark Mark Badge Modes

@@ -39,6 +39,55 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@implementation NSWindow (TXWindowHelper)
+
+- (void)changeFrameToMin
+{
+	[self changeFrameToMinAndDisplay:YES animate:NO];
+}
+
+- (void)changeFrameToMinAndDisplay:(BOOL)display
+{
+	[self changeFrameToMinAndDisplay:display animate:NO];
+}
+
+- (void)changeFrameToMinAndDisplay:(BOOL)display animate:(BOOL)animate
+{
+	NSSize minSize = self.contentMinSize;
+
+	[self changeFrameTo:minSize display:display animate:NO];
+}
+
+- (void)changeFrameTo:(NSSize)minSize display:(BOOL)display animate:(BOOL)animate
+{
+	NSRect oldFrame = self.frame;
+	NSRect newFrame = oldFrame;
+
+	NSRect contentRect = [self contentRectForFrameRect:newFrame];
+
+	float bezelHeight = (newFrame.size.height - contentRect.size.height);
+
+	newFrame.size.width = minSize.width;
+	newFrame.size.height = (bezelHeight + minSize.height);
+
+	newFrame.origin.y = (NSMaxY(oldFrame) - newFrame.size.height);
+
+	[self setFrame:newFrame display:display animate:animate];
+}
+
+- (void)replaceContentView:(NSView *)withView
+{
+	self.contentView = nil;
+
+	[self changeFrameTo:withView.frame.size display:NO animate:NO];
+
+	self.contentView = withView;
+}
+
+@end
+
+#pragma mark -
+
 @implementation NSView (TXViewHelperPrivate)
 
 - (nullable TVCMainWindow *)mainWindow
@@ -58,94 +107,82 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSView (TXViewHelper)
 
-- (NSArray<NSLayoutConstraint *> *)constraintsForHuggingEdges
+- (void)addConstraintsToSuperviewToHugEdges
 {
+	NSView *superview = self.superview;
+
+	NSArray *constraints = @[
+	 [NSLayoutConstraint constraintWithItem:self
+								  attribute:NSLayoutAttributeLeft
+								  relatedBy:NSLayoutRelationEqual
+									 toItem:superview
+								  attribute:NSLayoutAttributeLeft
+								 multiplier:1.0
+								   constant:0.0],
+
+	 [NSLayoutConstraint constraintWithItem:self
+								  attribute:NSLayoutAttributeRight
+								  relatedBy:NSLayoutRelationEqual
+									 toItem:superview
+								  attribute:NSLayoutAttributeRight
+								 multiplier:1.0
+								   constant:0.0],
+
+	 [NSLayoutConstraint constraintWithItem:self
+								  attribute:NSLayoutAttributeTop
+								  relatedBy:NSLayoutRelationEqual
+									 toItem:superview
+								  attribute:NSLayoutAttributeTop
+								 multiplier:1.0
+								   constant:0.0],
+
+	 [NSLayoutConstraint constraintWithItem:self
+								  attribute:NSLayoutAttributeBottom
+								  relatedBy:NSLayoutRelationEqual
+									 toItem:superview
+								  attribute:NSLayoutAttributeBottom
+								 multiplier:1.0
+								   constant:0.0]
+	 ];
+
+	[superview addConstraints:constraints];
+}
+
+- (void)addConstraintsToSueprviewToEqualDimensions
+{
+	NSView *superview = self.superview;
+
 	NSMutableArray *constraints = [NSMutableArray array];
 
 	[constraints addObjectsFromArray:
-	 [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[self]-0-|"
+	 [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[self(0@550)]-0-|"
 											 options:NSLayoutFormatDirectionLeadingToTrailing
 											 metrics:nil
 											   views:NSDictionaryOfVariableBindings(self)]];
 
 	[constraints addObjectsFromArray:
-	 [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[self]-0-|"
+	 [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[self(0@550)]-0-|"
 											 options:NSLayoutFormatDirectionLeadingToTrailing
 											 metrics:nil
 											   views:NSDictionaryOfVariableBindings(self)]];
 
-	return [constraints copy];
+	[superview addConstraints:constraints];
 }
 
-- (void)attachSubviewToHugEdges:(NSView *)subview
+- (void)replaceFirstSubview:(NSView *)withSubview
 {
-	NSParameterAssert(subview != nil);
+	NSParameterAssert(withSubview != nil);
 
 	/* Remove any views that may already be in place. */
-	NSArray *contentSubviews = self.subviews;
+	[self.subviews.firstObject removeFromSuperviewWithoutNeedingDisplay];
 
-	if (contentSubviews.count > 0) {
-		[contentSubviews[0] removeFromSuperview];
-	}
+	/* Add subview. */
+	[self addSubview:withSubview];
 
-	[self addSubview:subview];
+	/* Apply constraints. */
+	[withSubview addConstraintsToSuperviewToHugEdges];
 
-	/* Add new constraints. */
-	[self addConstraints:subview.constraintsForHuggingEdges];
-}
-
-- (void)attachSubview:(NSView *)subview adjustedWidthConstraint:(nullable NSLayoutConstraint *)parentViewWidthConstraint adjustedHeightConstraint:(nullable NSLayoutConstraint *)parentViewHeightConstraint
-{
-	NSParameterAssert(subview != nil);
-
-	/* Remove any views that may already be in place. */
-	NSArray *contentSubviews = self.subviews;
-
-	if (contentSubviews.count > 0) {
-		[contentSubviews[0] removeFromSuperview];
-	}
-
-	[self addSubview:subview];
-
-	/* Adjust constraints of parent view to maintain the same size
-	 of the subview that is being added. */
-	NSRect subviewFrame = subview.bounds;
-
-	CGFloat subviewFrameWidth = NSWidth(subviewFrame);
-	CGFloat subviewFrameHeight = NSHeight(subviewFrame);
-
-	if ( parentViewWidthConstraint) {
-		parentViewWidthConstraint.constant = subviewFrameWidth;
-	}
-
-	if ( parentViewHeightConstraint) {
-		parentViewHeightConstraint.constant = subviewFrameHeight;
-	}
-
-	/* Add new constraints. */
-	NSMutableArray *constraints = [NSMutableArray array];
-
-	[constraints addObject:
-	 [NSLayoutConstraint constraintWithItem:subview
-								  attribute:NSLayoutAttributeWidth
-								  relatedBy:NSLayoutRelationEqual
-									 toItem:nil
-								  attribute:NSLayoutAttributeNotAnAttribute
-								 multiplier:1.0
-								   constant:subviewFrameWidth]
-	 ];
-
-	[constraints addObject:
-	 [NSLayoutConstraint constraintWithItem:subview
-								  attribute:NSLayoutAttributeHeight
-								  relatedBy:NSLayoutRelationEqual
-									 toItem:nil
-								  attribute:NSLayoutAttributeNotAnAttribute
-								 multiplier:1.0
-								   constant:subviewFrameHeight]
-	 ];
-
-	[subview addConstraints:constraints];
+	[withSubview addConstraintsToSueprviewToEqualDimensions];
 }
 
 @end

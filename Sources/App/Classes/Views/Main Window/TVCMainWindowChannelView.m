@@ -326,10 +326,6 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 
 - (void)updateVibrancy
 {
-	if (TEXTUAL_RUNNING_ON_YOSEMITE == NO) {
-		return;
-	}
-
 	if (themeSettings().underlyingWindowColorIsDark) {
 		self.appearance = [TXAppearancePropertyCollection appKitDarkAppearance];
 	} else {

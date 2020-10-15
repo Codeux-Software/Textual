@@ -112,16 +112,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
-	if (TEXTUAL_RUNNING_ON_SIERRA) {
-		LogToConsoleSetDefaultSubsystem(os_log_create(TXBundleBuildProductIdentifierCString, "General"));
-	}
+	LogToConsoleSetDefaultSubsystem(os_log_create(TXBundleBuildProductIdentifierCString, "General"));
 
-	NSUInteger keyboardKeys = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+	NSUInteger keyboardKeys = ([NSEvent modifierFlags] & NSEventModifierFlagDeviceIndependentFlagsMask);
 
-	if ((keyboardKeys & NSControlKeyMask) == NSControlKeyMask) {
+	if ((keyboardKeys & NSEventModifierFlagControl) == NSEventModifierFlagControl) {
 		self.debugModeIsOn = YES;
-
-		LogToConsoleSetDebugLoggingEnabled(YES);
 
 		LogToConsoleDebug("Launching in debug mode");
 	}
@@ -129,7 +125,7 @@ NS_ASSUME_NONNULL_BEGIN
 #if defined(DEBUG)
 	self.ghostModeIsOn = YES; // Do not use autoconnect during debug
 #else
-	if ((keyboardKeys & NSShiftKeyMask) == NSShiftKeyMask) {
+	if ((keyboardKeys & NSEventModifierFlagShift) == NSEventModifierFlagShift) {
 		self.ghostModeIsOn = YES;
 
 		LogToConsoleInfo("Launching without autoconnecting to the configured servers");
@@ -157,11 +153,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* We wait until -awakeFromNib to wake the window so that the menu
 	 controller created by the main nib has time to load. */
-	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
-		[RZMainBundle() loadNibNamed:@"TVCMainWindowYosemite" owner:self topLevelObjects:nil];
-	} else {
-		[RZMainBundle() loadNibNamed:@"TVCMainWindowMavericks" owner:self topLevelObjects:nil];
-	}
+	[RZMainBundle() loadNibNamed:@"TVCMainWindow" owner:self topLevelObjects:nil];
 }
 
 - (void)applicationWakeStepOne

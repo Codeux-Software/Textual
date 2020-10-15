@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.14" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,42 +20,22 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="puk-fp-XeX" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="765" y="571" width="366" height="179"/>
+            <rect key="contentRect" x="765" y="571" width="370" height="179"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="gBo-7N-KkR">
-                <rect key="frame" x="0.0" y="0.0" width="366" height="179"/>
+                <rect key="frame" x="0.0" y="0.0" width="370" height="178"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F12-H0-P9Z">
-                        <rect key="frame" x="18" y="125" width="330" height="34"/>
-                        <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Enter the name and e-mail address that you would like to be associated with your license key. " id="fYJ-sf-Wdh">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="F12-H0-P9Z">
+                        <rect key="frame" x="18" y="126" width="334" height="32"/>
+                        <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Enter the name and e-mail address that you would llike associated with your license key. " id="fYJ-sf-Wdh">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rVI-TX-GRu" customClass="TVCValidatedTextField">
-                        <rect key="frame" x="124" y="61" width="222" height="22"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="22" id="riT-8a-GoU"/>
-                        </constraints>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="Fsp-5h-Da6" customClass="TVCValidatedTextFieldCell">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        </textFieldCell>
-                        <accessibility description="E-mail address to associate with license key"/>
-                    </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NZa-CW-72p">
-                        <rect key="frame" x="18" y="63" width="100" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="E-mail Address:" id="Vhu-bj-bYq">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jam-O7-WoM">
-                        <rect key="frame" x="186" y="13" width="166" height="32"/>
+                        <rect key="frame" x="197" y="13" width="160" height="32"/>
                         <buttonCell key="cell" type="push" title="Request License Key" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="cOF-4q-haH">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -69,7 +49,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="caz-XB-TnX">
-                        <rect key="frame" x="104" y="13" width="82" height="32"/>
+                        <rect key="frame" x="123" y="13" width="76" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="KYK-L5-DFY">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -82,56 +62,87 @@ Gw
                             <action selector="cancel:" target="-2" id="qaw-bq-7JX"/>
                         </connections>
                     </button>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JL9-wh-1Zp" customClass="TVCValidatedTextField">
-                        <rect key="frame" x="124" y="91" width="222" height="22"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="22" id="eeN-U6-o6Q"/>
-                        </constraints>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="cjP-El-bvn" customClass="TVCValidatedTextFieldCell">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        </textFieldCell>
-                        <accessibility description="Name to assosicate with license key"/>
-                    </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jNw-4C-0KS">
-                        <rect key="frame" x="74" y="93" width="44" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Name:" id="1zk-IO-jS5">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
+                    <gridView xPlacement="trailing" yPlacement="fill" rowAlignment="firstBaseline" rowSpacing="8" columnSpacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1RR-lW-kgH">
+                        <rect key="frame" x="20" y="60" width="330" height="52"/>
+                        <rows>
+                            <gridRow id="FI3-Nv-ghm"/>
+                            <gridRow id="XNp-Sk-9kP"/>
+                        </rows>
+                        <columns>
+                            <gridColumn xPlacement="fill" id="ch8-dk-ArO"/>
+                            <gridColumn xPlacement="fill" id="phr-gg-3df"/>
+                        </columns>
+                        <gridCells>
+                            <gridCell row="FI3-Nv-ghm" column="ch8-dk-ArO" id="xGS-xL-AnN">
+                                <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jNw-4C-0KS">
+                                    <rect key="frame" x="-2" y="34" width="100" height="16"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Name:" id="1zk-IO-jS5">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </gridCell>
+                            <gridCell row="FI3-Nv-ghm" column="phr-gg-3df" id="rKv-D0-vOb">
+                                <textField key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="JL9-wh-1Zp" customClass="TVCValidatedTextField">
+                                    <rect key="frame" x="104" y="30" width="226" height="22"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="22" id="eeN-U6-o6Q"/>
+                                    </constraints>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="cjP-El-bvn" customClass="TVCValidatedTextFieldCell">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </textFieldCell>
+                                    <accessibility description="Name to assosicate with license key"/>
+                                </textField>
+                            </gridCell>
+                            <gridCell row="XNp-Sk-9kP" column="ch8-dk-ArO" id="VVe-lM-08F">
+                                <textField key="contentView" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NZa-CW-72p">
+                                    <rect key="frame" x="-2" y="4" width="100" height="16"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="E-mail Address:" id="Vhu-bj-bYq">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </gridCell>
+                            <gridCell row="XNp-Sk-9kP" column="phr-gg-3df" id="ELo-tV-WtX">
+                                <textField key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="rVI-TX-GRu" customClass="TVCValidatedTextField">
+                                    <rect key="frame" x="104" y="0.0" width="226" height="22"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="22" id="riT-8a-GoU"/>
+                                    </constraints>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="Fsp-5h-Da6" customClass="TVCValidatedTextFieldCell">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </textFieldCell>
+                                    <accessibility description="E-mail address to associate with license key"/>
+                                </textField>
+                            </gridCell>
+                        </gridCells>
+                    </gridView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Jam-O7-WoM" firstAttribute="leading" secondItem="caz-XB-TnX" secondAttribute="trailing" constant="12" symbolic="YES" id="2SD-mE-6cd"/>
                     <constraint firstItem="F12-H0-P9Z" firstAttribute="top" secondItem="gBo-7N-KkR" secondAttribute="top" constant="20" symbolic="YES" id="2VN-NF-6OU"/>
-                    <constraint firstItem="jNw-4C-0KS" firstAttribute="top" secondItem="JL9-wh-1Zp" secondAttribute="top" constant="3" id="4SP-8C-5iZ"/>
-                    <constraint firstItem="Jam-O7-WoM" firstAttribute="baseline" secondItem="caz-XB-TnX" secondAttribute="baseline" id="6Rq-7H-NUS"/>
-                    <constraint firstItem="JL9-wh-1Zp" firstAttribute="leading" secondItem="rVI-TX-GRu" secondAttribute="leading" id="6v2-ba-prQ"/>
-                    <constraint firstAttribute="trailing" secondItem="JL9-wh-1Zp" secondAttribute="trailing" constant="20" id="9pA-AE-BiC"/>
+                    <constraint firstItem="Jam-O7-WoM" firstAttribute="firstBaseline" secondItem="caz-XB-TnX" secondAttribute="firstBaseline" id="6Rq-7H-NUS"/>
+                    <constraint firstItem="1RR-lW-kgH" firstAttribute="leading" secondItem="gBo-7N-KkR" secondAttribute="leading" constant="20" id="BK9-gX-Em5"/>
+                    <constraint firstAttribute="trailing" secondItem="1RR-lW-kgH" secondAttribute="trailing" constant="20" id="CLC-PE-fHv"/>
                     <constraint firstAttribute="trailing" secondItem="Jam-O7-WoM" secondAttribute="trailing" constant="20" id="Csy-gA-e4q"/>
-                    <constraint firstItem="JL9-wh-1Zp" firstAttribute="leading" secondItem="jNw-4C-0KS" secondAttribute="trailing" constant="8" symbolic="YES" id="Hnn-fY-i1J"/>
                     <constraint firstItem="caz-XB-TnX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gBo-7N-KkR" secondAttribute="leading" constant="20" id="KPZ-1u-jhI"/>
                     <constraint firstAttribute="trailing" secondItem="F12-H0-P9Z" secondAttribute="trailing" constant="20" id="KwJ-66-7q0"/>
-                    <constraint firstItem="rVI-TX-GRu" firstAttribute="leading" secondItem="NZa-CW-72p" secondAttribute="trailing" constant="8" symbolic="YES" id="Lfi-S6-HR9"/>
-                    <constraint firstItem="Jam-O7-WoM" firstAttribute="top" secondItem="rVI-TX-GRu" secondAttribute="bottom" constant="20" id="Ni1-8E-t2Q"/>
-                    <constraint firstItem="NZa-CW-72p" firstAttribute="trailing" secondItem="jNw-4C-0KS" secondAttribute="trailing" id="UTL-Af-W7f"/>
+                    <constraint firstItem="Jam-O7-WoM" firstAttribute="top" secondItem="1RR-lW-kgH" secondAttribute="bottom" constant="20" id="V69-xp-ohJ"/>
                     <constraint firstItem="F12-H0-P9Z" firstAttribute="leading" secondItem="gBo-7N-KkR" secondAttribute="leading" constant="20" id="Y0u-1y-hv1"/>
-                    <constraint firstItem="rVI-TX-GRu" firstAttribute="top" secondItem="JL9-wh-1Zp" secondAttribute="bottom" constant="8" id="Y2V-Ky-gId"/>
-                    <constraint firstItem="JL9-wh-1Zp" firstAttribute="top" secondItem="F12-H0-P9Z" secondAttribute="bottom" constant="12" id="ckO-oX-we6"/>
-                    <constraint firstItem="rVI-TX-GRu" firstAttribute="trailing" secondItem="JL9-wh-1Zp" secondAttribute="trailing" id="g4X-xm-dMs"/>
-                    <constraint firstAttribute="bottom" secondItem="caz-XB-TnX" secondAttribute="bottom" constant="20" symbolic="YES" id="hQc-YA-T5i"/>
-                    <constraint firstItem="jNw-4C-0KS" firstAttribute="leading" secondItem="gBo-7N-KkR" secondAttribute="leading" constant="76" id="kKx-Zj-gUe"/>
-                    <constraint firstItem="NZa-CW-72p" firstAttribute="top" secondItem="jNw-4C-0KS" secondAttribute="bottom" constant="13" id="pSl-iq-11a"/>
-                    <constraint firstItem="NZa-CW-72p" firstAttribute="leading" secondItem="gBo-7N-KkR" secondAttribute="leading" constant="20" id="rhD-Pp-vj1"/>
+                    <constraint firstItem="1RR-lW-kgH" firstAttribute="top" secondItem="F12-H0-P9Z" secondAttribute="bottom" constant="14" id="hhC-ha-xtQ"/>
                     <constraint firstAttribute="bottom" secondItem="Jam-O7-WoM" secondAttribute="bottom" constant="20" id="yOO-X1-aCZ"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="ALC-xI-Yqc"/>
             </connections>
-            <point key="canvasLocation" x="278" y="270.5"/>
+            <point key="canvasLocation" x="278" y="270"/>
         </window>
     </objects>
 </document>

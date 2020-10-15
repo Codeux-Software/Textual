@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,56 +21,117 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="302">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="283" y="305" width="434" height="128"/>
+            <rect key="contentRect" x="283" y="305" width="434" height="40"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="303">
-                <rect key="frame" x="0.0" y="0.0" width="434" height="128"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <rect key="frame" x="0.0" y="0.0" width="434" height="129"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="304">
-                        <rect key="frame" x="18" y="84" width="100" height="25"/>
-                        <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="95" id="nPm-5S-cdY"/>
-                        </constraints>
-                        <popUpButtonCell key="cell" type="push" title="Match" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="307" id="305">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu"/>
-                            <menu key="menu" title="OtherViews" autoenablesItems="NO" id="306">
-                                <items>
-                                    <menuItem title="Match" state="on" tag="1" id="307"/>
-                                    <menuItem title="Exclude" tag="2" id="308"/>
-                                </items>
-                            </menu>
-                        </popUpButtonCell>
-                        <accessibility description="Highlight Match Type"/>
-                    </popUpButton>
-                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="314">
-                        <rect key="frame" x="18" y="63" width="90" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="in the channel" id="315">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="316">
-                        <rect key="frame" x="112" y="58" width="305" height="25"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="300" id="O88-U8-9d4"/>
-                        </constraints>
-                        <popUpButtonCell key="cell" type="push" title="All Channels" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="319" id="317">
-                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu"/>
-                            <menu key="menu" title="OtherViews" id="318">
-                                <items>
-                                    <menuItem title="All Channels" state="on" id="319"/>
-                                    <menuItem isSeparatorItem="YES" id="322"/>
-                                </items>
-                            </menu>
-                        </popUpButtonCell>
-                        <accessibility description="Limit Highlight to Channel"/>
-                    </popUpButton>
+                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="7" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pG1-Fd-QYW">
+                        <rect key="frame" x="20" y="60" width="394" height="49"/>
+                        <subviews>
+                            <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Umb-lT-yZS">
+                                <rect key="frame" x="0.0" y="27" width="394" height="22"/>
+                                <subviews>
+                                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="304">
+                                        <rect key="frame" x="-3" y="-3" width="102" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="95" id="nPm-5S-cdY"/>
+                                        </constraints>
+                                        <popUpButtonCell key="cell" type="push" title="Match" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="307" id="305">
+                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="menu"/>
+                                            <menu key="menu" title="OtherViews" autoenablesItems="NO" id="306">
+                                                <items>
+                                                    <menuItem title="Match" state="on" tag="1" id="307"/>
+                                                    <menuItem title="Exclude" tag="2" id="308"/>
+                                                </items>
+                                            </menu>
+                                        </popUpButtonCell>
+                                        <accessibility description="Highlight Match Type"/>
+                                    </popUpButton>
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="312">
+                                        <rect key="frame" x="101" y="3" width="78" height="16"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="the keyword" id="313">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="310" customClass="TVCValidatedTextField">
+                                        <rect key="frame" x="185" y="0.0" width="209" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="22" id="EpS-gd-fY4"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" usesSingleLineMode="YES" id="311" customClass="TVCValidatedTextFieldCell">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <accessibility description="Highlight Match Keyword"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="-2" id="337"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
+                            <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m7Y-06-lQs">
+                                <rect key="frame" x="0.0" y="0.0" width="394" height="20"/>
+                                <subviews>
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="314">
+                                        <rect key="frame" x="-2" y="4" width="89" height="16"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="in the channel" id="315">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="316">
+                                        <rect key="frame" x="90" y="-4" width="308" height="25"/>
+                                        <popUpButtonCell key="cell" type="push" title="All Channels" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="319" id="317">
+                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="menu"/>
+                                            <menu key="menu" title="OtherViews" id="318">
+                                                <items>
+                                                    <menuItem title="All Channels" state="on" id="319"/>
+                                                    <menuItem isSeparatorItem="YES" id="322"/>
+                                                </items>
+                                            </menu>
+                                        </popUpButtonCell>
+                                        <accessibility description="Limit Highlight to Channel"/>
+                                    </popUpButton>
+                                </subviews>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
+                        </subviews>
+                        <visibilityPriorities>
+                            <integer value="1000"/>
+                            <integer value="1000"/>
+                        </visibilityPriorities>
+                        <customSpacing>
+                            <real value="3.4028234663852886e+38"/>
+                            <real value="3.4028234663852886e+38"/>
+                        </customSpacing>
+                    </stackView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="323">
-                        <rect key="frame" x="268" y="13" width="82" height="32"/>
+                        <rect key="frame" x="283" y="13" width="76" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="324">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -81,7 +142,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="325">
-                        <rect key="frame" x="350" y="13" width="70" height="32"/>
+                        <rect key="frame" x="357" y="13" width="64" height="32"/>
                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="326">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -94,56 +155,23 @@ DQ
                             <action selector="ok:" target="-2" id="335"/>
                         </connections>
                     </button>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="310" customClass="TVCValidatedTextField">
-                        <rect key="frame" x="206" y="87" width="208" height="22"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="22" id="EpS-gd-fY4"/>
-                        </constraints>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" usesSingleLineMode="YES" id="311" customClass="TVCValidatedTextFieldCell">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                        <accessibility description="Highlight Match Keyword"/>
-                        <connections>
-                            <outlet property="delegate" destination="-2" id="337"/>
-                        </connections>
-                    </textField>
-                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="312">
-                        <rect key="frame" x="121" y="89" width="79" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="the keyword" id="313">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="304" firstAttribute="top" secondItem="303" secondAttribute="top" constant="20" symbolic="YES" id="8Ue-l8-Eye"/>
-                    <constraint firstAttribute="trailing" secondItem="316" secondAttribute="trailing" constant="20" id="9SG-RW-w6n"/>
-                    <constraint firstItem="312" firstAttribute="top" secondItem="310" secondAttribute="top" constant="3" id="BFl-PS-pGv"/>
                     <constraint firstItem="323" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="303" secondAttribute="leading" constant="20" id="E01-G7-a1g"/>
                     <constraint firstAttribute="bottom" secondItem="325" secondAttribute="bottom" constant="20" id="EbJ-bz-64h"/>
-                    <constraint firstItem="304" firstAttribute="baseline" secondItem="312" secondAttribute="baseline" id="Eu9-1e-Gys"/>
-                    <constraint firstItem="314" firstAttribute="top" secondItem="304" secondAttribute="bottom" constant="7" id="F23-ls-OjV"/>
-                    <constraint firstItem="316" firstAttribute="baseline" secondItem="314" secondAttribute="baseline" id="JFt-hR-91x"/>
-                    <constraint firstAttribute="trailing" secondItem="310" secondAttribute="trailing" constant="20" id="TAy-9k-0ne"/>
-                    <constraint firstItem="304" firstAttribute="leading" secondItem="314" secondAttribute="leading" id="V7b-IE-ocg"/>
-                    <constraint firstItem="325" firstAttribute="baseline" secondItem="323" secondAttribute="baseline" id="Vh4-nG-WCx"/>
-                    <constraint firstItem="316" firstAttribute="leading" secondItem="314" secondAttribute="trailing" constant="8" symbolic="YES" id="YmC-KU-NA3"/>
-                    <constraint firstItem="314" firstAttribute="leading" secondItem="303" secondAttribute="leading" constant="20" id="Zzr-Nr-AIm"/>
+                    <constraint firstItem="325" firstAttribute="top" secondItem="pG1-Fd-QYW" secondAttribute="bottom" constant="20" id="PfQ-cl-hFU"/>
+                    <constraint firstItem="325" firstAttribute="firstBaseline" secondItem="323" secondAttribute="firstBaseline" id="Vh4-nG-WCx"/>
                     <constraint firstItem="325" firstAttribute="leading" secondItem="323" secondAttribute="trailing" constant="12" symbolic="YES" id="dTA-9e-Cmz"/>
-                    <constraint firstItem="310" firstAttribute="leading" secondItem="312" secondAttribute="trailing" constant="8" symbolic="YES" id="dm6-8H-bEx"/>
+                    <constraint firstItem="pG1-Fd-QYW" firstAttribute="leading" secondItem="303" secondAttribute="leading" constant="20" id="fY3-0R-tBm"/>
+                    <constraint firstAttribute="trailing" secondItem="pG1-Fd-QYW" secondAttribute="trailing" constant="20" id="jIR-zs-8q5"/>
                     <constraint firstAttribute="trailing" secondItem="325" secondAttribute="trailing" constant="20" id="jnh-KQ-Qch"/>
-                    <constraint firstItem="325" firstAttribute="top" secondItem="316" secondAttribute="bottom" constant="20" id="lYX-p4-p2k"/>
-                    <constraint firstItem="304" firstAttribute="leading" secondItem="303" secondAttribute="leading" constant="20" symbolic="YES" id="vVj-mk-k6a"/>
-                    <constraint firstItem="312" firstAttribute="leading" secondItem="304" secondAttribute="trailing" constant="8" symbolic="YES" id="xXJ-9S-Z1h"/>
+                    <constraint firstItem="pG1-Fd-QYW" firstAttribute="top" secondItem="303" secondAttribute="top" constant="20" id="mHh-rB-ZCx"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="336"/>
             </connections>
-            <point key="canvasLocation" x="196" y="254"/>
+            <point key="canvasLocation" x="196" y="209"/>
         </window>
     </objects>
 </document>

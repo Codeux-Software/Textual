@@ -51,8 +51,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCServerListCell : NSTableCellView
 - (void)populateMessageCountBadge;
-
-- (void)updateGroupDisclosureTriangle;
 @end
 
 @interface TVCServerListCellChildItem : TVCServerListCell

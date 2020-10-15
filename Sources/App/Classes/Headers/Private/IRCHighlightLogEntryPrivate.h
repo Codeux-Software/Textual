@@ -45,7 +45,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, weak) IRCChannel *channel;
 @property (readonly, copy) NSString *channelName;
 @property (readonly, copy) NSString *timeLoggedFormatted;
-@property (nonatomic, assign) CGFloat rowHeight;
 @end
 
 @interface IRCHighlightLogEntryMutable : IRCHighlightLogEntry

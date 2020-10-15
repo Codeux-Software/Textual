@@ -151,9 +151,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.userInterfaceObjects = appearance;
 
-	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
-		[self updateVibrancyWithAppearance:appearance];
-	}
+	[self updateVibrancyWithAppearance:appearance];
 
 	self.textContainerInset = appearance.textViewInset;
 
@@ -246,9 +244,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	super.attributedStringValue = attributedStringValue;
 
-	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
-		[self updateAllFontColorsToMatchTheDefaultFont];
-	}
+	[self updateAllFontColorsToMatchTheDefaultFont];
 }
 
 - (void)updateTextDirection
@@ -400,10 +396,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.textViewHeightConstraint.constant = backgroundHeight;
 
-	if (TEXTUAL_RUNNING_ON_YOSEMITE == NO) {
-		[window setContentBorderThickness:backgroundHeight forEdge:NSMinYEdge];
-	}
-
 	id scrollViewContentView = self.enclosingScrollView.contentView;
 
 	NSRect contentViewBounds = [scrollViewContentView bounds];
@@ -513,124 +505,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TVCMainWindowTextViewBackground
 
-#pragma mark -
-#pragma mark Mavericks UI Drawing
-
-- (void)drawControllerForMavericksWithAppearance:(TVCMainWindowTextViewAppearance *)appearance
-{
-	NSParameterAssert(appearance != nil);
-
-	BOOL isWindowActive = self.mainWindow.activeForDrawing;
-
-	NSRect cellBounds = self.frame;
-
-	NSRect backgroundFrame = NSMakeRect(0.0, 1.0,   cellBounds.size.width,
-												   (cellBounds.size.height - 1.0));
-
-	NSRect foregroundFrame = NSMakeRect(1.0, 2.0,  (cellBounds.size.width - 2.0),
-												   (cellBounds.size.height - 3.0));
-
-	CGContextRef context = RZGraphicsCurrentContext().graphicsPort;
-
-	NSColor *backgroundColor = nil;
-	NSColor *backgroundBorderColor = nil;
-	NSColor *insideShadowColor = nil;
-	NSColor *outsideShadowColor = nil;
-
-	if (isWindowActive) {
-		backgroundColor = appearance.textViewBackgroundColorActiveWindow;
-		backgroundBorderColor = appearance.textViewOutlineColorActiveWindow;
-		insideShadowColor = appearance.textViewInsideShadowColorActiveWindow;
-		outsideShadowColor = appearance.textViewOutsidePrimaryShadowColorActiveWindow;
-	} else {
-		backgroundColor = appearance.textViewBackgroundColorInactiveWindow;
-		backgroundBorderColor = appearance.textViewOutlineColorInactiveWindow;
-		insideShadowColor = appearance.textViewInsideShadowColorInactiveWindow;
-		outsideShadowColor = appearance.textViewOutsidePrimaryShadowColorInactiveWindow;
-	} // isWindowActive
-
-	/* Shadow values */
-	NSShadow *outsideShadow = [NSShadow new];
-
-	outsideShadow.shadowBlurRadius = 0.0;
-	outsideShadow.shadowColor = outsideShadowColor;
-	outsideShadow.shadowOffset = NSMakeSize(0.0, (-1.0));
-
-	NSShadow *insideShadow = [NSShadow new];
-
-	insideShadow.shadowBlurRadius = 0.0;
-	insideShadow.shadowColor = insideShadowColor;
-	insideShadow.shadowOffset = NSMakeSize(0.0, (-1.0));
-
-	/* Draw the background rectangle which will act as the stroke of
-	 the foreground rectangle. It will also host the bottom shadow. */
-	NSBezierPath *backgroundPath = [NSBezierPath bezierPathWithRoundedRect:backgroundFrame xRadius:3.5 yRadius:3.5];
-
-	[NSGraphicsContext saveGraphicsState];
-
-	[outsideShadow set];
-
-	[backgroundBorderColor setFill];
-
-	[backgroundPath fill];
-
-	[NSGraphicsContext restoreGraphicsState];
-
-	/* Draw the foreground rectangle */
-	NSBezierPath *foregroundPath = [NSBezierPath bezierPathWithRoundedRect:foregroundFrame xRadius:3.5 yRadius:3.5];
-
-	[backgroundColor setFill];
-
-	[foregroundPath fill];
-
-	/* Draw the inside shadow of the foreground rectangle */
-	[NSGraphicsContext saveGraphicsState];
-
-	NSRectClip(foregroundPath.bounds);
-
-	CGContextSetShadowWithColor(context, CGSizeZero, 0.0, NULL);
-
-	CGContextSetAlpha(context, insideShadowColor.alphaComponent);
-
-	CGContextBeginTransparencyLayer(context, NULL);
-
-	{
-		/* Inside shadow drawing */
-		[insideShadow set];
-
-		CGContextSetBlendMode(context, kCGBlendModeSourceOut);
-
-		CGContextBeginTransparencyLayer(context, NULL);
-
-		/* Fill shadow */
-		[insideShadowColor setFill];
-
-		[foregroundPath fill];
-
-		/* Complete drawing */
-		CGContextEndTransparencyLayer(context);
-	}
-
-	CGContextEndTransparencyLayer(context);
-
-	[NSGraphicsContext restoreGraphicsState];
-}
-
-#pragma mark -
-#pragma mark Yosemite UI Drawing
-
-- (void)drawControllerForYosemiteWithAppearance:(TVCMainWindowTextViewAppearance *)appearance
+- (void)drawControllerForWithAppearance:(TVCMainWindowTextViewAppearance *)appearance
 {
 	NSParameterAssert(appearance != nil);
 
 	if (appearance.isDarkAppearance == NO) {
-		[self drawLightControllerForYosemiteWithAppearance:appearance];
+		[self drawLightControllerForWithAppearance:appearance];
 	} else {
-		[self drawDarkControllerForYosemiteWithAppearance:appearance];
+		[self drawDarkControllerForWithAppearance:appearance];
 	}
 }
 
-- (void)drawDarkControllerForYosemiteWithAppearance:(TVCMainWindowTextViewAppearance *)appearance
+- (void)drawDarkControllerForWithAppearance:(TVCMainWindowTextViewAppearance *)appearance
 {
 	NSParameterAssert(appearance != nil);
 
@@ -676,7 +562,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[NSGraphicsContext restoreGraphicsState];
 }
 
-- (void)drawLightControllerForYosemiteWithAppearance:(TVCMainWindowTextViewAppearance *)appearance
+- (void)drawLightControllerForWithAppearance:(TVCMainWindowTextViewAppearance *)appearance
 {
 	NSParameterAssert(appearance != nil);
 
@@ -801,11 +687,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
-		[self drawControllerForYosemiteWithAppearance:appearance];
-	} else {
-		[self drawControllerForMavericksWithAppearance:appearance];
-	}
+	[self drawControllerForWithAppearance:appearance];
 }
 
 @end
@@ -813,9 +695,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Text Field Background Vibrant View
 
-/* The content view layer only exists on Yosemite and later. 
- Textual on Mavericks and earlier uses the content border of
- the window in place of this layer for the content view. */
 @implementation TVCMainWindowTextViewContentView
 
 - (void)drawRect:(NSRect)dirtyRect

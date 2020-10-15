@@ -44,8 +44,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/* This class is used by both Mavericks and Yosemite, but only the Yosemite
- version does any drawing. */
 @implementation TVCMainWindowTitlebarAccessoryView
 @end
 
@@ -56,7 +54,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL drawsCustomBackgroundColor;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *lockButtonLeftMarginConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *lockButtonRightMarginConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *lockButtonSuperviewWidthConstraint;
 @end
 
 @implementation TVCMainWindowTitlebarAccessoryViewLockButton
@@ -78,19 +75,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 	CGFloat totalViewWidth = (buttonLeftMargin + buttonWidth + buttonRightMargin);
 
-	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
-		NSRect superviewFrame = self.superview.frame;
+	NSRect superviewFrame = self.superview.frame;
 
-		superviewFrame.size.width = totalViewWidth;
+	superviewFrame.size.width = totalViewWidth;
 
-		self.superview.frame = superviewFrame;
+	self.superview.frame = superviewFrame;
 
-		return;
-	}
-
-	if (self.lockButtonSuperviewWidthConstraint) {
-		self.lockButtonSuperviewWidthConstraint.constant = totalViewWidth;
-	}
+	return;
 }
 
 - (void)awakeFromNib
@@ -126,10 +117,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)disableDrawingCustomBackgroundColor
 {
-	if (TEXTUAL_RUNNING_ON_YOSEMITE == NO) {
-		return;
-	}
-
 	self.cell.backgroundStyle = NSBackgroundStyleRaised;
 
 	self.drawsCustomBackgroundColor = NO;
@@ -137,10 +124,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)enableDrawingCustomBackgroundColor
 {
-	if (TEXTUAL_RUNNING_ON_YOSEMITE == NO) {
-		return;
-	}
-
 	self.cell.backgroundStyle = NSBackgroundStyleLowered;
 
 	self.drawsCustomBackgroundColor = YES;
@@ -153,13 +136,13 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (self.drawsCustomBackgroundColor) {
-		[self drawInteriorOnYosemite];
+		[self drawInterior];
 	}
 
 	[super drawRect:dirtyRect];
 }
 
-- (void)drawInteriorOnYosemite
+- (void)drawInterior
 {
 	if (self.mainWindow.isActiveForDrawing == NO) {
 		return;
@@ -171,15 +154,15 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	[self drawInteriorForActiveWindowOnYosemiteWithAppearance:appearance];
+	[self drawInteriorForActiveWindowWithAppearance:appearance];
 }
 
-- (void)drawInteriorForActiveWindowOnYosemiteWithAppearance:(TVCMainWindowAppearance *)appearance
+- (void)drawInteriorForActiveWindowWithAppearance:(TVCMainWindowAppearance *)appearance
 {
 	NSParameterAssert(appearance != nil);
 
-	/* On Yosemite, we get the bounds of the object and tweak it just slighly to match what
-	 it actually is. After that, we draw our color in behind it to fake the background. */
+	/* We get the bounds of the object and tweak it just slighly to match what it
+	 actually is. After that, we draw our color in behind it to fake the background. */
 	NSRect controllerFrame = self.bounds;
 
 	controllerFrame.size.height -= 1.0;

@@ -39,10 +39,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, TXAppearanceType)
 {
-	TXAppearanceTypeMavericksAquaLight,
-	TXAppearanceTypeMavericksAquaDark,
-	TXAppearanceTypeMavericksGraphiteLight,
-	TXAppearanceTypeMavericksGraphiteDark,
 	TXAppearanceTypeYosemiteLight,
 	TXAppearanceTypeYosemiteDark,
 	TXAppearanceTypeMojaveLight,
@@ -73,7 +69,6 @@ typedef NS_ENUM(NSUInteger, TXAppKitAppearanceTarget)
 @property (readonly, copy) NSString *shortAppearanceDescription; // e.g. "light", "dark"
 
 @property (readonly) BOOL isDarkAppearance;
-@property (readonly) BOOL isModernAppearance; // Anything newer or equal to OS X Yosemite
 
 @property (readonly) TXAppKitAppearanceTarget appKitAppearanceTarget;
 @property (readonly, nullable) NSAppearance *appKitAppearance; // nil when -appKitAppearanceTarget = none

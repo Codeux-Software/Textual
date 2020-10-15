@@ -543,7 +543,7 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 	/* Construct alert */
 	NSAlert *alert = [NSAlert new];
 
-	alert.alertStyle = NSInformationalAlertStyle;
+	alert.alertStyle = NSAlertStyleInformational;
 
 	alert.messageText = titleText;
 	alert.informativeText = bodyText;
@@ -576,26 +576,12 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 	context.completionBlock = completionBlock;
 
 	/* Pop alert */
-	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
-		[alert beginSheetModalForWindow:window completionHandler:^(NSModalResponse returnCode) {
-			[self _alertSheetResponseCallback_stage2:alert returnCode:returnCode contextInfo:context];
-		}];
-	} else {
-		[alert beginSheetModalForWindow:window
-						  modalDelegate:[self class]
-						 didEndSelector:@selector(_alertSheetResponseCallback_stage1:returnCode:contextInfo:)
-							contextInfo:(void *)CFBridgingRetain(context)];
-	}
+	[alert beginSheetModalForWindow:window completionHandler:^(NSModalResponse returnCode) {
+		[self _alertSheetResponseCallback:alert returnCode:returnCode contextInfo:context];
+	}];
 }
 
-+ (void)_alertSheetResponseCallback_stage1:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)context
-{
-	TDCAlertContext *contextObject = ((TDCAlertContext *)CFBridgingRelease(context));
-
-	[self _alertSheetResponseCallback_stage2:alert returnCode:returnCode contextInfo:contextObject];
-}
-
-+ (void)_alertSheetResponseCallback_stage2:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(TDCAlertContext *)context
++ (void)_alertSheetResponseCallback:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(TDCAlertContext *)context
 {
 	NSString *suppressionKey = context.suppressionKey;
 

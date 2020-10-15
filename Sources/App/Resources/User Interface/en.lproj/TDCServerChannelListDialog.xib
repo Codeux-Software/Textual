@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCServerChannelListDialog">
             <connections>
                 <outlet property="channelListController" destination="gJL-Lo-AKT" id="NLh-Wh-ISB"/>
-                <outlet property="channelListTable" destination="68" id="136"/>
+                <outlet property="channelListTable" destination="fir-Vj-Dlr" id="GeF-8A-eTo"/>
                 <outlet property="networkNameTextField" destination="132" id="GUU-qy-Vpo"/>
                 <outlet property="searchTextField" destination="103" id="m09-ig-hTb"/>
                 <outlet property="updateButton" destination="76" id="121"/>
@@ -20,34 +20,32 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Channel List" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" tabbingMode="disallowed" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <rect key="contentRect" x="934" y="498" width="600" height="300"/>
+            <rect key="contentRect" x="934" y="498" width="600" height="312"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
-            <value key="minSize" type="size" width="600" height="300"/>
             <value key="maxSize" type="size" width="1024" height="720"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
+                <rect key="frame" x="0.0" y="0.0" width="600" height="312"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="65">
-                        <rect key="frame" x="0.0" y="47" width="600" height="210"/>
-                        <clipView key="contentView" id="JRG-2W-GCG">
-                            <rect key="frame" x="1" y="0.0" width="598" height="209"/>
+                    <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="m9z-1h-faf">
+                        <rect key="frame" x="0.0" y="48" width="600" height="220"/>
+                        <clipView key="contentView" id="6OO-R3-f55">
+                            <rect key="frame" x="1" y="1" width="598" height="218"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="116" viewBased="YES" id="68" customClass="TVCBasicTableView">
-                                    <rect key="frame" x="0.0" y="0.0" width="598" height="186"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" autosaveColumns="NO" typeSelect="NO" usesAutomaticRowHeights="YES" headerView="sQg-9H-gSH" viewBased="YES" id="fir-Vj-Dlr" customClass="TVCBasicTableView">
+                                    <rect key="frame" x="0.0" y="0.0" width="598" height="190"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="channelName" editable="NO" width="124" minWidth="40" maxWidth="1000" id="70">
+                                        <tableColumn identifier="channelName" editable="NO" width="110" minWidth="40" maxWidth="1000" id="PaN-OT-TPX">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Channel Name">
-                                                <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="73">
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="OgI-gX-mC8">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -56,40 +54,39 @@
                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="channelName"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
-                                                <tableCellView id="ZaB-VD-KCR">
-                                                    <rect key="frame" x="1" y="1" width="124" height="17"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <tableCellView translatesAutoresizingMaskIntoConstraints="NO" id="088-fI-26f">
+                                                    <rect key="frame" x="1" y="1" width="115" height="16"/>
                                                     <subviews>
-                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="vDn-ey-QTL">
-                                                            <rect key="frame" x="0.0" y="0.0" width="124" height="17"/>
-                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="bAo-xK-qeb">
+                                                        <textField horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="LAi-KB-a4L">
+                                                            <rect key="frame" x="0.0" y="0.0" width="115" height="16"/>
+                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="iAr-vI-1Jn">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="ZaB-VD-KCR" name="value" keyPath="objectValue.channelName" id="myv-cT-OpW"/>
+                                                                <binding destination="088-fI-26f" name="value" keyPath="objectValue.channelName" id="mfe-UI-61a"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="vDn-ey-QTL" firstAttribute="top" secondItem="ZaB-VD-KCR" secondAttribute="top" id="FBe-uE-5Qk"/>
-                                                        <constraint firstItem="vDn-ey-QTL" firstAttribute="leading" secondItem="ZaB-VD-KCR" secondAttribute="leading" constant="2" id="QWR-fc-l3v"/>
-                                                        <constraint firstAttribute="trailing" secondItem="vDn-ey-QTL" secondAttribute="trailing" constant="2" id="g4Y-cR-Kp1"/>
+                                                        <constraint firstItem="LAi-KB-a4L" firstAttribute="leading" secondItem="088-fI-26f" secondAttribute="leading" constant="2" id="WK6-jg-jz1"/>
+                                                        <constraint firstAttribute="bottom" secondItem="LAi-KB-a4L" secondAttribute="bottom" id="ax5-LK-kTV"/>
+                                                        <constraint firstItem="LAi-KB-a4L" firstAttribute="top" secondItem="088-fI-26f" secondAttribute="top" id="y54-1Q-Sg8"/>
+                                                        <constraint firstAttribute="trailing" secondItem="LAi-KB-a4L" secondAttribute="trailing" constant="2" id="zXk-hk-rBF"/>
                                                     </constraints>
                                                     <connections>
-                                                        <outlet property="textField" destination="vDn-ey-QTL" id="BAW-q6-bMw"/>
+                                                        <outlet property="textField" destination="LAi-KB-a4L" id="ZMa-Dd-YhQ"/>
                                                     </connections>
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="channelMemberCount" editable="NO" width="88" minWidth="40" maxWidth="1000" id="71">
+                                        <tableColumn identifier="channelMemberCount" editable="NO" width="90" minWidth="40" maxWidth="1000" id="iqK-MO-gQw">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Member Count">
-                                                <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="72">
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="mMW-qu-HSl">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -98,40 +95,39 @@
                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="channelMemberCount"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
-                                                <tableCellView id="FcK-bp-len">
-                                                    <rect key="frame" x="128" y="1" width="88" height="17"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <tableCellView translatesAutoresizingMaskIntoConstraints="NO" id="65a-1B-tHU">
+                                                    <rect key="frame" x="119" y="1" width="90" height="16"/>
                                                     <subviews>
-                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="gnr-BE-kNx">
-                                                            <rect key="frame" x="0.0" y="0.0" width="88" height="17"/>
-                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Mq5-qO-kdn">
+                                                        <textField horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="9UU-Fz-GXc">
+                                                            <rect key="frame" x="0.0" y="0.0" width="90" height="16"/>
+                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="TaT-zx-zgK">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="FcK-bp-len" name="value" keyPath="objectValue.channelMemberCount" id="ymm-u9-JTh"/>
+                                                                <binding destination="65a-1B-tHU" name="value" keyPath="objectValue.channelMemberCount" id="GP7-TZ-7DS"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="gnr-BE-kNx" firstAttribute="top" secondItem="FcK-bp-len" secondAttribute="top" id="Mbs-1u-jRg"/>
-                                                        <constraint firstItem="gnr-BE-kNx" firstAttribute="leading" secondItem="FcK-bp-len" secondAttribute="leading" constant="2" id="jyv-BE-3ni"/>
-                                                        <constraint firstAttribute="trailing" secondItem="gnr-BE-kNx" secondAttribute="trailing" constant="2" id="riQ-f8-KjW"/>
+                                                        <constraint firstItem="9UU-Fz-GXc" firstAttribute="leading" secondItem="65a-1B-tHU" secondAttribute="leading" constant="2" id="8Gt-nD-wni"/>
+                                                        <constraint firstAttribute="trailing" secondItem="9UU-Fz-GXc" secondAttribute="trailing" constant="2" id="feh-ef-O53"/>
+                                                        <constraint firstItem="9UU-Fz-GXc" firstAttribute="top" secondItem="65a-1B-tHU" secondAttribute="top" id="i7n-zp-SeQ"/>
+                                                        <constraint firstAttribute="bottom" secondItem="9UU-Fz-GXc" secondAttribute="bottom" id="zkt-6R-1j3"/>
                                                     </constraints>
                                                     <connections>
-                                                        <outlet property="textField" destination="gnr-BE-kNx" id="Vrc-F8-0nu"/>
+                                                        <outlet property="textField" destination="9UU-Fz-GXc" id="IdQ-tp-oeZ"/>
                                                     </connections>
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="channelTopic" editable="NO" width="377" minWidth="10" maxWidth="3.4028234663852886e+38" id="78">
+                                        <tableColumn identifier="channelTopic" editable="NO" width="380" minWidth="10" maxWidth="3.4028234663852886e+38" id="exA-K8-ozT">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Topic">
-                                                <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                             </tableHeaderCell>
-                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" allowsEditingTextAttributes="YES" id="79">
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="seI-iZ-zcH">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -140,60 +136,64 @@
                                             <sortDescriptor key="sortDescriptorPrototype" selector="caseInsensitiveCompare:" sortKey="channelTopicUnformatted"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
-                                                <tableCellView id="Rj4-Hq-RWw">
-                                                    <rect key="frame" x="219" y="1" width="377" height="17"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <tableCellView translatesAutoresizingMaskIntoConstraints="NO" id="lXg-AU-UCu">
+                                                    <rect key="frame" x="212" y="1" width="384" height="16"/>
                                                     <subviews>
-                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="7s1-nc-Gl0">
-                                                            <rect key="frame" x="0.0" y="0.0" width="377" height="17"/>
-                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="urJ-pM-ab7">
+                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="tvH-QA-89d">
+                                                            <rect key="frame" x="0.0" y="0.0" width="384" height="16"/>
+                                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Table View Cell" id="oPQ-I2-Zqm">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
-                                                                <binding destination="Rj4-Hq-RWw" name="value" keyPath="objectValue.channelTopicFormatted" id="cpi-Da-f1M"/>
+                                                                <binding destination="lXg-AU-UCu" name="value" keyPath="objectValue.channelTopicFormatted" id="rGL-us-Xnl"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="7s1-nc-Gl0" secondAttribute="trailing" constant="2" id="RLv-gv-yJp"/>
-                                                        <constraint firstItem="7s1-nc-Gl0" firstAttribute="leading" secondItem="Rj4-Hq-RWw" secondAttribute="leading" constant="2" id="hSX-8h-Q0F"/>
-                                                        <constraint firstItem="7s1-nc-Gl0" firstAttribute="top" secondItem="Rj4-Hq-RWw" secondAttribute="top" id="iPk-Pm-Cg7"/>
+                                                        <constraint firstAttribute="bottom" secondItem="tvH-QA-89d" secondAttribute="bottom" id="U1x-9f-JGE"/>
+                                                        <constraint firstAttribute="trailing" secondItem="tvH-QA-89d" secondAttribute="trailing" constant="2" id="bhw-3W-lIw"/>
+                                                        <constraint firstItem="tvH-QA-89d" firstAttribute="top" secondItem="lXg-AU-UCu" secondAttribute="top" id="cYv-ug-abn"/>
+                                                        <constraint firstItem="tvH-QA-89d" firstAttribute="leading" secondItem="lXg-AU-UCu" secondAttribute="leading" constant="2" id="fcG-Wn-GfG"/>
                                                     </constraints>
                                                     <connections>
-                                                        <outlet property="textField" destination="7s1-nc-Gl0" id="lZ0-Vd-lHO"/>
+                                                        <outlet property="textField" destination="tvH-QA-89d" id="JKb-FS-GQW"/>
                                                     </connections>
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
-                                        <binding destination="gJL-Lo-AKT" name="content" keyPath="arrangedObjects" id="Aan-3r-Y2r"/>
-                                        <binding destination="gJL-Lo-AKT" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="Aan-3r-Y2r" id="xWt-Eu-bKV"/>
-                                        <binding destination="gJL-Lo-AKT" name="sortDescriptors" keyPath="sortDescriptors" previousBinding="xWt-Eu-bKV" id="I1D-lf-EMM"/>
-                                        <outlet property="dataSource" destination="-2" id="QdA-vM-Mmq"/>
-                                        <outlet property="delegate" destination="-2" id="SZe-ZV-KXj"/>
+                                        <binding destination="gJL-Lo-AKT" name="content" keyPath="arrangedObjects" id="52X-ys-8XF"/>
+                                        <binding destination="gJL-Lo-AKT" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="52X-ys-8XF" id="zq3-si-kb2"/>
+                                        <binding destination="gJL-Lo-AKT" name="sortDescriptors" keyPath="sortDescriptors" previousBinding="zq3-si-kb2" id="9Rn-KF-1bQ"/>
+                                        <outlet property="dataSource" destination="-2" id="agf-xc-8d4"/>
+                                        <outlet property="delegate" destination="-2" id="rJx-Wd-ijQ"/>
                                     </connections>
                                 </tableView>
                             </subviews>
                         </clipView>
-                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="115">
-                            <rect key="frame" x="1" y="381" width="788" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="600" id="fHu-ho-lZA"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="220" id="gad-i5-vCs"/>
+                        </constraints>
+                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Zxi-WW-aZs">
+                            <rect key="frame" x="1" y="214" width="598" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="114">
-                            <rect key="frame" x="773" y="16" width="15" height="357"/>
+                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="ZtW-M5-gFM">
+                            <rect key="frame" x="764" y="16" width="15" height="230"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <tableHeaderView key="headerView" id="116">
-                            <rect key="frame" x="0.0" y="0.0" width="598" height="23"/>
+                        <tableHeaderView key="headerView" wantsLayer="YES" id="sQg-9H-gSH">
+                            <rect key="frame" x="0.0" y="0.0" width="598" height="28"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                         <accessibility description="Channel List"/>
                     </scrollView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="74">
-                        <rect key="frame" x="511" y="6" width="75" height="32"/>
+                        <rect key="frame" x="517" y="7" width="70" height="32"/>
                         <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="111">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -207,7 +207,7 @@ Gw
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="76">
-                        <rect key="frame" x="401" y="6" width="110" height="32"/>
+                        <rect key="frame" x="415" y="7" width="104" height="32"/>
                         <buttonCell key="cell" type="push" title="Update List" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="112">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -218,7 +218,7 @@ Gw
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="132">
-                        <rect key="frame" x="18" y="269" width="108" height="17"/>
+                        <rect key="frame" x="18" y="282" width="108" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="My IRC Network" id="133">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -226,7 +226,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="139">
-                        <rect key="frame" x="14" y="6" width="182" height="32"/>
+                        <rect key="frame" x="13" y="7" width="176" height="32"/>
                         <buttonCell key="cell" type="push" title="Join Selected Channels" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="140">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -237,7 +237,7 @@ Gw
                         </connections>
                     </button>
                     <searchField wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="103">
-                        <rect key="frame" x="380" y="267" width="200" height="22"/>
+                        <rect key="frame" x="380" y="279" width="200" height="22"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="200" id="fg4-E2-QNl"/>
                         </constraints>
@@ -259,28 +259,28 @@ Gw
                     </searchField>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="74" firstAttribute="top" secondItem="65" secondAttribute="bottom" constant="13" id="9cD-7w-cMk"/>
+                    <constraint firstAttribute="bottom" secondItem="74" secondAttribute="bottom" constant="14" id="2TH-qs-jWK"/>
+                    <constraint firstItem="132" firstAttribute="top" secondItem="6" secondAttribute="top" constant="14" id="Bt8-hJ-xrj"/>
                     <constraint firstAttribute="trailing" secondItem="103" secondAttribute="trailing" constant="20" symbolic="YES" id="Cz5-Bb-inG"/>
                     <constraint firstItem="103" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="132" secondAttribute="trailing" constant="20" id="Few-xO-gBE"/>
-                    <constraint firstItem="65" firstAttribute="top" secondItem="103" secondAttribute="bottom" constant="10" id="Idf-R4-CqE"/>
                     <constraint firstAttribute="trailing" secondItem="74" secondAttribute="trailing" constant="20" id="Ku9-ei-0zH"/>
-                    <constraint firstAttribute="bottom" secondItem="74" secondAttribute="bottom" constant="13" id="LEG-kP-kBr"/>
                     <constraint firstItem="74" firstAttribute="leading" secondItem="76" secondAttribute="trailing" constant="12" symbolic="YES" id="NqQ-Of-1y7"/>
-                    <constraint firstItem="132" firstAttribute="baseline" secondItem="103" secondAttribute="baseline" id="PmL-vy-ip4"/>
                     <constraint firstItem="139" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="20" id="Qca-Mp-mnz"/>
-                    <constraint firstItem="65" firstAttribute="leading" secondItem="6" secondAttribute="leading" id="S1M-98-hH9"/>
-                    <constraint firstItem="76" firstAttribute="baseline" secondItem="74" secondAttribute="baseline" id="ew2-ax-kv3"/>
+                    <constraint firstItem="76" firstAttribute="firstBaseline" secondItem="74" secondAttribute="firstBaseline" id="ew2-ax-kv3"/>
+                    <constraint firstItem="m9z-1h-faf" firstAttribute="top" secondItem="132" secondAttribute="bottom" constant="14" id="fpy-Fb-loa"/>
+                    <constraint firstItem="103" firstAttribute="centerY" secondItem="132" secondAttribute="centerY" id="hMc-j2-bmX"/>
+                    <constraint firstItem="74" firstAttribute="top" secondItem="m9z-1h-faf" secondAttribute="bottom" constant="14" id="jy2-r7-H7m"/>
+                    <constraint firstItem="m9z-1h-faf" firstAttribute="leading" secondItem="6" secondAttribute="leading" id="nw8-14-FJp"/>
                     <constraint firstItem="132" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="20" symbolic="YES" id="od9-bj-Cfd"/>
-                    <constraint firstItem="65" firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="rDb-4R-I0a"/>
+                    <constraint firstItem="m9z-1h-faf" firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="t1H-hc-5Wj"/>
                     <constraint firstItem="76" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="139" secondAttribute="trailing" constant="20" id="vWb-Qf-IzU"/>
-                    <constraint firstItem="139" firstAttribute="baseline" secondItem="76" secondAttribute="baseline" id="vck-zb-Gav"/>
-                    <constraint firstItem="103" firstAttribute="top" secondItem="6" secondAttribute="top" constant="11" id="w1e-BN-ryI"/>
+                    <constraint firstItem="139" firstAttribute="firstBaseline" secondItem="76" secondAttribute="firstBaseline" id="vck-zb-Gav"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="118"/>
             </connections>
-            <point key="canvasLocation" x="942" y="364"/>
+            <point key="canvasLocation" x="496" y="415"/>
         </window>
         <arrayController objectClassName="TDCServerChannelListDialogEntry" selectsInsertedObjects="NO" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" automaticallyRearrangesObjects="YES" id="gJL-Lo-AKT">
             <declaredKeys>

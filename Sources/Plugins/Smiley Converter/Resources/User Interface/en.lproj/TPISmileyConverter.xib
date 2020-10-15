@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,55 +14,64 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="1">
-            <rect key="frame" x="0.0" y="0.0" width="589" height="152"/>
+            <rect key="frame" x="0.0" y="0.0" width="670" height="156"/>
             <userGuides>
                 <userLayoutGuide location="432" affinity="minY"/>
                 <userLayoutGuide location="373" affinity="minY"/>
             </userGuides>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s9C-FG-WiP">
-                    <rect key="frame" x="99" y="90" width="392" height="32"/>
+                    <rect key="frame" x="98" y="94" width="474" height="32"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="This addon replaces plain text emoticons (e.g. “:-)”) with their emoji equivalent; the result of which is only visible to you." id="fQA-0x-acP">
-                        <font key="font" metaFont="cellTitle"/>
+                        <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="64">
-                    <rect key="frame" x="100" y="54" width="161" height="18"/>
-                    <buttonCell key="cell" type="check" title="Enable Smiley Converter" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="65">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="cellTitle"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="preferenceChanged:" target="-2" id="hl1-Tp-jqb"/>
-                        <binding destination="LeY-as-hAW" name="value" keyPath="values.Smiley Converter Extension -&gt; Enable Service" id="2bD-6F-V3R"/>
-                    </connections>
-                </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="d4p-fS-sg0">
-                    <rect key="frame" x="100" y="28" width="346" height="18"/>
-                    <buttonCell key="cell" type="check" title="Enable the www.emoji-cheat-sheet.com set of emoticons" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="nlC-dQ-P7M">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="preferenceChanged:" target="-2" id="IRd-n3-a4p"/>
-                        <binding destination="LeY-as-hAW" name="value" keyPath="values.Smiley Converter Extension -&gt; Enable Extra Emoticons" id="Hkv-nI-vbY"/>
-                        <binding destination="LeY-as-hAW" name="enabled" keyPath="values.Smiley Converter Extension -&gt; Enable Service" id="QoG-q7-Hnu"/>
-                    </connections>
-                </button>
+                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="12" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AEE-0p-afi">
+                    <rect key="frame" x="100" y="30" width="371" height="44"/>
+                    <subviews>
+                        <button translatesAutoresizingMaskIntoConstraints="NO" id="64">
+                            <rect key="frame" x="-2" y="27" width="175" height="18"/>
+                            <buttonCell key="cell" type="check" title="Enable Smiley Converter" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="65">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="preferenceChanged:" target="-2" id="hl1-Tp-jqb"/>
+                                <binding destination="LeY-as-hAW" name="value" keyPath="values.Smiley Converter Extension -&gt; Enable Service" id="2bD-6F-V3R"/>
+                            </connections>
+                        </button>
+                        <button translatesAutoresizingMaskIntoConstraints="NO" id="d4p-fS-sg0">
+                            <rect key="frame" x="-2" y="-1" width="373" height="18"/>
+                            <buttonCell key="cell" type="check" title="Enable the www.emoji-cheat-sheet.com set of emoticons" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="nlC-dQ-P7M">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="preferenceChanged:" target="-2" id="IRd-n3-a4p"/>
+                                <binding destination="LeY-as-hAW" name="value" keyPath="values.Smiley Converter Extension -&gt; Enable Extra Emoticons" id="Hkv-nI-vbY"/>
+                                <binding destination="LeY-as-hAW" name="enabled" keyPath="values.Smiley Converter Extension -&gt; Enable Service" id="QoG-q7-Hnu"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
             </subviews>
             <constraints>
-                <constraint firstItem="64" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="102" id="4gB-Ee-FI9"/>
+                <constraint firstItem="AEE-0p-afi" firstAttribute="top" secondItem="s9C-FG-WiP" secondAttribute="bottom" constant="20" id="3oW-li-kdQ"/>
                 <constraint firstItem="s9C-FG-WiP" firstAttribute="top" secondItem="1" secondAttribute="top" constant="30" id="E1z-Wc-Pn2"/>
-                <constraint firstItem="d4p-fS-sg0" firstAttribute="top" secondItem="64" secondAttribute="bottom" constant="12" id="ZS1-MY-EVd"/>
                 <constraint firstAttribute="trailing" secondItem="s9C-FG-WiP" secondAttribute="trailing" constant="100" id="b82-Ic-lGC"/>
-                <constraint firstAttribute="bottom" secondItem="d4p-fS-sg0" secondAttribute="bottom" constant="30" id="bWk-65-phe"/>
-                <constraint firstItem="d4p-fS-sg0" firstAttribute="leading" secondItem="64" secondAttribute="leading" id="cqh-kX-hHP"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="64" secondAttribute="trailing" constant="20" id="dk6-jv-Oti"/>
-                <constraint firstItem="s9C-FG-WiP" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="101" id="mjl-0e-FTY"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="d4p-fS-sg0" secondAttribute="trailing" constant="20" id="nhv-OJ-Udv"/>
-                <constraint firstItem="64" firstAttribute="top" secondItem="s9C-FG-WiP" secondAttribute="bottom" constant="20" id="yZn-Gd-y1s"/>
+                <constraint firstItem="AEE-0p-afi" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="100" id="dMf-UW-ZgT"/>
+                <constraint firstItem="s9C-FG-WiP" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="100" id="mjl-0e-FTY"/>
+                <constraint firstAttribute="bottom" secondItem="AEE-0p-afi" secondAttribute="bottom" constant="30" id="pA9-Of-mCj"/>
             </constraints>
             <point key="canvasLocation" x="63" y="104"/>
         </customView>

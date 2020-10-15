@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.13.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.13.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TXApplication">
@@ -52,6 +52,7 @@
             <connections>
                 <outlet property="delegate" destination="267" id="oPr-nd-Yxd"/>
             </connections>
+            <point key="canvasLocation" x="21" y="-424"/>
         </menu>
         <menu title="Menu" id="374" userLabel="Channel View Menu">
             <items>
@@ -104,7 +105,7 @@
             <connections>
                 <outlet property="delegate" destination="267" id="L6h-v2-qwT"/>
             </connections>
-            <point key="canvasLocation" x="-416" y="-69"/>
+            <point key="canvasLocation" x="-434" y="-545"/>
         </menu>
         <menu title="File" id="Q9Y-E0-gAT" userLabel="Dock Menu">
             <items>
@@ -123,6 +124,7 @@
             <connections>
                 <outlet property="delegate" destination="267" id="2RV-vm-dLp"/>
             </connections>
+            <point key="canvasLocation" x="95" y="-617"/>
         </menu>
         <menu id="edI-1l-81o" userLabel="Encryption Manager Status Menu">
             <items>
@@ -169,7 +171,7 @@
             <connections>
                 <outlet property="delegate" destination="267" id="WYt-sp-mVt"/>
             </connections>
-            <point key="canvasLocation" x="94" y="581.5"/>
+            <point key="canvasLocation" x="-452" y="-306"/>
         </menu>
         <menu showsStateColumn="NO" id="963" userLabel="Join Channel Menu">
             <items>
@@ -183,6 +185,7 @@
             <connections>
                 <outlet property="delegate" destination="267" id="Up9-R6-U8F"/>
             </connections>
+            <point key="canvasLocation" x="22" y="-515"/>
         </menu>
         <menu title="MainMenu" systemMenu="main" id="29">
             <items>
@@ -956,16 +959,10 @@ CQ
                                     <action selector="showFileTransfersWindow:" target="267" id="klt-6R-Q9W"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Buddy List" tag="818" keyEquivalent="7" id="NxI-qC-er0">
-                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
-                                <connections>
-                                    <action selector="showBuddyListWindow:" target="267" id="6FM-AC-Lhe"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" tag="819" id="92">
+                            <menuItem isSeparatorItem="YES" tag="818" id="92">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Bring All to Front" tag="820" id="5">
+                            <menuItem title="Bring All to Front" tag="819" id="5">
                                 <connections>
                                     <action selector="arrangeInFront:" target="-1" id="39"/>
                                 </connections>
@@ -1183,7 +1180,7 @@ CQ
             <connections>
                 <outlet property="delegate" destination="267" id="Mt0-YV-PA3"/>
             </connections>
-            <point key="canvasLocation" x="-1240" y="-1750"/>
+            <point key="canvasLocation" x="-226" y="-741"/>
         </menu>
         <menu title="Channel" id="1s1-yL-ZHT" userLabel="Main Menu Channel Menu">
             <items>
@@ -1327,6 +1324,7 @@ CA
             <connections>
                 <outlet property="delegate" destination="267" id="pbv-Ao-GhP"/>
             </connections>
+            <point key="canvasLocation" x="74" y="-168"/>
         </menu>
         <menu title="Query" id="6uP-Kf-gUN" userLabel="Main Menu Query Menu">
             <items>
@@ -1351,6 +1349,7 @@ CA
             <connections>
                 <outlet property="delegate" destination="267" id="e9S-J4-SoO"/>
             </connections>
+            <point key="canvasLocation" x="-222" y="-61"/>
         </menu>
         <menu title="Menu" showsStateColumn="NO" id="426" userLabel="Open URL Menu">
             <items>
@@ -1363,6 +1362,7 @@ CA
             <connections>
                 <outlet property="delegate" destination="267" id="n8y-YA-LIK"/>
             </connections>
+            <point key="canvasLocation" x="-510" y="-144"/>
         </menu>
         <menu title="Menu" id="2953" userLabel="Segmented Controller Menu">
             <items>
@@ -1382,6 +1382,7 @@ CA
             <connections>
                 <outlet property="delegate" destination="267" id="e4U-Ty-iAr"/>
             </connections>
+            <point key="canvasLocation" x="-479" y="-38"/>
         </menu>
         <menu title="Menu" id="327" userLabel="User Controls Menu">
             <items>
@@ -1587,7 +1588,7 @@ CA
             <connections>
                 <outlet property="delegate" destination="267" id="VR8-mY-poH"/>
             </connections>
-            <point key="canvasLocation" x="18" y="-162"/>
+            <point key="canvasLocation" x="-197" y="-399"/>
         </menu>
     </objects>
 </document>

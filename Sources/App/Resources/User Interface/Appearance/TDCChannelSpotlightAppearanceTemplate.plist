@@ -70,9 +70,9 @@
 				<key>value</key>
 				<string>0.0 0.0 0.0</string>
 			</dict>
-			<key>keyboardShortcutDeselectedTopOffset</key>
+			<key>keyboardShortcutDeselectedOffset</key>
 			<integer>0</integer>
-			<key>keyboardShortcutSelectedTextOffset</key>
+			<key>keyboardShortcutSelectedOffset</key>
 			<integer>0</integer>
 			<key>selectedTextColor</key>
 			<dict>

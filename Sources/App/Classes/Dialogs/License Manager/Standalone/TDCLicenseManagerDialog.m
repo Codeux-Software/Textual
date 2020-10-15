@@ -66,11 +66,8 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 #define _upgradeDialogRemindMeInterval 		345600 // 4 days
 
 @interface TDCLicenseManagerDialog ()
-@property (nonatomic, weak) IBOutlet NSView *contentView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewUnregisteredTextualView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewRegisteredTextualView;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSTextField *unregisteredViewLicenseKeyTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *unregisteredViewTrialInformationTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *registeredViewLicenseKeyTextField;
@@ -158,13 +155,7 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 		return;
 	}
 
-	NSString *appStoreIconPath = nil;
-
-	if (TEXTUAL_RUNNING_ON_SIERRA) {
-		appStoreIconPath = [appStoreApplication pathForResource:@"AppIcon" ofType:@"icns"];
-	} else {
-		appStoreIconPath = [appStoreApplication pathForResource:@"appStore" ofType:@"icns"];
-	}
+	NSString *appStoreIconPath = [appStoreApplication pathForResource:@"AppIcon" ofType:@"icns"];
 
 	if (appStoreIconPath == nil) {
 		return;
@@ -202,9 +193,7 @@ NSString * const TDCLicenseManagerTrialExpiredNotification = @"TDCLicenseManager
 		self.unregisteredViewTrialInformationTextField.stringValue = formattedTrialInformation;
 	}
 
-	[self.contentView attachSubview:contentView
-			adjustedWidthConstraint:self.contentViewWidthConstraint
-		   adjustedHeightConstraint:self.contentViewHeightConstraint];
+	[self.window replaceContentView:contentView];
 }
 
 #pragma mark -

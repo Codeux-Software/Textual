@@ -124,26 +124,6 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (void)lazilyDefineHeightForRow:(NSUInteger)row
-{
-	NSTableView *tableView = self.highlightListTable;
-
-	NSSize cellViewSpacing = tableView.intercellSpacing;
-
-	NSTableCellView *cellView = [tableView viewAtColumn:1 row:row makeIfNecessary:NO];
-
-	NSRect textFieldFrame = cellView.textField.frame;
-
-	IRCHighlightLogEntry *entryItem = self.highlightListController.arrangedObjects[row];
-
-	entryItem.rowHeight = (textFieldFrame.size.height + cellViewSpacing.height);
-
-	[NSAnimationContext performBlockWithoutAnimation:^{
-		[tableView noteHeightOfRowsWithIndexesChanged:
-		 [NSIndexSet indexSetWithIndex:row]];
-	}];
-}
-
 - (void)onClearList:(id)sender
 {
 	self.highlightListController.content = nil;
@@ -204,27 +184,11 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark NSTableView Delegate
 
-- (CGFloat)tableView:(NSTableView *)aTableView heightOfRow:(NSInteger)row
-{
-	IRCHighlightLogEntry *entryItem = self.highlightListController.arrangedObjects[row];
-
-	if (entryItem.rowHeight > 0) {
-		return entryItem.rowHeight;
-	}
-
-	return aTableView.rowHeight;
-}
-
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
 	NSTableCellView *result = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
 
 	return result;
-}
-
-- (void)tableView:(NSTableView *)tableView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
-{
-	[self lazilyDefineHeightForRow:row];
 }
 
 #pragma mark -

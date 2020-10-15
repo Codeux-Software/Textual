@@ -184,29 +184,6 @@ static CGFloat _userScrolledMinimum = 25.0;
 	return (contentRect.size.height > frameRect.size.height);
 }
 
-- (void)redrawFrameIfNeeded
-{
-	/* WebKit uses layered compositing for position: fixed elements as of Yosemite.
-	 However, there are some issues related to this change which results in position
-	 fixed elements flickering while scrolling. This has been filed as radar #18211024
-	 but in the meantime, we redraw the WebView on scroll to workaround this issue. */
-	static BOOL _performForceRedraw = NO;
-
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		_performForceRedraw =
-		(TEXTUAL_RUNNING_ON_YOSEMITE &&
-		 TEXTUAL_RUNNING_ON_ELCAPITAN == NO);
-	});
-
-	if (_performForceRedraw == NO) {
-		return;
-	}
-
-	[self redrawFrame];
-}
-
 - (void)redrawFrame
 {
 	[self.documentView setNeedsLayout:YES];
@@ -273,8 +250,6 @@ static CGFloat _userScrolledMinimum = 25.0;
 			LogToConsoleDebug("Scrolled below threshold. Enabled auto scroll.");
 		}
 	}
-
-	[self redrawFrameIfNeeded];
 }
 
 - (void)webViewDidChangeFrame:(NSNotification *)aNotification

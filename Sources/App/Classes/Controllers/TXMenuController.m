@@ -520,9 +520,9 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 		case MTMMServerConnectWithoutProxy: // "Connect Without Proxy"
 		{
-			NSUInteger flags = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+			NSUInteger flags = ([NSEvent modifierFlags] & NSEventModifierFlagDeviceIndependentFlagsMask);
 
-			if (flags != NSShiftKeyMask) {
+			if (flags != NSEventModifierFlagShift) {
 				menuItem.hidden = YES;
 
 				return NO;
@@ -587,12 +587,6 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 
 			return [viewController highlightAvailable:(tag == MTMMNavigationPreviousHighlight)];
-		}
-		case MTMMNavigationSearchChannels: // "Search channels…"
-		{
-			menuItem.hidden = (TEXTUAL_RUNNING_ON_YOSEMITE == NO);
-
-			return YES;
 		}
 
 		case MTMMChannelJoinChannel: // "Join Channel"
@@ -725,16 +719,6 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 
 			return [TPCPreferences logHighlights];
-		}
-		case MTMMWindowBuddyList: // "Buddy List"
-		{
-#ifdef TEXTUAL_BUILT_WITH_BUDDY_LIST_WINDOW
-			menuItem.hidden = (TEXTUAL_RUNNING_ON_YOSEMITE == NO);
-#else
-			menuItem.hidden = YES;
-#endif
-
-			return YES;
 		}
 
 		case MTUserControlsAddIgnore: // "Add Ignore"
@@ -3125,7 +3109,7 @@ NS_ASSUME_NONNULL_BEGIN
 														 target:self
 														 action:@selector(_navigateToChannelInNavigationList:)
 												  keyEquivalent:[NSString stringWithUniChar:('0' + keyboardIndex)]
-											  keyEquivalentMask:NSCommandKeyMask];
+											  keyEquivalentMask:NSEventModifierFlagCommand];
 			}
 
 			channelMenuItem.userInfo = [worldController() pasteboardStringForItem:c];
@@ -3482,31 +3466,6 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
-#pragma mark Buddy List Window
-
-- (void)showBuddyListWindow:(id)sender
-{
-#ifdef TEXTUAL_BUILT_WITH_BUDDY_LIST_WINDOW
-	_popWindowViewIfExists(@"TDCBuddyListDialog");
-
-	TDCBuddyListDialog *dialog = [TDCBuddyListDialog new];
-
-	dialog.delegate = (id)self;
-
-	[dialog show];
-
-	[windowController() addWindowToWindowList:dialog];
-#endif
-}
-
-#ifdef TEXTUAL_BUILT_WITH_BUDDY_LIST_WINDOW
-- (void)buddyListDialogWillClose:(TDCBuddyListDialog *)sender
-{
-	[windowController() removeWindowFromWindowList:sender];
-}
-#endif
-
-#pragma mark -
 #pragma mark Server Properties Sheet
 
 - (void)showServerPropertiesSheetForClient:(IRCClient *)client withSelection:(TDCServerPropertiesSheetSelection)selection context:(nullable id)context
@@ -3742,9 +3701,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)showChannelSpotlightWindow:(id)sender
 {
-	NSAssert(TEXTUAL_RUNNING_ON_YOSEMITE,
-		 @"This feature requires OS X Yosemite or later");
-
 	_popWindowViewIfExists(@"TDCChannelSpotlightController");
 
 	TDCChannelSpotlightController *dialog = [TDCChannelSpotlightController new];

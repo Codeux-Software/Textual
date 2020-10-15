@@ -715,17 +715,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 
 + (BOOL)webKit2Enabled
 {
-	BOOL canUseWebKit2 = [RZUserDefaults() boolForKey:@"UsesWebKit2WhenAvailable"];
-
-	if (canUseWebKit2 == NO) {
-		return NO;
-	}
-
-	if (TEXTUAL_RUNNING_ON_ELCAPITAN) {
-		return YES;
-	}
-
-	return NO;
+	return [RZUserDefaults() boolForKey:@"UsesWebKit2WhenAvailable"];
 }
 
 + (BOOL)webKit2ProcessPoolSizeLimited

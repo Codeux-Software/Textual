@@ -60,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, copy) NSString *unreadCountDescription;
 @property (nonatomic, weak) IBOutlet NSTextField *channelNameField;
 @property (nonatomic, weak) IBOutlet NSTextField *keyboardShortcutField;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *keyboardShortcutFieldTopConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *keyboardShortcutFieldOffsetConstraint;
 @property (nonatomic, weak) IBOutlet NSTextField *unreadCountDescriptionField;
 @property (nonatomic, assign) BOOL staticLabelsPopulated;
 @property (readonly) TDCChannelSpotlightAppearance *userInterfaceObjects;
@@ -110,7 +110,7 @@ NS_ASSUME_NONNULL_BEGIN
 		self.unreadCountDescriptionField.textColor = appearance.searchResultChannelDescriptionTextColor;
 
 		self.keyboardShortcutField.textColor = appearance.searchResultKeyboardShortcutTextColor;
-		self.keyboardShortcutFieldTopConstraint.constant = appearance.searchResultKeyboardShortcutDeselectedTopOffset;
+		self.keyboardShortcutFieldOffsetConstraint.constant = appearance.searchResultKeyboardShortcutDeselectedOffset;
 	}
 	else
 	{
@@ -121,7 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
 		self.unreadCountDescriptionField.textColor = selectedTextColor;
 
 		self.keyboardShortcutField.textColor = selectedTextColor;
-		self.keyboardShortcutFieldTopConstraint.constant = appearance.searchResultKeyboardShortcutSelectedTopOffset;
+		self.keyboardShortcutFieldOffsetConstraint.constant = appearance.searchResultKeyboardShortcutSelectedOffset;
 	}
 }
 

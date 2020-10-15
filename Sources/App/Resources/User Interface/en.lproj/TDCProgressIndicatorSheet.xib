@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,33 +17,46 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="6sk-kp-nIv">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="283" y="305" width="411" height="64"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
+            <rect key="contentRect" x="283" y="305" width="406" height="60"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
             <view key="contentView" id="WV3-RL-BkV">
-                <rect key="frame" x="0.0" y="0.0" width="411" height="64"/>
+                <rect key="frame" x="0.0" y="0.0" width="406" height="60"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="44f-oq-qcQ">
-                        <rect key="frame" x="75" y="24" width="318" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Please wait a moment while this task is completed…" id="Wtt-QE-OE3">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="nX8-Wu-d5N">
-                        <rect key="frame" x="20" y="16" width="32" height="32"/>
-                    </progressIndicator>
+                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="653-Q6-e7G">
+                        <rect key="frame" x="20" y="14" width="366" height="32"/>
+                        <subviews>
+                            <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="nX8-Wu-d5N">
+                                <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                            </progressIndicator>
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="44f-oq-qcQ">
+                                <rect key="frame" x="50" y="8" width="318" height="16"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Please wait a moment while this task is completed…" id="Wtt-QE-OE3">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <visibilityPriorities>
+                            <integer value="1000"/>
+                            <integer value="1000"/>
+                        </visibilityPriorities>
+                        <customSpacing>
+                            <real value="3.4028234663852886e+38"/>
+                            <real value="3.4028234663852886e+38"/>
+                        </customSpacing>
+                    </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="nX8-Wu-d5N" firstAttribute="centerY" secondItem="WV3-RL-BkV" secondAttribute="centerY" id="APo-5a-dOm"/>
-                    <constraint firstItem="44f-oq-qcQ" firstAttribute="centerY" secondItem="nX8-Wu-d5N" secondAttribute="centerY" id="bPQ-VF-UKr"/>
-                    <constraint firstAttribute="trailing" secondItem="44f-oq-qcQ" secondAttribute="trailing" constant="20" symbolic="YES" id="fCX-3Q-GAC"/>
-                    <constraint firstItem="nX8-Wu-d5N" firstAttribute="leading" secondItem="WV3-RL-BkV" secondAttribute="leading" constant="20" symbolic="YES" id="iPN-xW-rt4"/>
-                    <constraint firstItem="44f-oq-qcQ" firstAttribute="leading" secondItem="nX8-Wu-d5N" secondAttribute="trailing" constant="25" id="tCK-cN-bD3"/>
+                    <constraint firstItem="653-Q6-e7G" firstAttribute="centerX" secondItem="WV3-RL-BkV" secondAttribute="centerX" id="LgP-DR-EUU"/>
+                    <constraint firstItem="44f-oq-qcQ" firstAttribute="centerY" secondItem="WV3-RL-BkV" secondAttribute="centerY" id="UeS-oJ-78n"/>
+                    <constraint firstItem="653-Q6-e7G" firstAttribute="top" secondItem="WV3-RL-BkV" secondAttribute="top" constant="14" id="fIb-Tb-zyB"/>
+                    <constraint firstItem="653-Q6-e7G" firstAttribute="centerY" secondItem="WV3-RL-BkV" secondAttribute="centerY" id="jDN-wc-LJJ"/>
+                    <constraint firstItem="653-Q6-e7G" firstAttribute="leading" secondItem="WV3-RL-BkV" secondAttribute="leading" constant="20" id="mmp-xu-oJn"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="412.5" y="397"/>
+            <point key="canvasLocation" x="394" y="418"/>
         </window>
     </objects>
 </document>

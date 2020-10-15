@@ -59,7 +59,6 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 @property (nonatomic, assign) NSInteger lastRowShownUserInfoPopover;
 @property (nonatomic, strong, readwrite) TVCMemberListAppearance *userInterfaceObjects;
 @property (nonatomic, weak, readwrite) IBOutlet NSVisualEffectView *visualEffectView;
-@property (nonatomic, weak, readwrite) IBOutlet TVCMemberListMavericksBackgroundBox *backgroundView;
 @property (nonatomic, strong, readwrite) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
 @end
 
@@ -514,22 +513,16 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 {
 	NSParameterAssert(appearance != nil);
 
-	BOOL onYosemite = TEXTUAL_RUNNING_ON_YOSEMITE;
-
 	/* We assign a strong reference to these instead of returning the original
 	 value every time so that there are no race conditions for when it changes. */
 	self.userInterfaceObjects = appearance;
 
-	if (onYosemite) {
-		[self updateVibrancyWithAppearance:appearance];
-	}
+	[self updateVibrancyWithAppearance:appearance];
 
-	if (onYosemite == NO) {
-		if (appearance.isDarkAppearance) {
-			self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleLight;
-		} else {
-			self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleDark;
-		}
+	if (appearance.isDarkAppearance) {
+		self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleLight;
+	} else {
+		self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleDark;
 	}
 
 	self.needsDisplay = YES;
@@ -559,10 +552,6 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 
 - (void)respondToRequiresRedraw
 {
-	if (self.backgroundView) {
-		self.backgroundView.needsDisplay = YES;
-	}
-
 	[self refreshAllDrawings:YES];
 }
 

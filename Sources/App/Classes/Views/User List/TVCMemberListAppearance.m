@@ -46,10 +46,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCMemberListMavericksBackgroundBox ()
-@property (nonatomic, weak) IBOutlet TVCMemberList *memberList;
-@end
-
 @interface TVCMemberListAppearance ()
 @property (nonatomic, weak, readwrite) TVCMemberList *memberList;
 
@@ -57,8 +53,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign, readwrite) CGFloat minimumWidth;
 @property (nonatomic, assign, readwrite) CGFloat maximumWidth;
 
-@property (nonatomic, copy, nullable, readwrite) NSColor *backgroundColorActiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSColor *backgroundColorInactiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *rowSelectionColorActiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *rowSelectionColorInactiveWindow;
 
@@ -66,24 +60,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Member Cell
 
 @property (nonatomic, assign, readwrite) BOOL cellRowEmphasized;
-@property (nonatomic, assign, readwrite) CGFloat cellRowHeight;
-@property (nonatomic, copy, nullable, readwrite) NSImage *cellSelectionImageActiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSImage *cellSelectionImageInactiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *cellTextColorActiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *cellTextColorInactiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSColor *cellTextShadowColorActiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSColor *cellTextShadowColorInactiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *cellAwayTextColorActiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *cellAwayTextColorInactiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSColor *cellAwayTextShadowColorActiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSColor *cellAwayTextShadowColorInactiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *cellSelectedTextColorActiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *cellSelectedTextColorInactiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSColor *cellSelectedTextShadowColorActiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSColor *cellSelectedTextShadowColorInactiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSFont *cellFont;
 @property (nonatomic, copy, nullable, readwrite) NSFont *cellFontSelected;
-@property (nonatomic, assign, readwrite) CGFloat cellTopOffset;
 
 #pragma mark -
 #pragma mark Mark Badge
@@ -96,13 +80,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable, readwrite) NSColor *markBadgeTextColorInactiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *markBadgeSelectedTextColorActiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *markBadgeSelectedTextColorInactiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSColor *markBadgeShadowColorActiveWindow;
-@property (nonatomic, copy, nullable, readwrite) NSColor *markBadgeShadowColorInactiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSFont *markBadgeFont;
 @property (nonatomic, copy, nullable, readwrite) NSFont *markBadgeFontSelected;
-@property (nonatomic, assign, readwrite) CGFloat markBadgeWidth;
-@property (nonatomic, assign, readwrite) CGFloat markBadgeHeight;
-@property (nonatomic, assign, readwrite) CGFloat markBadgeTopOffset;
 
 @property (nonatomic, strong, nullable) NSCache *cachedUserMarkBadges;
 @end
@@ -149,30 +128,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.rowSelectionColorActiveWindow = [self colorForKey:@"selectionColor" forActiveWindow:YES];
 	self.rowSelectionColorInactiveWindow = [self colorForKey:@"selectionColor" forActiveWindow:NO];
-	self.backgroundColorActiveWindow = [self colorForKey:@"backgroundColor" forActiveWindow:YES];
-	self.backgroundColorInactiveWindow = [self colorForKey:@"backgroundColor" forActiveWindow:NO];
 
 	NSDictionary *memberCell = properties[@"Member Cell"];
 
 	self.cellRowEmphasized = [memberCell boolForKey:@"rowEmphasized"];
-	self.cellRowHeight = [self measurementInGroup:memberCell withKey:@"rowHeight"];
-	self.cellSelectionImageActiveWindow = [self imageInGroup:memberCell withKey:@"selectionImage" forActiveWindow:YES];
-	self.cellSelectionImageInactiveWindow = [self imageInGroup:memberCell withKey:@"selectionImage" forActiveWindow:NO];
 	self.cellTextColorActiveWindow = [self colorInGroup:memberCell withKey:@"normalTextColor" forActiveWindow:YES];
 	self.cellTextColorInactiveWindow = [self colorInGroup:memberCell withKey:@"normalTextColor" forActiveWindow:NO];
-	self.cellTextShadowColorActiveWindow = [self colorInGroup:memberCell withKey:@"normalTextShadowColor" forActiveWindow:YES];
-	self.cellTextShadowColorInactiveWindow = [self colorInGroup:memberCell withKey:@"normalTextShadowColor" forActiveWindow:NO];
 	self.cellAwayTextColorActiveWindow = [self colorInGroup:memberCell withKey:@"awayTextColor" forActiveWindow:YES];
 	self.cellAwayTextColorInactiveWindow = [self colorInGroup:memberCell withKey:@"awayTextColor" forActiveWindow:NO];
-	self.cellAwayTextShadowColorActiveWindow = [self colorInGroup:memberCell withKey:@"awayTextShadowColor" forActiveWindow:YES];
-	self.cellAwayTextShadowColorInactiveWindow = [self colorInGroup:memberCell withKey:@"awayTextShadowColor" forActiveWindow:NO];
 	self.cellSelectedTextColorActiveWindow = [self colorInGroup:memberCell withKey:@"selectedTextColor" forActiveWindow:YES];
 	self.cellSelectedTextColorInactiveWindow = [self colorInGroup:memberCell withKey:@"selectedTextColor" forActiveWindow:NO];
-	self.cellSelectedTextShadowColorActiveWindow = [self colorInGroup:memberCell withKey:@"selectedTextShadowColor" forActiveWindow:YES];
-	self.cellSelectedTextShadowColorInactiveWindow = [self colorInGroup:memberCell withKey:@"selectedTextShadowColor" forActiveWindow:NO];
 	self.cellFont = [self fontInGroup:memberCell withKey:@"font"];
 	self.cellFontSelected = [self fontInGroup:memberCell withKey:@"fontSelected"];
-	self.cellTopOffset = [self measurementInGroup:memberCell withKey:@"topOffset"];
 
 	NSDictionary *markBadge = properties[@"Mark Badge"];
 
@@ -184,13 +151,8 @@ NS_ASSUME_NONNULL_BEGIN
 	self.markBadgeTextColorInactiveWindow = [self colorInGroup:markBadge withKey:@"normalTextColor" forActiveWindow:NO];
 	self.markBadgeSelectedTextColorActiveWindow = [self colorInGroup:markBadge withKey:@"selectedTextColor" forActiveWindow:YES];
 	self.markBadgeSelectedTextColorInactiveWindow = [self colorInGroup:markBadge withKey:@"selectedTextColor" forActiveWindow:NO];
-	self.markBadgeShadowColorActiveWindow = [self colorInGroup:markBadge withKey:@"shadowColor" forActiveWindow:YES];
-	self.markBadgeShadowColorInactiveWindow = [self colorInGroup:markBadge withKey:@"shadowColor" forActiveWindow:NO];
 	self.markBadgeFont = [self fontInGroup:markBadge withKey:@"font"];
 	self.markBadgeFontSelected = [self fontInGroup:markBadge withKey:@"fontSelected"];
-	self.markBadgeWidth = [self measurementInGroup:markBadge withKey:@"width"];
-	self.markBadgeHeight = [self measurementInGroup:markBadge withKey:@"height"];
-	self.markBadgeTopOffset = [self measurementInGroup:markBadge withKey:@"topOffset"];
 
 	[self flushAppearanceProperties];
 }
@@ -274,11 +236,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-	if (self.isModernAppearance) {
-		return [defaultColor colorWithAlphaComponent:0.7];
-	} else {
-		return  defaultColor;
-	}
+	return [defaultColor colorWithAlphaComponent:0.7];
 }
 
 - (NSColor *)markBadgeBackgroundColor_Y // InspIRCd-2.0
@@ -314,46 +272,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSColor *)markBadgeBackgroundColorByUser
 {
 	return [self _userMarkBadgeBackgroundColorWithAlphaCorrect:@"User List Mode Badge Colors -> no mode"];
-}
-
-@end
-
-#pragma mark -
-
-@implementation TVCMemberListMavericksBackgroundBox
-
-- (void)drawRect:(NSRect)dirtyRect
-{
-	/* The following is specialized drawing for the normal source list
-	 background when inside a backed layer view. */
-	TVCMemberListAppearance *appearance = self.memberList.userInterfaceObjects;
-
-	if (appearance == nil) {
-		return;
-	}
-
-	NSColor *backgroundColor = nil;
-
-	if (self.mainWindow.isActiveForDrawing) {
-		backgroundColor = appearance.backgroundColorActiveWindow;
-	} else {
-		backgroundColor = appearance.backgroundColorInactiveWindow;
-	}
-
-	if ( backgroundColor) {
-		[backgroundColor set];
-
-		NSRectFill(self.bounds);
-	} else {
-		NSGradient *backgroundGradient = [NSGradient sourceListBackgroundGradientColor];
-
-		[backgroundGradient drawInRect:self.bounds angle:270.0];
-	}
-}
-
-- (BOOL)isOpaque
-{
-	return YES;
 }
 
 @end

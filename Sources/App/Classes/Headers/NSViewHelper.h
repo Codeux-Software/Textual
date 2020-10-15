@@ -37,11 +37,31 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSView (TXViewHelper)
-@property (readonly, copy) NSArray<NSLayoutConstraint *> *constraintsForHuggingEdges; // top, right, bottom, left all == 0
+@interface NSWindow (TXWindowHelper)
+/* Reset size of window to accommodate -minSize */
+- (void)changeFrameToMin; // display = YES; animate = NO
+- (void)changeFrameToMinAndDisplay:(BOOL)display; // animate = NO
+- (void)changeFrameToMinAndDisplay:(BOOL)display animate:(BOOL)animate;
 
-- (void)attachSubviewToHugEdges:(NSView *)subview;
-- (void)attachSubview:(NSView *)subview adjustedWidthConstraint:(nullable NSLayoutConstraint *)parentViewWidthConstraint adjustedHeightConstraint:(nullable NSLayoutConstraint *)parentViewHeightConstraint;
+/* Sets content view to nil, resets frame to fit view, then assigns new view. */
+- (void)replaceContentView:(NSView *)withView;
+@end
+
+@interface NSView (TXViewHelper)
+/* Self top, right, bottom, left will = superview with 0.0 constant. */
+- (void)addConstraintsToSuperviewToHugEdges;
+
+/* Superview width and height will = self with 0.0 constant. */
+/* A priority of 550 is used to encourage hugging. */
+- (void)addConstraintsToSueprviewToEqualDimensions;
+
+/* Remove first subview (if one is present) and replaces it with subview. */
+/* The new superview width and height will equal that of subview with a
+ priority of 550. The subview top, right, bottom, and left will equal
+ that of the superview with 0.0 constant. */
+/* See 	-addConstraintsToSuperviewToHugEdges
+		-addConstraintsToSueprviewToEqualDimensions */
+- (void)replaceFirstSubview:(NSView *)withView;
 @end
 
 NS_ASSUME_NONNULL_END

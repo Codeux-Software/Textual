@@ -259,13 +259,9 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	} else if ((reloadAction & TPCPreferencesReloadActionServerListUnreadBadges) == TPCPreferencesReloadActionServerListUnreadBadges) {
 		if (didReloadUserInterface == NO) {
-			/* The color used for unread badges on Yosemite also apply to the text color
-			 so we must reload all drawings instead of only the badges themselves. */
-			if (TEXTUAL_RUNNING_ON_YOSEMITE) {
-				[mainWindowServerList() refreshAllDrawings];
-			} else {
-				[mainWindowServerList() refreshAllUnreadMessageCountBadges];
-			}
+			/* The color used for unread badges also apply to the text color so
+			 we must reload all drawings instead of only the badges themselves. */
+			[mainWindowServerList() refreshAllDrawings];
 		}
 	}
 

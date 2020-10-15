@@ -31,10 +31,3 @@
 	padding-right: 7px;
 	padding-left: 0px;
 }
-
-body[data-system-version=^"10.9"] .inlineImage .closeButton,
-body[data-system-version=^"10.9"] .inlineVideo .closeButton,
-body[data-system-version=^"10.9"] .inlineVideoService .closeButton,
-body[data-system-version=^"10.9"] .inlineHTML .closeButton {
-	line-height: 13px;
-}

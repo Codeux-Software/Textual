@@ -10,23 +10,6 @@
 		<integer>0</integer>
 		<key>maximumWidth</key>
 		<integer>0</integer>
-		<key>backgroundColor</key>
-		<dict>
-			<key>activeWindow</key>
-			<dict>
-				<key>type</key>
-				<integer>2</integer>
-				<key>value</key>
-				<string>0.0 0.0 0.0</string>
-			</dict>
-			<key>inactiveWindow</key>
-			<dict>
-				<key>type</key>
-				<integer>2</integer>
-				<key>value</key>
-				<string>0.0 0.0 0.0</string>
-			</dict>
-		</dict>
 		<key>selectionColor</key>
 		<dict>
 			<key>activeWindow</key>
@@ -48,8 +31,6 @@
 		<dict>
 			<key>rowEmphasized</key>
 			<false/>
-			<key>rowHeight</key>
-			<integer>0</integer>
 			<key>selectionImage</key>
 			<dict>
 				<key>activeWindow</key>
@@ -84,23 +65,6 @@
 					<string>0.0 0.0 0.0</string>
 				</dict>
 			</dict>
-			<key>normalTextShadowColor</key>
-			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-			</dict>
 			<key>disabledTextColor</key>
 			<dict>
 				<key>activeWindow</key>
@@ -118,41 +82,7 @@
 					<string>0.0 0.0 0.0</string>
 				</dict>
 			</dict>
-			<key>disabledTextShadowColor</key>
-			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-			</dict>
 			<key>selectedTextColor</key>
-			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-			</dict>
-			<key>selectedTextShadowColor</key>
 			<dict>
 				<key>activeWindow</key>
 				<dict>
@@ -183,15 +113,11 @@
 				<key>size</key>
 				<real>10</real>
 			</dict>
-			<key>topOffset</key>
-			<integer>0</integer>
 		</dict>
 		<key>Channel Cell</key>
 		<dict>
 			<key>rowEmphasized</key>
 			<false/>
-			<key>rowHeight</key>
-			<integer>0</integer>
 			<key>selectionImage</key>
 			<dict>
 				<key>activeWindow</key>
@@ -226,23 +152,6 @@
 					<string>0.0 0.0 0.0</string>
 				</dict>
 			</dict>
-			<key>normalTextShadowColor</key>
-			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-			</dict>
 			<key>disabledTextColor</key>
 			<dict>
 				<key>activeWindow</key>
@@ -260,41 +169,7 @@
 					<string>0.0 0.0 0.0</string>
 				</dict>
 			</dict>
-			<key>disabledTextShadowColor</key>
-			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-			</dict>
 			<key>selectedTextColor</key>
-			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-			</dict>
-			<key>selectedTextShadowColor</key>
 			<dict>
 				<key>activeWindow</key>
 				<dict>
@@ -359,8 +234,6 @@
 				<key>size</key>
 				<real>10</real>
 			</dict>
-			<key>topOffset</key>
-			<integer>0</integer>
 		</dict>
 		<key>Unread Badge</key>
 		<dict>
@@ -466,23 +339,6 @@
 					<string>0.0 0.0 0.0</string>
 				</dict>
 			</dict>
-			<key>shadowColor</key>
-			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-			</dict>
 			<key>font</key>
 			<dict>
 				<key>name</key>
@@ -502,12 +358,6 @@
 			<key>height</key>
 			<integer>0</integer>
 			<key>padding</key>
-			<integer>0</integer>
-			<key>textCenterYOffset</key>
-			<integer>0</integer>
-			<key>topOffset</key>
-			<integer>0</integer>
-			<key>rightMargin</key>
 			<integer>0</integer>
 		</dict>
 	</dict>

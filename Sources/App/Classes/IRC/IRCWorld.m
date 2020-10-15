@@ -352,7 +352,7 @@ NSString * const IRCWorldWillDestroyChannelNotification = @"IRCWorldWillDestroyC
 {
 	/* Ask for the day, month, and year from the current calender. */
 	/* We are not asking for time which means that it will default to zero. */
-	NSDateComponents *currentDayComponents = [RZCurrentCalender() components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:[NSDate date]];
+	NSDateComponents *currentDayComponents = [RZCurrentCalender() components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:[NSDate date]];
 
 	NSDate *lastMidnight = [RZCurrentCalender() dateFromComponents:currentDayComponents];
 

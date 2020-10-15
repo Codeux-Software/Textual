@@ -51,8 +51,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSTextField *progressViewDescriptionTextField;
 @property (nonatomic, weak) IBOutlet NSProgressIndicator *progressViewIndicator;
 @property (nonatomic, strong) IBOutlet NSView *trialExpiredView;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *loadingScreenMinimumWidthConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *loadingScreenMinimumHeightConstraint;
 @end
 
 @implementation TVCMainWindowLoadingScreenView
@@ -120,33 +118,43 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[self disableBackgroundControlsStepOne];
 
-	NSRect viewFrame = view.frame;
-
-	self.loadingScreenMinimumWidthConstraint.constant = viewFrame.size.width;
-	self.loadingScreenMinimumHeightConstraint.constant = viewFrame.size.height;
-
 	[self addSubview:view];
 
-	NSMutableArray<NSLayoutConstraint *> *constraints = [NSMutableArray array];
-
-	[constraints addObject:
+	NSArray * constraints = @[
+	/* Center view on both axis. */
 	 [NSLayoutConstraint constraintWithItem:view
 								  attribute:NSLayoutAttributeCenterX
 								  relatedBy:NSLayoutRelationEqual
 									 toItem:self
 								  attribute:NSLayoutAttributeCenterX
 								 multiplier:1.0
-								   constant:0.0]
-	 ];
+								   constant:0.0],
 
-	[constraints addObject:
 	 [NSLayoutConstraint constraintWithItem:view
 								  attribute:NSLayoutAttributeCenterY
 								  relatedBy:NSLayoutRelationEqual
 									 toItem:self
 								  attribute:NSLayoutAttributeCenterY
 								 multiplier:1.0
-								   constant:0.0]
+								   constant:0.0],
+
+	 /* Constrain edges but use >= so that window does not
+	  shrink to conform to it. */
+	 [NSLayoutConstraint constraintWithItem:view
+								  attribute:NSLayoutAttributeLeft
+								  relatedBy:NSLayoutRelationGreaterThanOrEqual
+									 toItem:self
+								  attribute:NSLayoutAttributeLeft
+								 multiplier:1.0
+								   constant:0.0],
+
+	 [NSLayoutConstraint constraintWithItem:view
+								  attribute:NSLayoutAttributeTop
+								  relatedBy:NSLayoutRelationGreaterThanOrEqual
+									 toItem:self
+								  attribute:NSLayoutAttributeTop
+								 multiplier:1.0
+								   constant:0.0],
 	 ];
 
 	[self addConstraints:constraints];
@@ -166,9 +174,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)hideView:(NSView *)view animate:(BOOL)animate
 {
 	[self enableBackgroundControlsStepOne];
-
-	self.loadingScreenMinimumWidthConstraint.constant = 0.0;
-	self.loadingScreenMinimumHeightConstraint.constant = 0.0;
 
 	/* ================================== */
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,13 +20,13 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="593" y="397" width="315" height="101"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="720"/>
             <view key="contentView" id="Cdd-Jy-aKw">
-                <rect key="frame" x="0.0" y="0.0" width="315" height="101"/>
+                <rect key="frame" x="0.0" y="0.0" width="315" height="104"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fbs-59-BbJ">
-                        <rect key="frame" x="18" y="64" width="166" height="17"/>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fbs-59-BbJ">
+                        <rect key="frame" x="18" y="64" width="166" height="16"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Change nickname color to:" id="Ril-X5-ce2">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -42,7 +42,7 @@
                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wi2-Ib-F3T">
-                        <rect key="frame" x="246" y="60" width="49" height="23"/>
+                        <rect key="frame" x="245" y="60" width="51" height="23"/>
                         <buttonCell key="cell" type="roundTextured" title="Reset" bezelStyle="texturedRounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="B0R-Mq-sMG">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -53,7 +53,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bdT-W6-ebh">
-                        <rect key="frame" x="231" y="13" width="70" height="32"/>
+                        <rect key="frame" x="238" y="13" width="64" height="32"/>
                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="HVO-sY-mGM">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -67,7 +67,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SNT-UD-yxI">
-                        <rect key="frame" x="149" y="13" width="82" height="32"/>
+                        <rect key="frame" x="164" y="13" width="76" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="u11-Xe-NNB">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -82,14 +82,15 @@ Gw
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Wi2-Ib-F3T" firstAttribute="baseline" secondItem="Fbs-59-BbJ" secondAttribute="baseline" id="Bjh-1M-v6M"/>
+                    <constraint firstItem="bdT-W6-ebh" firstAttribute="top" secondItem="PRL-el-8JJ" secondAttribute="bottom" constant="20" id="1rb-8b-5dE"/>
                     <constraint firstItem="SNT-UD-yxI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Cdd-Jy-aKw" secondAttribute="leading" constant="20" id="HWw-Gn-3sa"/>
-                    <constraint firstItem="SNT-UD-yxI" firstAttribute="baseline" secondItem="bdT-W6-ebh" secondAttribute="baseline" id="M1Z-we-XpM"/>
+                    <constraint firstItem="SNT-UD-yxI" firstAttribute="firstBaseline" secondItem="bdT-W6-ebh" secondAttribute="firstBaseline" id="M1Z-we-XpM"/>
                     <constraint firstItem="bdT-W6-ebh" firstAttribute="leading" secondItem="SNT-UD-yxI" secondAttribute="trailing" constant="12" id="QnB-rZ-NbI"/>
-                    <constraint firstItem="Fbs-59-BbJ" firstAttribute="top" secondItem="PRL-el-8JJ" secondAttribute="top" constant="3" id="WvP-Xm-YyL"/>
                     <constraint firstAttribute="trailing" secondItem="Wi2-Ib-F3T" secondAttribute="trailing" constant="20" id="aVs-i1-n4V"/>
-                    <constraint firstItem="PRL-el-8JJ" firstAttribute="top" secondItem="Cdd-Jy-aKw" secondAttribute="top" constant="17" id="dvf-Sc-Nwr"/>
+                    <constraint firstItem="Wi2-Ib-F3T" firstAttribute="centerY" secondItem="Fbs-59-BbJ" secondAttribute="centerY" id="cfk-V4-P8i"/>
+                    <constraint firstItem="PRL-el-8JJ" firstAttribute="top" secondItem="Cdd-Jy-aKw" secondAttribute="top" constant="20" id="dfr-gh-2dW"/>
                     <constraint firstItem="PRL-el-8JJ" firstAttribute="leading" secondItem="Fbs-59-BbJ" secondAttribute="trailing" constant="8" id="iTo-HP-ueb"/>
+                    <constraint firstItem="PRL-el-8JJ" firstAttribute="centerY" secondItem="Fbs-59-BbJ" secondAttribute="centerY" id="j5a-0O-h1H"/>
                     <constraint firstAttribute="bottom" secondItem="bdT-W6-ebh" secondAttribute="bottom" constant="20" id="qkj-TI-uqS"/>
                     <constraint firstItem="Wi2-Ib-F3T" firstAttribute="leading" secondItem="PRL-el-8JJ" secondAttribute="trailing" constant="8" id="qnb-KV-iAB"/>
                     <constraint firstItem="Fbs-59-BbJ" firstAttribute="leading" secondItem="Cdd-Jy-aKw" secondAttribute="leading" constant="20" id="vVn-zc-2tg"/>

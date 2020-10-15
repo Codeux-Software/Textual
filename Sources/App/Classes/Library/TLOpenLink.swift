@@ -41,12 +41,10 @@ public class OpenLink: NSObject
 	@objc(open:inBackground:)
 	public static func open(url: URL, inBackground: Bool = TPCPreferences.openBrowserInBackground())
 	{
-		if #available(OSX 10.10, *) {
-			if inBackground {
-				NSWorkspace.shared.open([url], withAppBundleIdentifier: nil, options: [.withoutActivation], additionalEventParamDescriptor: nil, launchIdentifiers: nil)
+		if inBackground {
+			NSWorkspace.shared.open([url], withAppBundleIdentifier: nil, options: [.withoutActivation], additionalEventParamDescriptor: nil, launchIdentifiers: nil)
 
-				return
-			}
+			return
 		}
 
 		NSWorkspace.shared.open(url)

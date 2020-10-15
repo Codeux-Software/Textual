@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.14" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,57 +20,77 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="765" y="571" width="340" height="131"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
+            <rect key="contentRect" x="765" y="571" width="350" height="131"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="720"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="340" height="131"/>
+                <rect key="frame" x="0.0" y="0.0" width="350" height="130"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7">
-                        <rect key="frame" x="18" y="94" width="116" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Current nickname:" id="21">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8">
-                        <rect key="frame" x="138" y="94" width="69" height="17"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="Nickname" id="22">
-                            <font key="font" metaFont="systemBold"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                        <connections>
-                            <accessibilityConnection property="title" destination="7" id="vl7-Yc-7VP"/>
-                        </connections>
-                    </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9" customClass="TVCValidatedTextField">
-                        <rect key="frame" x="140" y="61" width="180" height="22"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="22" id="8PY-qp-M8c"/>
-                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="250" id="Dfm-db-tY7"/>
-                        </constraints>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="23" customClass="TVCValidatedTextFieldCell">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        </textFieldCell>
-                        <connections>
-                            <accessibilityConnection property="title" destination="10" id="0D2-UX-54T"/>
-                            <outlet property="delegate" destination="-2" id="35"/>
-                        </connections>
-                    </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="10">
-                        <rect key="frame" x="37" y="63" width="97" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="New nickname:" id="24">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
+                    <gridView xPlacement="trailing" yPlacement="fill" rowAlignment="firstBaseline" rowSpacing="12" columnSpacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Nly-w9-qBD">
+                        <rect key="frame" x="20" y="60" width="310" height="50"/>
+                        <rows>
+                            <gridRow id="ppz-rq-TUu"/>
+                            <gridRow id="dKL-HV-I1m"/>
+                        </rows>
+                        <columns>
+                            <gridColumn xPlacement="fill" id="3xi-Rc-Hat"/>
+                            <gridColumn xPlacement="fill" id="6xP-6q-U70"/>
+                        </columns>
+                        <gridCells>
+                            <gridCell row="ppz-rq-TUu" column="3xi-Rc-Hat" id="1bX-nw-L4J">
+                                <textField key="contentView" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7">
+                                    <rect key="frame" x="-2" y="34" width="116" height="16"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Current nickname:" id="21">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </gridCell>
+                            <gridCell row="ppz-rq-TUu" column="6xP-6q-U70" id="3Ug-p0-42P">
+                                <textField key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="8">
+                                    <rect key="frame" x="118" y="34" width="194" height="16"/>
+                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="Nickname" id="22">
+                                        <font key="font" metaFont="systemBold"/>
+                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <accessibilityConnection property="title" destination="7" id="vl7-Yc-7VP"/>
+                                    </connections>
+                                </textField>
+                            </gridCell>
+                            <gridCell row="dKL-HV-I1m" column="3xi-Rc-Hat" id="hFl-cB-10P">
+                                <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="10">
+                                    <rect key="frame" x="-2" y="4" width="116" height="16"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="New nickname:" id="24">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </gridCell>
+                            <gridCell row="dKL-HV-I1m" column="6xP-6q-U70" id="aU4-9P-AoB">
+                                <textField key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="9" customClass="TVCValidatedTextField">
+                                    <rect key="frame" x="120" y="0.0" width="190" height="22"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="22" id="8PY-qp-M8c"/>
+                                    </constraints>
+                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="23" customClass="TVCValidatedTextFieldCell">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <accessibilityConnection property="title" destination="10" id="0D2-UX-54T"/>
+                                        <outlet property="delegate" destination="-2" id="35"/>
+                                    </connections>
+                                </textField>
+                            </gridCell>
+                        </gridCells>
+                    </gridView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="15">
-                        <rect key="frame" x="175" y="13" width="151" height="32"/>
+                        <rect key="frame" x="192" y="13" width="145" height="32"/>
                         <buttonCell key="cell" type="push" title="Change Nickname" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="25">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -84,7 +104,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="16">
-                        <rect key="frame" x="93" y="13" width="82" height="32"/>
+                        <rect key="frame" x="118" y="13" width="76" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="26">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -100,29 +120,20 @@ Gw
                 </subviews>
                 <constraints>
                     <constraint firstItem="16" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6" secondAttribute="leading" constant="20" id="2bq-Vf-84Z"/>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="8" secondAttribute="trailing" constant="20" id="8pW-pf-oPs"/>
-                    <constraint firstItem="9" firstAttribute="leading" secondItem="8" secondAttribute="leading" id="9hw-TK-wkI"/>
-                    <constraint firstItem="7" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="20" id="HhR-Us-ycN"/>
+                    <constraint firstItem="15" firstAttribute="top" secondItem="Nly-w9-qBD" secondAttribute="bottom" constant="20" id="9zY-Yo-jjt"/>
+                    <constraint firstAttribute="trailing" secondItem="Nly-w9-qBD" secondAttribute="trailing" constant="20" id="CMh-bk-HPo"/>
+                    <constraint firstItem="Nly-w9-qBD" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="20" id="Crq-ej-ThU"/>
                     <constraint firstAttribute="trailing" secondItem="15" secondAttribute="trailing" constant="20" id="K6U-kV-8HI"/>
-                    <constraint firstItem="10" firstAttribute="top" secondItem="7" secondAttribute="bottom" constant="14" id="MkB-dC-POZ"/>
-                    <constraint firstItem="15" firstAttribute="top" secondItem="9" secondAttribute="bottom" constant="20" id="MpW-TL-IfQ"/>
-                    <constraint firstItem="10" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="39" id="O3j-3L-JpL"/>
-                    <constraint firstItem="15" firstAttribute="baseline" secondItem="16" secondAttribute="baseline" id="SxL-Go-4Lh"/>
-                    <constraint firstAttribute="trailing" secondItem="9" secondAttribute="trailing" constant="20" id="Tfa-nI-yTf"/>
-                    <constraint firstItem="8" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" id="Yx7-Al-TR1"/>
-                    <constraint firstItem="9" firstAttribute="top" secondItem="8" secondAttribute="bottom" constant="11" id="cmx-Q0-hFR"/>
-                    <constraint firstItem="9" firstAttribute="leading" secondItem="10" secondAttribute="trailing" constant="8" id="eEe-uF-bHx"/>
-                    <constraint firstItem="7" firstAttribute="baseline" secondItem="8" secondAttribute="baseline" id="eWw-Jr-0Kn"/>
-                    <constraint firstItem="8" firstAttribute="leading" secondItem="7" secondAttribute="trailing" constant="8" id="j3P-Av-O1F"/>
+                    <constraint firstItem="15" firstAttribute="firstBaseline" secondItem="16" secondAttribute="firstBaseline" id="SxL-Go-4Lh"/>
                     <constraint firstAttribute="bottom" secondItem="15" secondAttribute="bottom" constant="20" id="jHU-7O-esr"/>
                     <constraint firstItem="15" firstAttribute="leading" secondItem="16" secondAttribute="trailing" constant="12" id="nvG-d0-F6m"/>
-                    <constraint firstItem="10" firstAttribute="trailing" secondItem="7" secondAttribute="trailing" id="pW0-FW-98v"/>
+                    <constraint firstItem="Nly-w9-qBD" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" id="zea-BU-g5k"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="36"/>
             </connections>
-            <point key="canvasLocation" x="196" y="246.5"/>
+            <point key="canvasLocation" x="407" y="324"/>
         </window>
     </objects>
 </document>

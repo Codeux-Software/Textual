@@ -225,7 +225,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSRect mouseLocationLocal =
 	[webViewWindow convertRectFromScreen:NSMakeRect(mouseLocationGlobal.x, mouseLocationGlobal.y, 0, 0)];
 
-	NSEvent *event = [NSEvent mouseEventWithType:NSRightMouseUp
+	NSEvent *event = [NSEvent mouseEventWithType:NSEventTypeRightMouseUp
 										location:mouseLocationLocal.origin
 								   modifierFlags:0
 									   timestamp:0
@@ -341,9 +341,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	BOOL openInBackground = [TPCPreferences openBrowserInBackground];
 
-	NSUInteger keyboardKeys = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+	NSUInteger keyboardKeys = ([NSEvent modifierFlags] & NSEventModifierFlagDeviceIndependentFlagsMask);
 
-	if ((keyboardKeys & NSCommandKeyMask) == NSCommandKeyMask) {
+	if ((keyboardKeys & NSEventModifierFlagCommand) == NSEventModifierFlagCommand) {
 		openInBackground = !openInBackground;
 	}
 

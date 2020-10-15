@@ -90,7 +90,7 @@ NS_ASSUME_NONNULL_BEGIN
 	self.searchResultsTable.doubleAction = @selector(delegatePostSelectChannelForDoubleClickedRow:);
 
 	self.mouseEventMonitor =
-	[NSEvent addLocalMonitorForEventsMatchingMask:NSKeyDownMask
+	[NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskKeyDown
 										  handler:^NSEvent *(NSEvent *event) {
 											  return [self respondToKeyDownEvent:event];
 										  }];
@@ -232,11 +232,11 @@ NS_ASSUME_NONNULL_BEGIN
 		case 28 ... 29:
 		case 82 ... 92: // 0-9 (number pad)
 		{
-			NSUInteger keyboardKeys = (event.modifierFlags & NSDeviceIndependentModifierFlagsMask);
+			NSUInteger keyboardKeys = (event.modifierFlags & NSEventModifierFlagDeviceIndependentFlagsMask);
 
-			keyboardKeys &= ~NSNumericPadKeyMask;
+			keyboardKeys &= ~NSEventModifierFlagNumericPad;
 
-			if (keyboardKeys == NSCommandKeyMask) {
+			if (keyboardKeys == NSEventModifierFlagCommand) {
 				return [self handleCommandNumberEvent:event];
 			}
 

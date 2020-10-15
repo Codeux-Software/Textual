@@ -10,23 +10,6 @@
 		<integer>0</integer>
 		<key>maximumWidth</key>
 		<integer>0</integer>
-		<key>backgroundColor</key>
-		<dict>
-			<key>activeWindow</key>
-			<dict>
-				<key>type</key>
-				<integer>2</integer>
-				<key>value</key>
-				<string>0.0 0.0 0.0</string>
-			</dict>
-			<key>inactiveWindow</key>
-			<dict>
-				<key>type</key>
-				<integer>2</integer>
-				<key>value</key>
-				<string>0.0 0.0 0.0</string>
-			</dict>
-		</dict>
 		<key>selectionColor</key>
 		<dict>
 			<key>activeWindow</key>
@@ -48,43 +31,7 @@
 		<dict>
 			<key>rowEmphasized</key>
 			<false/>
-			<key>rowHeight</key>
-			<integer>0</integer>
-			<key>selectionImage</key>
-			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>1</integer>
-					<key>value</key>
-					<string></string>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>1</integer>
-					<key>value</key>
-					<string></string>
-				</dict>
-			</dict>
 			<key>normalTextColor</key>
-			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-			</dict>
-			<key>normalTextShadowColor</key>
 			<dict>
 				<key>activeWindow</key>
 				<dict>
@@ -118,41 +65,7 @@
 					<string>0.0 0.0 0.0</string>
 				</dict>
 			</dict>
-			<key>awayTextShadowColor</key>
-			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-			</dict>
 			<key>selectedTextColor</key>
-			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-			</dict>
-			<key>selectedTextShadowColor</key>
 			<dict>
 				<key>activeWindow</key>
 				<dict>
@@ -203,8 +116,6 @@
 					<real>10</real>
 				</dict>
 			</dict>
-			<key>topOffset</key>
-			<integer>0</integer>
 		</dict>
 		<key>Mark Badge</key>
 		<dict>
@@ -276,23 +187,6 @@
 					<string>0.0 0.0 0.0</string>
 				</dict>
 			</dict>
-			<key>shadowColor</key>
-			<dict>
-				<key>activeWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-				<key>inactiveWindow</key>
-				<dict>
-					<key>type</key>
-					<integer>2</integer>
-					<key>value</key>
-					<string>0.0 0.0 0.0</string>
-				</dict>
-			</dict>
 			<key>font</key>
 			<dict>
 				<key>activeWindow</key>
@@ -327,12 +221,6 @@
 					<real>10</real>
 				</dict>
 			</dict>
-			<key>width</key>
-			<integer>0</integer>
-			<key>height</key>
-			<integer>0</integer>
-			<key>topOffset</key>
-			<integer>0</integer>
 		</dict>
 	</dict>
 </dict>

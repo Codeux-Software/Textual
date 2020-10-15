@@ -281,9 +281,7 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 
 	self.userInterfaceObjects = appearance;
 
-	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
-		[self updateVibrancyWithAppearance:appearance];
-	}
+	[self updateVibrancyWithAppearance:appearance];
 
 	[self notifyApplicationAppearanceChanged];
 }
@@ -612,34 +610,34 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 	[self registerSelector:@selector(exitFullscreenMode:) key:TXKeyEscapeCode modifiers:0];
 
 	[self registerSelector:@selector(tab:) key:TXKeyTabCode modifiers:0];
-	[self registerSelector:@selector(shiftTab:)	key:TXKeyTabCode modifiers:NSShiftKeyMask];
+	[self registerSelector:@selector(shiftTab:)	key:TXKeyTabCode modifiers:NSEventModifierFlagShift];
 
-	[self registerSelector:@selector(selectPreviousSelection:) key:TXKeyTabCode modifiers:NSAlternateKeyMask];
+	[self registerSelector:@selector(selectPreviousSelection:) key:TXKeyTabCode modifiers:NSEventModifierFlagOption];
 
-	[self registerSelector:@selector(textFormattingBold:) character:'b' modifiers:NSCommandKeyMask];
-	[self registerSelector:@selector(textFormattingUnderline:) character:'u' modifiers:(NSControlKeyMask | NSShiftKeyMask)];
-	[self registerSelector:@selector(textFormattingItalic:)	character:'i' modifiers:(NSControlKeyMask | NSShiftKeyMask)];
-	[self registerSelector:@selector(textFormattingForegroundColor:) character:'c' modifiers:(NSControlKeyMask | NSShiftKeyMask)];
-	[self registerSelector:@selector(textFormattingBackgroundColor:) character:'h' modifiers:(NSControlKeyMask | NSShiftKeyMask)];
+	[self registerSelector:@selector(textFormattingBold:) character:'b' modifiers:NSEventModifierFlagCommand];
+	[self registerSelector:@selector(textFormattingUnderline:) character:'u' modifiers:(NSEventModifierFlagControl | NSEventModifierFlagShift)];
+	[self registerSelector:@selector(textFormattingItalic:)	character:'i' modifiers:(NSEventModifierFlagControl | NSEventModifierFlagShift)];
+	[self registerSelector:@selector(textFormattingForegroundColor:) character:'c' modifiers:(NSEventModifierFlagControl | NSEventModifierFlagShift)];
+	[self registerSelector:@selector(textFormattingBackgroundColor:) character:'h' modifiers:(NSEventModifierFlagControl | NSEventModifierFlagShift)];
 
-	[self registerSelector:@selector(speakPendingNotifications:) character:'.' modifiers:NSCommandKeyMask];
+	[self registerSelector:@selector(speakPendingNotifications:) character:'.' modifiers:NSEventModifierFlagCommand];
 
-	[self registerSelector:@selector(inputHistoryUp:) character:'p' modifiers:NSControlKeyMask];
-	[self registerSelector:@selector(inputHistoryDown:)	character:'n' modifiers:NSControlKeyMask];
+	[self registerSelector:@selector(inputHistoryUp:) character:'p' modifiers:NSEventModifierFlagControl];
+	[self registerSelector:@selector(inputHistoryDown:)	character:'n' modifiers:NSEventModifierFlagControl];
 
 	/* Text field keyboard shortcuts */
-	[self registerInputSelector:@selector(sendControlEnterMessageMaybe:) key:TXKeyEnterCode modifiers:NSControlKeyMask];
+	[self registerInputSelector:@selector(sendControlEnterMessageMaybe:) key:TXKeyEnterCode modifiers:NSEventModifierFlagControl];
 
-	[self registerInputSelector:@selector(sendMessageAsAction:) key:TXKeyReturnCode modifiers:NSCommandKeyMask];
-	[self registerInputSelector:@selector(sendMessageAsAction:) key:TXKeyEnterCode modifiers:NSCommandKeyMask];
+	[self registerInputSelector:@selector(sendMessageAsAction:) key:TXKeyReturnCode modifiers:NSEventModifierFlagCommand];
+	[self registerInputSelector:@selector(sendMessageAsAction:) key:TXKeyEnterCode modifiers:NSEventModifierFlagCommand];
 
-	[self registerInputSelector:@selector(focusWebview:) character:'l' modifiers:(NSAlternateKeyMask | NSCommandKeyMask)];
+	[self registerInputSelector:@selector(focusWebview:) character:'l' modifiers:(NSEventModifierFlagOption | NSEventModifierFlagCommand)];
 
 	[self registerInputSelector:@selector(inputHistoryUpWithScrollCheck:) key:TXKeyUpArrowCode modifiers:0];
-	[self registerInputSelector:@selector(inputHistoryUpWithScrollCheck:) key:TXKeyUpArrowCode modifiers:NSAlternateKeyMask];
+	[self registerInputSelector:@selector(inputHistoryUpWithScrollCheck:) key:TXKeyUpArrowCode modifiers:NSEventModifierFlagOption];
 
 	[self registerInputSelector:@selector(inputHistoryDownWithScrollCheck:) key:TXKeyDownArrowCode modifiers:0];
-	[self registerInputSelector:@selector(inputHistoryDownWithScrollCheck:) key:TXKeyDownArrowCode modifiers:NSAlternateKeyMask];
+	[self registerInputSelector:@selector(inputHistoryDownWithScrollCheck:) key:TXKeyDownArrowCode modifiers:NSEventModifierFlagOption];
 }
 
 #pragma mark -
@@ -1951,36 +1949,7 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 	}
 }
 
-- (void)addAccessoryViewsToTitlebarOnMavericks
-{
-	NSThemeFrame *themeFrame = (NSThemeFrame *)self.contentView.superview;
-
-	NSView *accessoryView = self.titlebarAccessoryView;
-
-	[themeFrame addSubview:accessoryView];
-
-	NSLayoutConstraint *topConstraint =
-	[NSLayoutConstraint constraintWithItem:accessoryView
-								 attribute:NSLayoutAttributeTop
-								 relatedBy:NSLayoutRelationEqual
-									toItem:themeFrame
-								 attribute:NSLayoutAttributeTop
-								multiplier:1
-								  constant:0];
-
-	NSLayoutConstraint *rightConstraint =
-	[NSLayoutConstraint constraintWithItem:accessoryView
-								 attribute:NSLayoutAttributeTrailing
-								 relatedBy:NSLayoutRelationEqual
-									toItem:themeFrame
-								 attribute:NSLayoutAttributeTrailing
-								multiplier:1
-								  constant:0];
-
-	[themeFrame addConstraints:@[topConstraint, rightConstraint]];
-}
-
-- (void)addAccessoryViewsToTitlebarOnYosemite
+- (void)addAccessoryViewsToTitlebar
 {
 	NSThemeFrame *themeFrame = (NSThemeFrame *)self.contentView.superview;
 
@@ -1991,15 +1960,6 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 	accessoryView.layoutAttribute = NSLayoutAttributeRight;
 
 	[self addTitlebarAccessoryViewController:accessoryView];
-}
-
-- (void)addAccessoryViewsToTitlebar
-{
-	if (TEXTUAL_RUNNING_ON_YOSEMITE) {
-		[self addAccessoryViewsToTitlebarOnYosemite];
-	} else {
-		[self addAccessoryViewsToTitlebarOnMavericks];
-	}
 }
 
 - (void)updateTitleFor:(IRCTreeItem *)item
@@ -2113,7 +2073,7 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 
 	self.title = title;
 
-	[XRAccessibility setAccessibilityTitle:TXTLS(@"Accessibility[k79-1a]") forObject:self];
+	[self setAccessibilityTitle:TXTLS(@"Accessibility[k79-1a]")];
 }
 
 #pragma mark -
@@ -2213,6 +2173,8 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 	self.memberList.target = menuController();
 	self.memberList.doubleAction = @selector(memberInMemberListDoubleClicked:);
 
+	self.memberList.stronglyReferencesItems = NO;
+
 	self.serverList.keyDelegate = self;
 
 	self.serverList.delegate = (id)self;
@@ -2220,6 +2182,8 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 
 	self.serverList.target = self;
 	self.serverList.doubleAction = @selector(outlineViewDoubleClicked:);
+
+	self.serverList.stronglyReferencesItems = NO;
 
 	/* Inform the table we want drag events */
 	[self.serverList registerForDraggedTypes:_treeDragItemTypes];
@@ -2710,19 +2674,6 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 	return item;
 }
 
-- (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
-{
-	TVCServerList *serverList = (id)outlineView;
-
-	TVCServerListAppearance *appearance = serverList.userInterfaceObjects;
-
-	if (item == nil || [item isClient]) {
-		return appearance.serverRowHeight;
-	}
-
-	return appearance.channelRowHeight;
-}
-
 - (nullable NSTableRowView *)outlineView:(NSOutlineView *)outlineView rowViewForItem:(id)item
 {
 	if (item == nil || [item isClient]) {
@@ -2734,14 +2685,12 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 
 - (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(id)item
 {
-	BOOL onMojave = TEXTUAL_RUNNING_ON_MOJAVE;
-
 	NSString *viewIdentifier = nil;
 
 	if (item == nil || [item isClient]) {
-		viewIdentifier = ((onMojave) ? @"GroupViewMojave" : @"GroupView");
+		viewIdentifier = @"GroupView";
 	} else {
-		viewIdentifier = ((onMojave) ? @"ChildViewMojave" : @"ChildView");
+		viewIdentifier = @"ChildView";
 	}
 
 	NSView *newView = [outlineView makeViewWithIdentifier:viewIdentifier owner:self];
@@ -2808,10 +2757,10 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 	}
 
 	/* If command or shift are held down, allow change. */
-	NSUInteger keyboardKeys = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+	NSUInteger keyboardKeys = ([NSEvent modifierFlags] & NSEventModifierFlagDeviceIndependentFlagsMask);
 
-	if ((keyboardKeys & NSCommandKeyMask) == NSCommandKeyMask ||
-		(keyboardKeys & NSShiftKeyMask) == NSShiftKeyMask)
+	if ((keyboardKeys & NSEventModifierFlagCommand) == NSEventModifierFlagCommand ||
+		(keyboardKeys & NSEventModifierFlagShift) == NSEventModifierFlagShift)
 	{
 		return YES;
 	}
@@ -2870,9 +2819,9 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 
 	IRCTreeItem *selectedItem = nil;
 
-	NSUInteger keyboardKeys = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+	NSUInteger keyboardKeys = ([NSEvent modifierFlags] & NSEventModifierFlagDeviceIndependentFlagsMask);
 
-	if (keyboardKeys == NSCommandKeyMask) {
+	if (keyboardKeys == NSEventModifierFlagCommand) {
 		NSInteger rowBeneathMouse = serverList.rowBeneathMouse;
 
 		if (rowBeneathMouse >= 0 && [selectedRows containsIndex:rowBeneathMouse]) {

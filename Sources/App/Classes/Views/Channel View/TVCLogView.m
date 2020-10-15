@@ -130,9 +130,9 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSUInteger m = e.modifierFlags;
 
-	BOOL cmd = ((m & NSCommandKeyMask) == NSCommandKeyMask);
-	BOOL alt = ((m & NSAlternateKeyMask) == NSAlternateKeyMask);
-	BOOL ctrl = ((m & NSControlKeyMask) == NSControlKeyMask);
+	BOOL cmd = ((m & NSEventModifierFlagCommand) == NSEventModifierFlagCommand);
+	BOOL alt = ((m & NSEventModifierFlagOption) == NSEventModifierFlagOption);
+	BOOL ctrl = ((m & NSEventModifierFlagControl) == NSEventModifierFlagControl);
 
 	if (ctrl == NO && alt == NO && cmd == NO) {
 		[self.viewController logViewWebViewKeyDown:e];
@@ -199,13 +199,11 @@ ClassWithDesignatedInitializerInitMethod
 
 	dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
 
-	if (TEXTUAL_RUNNING_ON_ELCAPITAN) {
-		[TVCLogViewInternalWK2 emptyCaches:^{
-			dispatch_semaphore_signal(semaphore);
-		}];
+	[TVCLogViewInternalWK2 emptyCaches:^{
+		dispatch_semaphore_signal(semaphore);
+	}];
 
-		dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-	}
+	dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
 }
 
 - (void)recreateTemporaryCopyOfThemeIfNecessary

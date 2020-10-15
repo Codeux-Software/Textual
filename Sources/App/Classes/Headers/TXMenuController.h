@@ -209,9 +209,8 @@ enum
 	MTMMWindowViewLogs = 815, // "View Logs"
 	MTMMWindowHighlightList = 816, // "Highlight List"
 	MTMMWindowFileTransfers = 817, // "File Transfers"
-	MTMMWindowBuddyList = 818, // "Buddy List"
-	MTMMWindowBuddyListSeparator = 819, // "-"
-	MTMMWindowBrightAllToFront = 820, // "Bring All to Front"
+	MTMMWindowFileTransfersSeparator = 818, // "-"
+	MTMMWindowBrightAllToFront = 819, // "Bring All to Front"
 
 	/* Main menu - Help menu */
 	MTMMHelpAcknowledgements = 900, // "Acknowledgements"
@@ -461,7 +460,6 @@ enum
 
 - (IBAction)showAboutWindow:(id)sender;
 - (IBAction)showAddressBook:(id)sender;
-- (IBAction)showBuddyListWindow:(id)sender;
 - (IBAction)showChannelBanExceptionList:(id)sender;
 - (IBAction)showChannelBanList:(id)sender;
 - (IBAction)showChannelInviteExceptionList:(id)sender;

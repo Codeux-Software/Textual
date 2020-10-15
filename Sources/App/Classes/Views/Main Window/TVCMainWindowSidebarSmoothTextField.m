@@ -41,64 +41,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma mark -
-#pragma mark OS X Mavericks
-
-@interface TVCMainWindowSidebarMavericksSmoothTextFieldBackingLayer : CALayer
-@property (nonatomic, weak) NSWindow *t_mainWindow;
+@implementation TVCMainWindowSidebarSmoothTextField
 @end
 
-@implementation TVCMainWindowSidebarMavericksSmoothTextField
-
-- (BOOL)wantsLayer
-{
-	return YES;
-}
-
-- (void)viewWillMoveToWindow:(nullable NSWindow *)newWindow
-{
-	((TVCMainWindowSidebarMavericksSmoothTextFieldBackingLayer *)self.layer).t_mainWindow = newWindow;
-}
-
-- (NSViewLayerContentsRedrawPolicy)layerContentsRedrawPolicy
-{
-	return NSViewLayerContentsRedrawBeforeViewResize;
-}
-
-- (CALayer *)makeBackingLayer
-{
-	return [TVCMainWindowSidebarMavericksSmoothTextFieldBackingLayer layer];
-}
-
-@end
-
-#pragma mark -
-
-@implementation TVCMainWindowSidebarMavericksSmoothTextFieldBackingLayer
-
-- (CGFloat)contentsScale
-{
-	return self.t_mainWindow.backingScaleFactor;
-}
-
-- (void)drawInContext:(CGContextRef)context
-{
-	CGContextSetShouldAntialias(context, true);
-	CGContextSetShouldSmoothFonts(context, true);
-	CGContextSetShouldSubpixelPositionFonts(context, true);
-
-	[super drawInContext:context];
-}
-
-@end
-
-#pragma mark -
-#pragma mark OS X Yosemite
-
-@implementation TVCMainWindowSidebarYosemiteSmoothTextField
-@end
-
-@implementation TVCMainWindowSidebarYosemiteSmoothTextFieldCell
+@implementation TVCMainWindowSidebarSmoothTextFieldCell
 
 - (CGFloat)contentsScale
 {
@@ -159,9 +105,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
 	/* Mojave no longer performs subpixel antialiasing */
-	if (TEXTUAL_RUNNING_ON_YOSEMITE == NO ||
-		TEXTUAL_RUNNING_ON_MOJAVE)
-	{
+	if (TEXTUAL_RUNNING_ON_MOJAVE) {
 		[super drawWithFrame:cellFrame inView:controlView];
 
 		return;
@@ -194,7 +138,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[stringValueImage drawInRect:cellFrameCopy
 						fromRect:NSZeroRect
-					   operation:NSCompositeSourceOver
+					   operation:NSCompositingOperationSourceOver
 						fraction:1.0
 				  respectFlipped:YES
 						   hints:nil];

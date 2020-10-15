@@ -45,7 +45,4 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable instancetype)initWithMemberList:(TVCMemberList *)MemberList inWindow:(TVCMainWindow *)mainWindow;
 @end
 
-@interface TVCMemberListMavericksBackgroundBox : NSBox
-@end
-
 NS_ASSUME_NONNULL_END

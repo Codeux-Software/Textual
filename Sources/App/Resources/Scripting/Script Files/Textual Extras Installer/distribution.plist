@@ -10,7 +10,7 @@
    
     <volume-check>
         <allowed-os-versions>
-            <os-version min="10.8"/>
+            <os-version min="10.12"/>
         </allowed-os-versions>
     </volume-check>
     
@@ -88,9 +88,9 @@
     <pkg-ref id="com.codeux.app-extensions.textual-scripts-installer-AudioVideo-np-Music" version="1.0" active="script_np_music_enabled()">#Scripts-AudioVideo-np-Music.pkg</pkg-ref>
     <pkg-ref id="com.codeux.app-extensions.textual-scripts-installer-Fun" version="1.3">#Scripts-Fun.pkg</pkg-ref>
     <pkg-ref id="com.codeux.app-extensions.textual-scripts-installer-Utilities" version="1.3">#Scripts-Utilities.pkg</pkg-ref>
-    <pkg-ref id="com.codeux.app-extensions.textual-extension-installer-BlowfishEncryption" version="1.0.9">#Extension-BlowfishEncryption.pkg</pkg-ref>
-    <pkg-ref id="com.codeux.app-extensions.textual-extension-installer-Caffeine" version="1.0.4">#Extension-Caffeine.pkg</pkg-ref>
-    <pkg-ref id="com.codeux.app-extensions.textual-extension-installer-WikiStyleLinkParser" version="1.0.4">#Extension-WikiStyleLinkParser.pkg</pkg-ref>
+    <pkg-ref id="com.codeux.app-extensions.textual-extension-installer-BlowfishEncryption" version="1.0.17">#Extension-BlowfishEncryption.pkg</pkg-ref>
+    <pkg-ref id="com.codeux.app-extensions.textual-extension-installer-Caffeine" version="1.0.8">#Extension-Caffeine.pkg</pkg-ref>
+    <pkg-ref id="com.codeux.app-extensions.textual-extension-installer-WikiStyleLinkParser" version="1.0.8">#Extension-WikiStyleLinkParser.pkg</pkg-ref>
 
     <pkg-ref id="com.codeux.app-extensions.textual-extension-installer-BlowfishEncryption">
         <must-close>

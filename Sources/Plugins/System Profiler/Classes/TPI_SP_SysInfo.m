@@ -39,7 +39,7 @@
 
 #import "TPI_SP_SysInfo.h"
 
-#import "TPISystemProfilerModelIDRequestController.h"
+#import "TPISystemProfilerModelRequest.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -294,7 +294,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (modelIdentifier.length > 0) {
 		NSString *modelTitle = nil;
 
-		NSString *modelTitleApple = [TPISystemProfilerModelIDRequestController sharedController].cachedIdentifier;
+		NSString *modelTitleApple = [TPISystemProfilerModelRequest sharedController].cachedIdentifier;
 
 		if (modelTitleApple) {
 			modelTitle = modelTitleApple;

@@ -39,8 +39,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TPISystemProfilerModelIDRequestController : NSObject
-+ (TPISystemProfilerModelIDRequestController *)sharedController;
+@interface TPISystemProfilerModelRequest : NSObject
++ (TPISystemProfilerModelRequest *)sharedController;
 
 - (void)requestIdentifier;
 

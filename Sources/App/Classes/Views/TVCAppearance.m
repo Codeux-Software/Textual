@@ -562,19 +562,11 @@ ClassWithDesignatedInitializerInitMethod
 		return nil;
 	}
 
-	BOOL onElCapitan = TEXTUAL_RUNNING_ON_ELCAPITAN;
-
 	CGFloat weight = [fontProperties doubleForKey:@"weight"];
 
 	if ([name isEqualToString:@"System"])
 	{
-		CGFloat systemWeight = ((onElCapitan) ? weight : NSFontWeightRegular);
-
-		if (weight == NSFontWeightRegular) {
-			return [NSFont systemFontOfSize:size];
-		} else {
-			return [NSFont systemFontOfSize:size weight:systemWeight];
-		}
+		return [NSFont systemFontOfSize:size weight:weight];
 	}
 	else if ([name isEqualToString:@"SystemBold"])
 	{
@@ -582,21 +574,11 @@ ClassWithDesignatedInitializerInitMethod
 	}
 	else if ([name isEqualToString:@"SystemMonospace"])
 	{
-		CGFloat systemWeight = ((onElCapitan) ? weight : NSFontWeightRegular);
-
-		if (onElCapitan) {
-			return [NSFont monospacedDigitSystemFontOfSize:size weight:systemWeight];
-		} else {
-			return [NSFont systemFontOfSize:size];
-		}
+		return [NSFont monospacedDigitSystemFontOfSize:size weight:weight];
 	}
 	else if ([name isEqualToString:@"SystemMonospaceBold"])
 	{
-		if (onElCapitan) {
-			return [NSFont monospacedDigitSystemFontOfSize:size weight:NSFontWeightBold];
-		} else {
-			return [NSFont boldSystemFontOfSize:size];
-		}
+		return [NSFont monospacedDigitSystemFontOfSize:size weight:NSFontWeightBold];
 	}
 
 	if (weight > 0) {
@@ -808,11 +790,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (BOOL)isDarkAppearance
 {
 	return self.applicationProperties.isDarkAppearance;
-}
-
-- (BOOL)isModernAppearance
-{
-	return self.applicationProperties.isModernAppearance;
 }
 
 - (TXAppKitAppearanceTarget)appKitAppearanceTarget

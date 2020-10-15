@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.14" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,14 +19,14 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="gIn-WG-UO6" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="765" y="571" width="379" height="149"/>
+            <rect key="contentRect" x="765" y="571" width="370" height="149"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="Lpx-CQ-7HY">
-                <rect key="frame" x="0.0" y="0.0" width="379" height="149"/>
+                <rect key="frame" x="0.0" y="0.0" width="370" height="148"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BdN-s0-jEO">
-                        <rect key="frame" x="18" y="95" width="343" height="34"/>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="BdN-s0-jEO">
+                        <rect key="frame" x="18" y="96" width="334" height="32"/>
                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Enter the e-mail address used when purchasing Textual to recover your license key(s)." id="v6x-ej-Sxw">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -34,7 +34,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RLC-SX-HOX" customClass="TVCValidatedTextField">
-                        <rect key="frame" x="124" y="61" width="235" height="22"/>
+                        <rect key="frame" x="124" y="60" width="226" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="tER-gy-61J"/>
                         </constraints>
@@ -48,8 +48,8 @@
                             <outlet property="delegate" destination="-2" id="N64-jt-SMG"/>
                         </connections>
                     </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l4F-Hq-LJS">
-                        <rect key="frame" x="18" y="63" width="100" height="17"/>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="l4F-Hq-LJS">
+                        <rect key="frame" x="18" y="64" width="100" height="16"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="E-mail Address:" id="Cbk-SL-qTh">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -57,7 +57,7 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3wc-zV-dNO">
-                        <rect key="frame" x="196" y="13" width="169" height="32"/>
+                        <rect key="frame" x="193" y="13" width="164" height="32"/>
                         <buttonCell key="cell" type="push" title="Recover Lost License" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="N4b-7q-PPZ">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -71,7 +71,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GuT-8v-aNV">
-                        <rect key="frame" x="114" y="13" width="82" height="32"/>
+                        <rect key="frame" x="119" y="13" width="76" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="KNw-Jq-eAB">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -87,11 +87,10 @@ Gw
                 </subviews>
                 <constraints>
                     <constraint firstItem="3wc-zV-dNO" firstAttribute="leading" secondItem="GuT-8v-aNV" secondAttribute="trailing" constant="12" symbolic="YES" id="15w-2z-PZq"/>
-                    <constraint firstItem="3wc-zV-dNO" firstAttribute="baseline" secondItem="GuT-8v-aNV" secondAttribute="baseline" id="65z-on-n1I"/>
+                    <constraint firstItem="3wc-zV-dNO" firstAttribute="firstBaseline" secondItem="GuT-8v-aNV" secondAttribute="firstBaseline" id="65z-on-n1I"/>
                     <constraint firstItem="GuT-8v-aNV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Lpx-CQ-7HY" secondAttribute="leading" constant="20" id="HpO-8h-3zq"/>
-                    <constraint firstItem="l4F-Hq-LJS" firstAttribute="top" secondItem="RLC-SX-HOX" secondAttribute="top" constant="3" id="Ltg-OF-Zdx"/>
                     <constraint firstItem="BdN-s0-jEO" firstAttribute="top" secondItem="Lpx-CQ-7HY" secondAttribute="top" constant="20" id="Mu4-N2-5yu"/>
-                    <constraint firstItem="RLC-SX-HOX" firstAttribute="top" secondItem="BdN-s0-jEO" secondAttribute="bottom" constant="12" id="Prg-Eg-dBB"/>
+                    <constraint firstItem="RLC-SX-HOX" firstAttribute="top" secondItem="BdN-s0-jEO" secondAttribute="bottom" constant="14" id="Prg-Eg-dBB"/>
                     <constraint firstAttribute="bottom" secondItem="3wc-zV-dNO" secondAttribute="bottom" constant="20" id="TSC-y7-KMc"/>
                     <constraint firstAttribute="trailing" secondItem="RLC-SX-HOX" secondAttribute="trailing" constant="20" id="WLR-Lc-YFZ"/>
                     <constraint firstItem="BdN-s0-jEO" firstAttribute="leading" secondItem="Lpx-CQ-7HY" secondAttribute="leading" constant="20" id="ad4-im-3Ms"/>
@@ -100,12 +99,13 @@ Gw
                     <constraint firstItem="l4F-Hq-LJS" firstAttribute="leading" secondItem="Lpx-CQ-7HY" secondAttribute="leading" constant="20" id="jEZ-Fz-CFl"/>
                     <constraint firstItem="RLC-SX-HOX" firstAttribute="leading" secondItem="l4F-Hq-LJS" secondAttribute="trailing" constant="8" symbolic="YES" id="oYP-Lh-Ux1"/>
                     <constraint firstAttribute="trailing" secondItem="3wc-zV-dNO" secondAttribute="trailing" constant="20" id="pmf-YU-mb7"/>
+                    <constraint firstItem="l4F-Hq-LJS" firstAttribute="firstBaseline" secondItem="RLC-SX-HOX" secondAttribute="firstBaseline" id="uKe-BV-qlt"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="aWb-MA-zaG"/>
             </connections>
-            <point key="canvasLocation" x="345.5" y="408.5"/>
+            <point key="canvasLocation" x="345.5" y="408"/>
         </window>
     </objects>
 </document>
