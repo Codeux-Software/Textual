@@ -2087,7 +2087,11 @@ To continue using Textual 7, you will need to purchase it.</string>
             </constraints>
             <point key="canvasLocation" x="52" y="1002"/>
         </customView>
-        <arrayController objectClassName="IRCChannelMember" preservesSelection="NO" selectsInsertedObjects="NO" avoidsEmptySelection="NO" id="hdH-wA-Q1P" customClass="IRCChannelMemberListController"/>
+        <arrayController objectClassName="IRCChannelMember" preservesSelection="NO" selectsInsertedObjects="NO" avoidsEmptySelection="NO" id="hdH-wA-Q1P" customClass="IRCChannelMemberListController">
+            <connections>
+                <outlet property="tableView" destination="bgh-q2-4XX" id="hkO-aM-hXC"/>
+            </connections>
+        </arrayController>
     </objects>
     <resources>
         <image name="FormattingColor_0" width="16" height="16"/>

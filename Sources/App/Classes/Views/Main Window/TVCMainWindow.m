@@ -356,13 +356,13 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 
 	LogToConsoleTerminationProgress("Giving up server list & member list delegation.");
 
-	[self.memberList assignToChannel:nil];
-
-	self.memberList.keyDelegate = nil;
-
 	self.serverList.dataSource = nil;
 	self.serverList.delegate = nil;
 	self.serverList.keyDelegate = nil;
+
+	self.memberList.keyDelegate = nil;
+
+	[self.memberList assignToChannel:nil];
 
 	self.delegate = (id)self;
 

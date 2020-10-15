@@ -433,6 +433,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if (self.isUtility == NO) {
 		self.memberInfo = [[IRCChannelMemberList alloc] initWithChannel:self];
+
+		/* A channel is only assigned by TVCMainWindow when it's switched to.
+		 Because of that we have to assign it here as the user already has
+		 the channel selected, but it was never assigned because the member
+		 list did not exist up to this point. */
+		if (self.isSelectedChannel) {
+			[mainWindowMemberList() assignToChannel:self];
+		}
 	}
 
 	if (self.isChannel) {

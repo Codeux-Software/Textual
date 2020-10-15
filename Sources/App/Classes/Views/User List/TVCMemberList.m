@@ -113,9 +113,6 @@ NSString * const TVCMemberListDragType = @"TVCMemberListDragType";
 
 - (void)assignToChannel:(nullable IRCChannel *)channel
 {
-	self.delegate = (id)channel;
-	self.dataSource = (id)channel;
-
 	[self.contentController assignToChannel:channel];
 }
 

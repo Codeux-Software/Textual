@@ -46,17 +46,38 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface IRCChannelMemberListController ()
-@property (nonatomic, strong, nullable) IRCChannelMemberList *memberList;
+@property (nonatomic, weak) IRCChannelMemberList *memberList;
+@property (nonatomic, weak) IBOutlet NSTableView *tableView;
 @end
 
 @implementation IRCChannelMemberListController
 
 - (void)assignToChannel:(nullable IRCChannel *)channel
 {
-	if ( self.memberList) {
-		[self.memberList assignController:nil];
+	/* Modify table sources */
+	NSTableView *tableView = self.tableView;
+
+	tableView.dataSource = (id)channel;
+	tableView.delegate = (id)channel;
+
+	/* Are we assigned? */
+	IRCChannelMemberList *oldList = self.memberList;
+
+	if ( oldList) {
+		[oldList assignController:nil];
+
+		self.memberList = nil;
+
+		/* If we were already assigned to a list, but will now be
+		 assigned to nothing, then clear contents and do nothing more. */
+		if (channel == nil) {
+			self.content = @[];
+
+			return;
+		}
 	}
 
+	/* Assign to channel */
 	IRCChannelMemberList *newList = channel.memberInfo;
 
 	[newList assignController:self];

@@ -84,6 +84,12 @@ ClassWithDesignatedInitializerInitMethod
 	self.memberContainer = [NSMutableArray array];
 }
 
+- (void)dealloc
+{
+	/* Send a last message before death. */
+	[self unassignController];
+}
+
 - (void)assignController:(nullable IRCChannelMemberListController *)controller
 {
 	/* All modifications to the controller occur on the main thread.
@@ -94,6 +100,17 @@ ClassWithDesignatedInitializerInitMethod
 		[controller replaceContents:self.memberList];
 
 		self.controller = controller;
+	});
+}
+
+- (void)unassignController
+{
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		__weak IRCChannelMemberListController *controller = self.controller;
+
+		if ( controller) {
+			[controller assignToChannel:nil];
+		}
 	});
 }
 
