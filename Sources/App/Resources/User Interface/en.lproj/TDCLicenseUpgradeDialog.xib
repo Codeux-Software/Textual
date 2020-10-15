@@ -18,13 +18,13 @@
         <window title="Welcome to Textual 7" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" tabbingMode="disallowed" id="M9l-C7-U7y">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="128" y="143" width="450" height="484"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="720"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <value key="maxSize" type="size" width="500" height="484"/>
             <view key="contentView" id="EoC-tq-z8D">
                 <rect key="frame" x="0.0" y="0.0" width="450" height="505"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ns3-OP-zFx">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ns3-OP-zFx">
                         <rect key="frame" x="116" y="458" width="219" height="27"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Welcome to Textual 7" id="lbE-e4-Mr5">
                             <font key="font" metaFont="system" size="23"/>
@@ -32,7 +32,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7kB-e4-GqC">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7kB-e4-GqC">
                         <rect key="frame" x="133" y="288" width="184" height="16"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Textual 7 is a paid upgrade." id="plM-2e-3wr">
                             <font key="font" metaFont="systemBold"/>
@@ -40,7 +40,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SNs-UD-Sff">
+                    <imageView translatesAutoresizingMaskIntoConstraints="NO" id="SNs-UD-Sff">
                         <rect key="frame" x="160" y="320" width="130" height="130"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="130" id="Pdt-yO-ZwO"/>
@@ -134,7 +134,7 @@ Click “Check Eligibility" to find out which you are eligible for.</string>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ucd-Qu-Uhy">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ucd-Qu-Uhy">
                         <rect key="frame" x="91" y="20" width="268" height="16"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Your trial of Textual will expire in 30 days" id="u8E-ij-xBX">
                             <font key="font" metaFont="systemBold"/>

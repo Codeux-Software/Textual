@@ -148,7 +148,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) IBOutlet NSView *contentViewICloud;
 @property (nonatomic, strong) IBOutlet NSView *contentViewHiddenPreferences;
 
-@property (nonatomic, weak) IBOutlet NSMatrix *checkForUpdatesMatrix;
+@property (nonatomic, weak) IBOutlet NSButton *checkForUpdatesDontCheck;
+@property (nonatomic, weak) IBOutlet NSButton *checkForUpdatesAutomaticallyCheck;
+@property (nonatomic, weak) IBOutlet NSButton *checkForUpdatesAutomaticallyDownload;
 @property (nonatomic, weak) IBOutlet NSStackView *contentViewGeneralStackView;
 @property (nonatomic, weak) IBOutlet NSView *contentViewGeneralCheckForUpdatesView;
 @property (nonatomic, weak) IBOutlet NSView *contentViewGeneralShareDataView;
@@ -1266,41 +1268,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateCheckForUpdatesMatrix
 {
-	// Tags:
-	// 0 = Don't check for updates
-	// 1 = Just notify if there are updates
-	// 2 = Automatically download and install updates
-
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
 	SUUpdater *updater = [SUUpdater sharedUpdater];
 
-	if (updater.automaticallyDownloadsUpdates) {
-		[self.checkForUpdatesMatrix selectCellWithTag:2];
-	} else if (updater.automaticallyChecksForUpdates) {
-		[self.checkForUpdatesMatrix selectCellWithTag:1];
-	} else {
-		[self.checkForUpdatesMatrix selectCellWithTag:0];
-	}
+	self.checkForUpdatesAutomaticallyDownload.state = updater.automaticallyDownloadsUpdates;
+	self.checkForUpdatesAutomaticallyCheck.state = updater.automaticallyChecksForUpdates;
+	self.checkForUpdatesDontCheck.state = (updater.automaticallyDownloadsUpdates == NO &&
+										   updater.automaticallyChecksForUpdates == NO);
 #endif
 }
 
 - (void)onChangedCheckForUpdates:(id)sender
 {
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	NSInteger selectedTag = self.checkForUpdatesMatrix.selectedTag;
-
 	SUUpdater *updater = [SUUpdater sharedUpdater];
 
-	if (selectedTag == 2) {
-		updater.automaticallyChecksForUpdates = YES;
-		updater.automaticallyDownloadsUpdates = YES;
-	} else if (selectedTag == 1) {
-		updater.automaticallyChecksForUpdates = YES;
-		updater.automaticallyDownloadsUpdates = NO;
-	} else {
-		updater.automaticallyChecksForUpdates = NO;
-		updater.automaticallyDownloadsUpdates = NO;
-	}
+	updater.automaticallyChecksForUpdates = (self.checkForUpdatesAutomaticallyCheck.state == NSOnState);
+	updater.automaticallyDownloadsUpdates = (self.checkForUpdatesAutomaticallyDownload.state == NSOnState);
 #endif
 }
 

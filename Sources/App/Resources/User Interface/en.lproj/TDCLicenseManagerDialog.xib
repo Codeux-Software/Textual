@@ -50,7 +50,7 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="applicationIcon" id="9c6-9f-bCg"/>
                     <accessibility description="Textual Logo"/>
                 </imageView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Uu0-L6-ebd">
+                <textField horizontalHuggingPriority="250" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Uu0-L6-ebd">
                     <rect key="frame" x="109" y="264" width="316" height="16"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="To activate Textual, enter your license key below" id="6U9-rS-tAa">
                         <font key="font" metaFont="systemBold"/>
@@ -58,7 +58,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SKZ-Sh-8aW">
+                <textField horizontalHuggingPriority="250" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SKZ-Sh-8aW">
                     <rect key="frame" x="109" y="193" width="81" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="License Key:" id="iji-CW-RF2">
                         <font key="font" metaFont="system"/>
@@ -112,7 +112,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="590" height="41"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Pho-XN-fdp">
+                            <textField horizontalHuggingPriority="250" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Pho-XN-fdp">
                                 <rect key="frame" x="14" y="11" width="249" height="19"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Your trial of Textual expires in %@" id="b62-vg-HHg">
                                     <font key="font" metaFont="system" size="16"/>
@@ -160,7 +160,7 @@
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="applicationIcon" id="Nw3-hE-vWZ"/>
                                 <accessibility description="Mac App Store Logo"/>
                             </imageView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="x6V-ip-XZY">
+                            <textField horizontalHuggingPriority="250" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="x6V-ip-XZY">
                                 <rect key="frame" x="105" y="96" width="210" height="16"/>
                                 <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Migrate from the Mac App Store" id="UVC-M1-5Bi">
                                     <font key="font" metaFont="systemBold"/>
@@ -304,7 +304,7 @@ Gw
                     <color key="borderColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0241231274" colorSpace="calibratedWhite"/>
                 </box>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6ov-Tb-DrN">
+                <textField horizontalHuggingPriority="250" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6ov-Tb-DrN">
                     <rect key="frame" x="83" y="150" width="395" height="24"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Thank you for your purchase of Textual 7!" id="VEa-9u-paw">
                         <font key="font" metaFont="systemBold" size="20"/>
@@ -325,7 +325,7 @@ Gw
                     </columns>
                     <gridCells>
                         <gridCell row="WQq-cq-5bc" column="Wnb-a3-qTo" id="ADu-eE-3FZ">
-                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cfn-IY-dQv">
+                            <textField key="contentView" horizontalHuggingPriority="250" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cfn-IY-dQv">
                                 <rect key="frame" x="15" y="48" width="86" height="16"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="License Key:" id="Sqv-hD-I9t">
                                     <font key="font" metaFont="systemBold"/>
@@ -345,7 +345,7 @@ Gw
                             </textField>
                         </gridCell>
                         <gridCell row="0ed-nt-dpf" column="Wnb-a3-qTo" id="To6-Fl-r4z">
-                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Kl-eO-RdC">
+                            <textField key="contentView" horizontalHuggingPriority="250" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Kl-eO-RdC">
                                 <rect key="frame" x="17" y="24" width="84" height="16"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Licensed to:" id="6ME-D8-5PB">
                                     <font key="font" metaFont="systemBold"/>
@@ -355,7 +355,7 @@ Gw
                             </textField>
                         </gridCell>
                         <gridCell row="0ed-nt-dpf" column="utI-Eu-ITn" id="Hs3-cg-Ku2">
-                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3dT-zX-85e">
+                            <textField key="contentView" horizontalHuggingPriority="250" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3dT-zX-85e">
                                 <rect key="frame" x="105" y="24" width="72" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="John Smith" id="xuy-7G-Mgt">
                                     <font key="font" metaFont="system"/>
@@ -365,7 +365,7 @@ Gw
                             </textField>
                         </gridCell>
                         <gridCell row="vAa-8C-0kw" column="Wnb-a3-qTo" id="Pnr-0o-kf9">
-                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KTA-04-hF9">
+                            <textField key="contentView" horizontalHuggingPriority="250" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KTA-04-hF9">
                                 <rect key="frame" x="-2" y="0.0" width="103" height="16"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Purchase Date:" id="ZkA-LE-wVS">
                                     <font key="font" metaFont="systemBold"/>
@@ -375,7 +375,7 @@ Gw
                             </textField>
                         </gridCell>
                         <gridCell row="vAa-8C-0kw" column="utI-Eu-ITn" id="kEJ-eR-7ce">
-                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g5a-3T-fft">
+                            <textField key="contentView" horizontalHuggingPriority="250" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g5a-3T-fft">
                                 <rect key="frame" x="105" y="0.0" width="53" height="16"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Monday" id="CVk-zh-eEN">
                                     <font key="font" metaFont="system"/>

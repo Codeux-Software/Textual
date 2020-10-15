@@ -119,11 +119,10 @@
                     <splitView autosaveName="" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dVR-2U-X51" userLabel="Thin Split View" customClass="TVCMainWindowSplitView">
                         <rect key="frame" x="0.0" y="38" width="800" height="439"/>
                         <subviews>
-                            <visualEffectView blendingMode="behindWindow" material="underWindowBackground" state="followsWindowActiveState" id="KgM-JY-9PC">
+                            <visualEffectView blendingMode="behindWindow" material="underWindowBackground" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="KgM-JY-9PC">
                                 <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="23" horizontalPageScroll="10" verticalLineScroll="23" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="KbE-36-qMw">
+                                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="23" horizontalPageScroll="10" verticalLineScroll="23" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KbE-36-qMw">
                                         <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" id="pGy-N5-8Z2">
@@ -241,18 +240,16 @@
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="uvA-9N-e8z"/>
                                 </constraints>
                             </visualEffectView>
-                            <splitView dividerStyle="thin" id="dCp-Wp-aIX" customClass="TVCMainWindowChannelView">
+                            <splitView dividerStyle="thin" translatesAutoresizingMaskIntoConstraints="NO" id="dCp-Wp-aIX" customClass="TVCMainWindowChannelView">
                                 <rect key="frame" x="151" y="0.0" width="498" height="439"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="mtt-4n-lrH"/>
                                 </constraints>
                             </splitView>
-                            <visualEffectView blendingMode="behindWindow" material="underWindowBackground" state="followsWindowActiveState" id="2k7-ax-6YE">
+                            <visualEffectView blendingMode="behindWindow" material="underWindowBackground" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="2k7-ax-6YE">
                                 <rect key="frame" x="650" y="0.0" width="150" height="439"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="10" verticalLineScroll="20" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="KMX-Oo-KOu">
+                                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="10" verticalLineScroll="20" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KMX-Oo-KOu">
                                         <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" id="dMW-Pm-dRv">
@@ -340,8 +337,6 @@
                             </visualEffectView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="2k7-ax-6YE" secondAttribute="trailing" id="1W5-K4-tWL"/>
-                            <constraint firstItem="2k7-ax-6YE" firstAttribute="leading" secondItem="dCp-Wp-aIX" secondAttribute="trailing" constant="1" id="4qB-4t-0aw"/>
                             <constraint firstItem="KgM-JY-9PC" firstAttribute="top" secondItem="dVR-2U-X51" secondAttribute="top" id="8Ld-b3-95S"/>
                             <constraint firstAttribute="bottom" secondItem="KgM-JY-9PC" secondAttribute="bottom" id="RqD-1B-IBq"/>
                             <constraint firstItem="2k7-ax-6YE" firstAttribute="top" secondItem="dVR-2U-X51" secondAttribute="top" id="TbP-t5-Rvn"/>
@@ -938,104 +933,104 @@
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
                                 <menuItem isSeparatorItem="YES" id="bg0-Ng-Tzn"/>
-                                <menuItem title=" White" onStateImage="FormattingColor_0" offStateImage="FormattingColor_0" mixedStateImage="FormattingColor_0" id="ARN-Ri-nbk">
+                                <menuItem title=" White" offStateImage="FormattingColor_0" id="ARN-Ri-nbk">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="FNB-p8-dkn"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Black" onStateImage="FormattingColor_1" offStateImage="FormattingColor_1" tag="1" id="0Ss-XT-b86">
+                                <menuItem title=" Black" offStateImage="FormattingColor_1" tag="1" id="0Ss-XT-b86">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="L3V-HU-moa"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Blue (Navy)" onStateImage="FormattingColor_3" offStateImage="FormattingColor_3" tag="2" id="czd-tP-iaS">
+                                <menuItem title=" Blue (Navy)" offStateImage="FormattingColor_3" tag="2" id="czd-tP-iaS">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="fqd-Jj-JWw"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Green" onStateImage="FormattingColor_2" offStateImage="FormattingColor_2" tag="3" id="kS9-2O-sqS">
+                                <menuItem title=" Green" offStateImage="FormattingColor_2" tag="3" id="kS9-2O-sqS">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="ifM-ve-mmE"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Red" onStateImage="FormattingColor_4" offStateImage="FormattingColor_4" tag="4" id="IWI-GH-Ora">
+                                <menuItem title=" Red" offStateImage="FormattingColor_4" tag="4" id="IWI-GH-Ora">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="4kp-Lr-M6n"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Brown (Maroon)" onStateImage="FormattingColor_5" offStateImage="FormattingColor_5" tag="5" id="Who-wC-fSt">
+                                <menuItem title=" Brown (Maroon)" offStateImage="FormattingColor_5" tag="5" id="Who-wC-fSt">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="83e-yc-YNI"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Purple" onStateImage="FormattingColor_7" offStateImage="FormattingColor_7" tag="6" id="EIN-fm-82Q">
+                                <menuItem title=" Purple" offStateImage="FormattingColor_7" tag="6" id="EIN-fm-82Q">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="Wmx-gZ-kNd"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Orange" onStateImage="FormattingColor_6" offStateImage="FormattingColor_6" tag="7" id="8vZ-G8-jv5">
+                                <menuItem title=" Orange" offStateImage="FormattingColor_6" tag="7" id="8vZ-G8-jv5">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="Ckj-0h-aMs"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Yellow" onStateImage="FormattingColor_13" offStateImage="FormattingColor_13" tag="8" id="Gh5-I1-yLt">
+                                <menuItem title=" Yellow" offStateImage="FormattingColor_13" tag="8" id="Gh5-I1-yLt">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="nhL-U2-ZsB"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Light Green (Lime)" onStateImage="FormattingColor_12" offStateImage="FormattingColor_12" tag="9" id="N9c-LY-gcF">
+                                <menuItem title=" Light Green (Lime)" offStateImage="FormattingColor_12" tag="9" id="N9c-LY-gcF">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="Ejt-mI-FcA"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Teal (Green/Blue Cyan)" onStateImage="FormattingColor_10" offStateImage="FormattingColor_10" tag="10" id="Bje-lA-3rz">
+                                <menuItem title=" Teal (Green/Blue Cyan)" offStateImage="FormattingColor_10" tag="10" id="Bje-lA-3rz">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="UdV-8W-mbW"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Light Cyan (Cyan) (Aqua)" onStateImage="FormattingColor_11" offStateImage="FormattingColor_11" tag="11" id="P7u-ao-KWb">
+                                <menuItem title=" Light Cyan (Cyan) (Aqua)" offStateImage="FormattingColor_11" tag="11" id="P7u-ao-KWb">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="4eW-CR-GtF"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Light Blue (Royal)" onStateImage="FormattingColor_9" offStateImage="FormattingColor_9" tag="12" id="fi2-Ew-trd">
+                                <menuItem title=" Light Blue (Royal)" offStateImage="FormattingColor_9" tag="12" id="fi2-Ew-trd">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="uk3-zq-TUW"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Pink (Light Purple) (Fuchsia)" onStateImage="FormattingColor_8" offStateImage="FormattingColor_8" tag="13" id="CrD-bC-Yfu">
+                                <menuItem title=" Pink (Light Purple) (Fuchsia)" offStateImage="FormattingColor_8" tag="13" id="CrD-bC-Yfu">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="RB4-Kq-ziy"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Grey" onStateImage="FormattingColor_14" offStateImage="FormattingColor_14" tag="14" id="r0U-BE-Nuu">
+                                <menuItem title=" Grey" offStateImage="FormattingColor_14" tag="14" id="r0U-BE-Nuu">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="mKr-yg-A0i"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Light Grey (Silver)" onStateImage="FormattingColor_15" offStateImage="FormattingColor_15" tag="15" id="uI2-y4-Mub">
+                                <menuItem title=" Light Grey (Silver)" offStateImage="FormattingColor_15" tag="15" id="uI2-y4-Mub">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="WrN-Zd-u4L"/>
                                     </connections>
                                 </menuItem>
                                 <menuItem isSeparatorItem="YES" id="592-9O-NaR"/>
-                                <menuItem title=" Rainbow" onStateImage="FormattingColor_Rainbow" offStateImage="FormattingColor_Rainbow" mixedStateImage="FormattingColor_Rainbow" tag="299" id="yvr-bb-p4H">
+                                <menuItem title=" Rainbow" offStateImage="FormattingColor_Rainbow" tag="299" id="yvr-bb-p4H">
                                     <attributedString key="attributedTitle">
                                         <fragment content=" R">
                                             <attributes>
@@ -1403,104 +1398,104 @@
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                 </menuItem>
                                 <menuItem isSeparatorItem="YES" id="JG7-7S-yEI"/>
-                                <menuItem title=" White" onStateImage="FormattingColor_0" offStateImage="FormattingColor_0" mixedStateImage="FormattingColor_0" id="TDN-yE-ZR8">
+                                <menuItem title=" White" offStateImage="FormattingColor_0" id="TDN-yE-ZR8">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="MFE-ww-sKV"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Black" onStateImage="FormattingColor_1" offStateImage="FormattingColor_1" tag="1" id="Aw4-EX-d4G">
+                                <menuItem title=" Black" offStateImage="FormattingColor_1" tag="1" id="Aw4-EX-d4G">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="qva-b0-fWk"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Blue (Navy)" onStateImage="FormattingColor_3" offStateImage="FormattingColor_3" tag="2" id="l7k-2J-Xf5">
+                                <menuItem title=" Blue (Navy)" offStateImage="FormattingColor_3" tag="2" id="l7k-2J-Xf5">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="bGp-6k-NTc"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Green" onStateImage="FormattingColor_2" offStateImage="FormattingColor_2" tag="3" id="SGm-V5-eSq">
+                                <menuItem title=" Green" offStateImage="FormattingColor_2" tag="3" id="SGm-V5-eSq">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="bsh-dX-pGw"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Red" onStateImage="FormattingColor_4" offStateImage="FormattingColor_4" tag="4" id="YP3-Vn-UX9">
+                                <menuItem title=" Red" offStateImage="FormattingColor_4" tag="4" id="YP3-Vn-UX9">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="mpn-SZ-odr"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Brown (Maroon)" onStateImage="FormattingColor_5" offStateImage="FormattingColor_5" tag="5" id="x1s-UD-e6l">
+                                <menuItem title=" Brown (Maroon)" offStateImage="FormattingColor_5" tag="5" id="x1s-UD-e6l">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="07a-6f-29A"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Purple" onStateImage="FormattingColor_7" offStateImage="FormattingColor_7" tag="6" id="b3W-X6-t1o">
+                                <menuItem title=" Purple" offStateImage="FormattingColor_7" tag="6" id="b3W-X6-t1o">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="6jR-Zv-pSv"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Orange" onStateImage="FormattingColor_6" offStateImage="FormattingColor_6" tag="7" id="OIM-ms-A0J">
+                                <menuItem title=" Orange" offStateImage="FormattingColor_6" tag="7" id="OIM-ms-A0J">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="niw-i1-Na7"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Yellow" onStateImage="FormattingColor_13" offStateImage="FormattingColor_13" tag="8" id="ABW-nJ-yww">
+                                <menuItem title=" Yellow" offStateImage="FormattingColor_13" tag="8" id="ABW-nJ-yww">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="tnn-tV-dN3"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Light Green (Lime)" onStateImage="FormattingColor_12" offStateImage="FormattingColor_12" tag="9" id="PoI-vF-KTc">
+                                <menuItem title=" Light Green (Lime)" offStateImage="FormattingColor_12" tag="9" id="PoI-vF-KTc">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="gXc-M5-S85"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Teal (Green/Blue Cyan)" onStateImage="FormattingColor_10" offStateImage="FormattingColor_10" tag="10" id="dlX-Ta-yRu">
+                                <menuItem title=" Teal (Green/Blue Cyan)" offStateImage="FormattingColor_10" tag="10" id="dlX-Ta-yRu">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="HiV-pG-1Em"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Light Cyan (Cyan) (Aqua)" onStateImage="FormattingColor_11" offStateImage="FormattingColor_11" tag="11" id="LwL-4r-OcQ">
+                                <menuItem title=" Light Cyan (Cyan) (Aqua)" offStateImage="FormattingColor_11" tag="11" id="LwL-4r-OcQ">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="43d-0V-u0d"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Light Blue (Royal)" onStateImage="FormattingColor_9" offStateImage="FormattingColor_9" tag="12" id="qRD-RR-Ksa">
+                                <menuItem title=" Light Blue (Royal)" offStateImage="FormattingColor_9" tag="12" id="qRD-RR-Ksa">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="cnh-7i-KYu"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Pink (Light Purple) (Fuchsia)" onStateImage="FormattingColor_8" offStateImage="FormattingColor_8" tag="13" id="QK2-3t-Rgp">
+                                <menuItem title=" Pink (Light Purple) (Fuchsia)" offStateImage="FormattingColor_8" tag="13" id="QK2-3t-Rgp">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="v77-3W-2X3"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Grey" onStateImage="FormattingColor_14" offStateImage="FormattingColor_14" tag="14" id="Qjv-cy-whN">
+                                <menuItem title=" Grey" offStateImage="FormattingColor_14" tag="14" id="Qjv-cy-whN">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="yEd-hH-HRp"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Light Grey (Silver)" onStateImage="FormattingColor_15" offStateImage="FormattingColor_15" tag="15" id="glT-A8-2O4">
+                                <menuItem title=" Light Grey (Silver)" offStateImage="FormattingColor_15" tag="15" id="glT-A8-2O4">
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="j7v-mc-UwU" id="9Ot-er-ugQ"/>
                                     </connections>
                                 </menuItem>
                                 <menuItem isSeparatorItem="YES" id="Lkd-mt-5g7"/>
-                                <menuItem title=" Rainbow" onStateImage="FormattingColor_Rainbow" offStateImage="FormattingColor_Rainbow" mixedStateImage="FormattingColor_Rainbow" tag="299" id="YPx-ab-Cac">
+                                <menuItem title=" Rainbow" offStateImage="FormattingColor_Rainbow" tag="299" id="YPx-ab-Cac">
                                     <attributedString key="attributedTitle">
                                         <fragment content=" R">
                                             <attributes>
@@ -1908,7 +1903,7 @@
                     </constraints>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIcon" id="wpM-pw-UdB"/>
                 </imageView>
-                <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7NU-Ke-m1W">
+                <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7NU-Ke-m1W">
                     <rect key="frame" x="116" y="20" width="172" height="16"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="krn-AQ-P4T">
@@ -2047,7 +2042,7 @@ To continue using Textual 7, you will need to purchase it.</string>
                         <constraint firstAttribute="width" constant="420" id="dfS-de-acv"/>
                     </constraints>
                 </box>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LK8-9t-3xT">
+                <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LK8-9t-3xT">
                     <rect key="frame" x="159" y="55" width="203" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Already own a copy of Textual 7?" id="MJr-dN-Icn">
                         <font key="font" metaFont="system"/>
@@ -2110,11 +2105,11 @@ To continue using Textual 7, you will need to purchase it.</string>
         <image name="FormattingColor_7" width="16" height="16"/>
         <image name="FormattingColor_8" width="16" height="16"/>
         <image name="FormattingColor_9" width="16" height="16"/>
-        <image name="FormattingColor_Rainbow" width="16" height="16"/>
+        <image name="FormattingColor_Rainbow" width="8" height="8"/>
         <image name="MainWindowSegmentedControlUserTemplate" width="20" height="18"/>
         <image name="NSActionTemplate" width="15" height="15"/>
-        <image name="NSAddTemplate" width="14" height="13"/>
-        <image name="NSLockUnlockedTemplate" width="17" height="15"/>
+        <image name="NSAddTemplate" width="15" height="13"/>
+        <image name="NSLockUnlockedTemplate" width="18" height="15"/>
         <image name="applicationIcon" width="512" height="512"/>
     </resources>
 </document>

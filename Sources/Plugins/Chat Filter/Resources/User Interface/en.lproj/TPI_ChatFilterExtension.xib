@@ -78,14 +78,14 @@ Drag and drop filters to change their priority. The table is ranked highest prio
                         <binding destination="gVm-uR-B4M" name="enabled" keyPath="canRemove" id="9H4-zs-t6R"/>
                     </connections>
                 </button>
-                <scrollView borderType="line" autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="10" verticalLineScroll="20" verticalPageScroll="10" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="gPh-Vf-Ty1">
+                <scrollView autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="10" verticalLineScroll="20" verticalPageScroll="10" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="gPh-Vf-Ty1">
                     <rect key="frame" x="93" y="59" width="485" height="220"/>
                     <clipView key="contentView" id="seO-3c-oh7">
                         <rect key="frame" x="1" y="1" width="483" height="218"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="18" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" headerView="KyR-f3-84p" viewBased="YES" floatsGroupRows="NO" id="xhh-gD-9rb" customClass="TVCBasicTableView">
-                                <rect key="frame" x="0.0" y="0.0" width="483" height="195"/>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="18" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" headerView="L4E-jr-cQa" viewBased="YES" floatsGroupRows="NO" id="xhh-gD-9rb" customClass="TVCBasicTableView">
+                                <rect key="frame" x="0.0" y="0.0" width="483" height="190"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="2" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -148,15 +148,15 @@ Drag and drop filters to change their priority. The table is ranked highest prio
                         <constraint firstAttribute="height" constant="220" id="oPO-od-3xa"/>
                     </constraints>
                     <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="iJb-x6-x6a">
-                        <rect key="frame" x="2" y="202" width="481" height="16"/>
+                        <rect key="frame" x="1" y="203" width="483" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="cdX-i1-2vb">
                         <rect key="frame" x="224" y="17" width="15" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <tableHeaderView key="headerView" wantsLayer="YES" id="KyR-f3-84p">
-                        <rect key="frame" x="0.0" y="0.0" width="483" height="23"/>
+                    <tableHeaderView key="headerView" wantsLayer="YES" id="L4E-jr-cQa">
+                        <rect key="frame" x="0.0" y="0.0" width="483" height="28"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                     <accessibility description="List of Filters"/>

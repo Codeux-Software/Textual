@@ -31,7 +31,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="1015" y="629" width="370" height="291"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="720"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="522">
                 <rect key="frame" x="0.0" y="0.0" width="370" height="291"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -209,7 +209,7 @@ DQ
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="407" y="164" width="526" height="378"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="720"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="6">
                 <rect key="frame" x="0.0" y="0.0" width="534" height="378"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -384,7 +384,7 @@ DQ
                         </columns>
                         <gridCells>
                             <gridCell row="Kpp-Bb-tZs" column="gXI-5Z-cSP" id="Iwi-t9-9op">
-                                <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cG4-7I-vs2">
+                                <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cG4-7I-vs2">
                                     <rect key="frame" x="19" y="58" width="48" height="14"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" alignment="right" title="Format:" id="6s6-vf-tWd">
                                         <font key="font" metaFont="smallSystemBold"/>
@@ -394,7 +394,7 @@ DQ
                                 </textField>
                             </gridCell>
                             <gridCell row="Kpp-Bb-tZs" column="S1x-gJ-amK" id="fKU-DX-NXv">
-                                <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NBG-sm-fcb">
+                                <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NBG-sm-fcb">
                                     <rect key="frame" x="69" y="58" width="204" height="14"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" title="&lt;nickname&gt;!&lt;username&gt;@&lt;address&gt;" id="10i-MR-fkD">
                                         <font key="font" metaFont="smallSystem"/>
@@ -404,7 +404,7 @@ DQ
                                 </textField>
                             </gridCell>
                             <gridCell row="B8x-hc-NKZ" column="gXI-5Z-cSP" id="acK-2F-ExI">
-                                <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OjV-Aj-wiQ">
+                                <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OjV-Aj-wiQ">
                                     <rect key="frame" x="5" y="42" width="62" height="14"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" alignment="right" title="Examples:" id="NzA-7H-3Pn">
                                         <font key="font" metaFont="smallSystemBold"/>
@@ -414,7 +414,7 @@ DQ
                                 </textField>
                             </gridCell>
                             <gridCell row="B8x-hc-NKZ" column="S1x-gJ-amK" id="TeE-pc-TKL">
-                                <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TD9-se-tAw">
+                                <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TD9-se-tAw">
                                     <rect key="frame" x="69" y="42" width="307" height="14"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" title="*!*@* (matches every possible user — not recommended)" id="0fp-nP-7zU">
                                         <font key="font" metaFont="smallSystem"/>
@@ -425,7 +425,7 @@ DQ
                             </gridCell>
                             <gridCell row="cd4-bz-1Dn" column="gXI-5Z-cSP" id="pdD-NF-0Cb"/>
                             <gridCell row="cd4-bz-1Dn" column="S1x-gJ-amK" id="iPw-rC-Ykd">
-                                <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4U0-1G-9IA">
+                                <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4U0-1G-9IA">
                                     <rect key="frame" x="69" y="28" width="315" height="14"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" title="frank*!*@* (matches any nickname that starts with “frank”)" id="SBB-bO-rCp">
                                         <font key="font" metaFont="smallSystem"/>
@@ -436,7 +436,7 @@ DQ
                             </gridCell>
                             <gridCell row="GWF-7M-PGa" column="gXI-5Z-cSP" id="swW-Lp-XMF"/>
                             <gridCell row="GWF-7M-PGa" column="S1x-gJ-amK" id="k1P-Q0-rMI">
-                                <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fip-7x-R8J">
+                                <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fip-7x-R8J">
                                     <rect key="frame" x="69" y="14" width="304" height="14"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" title="*!matt@* (matches any username that is equal to “matt”)" id="18d-sU-ipn">
                                         <font key="font" metaFont="smallSystem"/>
@@ -447,7 +447,7 @@ DQ
                             </gridCell>
                             <gridCell row="ipg-pN-zE1" column="gXI-5Z-cSP" id="jmX-wX-8eL"/>
                             <gridCell row="ipg-pN-zE1" column="S1x-gJ-amK" id="6W6-Yn-nVH">
-                                <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dZf-j9-oJ1">
+                                <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dZf-j9-oJ1">
                                     <rect key="frame" x="69" y="0.0" width="265" height="14"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" title="*!*@*.info (matches any address ending in “.info”)" id="uSx-4A-ovI">
                                         <font key="font" metaFont="smallSystem"/>

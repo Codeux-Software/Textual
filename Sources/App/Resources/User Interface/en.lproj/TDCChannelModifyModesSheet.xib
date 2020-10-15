@@ -28,14 +28,14 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="639" y="553" width="320" height="308"/>
+            <rect key="contentRect" x="639" y="553" width="103" height="94"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                <rect key="frame" x="0.0" y="0.0" width="287" height="320"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="62">
-                        <rect key="frame" x="143" y="106" width="157" height="22"/>
+                        <rect key="frame" x="143" y="106" width="124" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="5It-6s-7uW"/>
                         </constraints>
@@ -318,7 +318,7 @@
                             <action selector="onChangeCheck:" target="-2" id="240"/>
                         </connections>
                     </button>
-                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="13" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ao3-gh-ieE">
+                    <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="13" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ao3-gh-ieE">
                         <rect key="frame" x="20" y="139" width="247" height="161"/>
                         <subviews>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="171">
@@ -394,10 +394,10 @@
                         </customSpacing>
                     </stackView>
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="244">
-                        <rect key="frame" x="12" y="58" width="296" height="5"/>
+                        <rect key="frame" x="12" y="58" width="263" height="5"/>
                     </box>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="64">
-                        <rect key="frame" x="169" y="13" width="76" height="32"/>
+                        <rect key="frame" x="136" y="13" width="76" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="215">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -411,7 +411,7 @@ Gw
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="65">
-                        <rect key="frame" x="243" y="13" width="64" height="32"/>
+                        <rect key="frame" x="210" y="13" width="64" height="32"/>
                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="216">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -425,7 +425,7 @@ DQ
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="63">
-                        <rect key="frame" x="213" y="77" width="87" height="22"/>
+                        <rect key="frame" x="213" y="77" width="54" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="bw9-zM-uph"/>
                         </constraints>
@@ -476,7 +476,7 @@ DQ
                 <outlet property="delegate" destination="-2" id="228"/>
                 <outlet property="initialFirstResponder" destination="65" id="246"/>
             </connections>
-            <point key="canvasLocation" x="317.5" y="437"/>
+            <point key="canvasLocation" x="221" y="360"/>
         </window>
     </objects>
 </document>

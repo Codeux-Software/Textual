@@ -21,7 +21,7 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="243">
             <windowStyleMask key="styleMask" titled="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="160" width="650" height="29"/>
+            <rect key="contentRect" x="196" y="160" width="164" height="162"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <value key="maxSize" type="size" width="1024" height="720"/>
             <view key="contentView" id="244">
@@ -34,8 +34,8 @@
                             <rect key="frame" x="1" y="1" width="648" height="238"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" misplaced="YES" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="16" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" headerView="281" viewBased="YES" translatesAutoresizingMaskIntoConstraints="NO" id="255" customClass="TVCBasicTableView">
-                                    <rect key="frame" x="0.0" y="0.0" width="648" height="215"/>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="16" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" headerView="OL3-le-5Xg" viewBased="YES" translatesAutoresizingMaskIntoConstraints="NO" id="255" customClass="TVCBasicTableView">
+                                    <rect key="frame" x="0.0" y="0.0" width="648" height="210"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -186,8 +186,8 @@
                             <rect key="frame" x="764" y="16" width="15" height="230"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <tableHeaderView key="headerView" wantsLayer="YES" id="281">
-                            <rect key="frame" x="0.0" y="0.0" width="648" height="23"/>
+                        <tableHeaderView key="headerView" wantsLayer="YES" id="OL3-le-5Xg">
+                            <rect key="frame" x="0.0" y="0.0" width="648" height="28"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                         <accessibility description="Highlight List"/>
@@ -235,7 +235,6 @@ Gw
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="246" firstAttribute="top" secondItem="249" secondAttribute="bottom" constant="13" id="2eU-2Y-oXs"/>
                     <constraint firstItem="277" firstAttribute="leading" secondItem="244" secondAttribute="leading" constant="20" id="9QX-LB-5Wf"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="249" secondAttribute="trailing" constant="20" id="Icy-sJ-SEY"/>
                     <constraint firstAttribute="bottom" secondItem="248" secondAttribute="bottom" constant="10" id="Qlf-2Y-QUR"/>
@@ -248,13 +247,14 @@ Gw
                     <constraint firstItem="249" firstAttribute="top" secondItem="244" secondAttribute="top" constant="13" id="oHc-Jd-kBt"/>
                     <constraint firstItem="249" firstAttribute="leading" secondItem="244" secondAttribute="leading" constant="20" symbolic="YES" id="oYF-cz-qoa"/>
                     <constraint firstItem="248" firstAttribute="top" secondItem="246" secondAttribute="bottom" constant="10" id="ocI-Av-3pC"/>
+                    <constraint firstItem="246" firstAttribute="top" secondItem="249" secondAttribute="bottom" constant="13" id="rvE-Lq-nus"/>
                     <constraint firstItem="246" firstAttribute="leading" secondItem="244" secondAttribute="leading" id="ypx-IL-Ez0"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="289"/>
             </connections>
-            <point key="canvasLocation" x="182" y="-182.5"/>
+            <point key="canvasLocation" x="-57" y="-290"/>
         </window>
         <arrayController objectClassName="IRCHighlightLogEntry" preservesSelection="NO" selectsInsertedObjects="NO" avoidsEmptySelection="NO" automaticallyRearrangesObjects="YES" id="5mx-Dm-tKI">
             <declaredKeys>

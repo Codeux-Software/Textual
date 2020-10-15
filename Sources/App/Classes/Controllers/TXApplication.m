@@ -62,9 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 													defaultButton:TXTLS(@"Prompts[mvh-ms]")
 												  alternateButton:TXTLS(@"Prompts[99q-gg]")];
 
-			if (continueLaunch == NO) {
-				return NO;
-			}
+			return continueLaunch;
 		}
 	}
 

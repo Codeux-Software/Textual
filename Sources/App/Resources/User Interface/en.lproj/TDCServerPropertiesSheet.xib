@@ -278,7 +278,7 @@ Gw
                             </textField>
                         </gridCell>
                         <gridCell row="uAb-uY-dJ9" column="kwW-4Q-r7S" id="xlG-iw-qu0">
-                            <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1539" customClass="TVCValidatedTextField">
+                            <textField key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1539" customClass="TVCValidatedTextField">
                                 <rect key="frame" x="121" y="105" width="239" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="9j5-dY-0rN"/>
@@ -304,7 +304,7 @@ Gw
                             </textField>
                         </gridCell>
                         <gridCell row="hUK-uO-DWz" column="kwW-4Q-r7S" id="ZvZ-NZ-lR2">
-                            <comboBox key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1548" customClass="TVCValidatedComboBox">
+                            <comboBox key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1548" customClass="TVCValidatedComboBox">
                                 <rect key="frame" x="121" y="68" width="242" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="19" id="6ls-al-2Lu"/>
@@ -330,10 +330,10 @@ Gw
                             </textField>
                         </gridCell>
                         <gridCell row="akK-h8-k22" column="kwW-4Q-r7S" id="VDu-lo-rfW">
-                            <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A6k-ee-dum">
+                            <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A6k-ee-dum">
                                 <rect key="frame" x="121" y="36" width="239" height="22"/>
                                 <subviews>
-                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1541" customClass="TVCValidatedTextField">
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1541" customClass="TVCValidatedTextField">
                                         <rect key="frame" x="0.0" y="0.0" width="60" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="PuT-pr-arX"/>
@@ -385,7 +385,7 @@ Gw
                             </textField>
                         </gridCell>
                         <gridCell row="FhT-p4-Yz2" column="kwW-4Q-r7S" id="3cc-iU-xNw">
-                            <textField key="contentView" toolTip="Password to be sent using the PASS command. This is NOT your password for NickServ." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1543" customClass="NSSecureTextField">
+                            <textField key="contentView" toolTip="Password to be sent using the PASS command. This is NOT your password for NickServ." verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1543" customClass="NSSecureTextField">
                                 <rect key="frame" x="121" y="0.0" width="239" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="KsP-sC-2yd"/>
@@ -403,7 +403,7 @@ Gw
                         </gridCell>
                     </gridCells>
                 </gridView>
-                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z7k-zB-mgb">
+                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="6" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z7k-zB-mgb">
                     <rect key="frame" x="113" y="50" width="295" height="82"/>
                     <subviews>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="1531">
@@ -501,7 +501,7 @@ Gw
                             </textField>
                         </gridCell>
                         <gridCell row="Zcw-cx-v0b" column="w3Z-Ld-gYr" id="CPp-os-0C3">
-                            <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1595" customClass="TVCValidatedTextField">
+                            <textField key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1595" customClass="TVCValidatedTextField">
                                 <rect key="frame" x="148" y="72" width="212" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="8E0-IE-YRt"/>
@@ -528,7 +528,7 @@ Gw
                             </textField>
                         </gridCell>
                         <gridCell row="O4O-Ig-L5p" column="w3Z-Ld-gYr" id="kkb-Ih-JRo">
-                            <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2335" customClass="TVCValidatedTextField">
+                            <textField key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="2335" customClass="TVCValidatedTextField">
                                 <rect key="frame" x="148" y="36" width="212" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="zpG-Ug-YZW"/>
@@ -554,7 +554,7 @@ Gw
                             </textField>
                         </gridCell>
                         <gridCell row="H9A-aR-nQi" column="w3Z-Ld-gYr" id="oh0-Rt-XDV">
-                            <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1602" customClass="TVCValidatedTextField">
+                            <textField key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1602" customClass="TVCValidatedTextField">
                                 <rect key="frame" x="148" y="0.0" width="212" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="uTp-8Y-0uU"/>
@@ -571,7 +571,7 @@ Gw
                         </gridCell>
                     </gridCells>
                 </gridView>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1601" customClass="NSSecureTextField">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1601" customClass="NSSecureTextField">
                     <rect key="frame" x="228" y="98" width="212" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="gox-5X-KFr"/>
@@ -639,7 +639,7 @@ Gw
                     </columns>
                     <gridCells>
                         <gridCell row="hv7-1e-ySA" column="s8y-m2-ky8" id="ODW-v7-wHU">
-                            <textField key="contentView" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1598">
+                            <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1598">
                                 <rect key="frame" x="-2" y="40" width="144" height="16"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Username:" id="1616">
                                     <font key="font" metaFont="system"/>
@@ -649,7 +649,7 @@ Gw
                             </textField>
                         </gridCell>
                         <gridCell row="hv7-1e-ySA" column="UoC-5W-n5F" id="cWe-EP-PjO">
-                            <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1597" customClass="TVCValidatedTextField">
+                            <textField key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1597" customClass="TVCValidatedTextField">
                                 <rect key="frame" x="148" y="36" width="212" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="uho-Mt-WUG"/>
@@ -675,7 +675,7 @@ Gw
                             </textField>
                         </gridCell>
                         <gridCell row="DVI-Kz-YNY" column="UoC-5W-n5F" id="Rhp-1d-fOQ">
-                            <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1599" customClass="TVCValidatedTextField">
+                            <textField key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1599" customClass="TVCValidatedTextField">
                                 <rect key="frame" x="148" y="0.0" width="212" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="nEL-Vg-sf4"/>
@@ -699,8 +699,8 @@ Gw
                 <constraint firstItem="1601" firstAttribute="trailing" secondItem="7sG-7N-mzK" secondAttribute="trailing" id="3UI-x1-mWt"/>
                 <constraint firstItem="2Zg-jJ-evU" firstAttribute="leading" secondItem="A3c-XH-Q30" secondAttribute="leading" id="40V-JA-hR7"/>
                 <constraint firstItem="A3c-XH-Q30" firstAttribute="leading" secondItem="1563" secondAttribute="leading" constant="100" id="5Bg-qa-iNb"/>
-                <constraint firstItem="1598" firstAttribute="trailing" secondItem="1603" secondAttribute="trailing" id="7re-E3-9om"/>
                 <constraint firstItem="1623" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1563" secondAttribute="leading" constant="20" id="Dw8-MU-1so"/>
+                <constraint firstItem="1598" firstAttribute="trailing" secondItem="1603" secondAttribute="trailing" id="FNL-Kj-p4o"/>
                 <constraint firstItem="1604" firstAttribute="leading" secondItem="1602" secondAttribute="leading" id="FzD-Hp-iQa"/>
                 <constraint firstItem="1623" firstAttribute="trailing" secondItem="1600" secondAttribute="trailing" id="GOw-a6-ODD"/>
                 <constraint firstItem="ptP-ZP-JAf" firstAttribute="top" secondItem="B1u-e0-30u" secondAttribute="bottom" constant="6" symbolic="YES" id="IuK-ad-UDf"/>
@@ -814,7 +814,7 @@ Gw
                             </textField>
                         </gridCell>
                         <gridCell row="HQO-PZ-kkO" column="VoC-9t-4Jn" id="Vbl-SS-VS0">
-                            <popUpButton key="contentView" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1684">
+                            <popUpButton key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1684">
                                 <rect key="frame" x="66" y="28" width="258" height="25"/>
                                 <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="1714">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -837,7 +837,7 @@ Gw
                             </textField>
                         </gridCell>
                         <gridCell row="ZX4-Aw-6qI" column="VoC-9t-4Jn" id="wEs-0H-zdj">
-                            <popUpButton key="contentView" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1685">
+                            <popUpButton key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1685">
                                 <rect key="frame" x="66" y="-4" width="258" height="25"/>
                                 <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" id="1692">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1027,14 +1027,14 @@ Gw
                         <rect key="frame" x="1" y="1" width="410" height="218"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" headerView="1802" id="1805" customClass="TVCBasicTableView">
-                                <rect key="frame" x="0.0" y="0.0" width="410" height="195"/>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" headerView="Lh4-PC-UuF" id="1805" customClass="TVCBasicTableView">
+                                <rect key="frame" x="0.0" y="0.0" width="410" height="190"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn identifier="name" editable="NO" width="247" minWidth="40" maxWidth="1000" id="1808">
+                                    <tableColumn identifier="name" editable="NO" width="248" minWidth="40" maxWidth="1000" id="1808">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Channel Name">
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -1047,7 +1047,7 @@ Gw
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
-                                    <tableColumn identifier="pass" editable="NO" width="115" minWidth="10" maxWidth="1000" id="1807">
+                                    <tableColumn identifier="pass" editable="NO" width="108" minWidth="10" maxWidth="1000" id="1807">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Password">
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -1060,7 +1060,7 @@ Gw
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
-                                    <tableColumn identifier="join" editable="NO" width="30.1845703125" minWidth="10" maxWidth="1000" id="1806">
+                                    <tableColumn identifier="join" editable="NO" width="36.1845703125" minWidth="10" maxWidth="1000" id="1806">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Join">
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -1089,8 +1089,8 @@ Gw
                         <rect key="frame" x="405" y="17" width="15" height="154"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <tableHeaderView key="headerView" wantsLayer="YES" id="1802">
-                        <rect key="frame" x="0.0" y="0.0" width="410" height="23"/>
+                    <tableHeaderView key="headerView" wantsLayer="YES" id="Lh4-PC-UuF">
+                        <rect key="frame" x="0.0" y="0.0" width="410" height="28"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                     <accessibility description="Channel List"/>
@@ -1178,8 +1178,8 @@ Gw
                         <rect key="frame" x="1" y="1" width="410" height="218"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" headerView="2451" id="2454" customClass="TVCBasicTableView">
-                                <rect key="frame" x="0.0" y="0.0" width="410" height="195"/>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" headerView="Gzo-0n-LCU" id="2454" customClass="TVCBasicTableView">
+                                <rect key="frame" x="0.0" y="0.0" width="410" height="190"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1241,8 +1241,8 @@ Gw
                         <rect key="frame" x="405" y="17" width="15" height="154"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <tableHeaderView key="headerView" wantsLayer="YES" id="2451">
-                        <rect key="frame" x="0.0" y="0.0" width="410" height="23"/>
+                    <tableHeaderView key="headerView" wantsLayer="YES" id="Gzo-0n-LCU">
+                        <rect key="frame" x="0.0" y="0.0" width="410" height="28"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                     <accessibility description="Highlight Match Table"/>
@@ -1323,8 +1323,8 @@ Gw
                         <rect key="frame" x="1" y="1" width="410" height="195"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" headerView="1852" id="1851" customClass="TVCBasicTableView">
-                                <rect key="frame" x="0.0" y="0.0" width="410" height="172"/>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" headerView="NHj-wb-YWi" id="1851" customClass="TVCBasicTableView">
+                                <rect key="frame" x="0.0" y="0.0" width="410" height="167"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1373,8 +1373,8 @@ Gw
                         <rect key="frame" x="294" y="16" width="15" height="340"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <tableHeaderView key="headerView" wantsLayer="YES" id="1852">
-                        <rect key="frame" x="0.0" y="0.0" width="410" height="23"/>
+                    <tableHeaderView key="headerView" wantsLayer="YES" id="NHj-wb-YWi">
+                        <rect key="frame" x="0.0" y="0.0" width="410" height="28"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                     <accessibility description="Address Book List"/>
@@ -1399,12 +1399,12 @@ Gw
                 <constraint firstAttribute="bottom" secondItem="1843" secondAttribute="bottom" constant="25" id="2Gi-2g-Nwu"/>
                 <constraint firstItem="1845" firstAttribute="leading" secondItem="1843" secondAttribute="trailing" constant="1" id="2qb-yz-69l"/>
                 <constraint firstItem="2358" firstAttribute="top" secondItem="1817" secondAttribute="top" constant="25" id="9z4-Kb-aMe"/>
+                <constraint firstItem="1843" firstAttribute="top" secondItem="1842" secondAttribute="bottom" constant="8" id="FUk-OU-ysM"/>
                 <constraint firstItem="1844" firstAttribute="top" secondItem="1842" secondAttribute="bottom" constant="8" symbolic="YES" id="H7n-ny-Oa6"/>
                 <constraint firstItem="2358" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="1842" secondAttribute="trailing" id="HJR-XB-yIn"/>
                 <constraint firstItem="1845" firstAttribute="firstBaseline" secondItem="1843" secondAttribute="firstBaseline" id="In6-si-fQf"/>
                 <constraint firstItem="1845" firstAttribute="width" secondItem="1843" secondAttribute="width" id="Mld-X8-TVW"/>
                 <constraint firstItem="1844" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1845" secondAttribute="trailing" constant="20" id="PyA-u7-Bx7"/>
-                <constraint firstItem="1843" firstAttribute="top" secondItem="1842" secondAttribute="bottom" constant="8" id="Uz3-NU-geK"/>
                 <constraint firstItem="1844" firstAttribute="trailing" secondItem="1842" secondAttribute="trailing" id="WVJ-uY-BnM"/>
                 <constraint firstItem="1845" firstAttribute="height" secondItem="1843" secondAttribute="height" id="mAz-MO-PcL"/>
                 <constraint firstItem="1842" firstAttribute="top" secondItem="2358" secondAttribute="bottom" constant="8" symbolic="YES" id="o17-Ew-zWm"/>
@@ -1440,7 +1440,7 @@ Gw
                     <rect key="frame" x="57" y="56" width="406" height="192"/>
                     <clipView key="contentView" drawsBackground="NO" id="rH8-fa-Y7i">
                         <rect key="frame" x="1" y="1" width="404" height="190"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" continuousSpellChecking="YES" allowsUndo="YES" allowsNonContiguousLayout="YES" id="2310">
                                 <rect key="frame" x="0.0" y="0.0" width="404" height="190"/>
@@ -1520,7 +1520,7 @@ Gw
                                     </textField>
                                 </gridCell>
                                 <gridCell row="Wux-ui-Afe" column="GOB-Ox-jHY" id="Yfy-2w-str">
-                                    <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1901" customClass="TVCValidatedTextField">
+                                    <textField key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1901" customClass="TVCValidatedTextField">
                                         <rect key="frame" x="74" y="108" width="246" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="22" id="CHb-rL-Cpx"/>
@@ -1546,10 +1546,10 @@ Gw
                                     </textField>
                                 </gridCell>
                                 <gridCell row="wAW-qX-GTz" column="GOB-Ox-jHY" id="Dow-Al-RGx">
-                                    <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fud-jH-umc">
+                                    <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fud-jH-umc">
                                         <rect key="frame" x="74" y="72" width="246" height="22"/>
                                         <subviews>
-                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="84A-gQ-HPC" customClass="TVCValidatedTextField">
+                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="84A-gQ-HPC" customClass="TVCValidatedTextField">
                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="22"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="22" id="3T9-ia-fvT"/>
@@ -1592,7 +1592,7 @@ Gw
                                     </textField>
                                 </gridCell>
                                 <gridCell row="Onw-AC-h2l" column="GOB-Ox-jHY" id="RwZ-xF-727">
-                                    <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1904">
+                                    <textField key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1904">
                                         <rect key="frame" x="74" y="36" width="246" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="22" id="jly-CJ-SHw"/>
@@ -1618,7 +1618,7 @@ Gw
                                     </textField>
                                 </gridCell>
                                 <gridCell row="cWB-GJ-DxE" column="GOB-Ox-jHY" id="e8B-zt-fSc">
-                                    <secureTextField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1902">
+                                    <secureTextField key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1902">
                                         <rect key="frame" x="74" y="0.0" width="246" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="22" id="EPx-uC-UQ3"/>
@@ -1699,7 +1699,7 @@ Gw
                         <constraint firstItem="h41-zX-k7q" firstAttribute="centerX" secondItem="GFp-Qd-4ck" secondAttribute="centerX" id="n8M-sY-58X"/>
                     </constraints>
                 </customView>
-                <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uxd-YG-qsq">
+                <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uxd-YG-qsq">
                     <rect key="frame" x="118" y="269" width="284" height="20"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1896">
@@ -1710,7 +1710,7 @@ Gw
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1905">
+                        <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1905">
                             <rect key="frame" x="92" y="-4" width="196" height="25"/>
                             <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="1906">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1754,7 +1754,7 @@ Gw
                     <rect key="frame" x="48" y="30" width="424" height="43"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Of6-s1-mF9">
                         <rect key="frame" x="0.0" y="0.0" width="424" height="43"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" id="hIR-WT-lAK">
                                 <rect key="frame" x="0.0" y="42" width="424" height="43"/>
@@ -1909,7 +1909,7 @@ Gw
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="7" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bJz-Am-LvT">
+                <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="7" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bJz-Am-LvT">
                     <rect key="frame" x="47" y="96" width="436" height="20"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9b4-kF-7N0">
@@ -1951,7 +1951,7 @@ Gw
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
-                <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lqs-Qy-WoE">
+                <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lqs-Qy-WoE">
                     <rect key="frame" x="47" y="153" width="438" height="20"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kGJ-aW-aWu">
@@ -2035,7 +2035,7 @@ Gw
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
-                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p7D-wU-ocI">
+                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="6" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p7D-wU-ocI">
                     <rect key="frame" x="35" y="138" width="357" height="60"/>
                     <subviews>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="2531">
@@ -2071,7 +2071,7 @@ Gw
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="46W-2g-sYj">
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="46W-2g-sYj">
                     <rect key="frame" x="33" y="71" width="88" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Cipher suites:" id="Qfh-rz-IdC">
                         <font key="font" metaFont="system"/>
@@ -2107,7 +2107,7 @@ Gw
                         <action selector="preferredCipherSuitesViewList:" target="-2" id="UQs-lq-m95"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="T3E-ox-F6h">
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="T3E-ox-F6h">
                     <rect key="frame" x="33" y="216" width="96" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Connect using:" id="B8q-jl-QtB">
                         <font key="font" metaFont="system"/>
@@ -2184,7 +2184,7 @@ Gw
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Ti4-Q4-cYX" userLabel="CertFP View">
             <rect key="frame" x="0.0" y="0.0" width="520" height="300"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zU1-IR-zpt">
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zU1-IR-zpt">
                     <rect key="frame" x="33" y="249" width="339" height="16"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Select a certificate to send when you connect securely." id="rIl-yx-VEH">
                         <font key="font" metaFont="system"/>
@@ -2192,7 +2192,7 @@ Gw
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" spacing="12" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J9k-kO-pE8">
+                <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" spacing="12" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J9k-kO-pE8">
                     <rect key="frame" x="130" y="35" width="260" height="20"/>
                     <subviews>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sab-tw-7nn">

@@ -33,14 +33,14 @@
                             <rect key="frame" x="1" y="1" width="598" height="218"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" autosaveColumns="NO" typeSelect="NO" usesAutomaticRowHeights="YES" headerView="sQg-9H-gSH" viewBased="YES" id="fir-Vj-Dlr" customClass="TVCBasicTableView">
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" autosaveColumns="NO" typeSelect="NO" usesAutomaticRowHeights="YES" headerView="XYU-kz-qVy" viewBased="YES" id="fir-Vj-Dlr" customClass="TVCBasicTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="598" height="190"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="channelName" editable="NO" width="110" minWidth="40" maxWidth="1000" id="PaN-OT-TPX">
+                                        <tableColumn identifier="channelName" editable="NO" width="111" minWidth="40" maxWidth="1000" id="PaN-OT-TPX">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Channel Name">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -55,10 +55,10 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView translatesAutoresizingMaskIntoConstraints="NO" id="088-fI-26f">
-                                                    <rect key="frame" x="1" y="1" width="115" height="16"/>
+                                                    <rect key="frame" x="1" y="1" width="116" height="16"/>
                                                     <subviews>
                                                         <textField horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="LAi-KB-a4L">
-                                                            <rect key="frame" x="0.0" y="0.0" width="115" height="16"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="116" height="16"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="iAr-vI-1Jn">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -81,7 +81,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="channelMemberCount" editable="NO" width="90" minWidth="40" maxWidth="1000" id="iqK-MO-gQw">
+                                        <tableColumn identifier="channelMemberCount" editable="NO" width="91" minWidth="40" maxWidth="1000" id="iqK-MO-gQw">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Member Count">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -96,10 +96,10 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView translatesAutoresizingMaskIntoConstraints="NO" id="65a-1B-tHU">
-                                                    <rect key="frame" x="119" y="1" width="90" height="16"/>
+                                                    <rect key="frame" x="120" y="1" width="91" height="16"/>
                                                     <subviews>
                                                         <textField horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="9UU-Fz-GXc">
-                                                            <rect key="frame" x="0.0" y="0.0" width="90" height="16"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="91" height="16"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="TaT-zx-zgK">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -122,7 +122,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="channelTopic" editable="NO" width="380" minWidth="10" maxWidth="3.4028234663852886e+38" id="exA-K8-ozT">
+                                        <tableColumn identifier="channelTopic" editable="NO" width="378" minWidth="10" maxWidth="3.4028234663852886e+38" id="exA-K8-ozT">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Topic">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -137,10 +137,10 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView translatesAutoresizingMaskIntoConstraints="NO" id="lXg-AU-UCu">
-                                                    <rect key="frame" x="212" y="1" width="384" height="16"/>
+                                                    <rect key="frame" x="214" y="1" width="382" height="16"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="tvH-QA-89d">
-                                                            <rect key="frame" x="0.0" y="0.0" width="384" height="16"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="16"/>
                                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Table View Cell" id="oPQ-I2-Zqm">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -179,15 +179,15 @@
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="220" id="gad-i5-vCs"/>
                         </constraints>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Zxi-WW-aZs">
-                            <rect key="frame" x="1" y="214" width="598" height="16"/>
+                            <rect key="frame" x="1" y="203" width="598" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="ZtW-M5-gFM">
                             <rect key="frame" x="764" y="16" width="15" height="230"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <tableHeaderView key="headerView" wantsLayer="YES" id="sQg-9H-gSH">
-                            <rect key="frame" x="0.0" y="0.0" width="598" height="23"/>
+                        <tableHeaderView key="headerView" wantsLayer="YES" id="XYU-kz-qVy">
+                            <rect key="frame" x="0.0" y="0.0" width="598" height="28"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                         <accessibility description="Channel List"/>

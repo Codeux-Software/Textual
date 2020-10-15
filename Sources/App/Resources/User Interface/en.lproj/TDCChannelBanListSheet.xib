@@ -43,8 +43,8 @@
                             <rect key="frame" x="1" y="1" width="598" height="228"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" autosaveColumns="NO" rowHeight="16" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" headerView="36" viewBased="YES" floatsGroupRows="NO" id="6" customClass="TVCBasicTableView">
-                                    <rect key="frame" x="0.0" y="0.0" width="598" height="205"/>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" autosaveColumns="NO" rowHeight="16" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" headerView="yZO-FU-7oR" viewBased="YES" floatsGroupRows="NO" id="6" customClass="TVCBasicTableView">
+                                    <rect key="frame" x="0.0" y="0.0" width="598" height="200"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -147,10 +147,10 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView translatesAutoresizingMaskIntoConstraints="NO" id="iDS-Kx-r1t">
-                                                    <rect key="frame" x="446" y="1" width="150" height="16"/>
+                                                    <rect key="frame" x="446" y="1" width="148" height="16"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="lWl-sU-LRh">
-                                                            <rect key="frame" x="0.0" y="0.0" width="150" height="16"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="148" height="16"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="FIa-a0-68K">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -183,15 +183,15 @@
                             </subviews>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="5">
-                            <rect key="frame" x="1" y="213" width="596" height="16"/>
+                            <rect key="frame" x="1" y="213" width="598" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="4">
                             <rect key="frame" x="764" y="16" width="15" height="230"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <tableHeaderView key="headerView" wantsLayer="YES" id="36">
-                            <rect key="frame" x="0.0" y="0.0" width="598" height="23"/>
+                        <tableHeaderView key="headerView" wantsLayer="YES" id="yZO-FU-7oR">
+                            <rect key="frame" x="0.0" y="0.0" width="598" height="28"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                         <accessibility description="Ban Exception List"/>
@@ -243,7 +243,7 @@ Gw
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mxf-43-RTj">
+                    <textField horizontalHuggingPriority="250" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mxf-43-RTj">
                         <rect key="frame" x="547" y="282" width="35" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="BjX-hz-9vr"/>

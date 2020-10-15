@@ -33,7 +33,7 @@
         <window title="Channel Spotlight" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="BfF-sG-KJr" customClass="TDCChannelSpotlightPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <rect key="contentRect" x="272" y="172" width="600" height="194"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="720"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="ibD-GT-hsB">
                 <rect key="frame" x="0.0" y="0.0" width="600" height="194"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -94,7 +94,7 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="46"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="d8V-0z-qfJ">
+                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="d8V-0z-qfJ">
                                                                             <rect key="frame" x="8" y="21" width="255" height="19"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="#channel on freenode IRC network" id="KNo-4X-COi">
                                                                                 <font key="font" metaFont="system" size="16"/>
@@ -105,7 +105,7 @@
                                                                                 <binding destination="G8b-ye-mjd" name="value" keyPath="self.channelName" id="1l0-Lg-xo1"/>
                                                                             </connections>
                                                                         </textField>
-                                                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Js1-ti-O0L">
+                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Js1-ti-O0L">
                                                                             <rect key="frame" x="8" y="7" width="172" height="15"/>
                                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="1 unread message, 1 highlight" id="P1U-vp-d2N">
                                                                                 <font key="font" metaFont="cellTitle"/>
@@ -116,7 +116,7 @@
                                                                                 <binding destination="G8b-ye-mjd" name="value" keyPath="self.unreadCountDescription" id="F6Q-hG-sKu"/>
                                                                             </connections>
                                                                         </textField>
-                                                                        <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ipN-YI-lSG">
+                                                                        <textField verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ipN-YI-lSG">
                                                                             <rect key="frame" x="561" y="11" width="31" height="24"/>
                                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="⌘1" id="wPt-pE-DBY">
                                                                                 <font key="font" metaFont="system" size="20"/>

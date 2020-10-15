@@ -91,7 +91,7 @@ Gw
                                     <rect key="frame" x="10" y="33" width="543" height="488"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vBs-bR-T5n">
+                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vBs-bR-T5n">
                                             <rect key="frame" x="28" y="410" width="80" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Filter Match:" id="a2n-La-LMB">
                                                 <font key="font" metaFont="system"/>
@@ -114,7 +114,7 @@ Gw
                                                 <outlet property="delegate" destination="-2" id="Ao8-VB-zQk"/>
                                             </connections>
                                         </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CsT-6O-3Gc">
+                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CsT-6O-3Gc">
                                             <rect key="frame" x="28" y="258" width="81" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Filter Action:" id="3HI-Ry-Pmd">
                                                 <font key="font" metaFont="system"/>
@@ -289,7 +289,7 @@ Gw
                                                 </constraints>
                                             </view>
                                         </box>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IBT-nM-IFM">
+                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IBT-nM-IFM">
                                             <rect key="frame" x="28" y="450" width="69" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Filter Title:" id="GOZ-2v-y7k">
                                                 <font key="font" metaFont="system"/>
@@ -362,7 +362,7 @@ Gw
                                     <rect key="frame" x="10" y="33" width="543" height="488"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="u00-83-eYs">
+                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="u00-83-eYs">
                                             <rect key="frame" x="106" y="448" width="88" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Limit Filter to:" id="ewY-OS-bvC">
                                                 <font key="font" metaFont="system"/>
@@ -376,7 +376,7 @@ Gw
                                                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="UY2-pC-A0V">
                                                     <rect key="frame" x="40" y="365" width="463" height="5"/>
                                                 </box>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ogw-Wl-ucj">
+                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ogw-Wl-ucj">
                                                     <rect key="frame" x="40" y="333" width="251" height="16"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Select one or more items to limit filter to:" id="xeZ-GM-gcw">
                                                         <font key="font" metaFont="system"/>
@@ -454,7 +454,7 @@ Gw
                                     <constraints>
                                         <constraint firstItem="bT2-rB-pWP" firstAttribute="top" secondItem="u00-83-eYs" secondAttribute="top" id="Ch9-5F-xgz"/>
                                         <constraint firstItem="bT2-rB-pWP" firstAttribute="leading" secondItem="u00-83-eYs" secondAttribute="trailing" constant="8" symbolic="YES" id="K5S-1O-LZk"/>
-                                        <constraint firstItem="u00-83-eYs" firstAttribute="top" secondItem="oIh-tI-HKB" secondAttribute="top" constant="24" id="TMb-WF-3ch"/>
+                                        <constraint firstItem="bT2-rB-pWP" firstAttribute="top" secondItem="oIh-tI-HKB" secondAttribute="top" constant="24" id="cpr-1n-hza"/>
                                         <constraint firstAttribute="bottom" secondItem="gTG-wG-y2s" secondAttribute="bottom" id="oHi-up-1Pv"/>
                                         <constraint firstAttribute="trailing" secondItem="gTG-wG-y2s" secondAttribute="trailing" id="t1C-Pk-18A"/>
                                         <constraint firstItem="gTG-wG-y2s" firstAttribute="leading" secondItem="oIh-tI-HKB" secondAttribute="leading" id="ws1-Kd-Xx8"/>
@@ -477,7 +477,7 @@ Gw
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SWQ-7s-2jI">
+                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SWQ-7s-2jI">
                                             <rect key="frame" x="49" y="177" width="49" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Others:" id="hII-je-7Zh">
                                                 <font key="font" metaFont="system"/>
@@ -690,7 +690,7 @@ Gw
                                     <rect key="frame" x="10" y="33" width="543" height="488"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vGk-i7-DUZ">
+                                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vGk-i7-DUZ">
                                             <rect key="frame" x="62" y="422" width="419" height="46"/>
                                             <subviews>
                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="1Ft-El-Wak">
@@ -727,7 +727,7 @@ Gw
                                                 <real value="3.4028234663852886e+38"/>
                                             </customSpacing>
                                         </stackView>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="k4d-KT-PP4">
+                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="k4d-KT-PP4">
                                             <rect key="frame" x="56" y="316" width="93" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Sender Match:" id="efZ-aQ-jSL">
                                                 <font key="font" metaFont="system"/>
@@ -852,7 +852,7 @@ This information is for your records and does not alter the behavior of the filt
                                     <rect key="frame" x="10" y="33" width="543" height="488"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RDw-Uz-qQG">
+                                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RDw-Uz-qQG">
                                             <rect key="frame" x="47" y="422" width="449" height="46"/>
                                             <subviews>
                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="vdu-cW-fcy">
@@ -888,7 +888,7 @@ This information is for your records and does not alter the behavior of the filt
                                         <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="FeH-nM-2Zz">
                                             <rect key="frame" x="40" y="401" width="463" height="5"/>
                                         </box>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Dp-RH-HQY">
+                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Dp-RH-HQY">
                                             <rect key="frame" x="66" y="369" width="73" height="16"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="16" id="hvZ-fQ-3Pi"/>
@@ -931,10 +931,10 @@ This information is for your records and does not alter the behavior of the filt
                                         <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="x0Z-6b-fhh">
                                             <rect key="frame" x="40" y="342" width="463" height="5"/>
                                         </box>
-                                        <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uPY-hj-XMJ">
+                                        <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uPY-hj-XMJ">
                                             <rect key="frame" x="56" y="304" width="432" height="22"/>
                                             <subviews>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KgF-yt-KDi">
+                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KgF-yt-KDi">
                                                     <rect key="frame" x="-2" y="4" width="308" height="16"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Do not perform Filter Action more than once every" id="y97-oT-WNv">
                                                         <font key="font" metaFont="system"/>
@@ -957,7 +957,7 @@ This information is for your records and does not alter the behavior of the filt
                                                         <outlet property="formatter" destination="vGQ-Aw-wDg" id="fgR-HD-NFG"/>
                                                     </connections>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZUu-lu-9qu">
+                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZUu-lu-9qu">
                                                     <rect key="frame" x="378" y="4" width="56" height="16"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="seconds" id="4O9-2v-odd">
                                                         <font key="font" metaFont="system"/>
@@ -977,7 +977,7 @@ This information is for your records and does not alter the behavior of the filt
                                                 <real value="3.4028234663852886e+38"/>
                                             </customSpacing>
                                         </stackView>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1cG-xA-EzB">
+                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1cG-xA-EzB">
                                             <rect key="frame" x="72" y="281" width="268" height="15"/>
                                             <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Change value to zero (0) to disable limitations." id="cvx-mI-PZ4">
                                                 <font key="font" metaFont="cellTitle"/>

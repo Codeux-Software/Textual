@@ -9,7 +9,9 @@
         <customObject id="-2" userLabel="File's Owner" customClass="TDCPreferencesController">
             <connections>
                 <outlet property="addExcludeKeywordButton" destination="KgU-fm-1CL" id="Yh1-uA-Lzy"/>
-                <outlet property="checkForUpdatesMatrix" destination="xz0-rq-VAP" id="fa8-EW-c3l"/>
+                <outlet property="checkForUpdatesAutomaticallyCheck" destination="KM0-Vm-IZi" id="R4h-yt-2DP"/>
+                <outlet property="checkForUpdatesAutomaticallyDownload" destination="rkY-hK-RL3" id="5QO-sY-KiJ"/>
+                <outlet property="checkForUpdatesDontCheck" destination="eyl-gj-5fj" id="K7p-w3-6hU"/>
                 <outlet property="contentViewBehavior" destination="iMS-Ox-Uda" id="Sff-A7-UVB"/>
                 <outlet property="contentViewChannelManagement" destination="kTM-XW-Yb5" id="yM5-Ac-xep"/>
                 <outlet property="contentViewCommandScope" destination="1YF-k7-FrW" id="cvJ-I0-CaK"/>
@@ -122,7 +124,7 @@
                         <popUpButton key="view" tag="108" id="J0J-90-PIH">
                             <rect key="frame" x="2" y="14" width="55" height="35"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="o4H-Er-8Yy">
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="TPWTB_Advanced" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="o4H-Er-8Yy">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="W9G-v3-1hY">
@@ -274,10 +276,10 @@
             <point key="canvasLocation" x="329" y="-8535"/>
         </window>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Eyz-5p-IkU" userLabel="General">
-            <rect key="frame" x="0.0" y="0.0" width="670" height="255"/>
+            <rect key="frame" x="0.0" y="0.0" width="670" height="251"/>
             <subviews>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="bKt-Ac-1I2">
-                    <rect key="frame" x="40" y="208" width="295" height="18"/>
+                    <rect key="frame" x="40" y="204" width="295" height="18"/>
                     <buttonCell key="cell" type="check" title="Request confirmation before quitting Textual" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="XAa-aA-vKv">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -287,13 +289,13 @@
                     </connections>
                 </button>
                 <box verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="GlR-W9-ZJo">
-                    <rect key="frame" x="40" y="188" width="590" height="5"/>
+                    <rect key="frame" x="40" y="184" width="590" height="5"/>
                 </box>
-                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lAf-Xj-H1K">
-                    <rect key="frame" x="0.0" y="30" width="670" height="142"/>
+                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lAf-Xj-H1K">
+                    <rect key="frame" x="0.0" y="30" width="670" height="138"/>
                     <subviews>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="fbu-cf-Xto">
-                            <rect key="frame" x="0.0" y="90" width="670" height="52"/>
+                            <rect key="frame" x="0.0" y="86" width="670" height="52"/>
                             <subviews>
                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="c5W-EH-b7w">
                                     <rect key="frame" x="40" y="35" width="276" height="18"/>
@@ -334,45 +336,16 @@
                             </constraints>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Arz-w3-aT6">
-                            <rect key="frame" x="0.0" y="0.0" width="670" height="90"/>
+                            <rect key="frame" x="0.0" y="0.0" width="670" height="86"/>
                             <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L50-Ud-iP2">
-                                    <rect key="frame" x="40" y="73" width="59" height="16"/>
+                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L50-Ud-iP2">
+                                    <rect key="frame" x="40" y="70" width="59" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Updates:" id="MC0-wK-dAF">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xz0-rq-VAP">
-                                    <rect key="frame" x="105" y="32" width="297" height="58"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="cellSize" width="297" height="18"/>
-                                    <size key="intercellSpacing" width="4" height="2"/>
-                                    <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="Ytp-xt-VEF">
-                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="system"/>
-                                    </buttonCell>
-                                    <cells>
-                                        <column>
-                                            <buttonCell type="radio" title="Automatically download and install updates" imagePosition="left" alignment="left" state="on" tag="2" inset="2" id="E6x-A1-m7P">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <buttonCell type="radio" title="Just notify if there are updates" imagePosition="left" alignment="left" tag="1" inset="2" id="a7g-ax-ezU">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <buttonCell type="radio" title="Don't check for updates" imagePosition="left" alignment="left" inset="2" id="oxE-dY-Bk4">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                        </column>
-                                    </cells>
-                                    <connections>
-                                        <action selector="onChangedCheckForUpdates:" target="-2" id="6Sm-hL-kDm"/>
-                                    </connections>
-                                </matrix>
                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="jfn-Sc-y1D">
                                     <rect key="frame" x="103" y="-1" width="150" height="18"/>
                                     <buttonCell key="cell" type="check" title="Enable beta updates" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="ZpK-O2-jD1">
@@ -384,16 +357,61 @@
                                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ReceiveBetaUpdates" id="kg8-1s-fSU"/>
                                     </connections>
                                 </button>
+                                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="4" verticalStackHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rs1-p6-eOx">
+                                    <rect key="frame" x="105" y="30" width="286" height="56"/>
+                                    <subviews>
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rkY-hK-RL3">
+                                            <rect key="frame" x="-2" y="39" width="288" height="18"/>
+                                            <buttonCell key="cell" type="radio" title="Automatically download and install updates" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="yeE-vC-LNb">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="onChangedCheckForUpdates:" target="-2" id="Hhq-9W-xaa"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KM0-Vm-IZi">
+                                            <rect key="frame" x="-2" y="19" width="212" height="18"/>
+                                            <buttonCell key="cell" type="radio" title="Just notify if there are updates" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Iuw-ng-k0Q">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="onChangedCheckForUpdates:" target="-2" id="CfD-E5-khM"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eyl-gj-5fj">
+                                            <rect key="frame" x="-2" y="-1" width="172" height="18"/>
+                                            <buttonCell key="cell" type="radio" title="Don't check for updates" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="SlQ-Ey-5fd">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="onChangedCheckForUpdates:" target="-2" id="2qR-a2-GtW"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <visibilityPriorities>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                    </visibilityPriorities>
+                                    <customSpacing>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                    </customSpacing>
+                                </stackView>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="xz0-rq-VAP" firstAttribute="leading" secondItem="L50-Ud-iP2" secondAttribute="trailing" constant="8" id="2Sx-He-FfO"/>
                                 <constraint firstItem="L50-Ud-iP2" firstAttribute="leading" secondItem="Arz-w3-aT6" secondAttribute="leading" constant="42" id="2ci-88-Tqp"/>
-                                <constraint firstItem="L50-Ud-iP2" firstAttribute="top" secondItem="xz0-rq-VAP" secondAttribute="top" constant="1" id="6cG-nD-CeW"/>
-                                <constraint firstItem="jfn-Sc-y1D" firstAttribute="leading" secondItem="xz0-rq-VAP" secondAttribute="leading" id="KDs-6b-1f6"/>
+                                <constraint firstItem="rs1-p6-eOx" firstAttribute="leading" secondItem="L50-Ud-iP2" secondAttribute="trailing" constant="8" symbolic="YES" id="ILV-3z-JJV"/>
+                                <constraint firstItem="jfn-Sc-y1D" firstAttribute="leading" secondItem="rs1-p6-eOx" secondAttribute="leading" id="TJ6-iz-bg5"/>
+                                <constraint firstItem="jfn-Sc-y1D" firstAttribute="top" secondItem="rs1-p6-eOx" secondAttribute="bottom" constant="14" id="VDa-qC-Sx1"/>
+                                <constraint firstItem="rs1-p6-eOx" firstAttribute="top" secondItem="Arz-w3-aT6" secondAttribute="top" id="cow-PV-Rx2"/>
                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jfn-Sc-y1D" secondAttribute="trailing" constant="20" id="hyd-U8-ANH"/>
-                                <constraint firstItem="jfn-Sc-y1D" firstAttribute="top" secondItem="xz0-rq-VAP" secondAttribute="bottom" constant="16" id="rAt-W6-Wpq"/>
+                                <constraint firstItem="L50-Ud-iP2" firstAttribute="firstBaseline" secondItem="rkY-hK-RL3" secondAttribute="firstBaseline" id="mNv-78-rHy"/>
                                 <constraint firstAttribute="bottom" secondItem="jfn-Sc-y1D" secondAttribute="bottom" id="sJr-Sh-fkA"/>
-                                <constraint firstItem="xz0-rq-VAP" firstAttribute="top" secondItem="Arz-w3-aT6" secondAttribute="top" id="sa9-TF-TLj"/>
                             </constraints>
                         </customView>
                     </subviews>
@@ -413,13 +431,13 @@
                 <constraint firstItem="GlR-W9-ZJo" firstAttribute="leading" secondItem="Eyz-5p-IkU" secondAttribute="leading" constant="40" id="aU0-D3-FEb"/>
                 <constraint firstAttribute="trailing" secondItem="lAf-Xj-H1K" secondAttribute="trailing" id="cSA-z1-DxP"/>
                 <constraint firstItem="lAf-Xj-H1K" firstAttribute="leading" secondItem="Eyz-5p-IkU" secondAttribute="leading" id="cvm-7s-bPC"/>
-                <constraint firstAttribute="bottom" secondItem="lAf-Xj-H1K" secondAttribute="bottom" constant="30" id="gST-3d-VgZ"/>
+                <constraint firstAttribute="bottom" secondItem="Arz-w3-aT6" secondAttribute="bottom" constant="30" id="fsQ-b1-Dq2"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bKt-Ac-1I2" secondAttribute="trailing" constant="20" id="hPW-7n-PiW"/>
                 <constraint firstItem="lAf-Xj-H1K" firstAttribute="top" secondItem="GlR-W9-ZJo" secondAttribute="bottom" constant="18" id="sh8-NW-aa2"/>
                 <constraint firstItem="GlR-W9-ZJo" firstAttribute="top" secondItem="bKt-Ac-1I2" secondAttribute="bottom" constant="18" id="whZ-Hz-BUA"/>
                 <constraint firstItem="bKt-Ac-1I2" firstAttribute="leading" secondItem="Eyz-5p-IkU" secondAttribute="leading" constant="42" id="xOx-Fd-rV8"/>
             </constraints>
-            <point key="canvasLocation" x="329" y="-8141"/>
+            <point key="canvasLocation" x="329" y="-8134.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Jdv-gk-kj9" userLabel="Highlights">
             <rect key="frame" x="0.0" y="0.0" width="670" height="342"/>
@@ -466,7 +484,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="250" height="160"/>
                                 <clipView key="contentView" id="QyB-ni-plT">
                                     <rect key="frame" x="1" y="1" width="248" height="158"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="nIO-jH-FEm">
                                             <rect key="frame" x="0.0" y="0.0" width="248" height="158"/>
@@ -524,7 +542,7 @@
                                 <rect key="frame" x="258" y="0.0" width="250" height="160"/>
                                 <clipView key="contentView" id="73A-Qg-29i">
                                     <rect key="frame" x="1" y="1" width="248" height="158"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="Vqz-0J-ajG">
                                             <rect key="frame" x="0.0" y="0.0" width="248" height="158"/>
@@ -644,10 +662,10 @@
                         <binding destination="-2" name="enabled" keyPath="self.excludeKeywordsTable.enabled" id="Qeh-dN-yl0"/>
                     </connections>
                 </button>
-                <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="50" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mdN-TE-pOJ">
+                <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="50" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mdN-TE-pOJ">
                     <rect key="frame" x="103" y="274" width="465" height="38"/>
                     <subviews>
-                        <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8oP-r2-z2R">
+                        <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8oP-r2-z2R">
                             <rect key="frame" x="-3" y="5" width="191" height="25"/>
                             <popUpButtonCell key="cell" type="push" title="Partial Matches" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" selectedItem="dnX-v4-Rf4" id="j6z-4b-d9v">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -666,7 +684,7 @@
                                 <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.NicknameHighlightMatchingType" id="oS6-Kq-Pds"/>
                             </connections>
                         </popUpButton>
-                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lZo-iP-d5m">
+                        <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="6" verticalStackHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lZo-iP-d5m">
                             <rect key="frame" x="234" y="0.0" width="231" height="38"/>
                             <subviews>
                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="xJN-JU-VGr">
@@ -767,7 +785,7 @@
                                             <binding destination="-2" name="value" keyPath="self.onlySpeakEventsForSelection" id="8g4-NF-YJ2"/>
                                         </connections>
                                     </button>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YQc-5a-Xjp">
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YQc-5a-Xjp">
                                         <rect key="frame" x="40" y="141" width="268" height="16"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Include when speaking a Channel Message:" id="va5-dc-OSt">
                                             <font key="font" metaFont="system"/>
@@ -775,7 +793,7 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ktT-0t-F2C">
+                                    <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ktT-0t-F2C">
                                         <rect key="frame" x="62" y="92" width="111" height="40"/>
                                         <subviews>
                                             <button translatesAutoresizingMaskIntoConstraints="NO" id="eJA-wf-fU4">
@@ -831,7 +849,7 @@
                                 <rect key="frame" x="10" y="33" width="624" height="221"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tno-Zq-S4W">
+                                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tno-Zq-S4W">
                                         <rect key="frame" x="42" y="145" width="424" height="46"/>
                                         <subviews>
                                             <button translatesAutoresizingMaskIntoConstraints="NO" id="Oe8-JD-drm">
@@ -905,7 +923,7 @@
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="iMS-Ox-Uda" userLabel="Behavior">
             <rect key="frame" x="0.0" y="0.0" width="670" height="272"/>
             <subviews>
-                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L9T-Bt-ocM">
+                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L9T-Bt-ocM">
                     <rect key="frame" x="42" y="113" width="338" height="76"/>
                     <subviews>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="utM-Q1-sGF">
@@ -950,7 +968,7 @@
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="8PV-b6-FPf">
+                <button horizontalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8PV-b6-FPf">
                     <rect key="frame" x="40" y="225" width="255" height="18"/>
                     <buttonCell key="cell" type="check" title="Open browser links in the background" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="rXX-bl-Nod">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -972,7 +990,7 @@
                         <constraint firstAttribute="height" constant="1" id="WVo-hN-ecn"/>
                     </constraints>
                 </box>
-                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hNi-fm-OQo">
+                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="751" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hNi-fm-OQo">
                     <rect key="frame" x="42" y="30" width="328" height="46"/>
                     <subviews>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="eWo-gj-0bg">
@@ -1041,7 +1059,7 @@
                                 <rect key="frame" x="10" y="33" width="624" height="470"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YgC-u1-eRM">
+                                    <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YgC-u1-eRM">
                                         <rect key="frame" x="42" y="181" width="261" height="106"/>
                                         <subviews>
                                             <button translatesAutoresizingMaskIntoConstraints="NO" id="nsU-oF-11h">
@@ -1289,7 +1307,7 @@
                                                 </textField>
                                             </gridCell>
                                             <gridCell row="W7w-za-NLm" column="xIx-H8-hL3" id="dq7-1Z-Oj4">
-                                                <popUpButton key="contentView" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FCb-0i-eUL">
+                                                <popUpButton key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FCb-0i-eUL">
                                                     <rect key="frame" x="132" y="30" width="328" height="25"/>
                                                     <popUpButtonCell key="cell" type="push" title="Complete nicknames, channels, and commands" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="BB3-hI-0sU" id="qkg-MZ-4sK">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1323,7 +1341,7 @@
                                                 </textField>
                                             </gridCell>
                                             <gridCell row="3as-Bs-tz6" column="xIx-H8-hL3" id="KuV-oB-Kcf">
-                                                <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zKJ-Y0-6fq">
+                                                <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zKJ-Y0-6fq">
                                                     <rect key="frame" x="135" y="0.0" width="321" height="22"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IYV-h0-Zl5">
@@ -1396,10 +1414,10 @@
                                             </gridCell>
                                         </gridCells>
                                     </gridView>
-                                    <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gGb-wc-eZP">
+                                    <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gGb-wc-eZP">
                                         <rect key="frame" x="162" y="141" width="301" height="20"/>
                                         <subviews>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PP9-CX-ahk">
+                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PP9-CX-ahk">
                                                 <rect key="frame" x="-2" y="3" width="191" height="16"/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Text size of the input text field:" id="R1K-MQ-Z0M">
                                                     <font key="font" metaFont="system"/>
@@ -1407,7 +1425,7 @@
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hw5-Ii-JYo">
+                                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hw5-Ii-JYo">
                                                 <rect key="frame" x="192" y="-4" width="113" height="25"/>
                                                 <popUpButtonCell key="cell" type="push" title="Normal" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="1rW-DR-UZS" id="CyX-fz-iYF">
                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1445,7 +1463,7 @@
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
-                                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QB5-Xf-FbA">
+                                    <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QB5-Xf-FbA">
                                         <rect key="frame" x="42" y="311" width="205" height="76"/>
                                         <subviews>
                                             <button translatesAutoresizingMaskIntoConstraints="NO" id="10g-d7-Fnj">
@@ -1490,7 +1508,7 @@
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
-                                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qdK-c5-LSO">
+                                    <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qdK-c5-LSO">
                                         <rect key="frame" x="43" y="198" width="412" height="76"/>
                                         <subviews>
                                             <button translatesAutoresizingMaskIntoConstraints="NO" id="5bf-6w-qFe">
@@ -1607,7 +1625,7 @@
                                 <rect key="frame" x="10" y="33" width="624" height="370"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Ks-KS-pKv">
+                                    <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Ks-KS-pKv">
                                         <rect key="frame" x="42" y="58" width="341" height="76"/>
                                         <subviews>
                                             <button translatesAutoresizingMaskIntoConstraints="NO" id="Gmu-Oh-Krb">
@@ -1691,7 +1709,7 @@
                                         </columns>
                                         <gridCells>
                                             <gridCell row="mZ9-hx-ewv" column="fVa-ZO-Yb4" id="oHW-zq-h02">
-                                                <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sgb-MI-xrH">
+                                                <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sgb-MI-xrH">
                                                     <rect key="frame" x="6" y="32" width="162" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Main window appearance:" id="8Z0-DR-TbO">
                                                         <font key="font" metaFont="system"/>
@@ -1734,7 +1752,7 @@
                                                 </textField>
                                             </gridCell>
                                             <gridCell row="XiR-N0-kUX" column="Lzf-OU-P1K" id="JpA-7o-5a3">
-                                                <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="firstBaseline" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l99-Sl-yf7">
+                                                <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="firstBaseline" spacing="6" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l99-Sl-yf7">
                                                     <rect key="frame" x="174" y="0.0" width="251" height="16"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lSR-7V-PDD">
@@ -1789,7 +1807,7 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dG4-2O-lpO">
+                                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dG4-2O-lpO">
                                         <rect key="frame" x="271" y="167" width="125" height="25"/>
                                         <popUpButtonCell key="cell" type="push" title="Top to bottom" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="5M2-Hy-cjn" id="2Va-c1-ec9">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -2159,7 +2177,7 @@
                                 <rect key="frame" x="10" y="33" width="625" height="280"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EC4-0b-hiq">
+                                    <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EC4-0b-hiq">
                                         <rect key="frame" x="170" y="173" width="285" height="21"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="19a-B6-iEv">
@@ -2226,7 +2244,7 @@
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
-                                    <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mpf-VK-Ftr">
+                                    <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mpf-VK-Ftr">
                                         <rect key="frame" x="112" y="230" width="401" height="20"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="inL-ss-ERr">
@@ -2288,7 +2306,7 @@
                                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="FAp-of-4TG">
                                         <rect key="frame" x="40" y="151" width="545" height="5"/>
                                     </box>
-                                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yk4-L0-S54">
+                                    <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yk4-L0-S54">
                                         <rect key="frame" x="187" y="59" width="251" height="76"/>
                                         <subviews>
                                             <button translatesAutoresizingMaskIntoConstraints="NO" id="jNN-n9-eyu">
@@ -2424,7 +2442,7 @@
                                 <rect key="frame" x="10" y="33" width="625" height="280"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="51b-3N-Ofw">
+                                    <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="51b-3N-Ofw">
                                         <rect key="frame" x="178" y="232" width="269" height="19"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PTW-Er-MK5">
@@ -2551,7 +2569,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                         <rect key="frame" x="167" y="207" width="300" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="mPp-b5-RuW">
                                             <rect key="frame" x="0.0" y="0.0" width="300" height="17"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" id="HFC-Nn-zVf">
                                                     <rect key="frame" x="0.0" y="107" width="300" height="17"/>
@@ -2606,7 +2624,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                         <rect key="frame" x="135" y="152" width="360" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="hYd-WC-meI">
                                             <rect key="frame" x="0.0" y="0.0" width="360" height="17"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" id="bjI-Oj-ZU6">
                                                     <rect key="frame" x="0.0" y="107" width="360" height="17"/>
@@ -2684,7 +2702,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                             </binding>
                                         </connections>
                                     </comboBox>
-                                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcs-0W-25e">
+                                    <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcs-0W-25e">
                                         <rect key="frame" x="158" y="39" width="309" height="76"/>
                                         <subviews>
                                             <button translatesAutoresizingMaskIntoConstraints="NO" id="NO4-3h-9X7">
@@ -2783,7 +2801,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                     <rect key="frame" x="100" y="128" width="470" height="210"/>
                     <clipView key="contentView" id="AXK-zU-57a">
                         <rect key="frame" x="1" y="1" width="468" height="208"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="rGf-Ih-C97">
                                 <rect key="frame" x="0.0" y="0.0" width="468" height="208"/>
@@ -2871,7 +2889,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ehJ-Ot-jXi">
+                <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ehJ-Ot-jXi">
                     <rect key="frame" x="199" y="30" width="272" height="18"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UuX-nP-keM">
@@ -2942,7 +2960,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="doe-fL-WAB">
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="doe-fL-WAB">
                     <rect key="frame" x="237" y="158" width="221" height="25"/>
                     <popUpButtonCell key="cell" type="push" title="nickname!username@address" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="qeE-pR-c4L" id="wVg-8i-HY5">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -3098,7 +3116,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                         <binding destination="G2Q-fc-ddg" name="selectedIndex" keyPath="values.DestinationOfNonserverNotices" id="Go7-JY-fnA"/>
                     </connections>
                 </matrix>
-                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IzG-w4-VXU">
+                <stackView distribution="fillEqually" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IzG-w4-VXU">
                     <rect key="frame" x="86" y="176" width="268" height="106"/>
                     <subviews>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="aVp-mc-vNk">
@@ -3161,7 +3179,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                 <constraint firstAttribute="bottom" secondItem="6AC-Oj-s1p" secondAttribute="bottom" constant="30" id="CO2-9e-4iv"/>
                 <constraint firstItem="vT0-4B-zbA" firstAttribute="top" secondItem="IzG-w4-VXU" secondAttribute="bottom" constant="18" id="QAA-Pn-lmw"/>
                 <constraint firstItem="nlA-Ew-LSZ" firstAttribute="leading" secondItem="vT0-4B-zbA" secondAttribute="leading" id="RgL-aY-fFR"/>
-                <constraint firstItem="xEg-Db-K0K" firstAttribute="top" secondItem="nlA-Ew-LSZ" secondAttribute="bottom" constant="17" id="TM9-Pf-Arp"/>
+                <constraint firstItem="6AC-Oj-s1p" firstAttribute="top" secondItem="nlA-Ew-LSZ" secondAttribute="bottom" constant="16" id="Rtr-m6-4wB"/>
                 <constraint firstItem="nlA-Ew-LSZ" firstAttribute="top" secondItem="zY5-8K-Mie" secondAttribute="bottom" constant="18" id="UeX-tm-lpF"/>
                 <constraint firstItem="vT0-4B-zbA" firstAttribute="centerX" secondItem="1YF-k7-FrW" secondAttribute="centerX" id="YjD-wK-T5a"/>
                 <constraint firstItem="xEg-Db-K0K" firstAttribute="top" secondItem="6AC-Oj-s1p" secondAttribute="top" constant="1" id="Zrl-cX-dmd"/>
@@ -3179,8 +3197,8 @@ Messages are not saved between app launches unless “Restore scrollback from pr
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="n4A-Pk-quE" userLabel="Flood Control">
             <rect key="frame" x="0.0" y="0.0" width="670" height="434"/>
             <subviews>
-                <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cDy-R9-0Ub">
-                    <rect key="frame" x="42" y="280" width="209" height="54"/>
+                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cDy-R9-0Ub">
+                    <rect key="frame" x="42" y="280" width="254" height="54"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vyq-Uz-h3Q">
                             <rect key="frame" x="-2" y="38" width="187" height="16"/>
@@ -3191,7 +3209,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                             </textFieldCell>
                         </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O9S-wJ-0VX">
-                            <rect key="frame" x="-2" y="0.0" width="189" height="30"/>
+                            <rect key="frame" x="-2" y="0.0" width="241" height="30"/>
                             <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="How long, in seconds, to wait in-between each join." id="SKh-K9-i5D">
                                 <font key="font" metaFont="cellTitle"/>
                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -3223,8 +3241,8 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                         </binding>
                     </connections>
                 </textField>
-                <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wIq-2E-v60">
-                    <rect key="frame" x="83" y="30" width="504" height="16"/>
+                <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" spacing="6" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wIq-2E-v60">
+                    <rect key="frame" x="77" y="30" width="516" height="16"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ovt-cD-DOK">
                             <rect key="frame" x="-2" y="1" width="65" height="15"/>
@@ -3235,7 +3253,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                             </textFieldCell>
                         </textField>
                         <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tfY-TP-YZN">
-                            <rect key="frame" x="55" y="-2" width="422" height="20"/>
+                            <rect key="frame" x="61" y="-2" width="422" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="410" id="HTg-8L-R5e"/>
                             </constraints>
@@ -3246,7 +3264,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                             </connections>
                         </slider>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xYi-8b-aQD">
-                            <rect key="frame" x="469" y="1" width="37" height="15"/>
+                            <rect key="frame" x="481" y="1" width="37" height="15"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" alignment="left" title="2,000" id="lYL-2U-2IR">
                                 <font key="font" metaFont="cellTitle"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -3265,8 +3283,8 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
-                <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PPm-GB-sT3">
-                    <rect key="frame" x="42" y="350" width="209" height="54"/>
+                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PPm-GB-sT3">
+                    <rect key="frame" x="42" y="350" width="254" height="54"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9we-bb-EEs">
                             <rect key="frame" x="-2" y="38" width="174" height="16"/>
@@ -3277,7 +3295,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                             </textFieldCell>
                         </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WkU-7v-VLt">
-                            <rect key="frame" x="-2" y="0.0" width="213" height="30"/>
+                            <rect key="frame" x="-2" y="0.0" width="254" height="30"/>
                             <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="How long, in seconds, to wait before joining channels after identifying." id="Nn9-kA-OjY">
                                 <font key="font" metaFont="cellTitle"/>
                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -3294,8 +3312,8 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
-                <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VWV-XI-SXi">
-                    <rect key="frame" x="105" y="81" width="461" height="99"/>
+                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VWV-XI-SXi">
+                    <rect key="frame" x="104" y="81" width="462" height="99"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wcy-2K-Z0C">
                             <rect key="frame" x="-2" y="83" width="250" height="16"/>
@@ -3306,7 +3324,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                             </textFieldCell>
                         </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OVq-cn-ftD">
-                            <rect key="frame" x="-2" y="0.0" width="465" height="75"/>
+                            <rect key="frame" x="-2" y="0.0" width="466" height="75"/>
                             <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="juM-7X-6WQ">
                                 <font key="font" metaFont="cellTitle"/>
                                 <string key="title">Textual must periodically poll the channels that you are in to find out when the away status of each user changes. This preference defines the maximum number of users a channel can contain before the channel is skipped over.
@@ -3329,11 +3347,11 @@ A lower value is always better especially when in a large number of channels.</s
                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="GdS-Lf-0FM">
                     <rect key="frame" x="40" y="196" width="590" height="5"/>
                 </box>
-                <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yo6-0a-8O6">
-                    <rect key="frame" x="269" y="290" width="359" height="35"/>
+                <stackView distribution="equalSpacing" orientation="vertical" alignment="centerX" spacing="4" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yo6-0a-8O6">
+                    <rect key="frame" x="314" y="290" width="314" height="35"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yHF-Mm-7mA">
-                            <rect key="frame" x="125" y="20" width="109" height="15"/>
+                            <rect key="frame" x="103" y="20" width="109" height="15"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Current Value: 100" id="Upf-sb-9aG">
                                 <font key="font" metaFont="cellTitle"/>
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -3347,8 +3365,8 @@ A lower value is always better especially when in a large number of channels.</s
                                 </binding>
                             </connections>
                         </textField>
-                        <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8gi-yj-GXQ">
-                            <rect key="frame" x="23" y="0.0" width="314" height="16"/>
+                        <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="6" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8gi-yj-GXQ">
+                            <rect key="frame" x="0.0" y="0.0" width="314" height="16"/>
                             <subviews>
                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="boi-EW-JP6">
                                     <rect key="frame" x="-2" y="0.0" width="22" height="15"/>
@@ -3396,11 +3414,11 @@ A lower value is always better especially when in a large number of channels.</s
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
-                <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XZO-OK-ByC">
-                    <rect key="frame" x="269" y="360" width="359" height="35"/>
+                <stackView distribution="equalSpacing" orientation="vertical" alignment="centerX" spacing="4" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XZO-OK-ByC">
+                    <rect key="frame" x="314" y="360" width="314" height="35"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N6h-L8-c0i">
-                            <rect key="frame" x="125" y="20" width="109" height="15"/>
+                            <rect key="frame" x="103" y="20" width="109" height="15"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Current Value: 100" id="ZFz-7f-mH4">
                                 <font key="font" metaFont="cellTitle"/>
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -3414,8 +3432,8 @@ A lower value is always better especially when in a large number of channels.</s
                                 </binding>
                             </connections>
                         </textField>
-                        <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ulc-ga-rFe">
-                            <rect key="frame" x="23" y="0.0" width="314" height="16"/>
+                        <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="6" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ulc-ga-rFe">
+                            <rect key="frame" x="0.0" y="0.0" width="314" height="16"/>
                             <subviews>
                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nUX-Py-gGJ">
                                     <rect key="frame" x="-2" y="0.0" width="22" height="15"/>
@@ -3499,7 +3517,7 @@ A lower value is always better especially when in a large number of channels.</s
                 <constraint firstItem="Yo6-0a-8O6" firstAttribute="trailing" secondItem="XZO-OK-ByC" secondAttribute="trailing" id="yTw-yV-nLW"/>
                 <constraint firstItem="cDy-R9-0Ub" firstAttribute="top" secondItem="PPm-GB-sT3" secondAttribute="bottom" constant="16" id="zZy-v9-3eL"/>
             </constraints>
-            <point key="canvasLocation" x="329" y="-3112"/>
+            <point key="canvasLocation" x="329" y="-3256"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="KpN-mD-prv" userLabel="Incoming Data">
             <rect key="frame" x="0.0" y="0.0" width="670" height="259"/>
@@ -3573,7 +3591,7 @@ A lower value is always better especially when in a large number of channels.</s
                     <rect key="frame" x="167" y="94" width="350" height="17"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="MeX-O6-c8G">
                         <rect key="frame" x="0.0" y="0.0" width="350" height="17"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="ijO-xj-OPG">
                                 <rect key="frame" x="0.0" y="0.0" width="350" height="17"/>
@@ -3681,10 +3699,10 @@ A lower value is always better especially when in a large number of channels.</s
             <point key="canvasLocation" x="329" y="-2176"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="4pD-W0-ghZ" userLabel="File Transfers">
-            <rect key="frame" x="0.0" y="0.0" width="670" height="381"/>
+            <rect key="frame" x="0.0" y="0.0" width="670" height="383"/>
             <subviews>
                 <gridView xPlacement="trailing" yPlacement="fill" rowAlignment="firstBaseline" rowSpacing="12" columnSpacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="boQ-fB-7JU">
-                    <rect key="frame" x="89" y="206" width="492" height="88"/>
+                    <rect key="frame" x="89" y="208" width="492" height="88"/>
                     <rows>
                         <gridRow id="ZQK-oQ-JYt"/>
                         <gridRow id="z65-ho-3y5"/>
@@ -3696,7 +3714,7 @@ A lower value is always better especially when in a large number of channels.</s
                     </columns>
                     <gridCells>
                         <gridCell row="ZQK-oQ-JYt" column="Bus-Va-tRO" id="Fdy-g2-p9G">
-                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AOa-Oj-4Fg">
+                            <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AOa-Oj-4Fg">
                                 <rect key="frame" x="-2" y="71" width="184" height="16"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="IP Address detection method:" id="VBT-UA-wAp">
                                     <font key="font" metaFont="system"/>
@@ -3706,7 +3724,7 @@ A lower value is always better especially when in a large number of channels.</s
                             </textField>
                         </gridCell>
                         <gridCell row="ZQK-oQ-JYt" column="BWk-SA-z5h" id="V9f-l1-Uxw">
-                            <popUpButton key="contentView" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kgc-ku-XGt">
+                            <popUpButton key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kgc-ku-XGt">
                                 <rect key="frame" x="185" y="64" width="311" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Ask router with no fallback" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3" imageScaling="proportionallyDown" inset="2" selectedItem="PpR-MQ-ujy" id="eNz-BX-xFG">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -3728,7 +3746,7 @@ A lower value is always better especially when in a large number of channels.</s
                             </popUpButton>
                         </gridCell>
                         <gridCell row="z65-ho-3y5" column="Bus-Va-tRO" id="0Sz-vf-13a">
-                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="T6Y-nV-U2L">
+                            <textField key="contentView" verticalHuggingPriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="T6Y-nV-U2L">
                                 <rect key="frame" x="3" y="38" width="179" height="16"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Manually entered IP address:" id="CJm-Pw-2rG">
                                     <font key="font" metaFont="system"/>
@@ -3756,7 +3774,7 @@ A lower value is always better especially when in a large number of channels.</s
                             </textField>
                         </gridCell>
                         <gridCell row="ua1-BC-ZVo" column="Bus-Va-tRO" id="lSh-ZL-d5e">
-                            <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wph-Lj-E2b">
+                            <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wph-Lj-E2b">
                                 <rect key="frame" x="34" y="4" width="148" height="16"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="File transfer port range:" id="Pak-RG-PFU">
                                     <font key="font" metaFont="system"/>
@@ -3766,7 +3784,7 @@ A lower value is always better especially when in a large number of channels.</s
                             </textField>
                         </gridCell>
                         <gridCell row="ua1-BC-ZVo" column="BWk-SA-z5h" id="BBG-jh-d7u">
-                            <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atp-n5-Eep">
+                            <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atp-n5-Eep">
                                 <rect key="frame" x="188" y="0.0" width="149" height="22"/>
                                 <subviews>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="B1H-Gt-xIn">
@@ -3789,7 +3807,7 @@ A lower value is always better especially when in a large number of channels.</s
                                             </binding>
                                         </connections>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zgz-mh-zlj">
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zgz-mh-zlj">
                                         <rect key="frame" x="66" y="4" width="17" height="16"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="to" id="49T-fc-D6u">
                                             <font key="font" metaFont="system"/>
@@ -3833,23 +3851,23 @@ A lower value is always better especially when in a large number of channels.</s
                     </gridCells>
                 </gridView>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wuk-ii-Ge1">
-                    <rect key="frame" x="96" y="113" width="320" height="28"/>
+                    <rect key="frame" x="96" y="115" width="320" height="28"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="You will be asked where to save downloaded files each time you start a file transfer a destination is not configured." id="3k5-n4-vrU">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c99-82-eTv">
-                    <rect key="frame" x="96" y="152" width="175" height="16"/>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c99-82-eTv">
+                    <rect key="frame" x="96" y="154" width="175" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Download files to the folder:" id="8Zx-Jz-9wf">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wNd-qD-qDv">
-                    <rect key="frame" x="274" y="145" width="160" height="25"/>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wNd-qD-qDv">
+                    <rect key="frame" x="274" y="147" width="160" height="25"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="nIO-8c-7R3">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -3877,16 +3895,16 @@ A lower value is always better especially when in a large number of channels.</s
                         <action selector="onFileTransferDownloadDestinationFolderChanged:" target="-2" id="9aO-P4-aVP"/>
                     </connections>
                 </popUpButton>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PcW-EO-frL">
-                    <rect key="frame" x="37" y="334" width="234" height="16"/>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PcW-EO-frL">
+                    <rect key="frame" x="37" y="336" width="234" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="When file transfer request is received:" id="ODe-np-HQz">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vGr-Fx-7Yk">
-                    <rect key="frame" x="274" y="327" width="185" height="25"/>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vGr-Fx-7Yk">
+                    <rect key="frame" x="274" y="329" width="185" height="25"/>
                     <popUpButtonCell key="cell" type="push" title="Automatically Download" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3" imageScaling="proportionallyDown" inset="2" selectedItem="dNd-oi-z2o" id="QsY-G8-09D">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -3904,19 +3922,19 @@ A lower value is always better especially when in a large number of channels.</s
                     </connections>
                 </popUpButton>
                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="r9F-t2-uVD">
-                    <rect key="frame" x="40" y="310" width="590" height="5"/>
+                    <rect key="frame" x="40" y="312" width="590" height="5"/>
                 </box>
                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Mhg-Fu-3s0">
-                    <rect key="frame" x="40" y="185" width="590" height="5"/>
+                    <rect key="frame" x="40" y="187" width="590" height="5"/>
                 </box>
                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="uhz-aJ-pvT">
-                    <rect key="frame" x="40" y="92" width="590" height="5"/>
+                    <rect key="frame" x="40" y="94" width="590" height="5"/>
                 </box>
-                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xxb-V7-Rr3">
-                    <rect key="frame" x="157" y="30" width="357" height="46"/>
+                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="14" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xxb-V7-Rr3">
+                    <rect key="frame" x="157" y="30" width="357" height="48"/>
                     <subviews>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ojQ-wC-ucw">
-                            <rect key="frame" x="-2" y="29" width="236" height="18"/>
+                        <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ojQ-wC-ucw">
+                            <rect key="frame" x="-2" y="32" width="236" height="17"/>
                             <buttonCell key="cell" type="check" title="Send passive file transfer requests" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="VZZ-dp-aIT">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -3925,8 +3943,8 @@ A lower value is always better especially when in a large number of channels.</s
                                 <binding destination="G2Q-fc-ddg" name="value" keyPath="values.File Transfers -&gt; File Transfer Requests Use Reverse DCC" id="buO-pD-sf8"/>
                             </connections>
                         </button>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6qx-4n-aFc">
-                            <rect key="frame" x="-2" y="-1" width="359" height="18"/>
+                        <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6qx-4n-aFc">
+                            <rect key="frame" x="-2" y="1" width="359" height="17"/>
                             <buttonCell key="cell" type="check" title="Do not allow Mac to go to sleep while transferring a file" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="n04-8I-DlI">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -3982,7 +4000,7 @@ A lower value is always better especially when in a large number of channels.</s
                 <constraint firstItem="c99-82-eTv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4pD-W0-ghZ" secondAttribute="leading" constant="20" id="wsK-1Q-YcF"/>
                 <constraint firstItem="vGr-Fx-7Yk" firstAttribute="top" secondItem="4pD-W0-ghZ" secondAttribute="top" constant="30" id="xUI-KD-LJJ"/>
             </constraints>
-            <point key="canvasLocation" x="329" y="-2611"/>
+            <point key="canvasLocation" x="329" y="-2720.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="c5A-lx-Ey9" userLabel="Inline Media">
             <rect key="frame" x="0.0" y="0.0" width="670" height="340"/>
@@ -4040,10 +4058,10 @@ A lower value is always better especially when in a large number of channels.</s
                                 <rect key="frame" x="10" y="33" width="624" height="270"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Aw8-jv-vTD">
+                                    <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="6" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Aw8-jv-vTD">
                                         <rect key="frame" x="95" y="200" width="434" height="48"/>
                                         <subviews>
-                                            <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O4j-qH-gbP">
+                                            <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O4j-qH-gbP">
                                                 <rect key="frame" x="0.0" y="28" width="434" height="20"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gJA-Vk-OGX">
@@ -4054,7 +4072,7 @@ A lower value is always better especially when in a large number of channels.</s
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
-                                                    <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SBB-Bw-5cY">
+                                                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SBB-Bw-5cY">
                                                         <rect key="frame" x="306" y="-4" width="132" height="25"/>
                                                         <popUpButtonCell key="cell" type="push" title="100 Megabytes" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="10" imageScaling="proportionallyDown" inset="2" selectedItem="Cm7-go-Ofo" id="Dyp-3C-1C2">
                                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -4089,7 +4107,7 @@ A lower value is always better especially when in a large number of channels.</s
                                                     <real value="3.4028234663852886e+38"/>
                                                 </customSpacing>
                                             </stackView>
-                                            <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kg1-A5-vUH">
+                                            <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kg1-A5-vUH">
                                                 <rect key="frame" x="0.0" y="0.0" width="404" height="22"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9ej-U6-DGg">
@@ -4161,7 +4179,7 @@ A lower value is always better especially when in a large number of channels.</s
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.InlineMediaCheckEverything" id="SFu-iR-jFH"/>
                                         </connections>
                                     </button>
-                                    <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eeu-56-HJQ">
+                                    <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eeu-56-HJQ">
                                         <rect key="frame" x="172" y="120" width="281" height="22"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Lga-QD-ob3">
@@ -4376,7 +4394,7 @@ You should therefore not rely solely on this preference.</string>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xFJ-dE-cHt">
+                <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xFJ-dE-cHt">
                     <rect key="frame" x="144" y="83" width="382" height="20"/>
                     <subviews>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="Ldq-4s-vGV">
@@ -4389,7 +4407,7 @@ You should therefore not rely solely on this preference.</string>
                                 <binding destination="-2" name="value" keyPath="logTranscript" id="XFM-G7-oO2"/>
                             </connections>
                         </button>
-                        <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="H7x-dV-MZS">
+                        <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="H7x-dV-MZS">
                             <rect key="frame" x="179" y="-4" width="207" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="200" id="evc-vk-lNE"/>
@@ -4443,8 +4461,8 @@ You should therefore not rely solely on this preference.</string>
             </constraints>
             <point key="canvasLocation" x="325" y="-1495"/>
         </customView>
-        <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d6J-SH-Xgl" userLabel="Default Identity">
-            <rect key="frame" x="0.0" y="0.0" width="679" height="248"/>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="d6J-SH-Xgl" userLabel="Default Identity">
+            <rect key="frame" x="0.0" y="0.0" width="679" height="243"/>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H70-fl-X2H">
                     <rect key="frame" x="110" y="197" width="459" height="16"/>
@@ -4500,7 +4518,7 @@ You should therefore not rely solely on this preference.</string>
                             </textField>
                         </gridCell>
                         <gridCell row="hax-Uw-b3z" column="gPO-Nm-Vn2" id="AZQ-Rr-rhq">
-                            <stackView key="contentView" distribution="fill" orientation="vertical" alignment="trailing" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RWl-og-Kwu">
+                            <stackView key="contentView" distribution="fill" orientation="vertical" alignment="trailing" spacing="0.0" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RWl-og-Kwu">
                                 <rect key="frame" x="8" y="64" width="99" height="16"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zJ6-fr-Jwe">
@@ -4605,7 +4623,7 @@ You should therefore not rely solely on this preference.</string>
                         </gridCell>
                     </gridCells>
                 </gridView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ImR-BQ-qOk">
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ImR-BQ-qOk">
                     <rect key="frame" x="278" y="30" width="123" height="15"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="All fields are optional" id="FIU-xu-elQ">
                         <font key="font" metaFont="cellTitle"/>
@@ -4621,6 +4639,7 @@ You should therefore not rely solely on this preference.</string>
                 <constraint firstAttribute="bottom" secondItem="ImR-BQ-qOk" secondAttribute="bottom" constant="30" id="f2P-UB-F1h"/>
                 <constraint firstItem="OMx-g0-PA6" firstAttribute="centerX" secondItem="d6J-SH-Xgl" secondAttribute="centerX" id="jua-TN-wP2"/>
                 <constraint firstItem="OMx-g0-PA6" firstAttribute="top" secondItem="H70-fl-X2H" secondAttribute="bottom" constant="20" id="l2r-ue-oEC"/>
+                <constraint firstItem="ImR-BQ-qOk" firstAttribute="centerX" secondItem="d6J-SH-Xgl" secondAttribute="centerX" id="wcf-tb-qd4"/>
                 <constraint firstItem="H70-fl-X2H" firstAttribute="top" secondItem="d6J-SH-Xgl" secondAttribute="top" constant="30" id="zUy-q8-g3u"/>
             </constraints>
             <point key="canvasLocation" x="329.5" y="-1246.5"/>
@@ -4908,7 +4927,7 @@ You should therefore not rely solely on this preference.</string>
                         <action selector="onPurgeOfCloudDataRequested:" target="-2" id="tft-Kx-4qi"/>
                     </connections>
                 </button>
-                <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rTA-t4-ixc">
+                <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rTA-t4-ixc">
                     <rect key="frame" x="177" y="85" width="317" height="18"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sb9-cH-4FU">
@@ -4952,7 +4971,7 @@ You should therefore not rely solely on this preference.</string>
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.SyncPreferencesToTheCloudLimitedToServers" id="FES-mD-uM5"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7Mg-Su-hs3">
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7Mg-Su-hs3">
                     <rect key="frame" x="193" y="140" width="303" height="15"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Do not synchronize anything other than connections." id="8GI-9E-vxD">
                         <font key="font" metaFont="cellTitle"/>
@@ -4994,7 +5013,7 @@ You should therefore not rely solely on this preference.</string>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="dAH-Sl-d77" userLabel="Hidden Preferences">
             <rect key="frame" x="0.0" y="0.0" width="670" height="466"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V0L-wf-MX5">
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V0L-wf-MX5">
                     <rect key="frame" x="151" y="30" width="369" height="15"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Some preferences may require a restart of Textual to take effect." id="uly-It-UKM">
                         <font key="font" metaFont="cellTitle"/>
@@ -5002,7 +5021,7 @@ You should therefore not rely solely on this preference.</string>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T5c-TO-S7r">
+                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T5c-TO-S7r">
                     <rect key="frame" x="185" y="158" width="316" height="226"/>
                     <subviews>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="1g9-Qk-YQN">
@@ -5115,10 +5134,10 @@ You should therefore not rely solely on this preference.</string>
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
-                <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="84h-O7-xuk">
+                <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" spacing="10" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="84h-O7-xuk">
                     <rect key="frame" x="147" y="119" width="376" height="19"/>
                     <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fkh-ub-y9J">
+                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fkh-ub-y9J">
                             <rect key="frame" x="-2" y="2" width="148" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Scrollback Visible Limit:" id="9Aa-8n-7T3">
                                 <font key="font" metaFont="system"/>
@@ -5126,7 +5145,7 @@ You should therefore not rely solely on this preference.</string>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <comboBox horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="79l-Tb-xQY">
+                        <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="79l-Tb-xQY">
                             <rect key="frame" x="154" y="-4" width="103" height="25"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="19" id="FM9-g5-NsI"/>
@@ -5159,7 +5178,7 @@ You should therefore not rely solely on this preference.</string>
                                 </binding>
                             </connections>
                         </comboBox>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Cl9-DF-vFp">
+                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Cl9-DF-vFp">
                             <rect key="frame" x="262" y="2" width="116" height="15"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0 = use default limit" id="wMl-wz-NsN">
                                 <font key="font" metaFont="cellTitle"/>
@@ -5179,7 +5198,7 @@ You should therefore not rely solely on this preference.</string>
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
-                <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f8P-S1-YSA">
+                <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f8P-S1-YSA">
                     <rect key="frame" x="185" y="75" width="300" height="24"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="q3y-Yb-Su8">
@@ -5213,10 +5232,10 @@ You should therefore not rely solely on this preference.</string>
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
-                <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eAs-xY-p50">
+                <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" spacing="4" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eAs-xY-p50">
                     <rect key="frame" x="180" y="404" width="310" height="32"/>
                     <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wnO-O0-7bL">
+                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wnO-O0-7bL">
                             <rect key="frame" x="-2" y="16" width="63" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Warning:" id="rGr-Kp-IJJ">
                                 <font key="font" metaFont="systemBold"/>

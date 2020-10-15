@@ -23,7 +23,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="370" height="260"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eX9-9T-nFn">
+                    <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eX9-9T-nFn">
                         <rect key="frame" x="91" y="216" width="188" height="24"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="You are not eligible." id="oiB-Uh-16m">
                             <font key="font" metaFont="systemBold" size="20"/>
@@ -109,7 +109,7 @@ Gw
                 <rect key="frame" x="0.0" y="0.0" width="380" height="290"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Oi-4c-Yln">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Oi-4c-Yln">
                         <rect key="frame" x="57" y="246" width="267" height="24"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Your upgrade is discounted!" id="4LA-tc-vdW">
                             <font key="font" metaFont="systemBold" size="20"/>
@@ -200,7 +200,7 @@ Gw
                 <rect key="frame" x="0.0" y="0.0" width="420" height="225"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="USW-SV-QEO">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="USW-SV-QEO">
                         <rect key="frame" x="110" y="181" width="200" height="24"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Your upgrade is free!" id="swW-rG-FFU">
                             <font key="font" metaFont="systemBold" size="20"/>

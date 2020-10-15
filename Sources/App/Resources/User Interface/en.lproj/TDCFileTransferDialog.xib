@@ -20,7 +20,7 @@
         <window title="File Transfers" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" tabbingMode="disallowed" toolbarStyle="unified" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <rect key="contentRect" x="560" y="234" width="550" height="297"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="720"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <value key="minSize" type="size" width="515" height="297"/>
             <value key="maxSize" type="size" width="800" height="800"/>
             <view key="contentView" id="6">
@@ -59,7 +59,7 @@
                                                         <progressIndicator wantsLayer="YES" maxValue="100" indeterminate="YES" controlSize="small" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="fkg-tB-oW2">
                                                             <rect key="frame" x="72" y="25" width="455" height="12"/>
                                                         </progressIndicator>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="tvE-ly-KOo">
+                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="tvE-ly-KOo">
                                                             <rect key="frame" x="70" y="44" width="94" height="16"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="dummyfile.png" id="5dv-pa-ldM">
                                                                 <font key="font" metaFont="system"/>
@@ -67,7 +67,7 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="22V-bc-ITj">
+                                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="22V-bc-ITj">
                                                             <rect key="frame" x="70" y="6" width="288" height="14"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="10 MB of 100 MB (100 KB/sec) — 2 seconds reamining" id="VVN-xJ-iKJ">
                                                                 <font key="font" metaFont="smallSystem"/>
@@ -75,7 +75,7 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NYx-LB-DAM">
+                                                        <imageView translatesAutoresizingMaskIntoConstraints="NO" id="NYx-LB-DAM">
                                                             <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="NYx-LB-DAM" secondAttribute="height" multiplier="1:1" id="W1B-VM-yBq"/>
@@ -83,7 +83,7 @@
                                                             </constraints>
                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="yRx-w7-oXd"/>
                                                         </imageView>
-                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="qsO-pI-cPd">
+                                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qsO-pI-cPd">
                                                             <rect key="frame" x="492" y="44" width="37" height="14"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="70" id="fDX-u0-Cff"/>

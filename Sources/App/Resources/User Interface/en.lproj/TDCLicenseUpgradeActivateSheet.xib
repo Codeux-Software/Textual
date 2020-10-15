@@ -45,7 +45,7 @@
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIcon" id="c9J-Ve-qDK"/>
                         <accessibility description="Textual Logo"/>
                     </imageView>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JWM-xV-yeI">
+                    <textField horizontalHuggingPriority="250" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JWM-xV-yeI">
                         <rect key="frame" x="103" y="90" width="429" height="14"/>
                         <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="Click “Activate Textual“ button to activate this license." id="rv5-Cc-yyP">
                             <font key="font" metaFont="smallSystem"/>
@@ -136,7 +136,7 @@ DQ
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIcon" id="rq0-Lj-paJ"/>
                         <accessibility description="Textual Logo"/>
                     </imageView>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="o0n-HD-iWG">
+                    <textField horizontalHuggingPriority="250" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="o0n-HD-iWG">
                         <rect key="frame" x="103" y="90" width="429" height="42"/>
                         <textFieldCell key="cell" controlSize="mini" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" id="64r-7V-Omc">
                             <font key="font" metaFont="smallSystem"/>

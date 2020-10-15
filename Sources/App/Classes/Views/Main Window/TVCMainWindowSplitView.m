@@ -55,9 +55,9 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 @property (nonatomic, assign) BOOL restoredPositions;
 @property (nonatomic, assign) BOOL stopFrameUpdatesForServerList;
 @property (nonatomic, assign) BOOL stopFrameUpdatesForMemberList;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *serverListWidthMinConstraint;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *serverListWidthMinConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *serverListWidthMaxConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *memberListWidthMinConstraint;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *memberListWidthMinConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *memberListWidthMaxConstraint;
 @end
 
@@ -100,15 +100,17 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 - (void)restorePositions
 {
-	if (self.restoredPositions == NO) {
-		[self expandServerList];
-
-		[self expandMemberList];
-
-		// Set after expanding views so that -resizeWithOldSuperviewSize:
-		// does not save the views' frames prematurely
-		self.restoredPositions = YES;
+	if (self.restoredPositions) {
+		return;
 	}
+
+	[self expandServerList];
+
+	[self expandMemberList];
+
+	// Set after expanding views so that -resizeWithOldSuperviewSize:
+	// does not save the views' frames prematurely
+	self.restoredPositions = YES;
 }
 
 - (NSRect)splitView:(NSSplitView *)splitView effectiveRect:(NSRect)proposedEffectiveRect forDrawnRect:(NSRect)drawnRect ofDividerAtIndex:(NSInteger)dividerIndex
@@ -150,7 +152,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 	[self setPosition:[self positionToRestoreServerListAt] ofDividerAtIndex:0];
 
-	[self.serverListWidthMinConstraint restoreArchivedConstant];
+	self.serverListWidthMinConstraint.active = YES;
 
 	self.stopFrameUpdatesForServerList = NO;
 }
@@ -167,7 +169,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 	[self setPosition:[self positionToRestoreMemberListAt] ofDividerAtIndex:1];
 
-	[self.memberListWidthMinConstraint restoreArchivedConstant];
+	self.memberListWidthMinConstraint.active = YES;
 
 	self.stopFrameUpdatesForMemberList = NO;
 }
@@ -176,7 +178,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 {
 	self.stopFrameUpdatesForServerList = YES;
 
-	[self.serverListWidthMinConstraint archiveConstantAndZeroOut];
+	self.serverListWidthMinConstraint.active = NO;
 
 	NSScrollView *scrollView = self.mainWindow.serverList.enclosingScrollView;
 
@@ -193,7 +195,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 {
 	self.stopFrameUpdatesForMemberList = YES;
 
-	[self.memberListWidthMinConstraint archiveConstantAndZeroOut];
+	self.memberListWidthMinConstraint.active = NO;
 
 	NSView *subview = self.subviews[2];
 

@@ -35,16 +35,16 @@
                         <binding destination="114" name="value" keyPath="values.System Profiler Extension -&gt; Request Model Information from Apple" id="RA5-Lv-Ep8"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6bj-fu-TKI">
+                <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6bj-fu-TKI">
                     <rect key="frame" x="233" y="30" width="306" height="45"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="mTb-3O-ZNG">
-                        <font key="font" metaFont="system" size="12"/>
+                        <font key="font" metaFont="cellTitle"/>
                         <string key="title">The last four characters of your Mac's serial number, which do not identify you in any way, will be sent to apple.com to retrieve model information.</string>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tag-MJ-P9h">
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tag-MJ-P9h">
                     <rect key="frame" x="130" y="352" width="411" height="16"/>
                     <textFieldCell key="cell" title="Select each item to appear in the output of the “sysinfo” command:" id="Mun-t6-pSD">
                         <font key="font" metaFont="system"/>
@@ -52,7 +52,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fcU-ye-s1H">
+                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fcU-ye-s1H">
                     <rect key="frame" x="217" y="136" width="237" height="196"/>
                     <subviews>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="3">

@@ -383,7 +383,7 @@ DQ
                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="lHS-Xe-fvm">
                     <rect key="frame" x="20" y="52" width="505" height="5"/>
                 </box>
-                <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dMy-To-qeW">
+                <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dMy-To-qeW">
                     <rect key="frame" x="45" y="20" width="455" height="16"/>
                     <subviews>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="whp-z2-95l">
@@ -396,6 +396,10 @@ DQ
                         </textField>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9Vn-4a-s97">
                             <rect key="frame" x="209" y="-1" width="18" height="18"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="9Vn-4a-s97" secondAttribute="height" multiplier="1:1" id="49a-Ri-ybr"/>
+                                <constraint firstAttribute="width" constant="14" id="u49-1H-oLY"/>
+                            </constraints>
                             <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" state="mixed" allowsMixedState="YES" inset="2" id="2LJ-Lb-6HF">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
