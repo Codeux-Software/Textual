@@ -51,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL _showTreeBadgeCount;
 	IRCChannelType _type;
 	NSString *_channelName;
+	NSString *_label;
 	NSString *_defaultModes;
 	NSString *_defaultTopic;
 	NSString *_secretKey;

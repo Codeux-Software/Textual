@@ -60,6 +60,7 @@ typedef NS_ENUM(NSUInteger, IRCChannelType) {
 @property (readonly) IRCChannelType type;
 @property (readonly, copy) NSString *channelName;
 @property (readonly, copy) NSString *uniqueIdentifier;
+@property (readonly, copy, nullable) NSString *label;
 @property (readonly, copy, nullable) NSString *defaultModes;
 @property (readonly, copy, nullable) NSString *defaultTopic;
 @property (readonly, copy, nullable) NSString *secretKey;
@@ -105,6 +106,7 @@ typedef NS_ENUM(NSUInteger, IRCChannelType) {
 @property (nonatomic, assign, readwrite) BOOL pushNotifications;
 @property (nonatomic, assign, readwrite) BOOL showTreeBadgeCount;
 @property (nonatomic, copy, readwrite) NSString *channelName;
+@property (nonatomic, copy, readwrite, nullable) NSString *label;
 @property (nonatomic, copy, readwrite, nullable) NSString *defaultModes;
 @property (nonatomic, copy, readwrite, nullable) NSString *defaultTopic;
 @property (nonatomic, copy, readwrite, nullable) NSString *secretKey;

@@ -755,6 +755,12 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (NSString *)label
 {
+	NSString *customLabel = self.config.label;
+
+	if (customLabel.length > 0) {
+		return customLabel;
+	}
+
 	return self.name;
 }
 

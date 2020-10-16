@@ -171,6 +171,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[defaultsMutable assignBoolTo:&self->_inlineMediaDisabled forKey:@"inlineMediaDisabled"];
 	[defaultsMutable assignBoolTo:&self->_inlineMediaEnabled forKey:@"inlineMediaEnabled"];
 
+	[defaultsMutable assignStringTo:&self->_label forKey:@"label"];
+
 	[defaultsMutable assignStringTo:&self->_defaultModes forKey:@"defaultMode"];
 	[defaultsMutable assignStringTo:&self->_defaultTopic forKey:@"defaultTopic"];
 
@@ -247,13 +249,18 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic setBool:self.showTreeBadgeCount forKey:@"showTreeBadgeCount"];
 
 	if (self.type == IRCChannelTypeChannel) {
+		[dic maybeSetObject:self.label forKey:@"label"];
+
 		[dic maybeSetObject:self.defaultModes forKey:@"defaultMode"];
 		[dic maybeSetObject:self.defaultTopic forKey:@"defaultTopic"];
+
 		[dic maybeSetObject:self.notifications forKey:@"notifications"];
 
 		[dic setBool:self.autoJoin forKey:@"autoJoin"];
+
 		[dic setBool:self.ignoreGeneralEventMessages forKey:@"ignoreGeneralEventMessages"];
 		[dic setBool:self.ignoreHighlights forKey:@"ignoreHighlights"];
+
 		[dic setBool:self.inlineMediaDisabled forKey:@"inlineMediaDisabled"];
 		[dic setBool:self.inlineMediaEnabled forKey:@"inlineMediaEnabled"];
 	}
@@ -523,6 +530,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 @dynamic type;
 @dynamic autoJoin;
 @dynamic channelName;
+@dynamic label;
 @dynamic defaultModes;
 @dynamic defaultTopic;
 @dynamic ignoreGeneralEventMessages;
@@ -606,6 +614,13 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if (self->_channelName != channelName) {
 		self->_channelName = [channelName copy];
+	}
+}
+
+- (void)setLabel:(nullable NSString *)label
+{
+	if (self->_label != label) {
+		self->_label = [label copy];
 	}
 }
 

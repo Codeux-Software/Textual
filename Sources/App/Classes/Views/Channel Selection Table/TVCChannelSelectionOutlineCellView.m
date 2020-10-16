@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	BOOL isGroupItem = [outlineView isGroupItem:cellItem];
 
-	self.textField.stringValue = cellItem.label;
+	self.textField.stringValue = cellItem.name;
 
 	self.selectedCheckbox.allowsMixedState = isGroupItem;
 }

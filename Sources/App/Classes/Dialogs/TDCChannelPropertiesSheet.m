@@ -76,6 +76,7 @@ typedef NS_ENUM(NSUInteger, TDCChannelPropertiesSheetSelection)
 @property (nonatomic, weak) IBOutlet NSButton *ignoreGeneralEventMessagesCheck;
 @property (nonatomic, weak) IBOutlet NSSegmentedControl *contentViewTabView;
 @property (nonatomic, weak) IBOutlet TVCValidatedTextField *channelNameTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *labelTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *defaultModesTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *defaultTopicTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *secretKeyTextField;
@@ -249,6 +250,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	self.channelNameTextField.stringValue = self.config.channelName;
 	self.channelNameTextField.editable = (self.config.channelName.length == 0);
+
+	self.labelTextField.stringValue = self.config.label;
 
 	self.defaultModesTextField.stringValue = self.config.defaultModes;
 	self.defaultTopicTextField.stringValue = self.config.defaultTopic;
@@ -424,6 +427,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[self removeConfigurationDidChangeObserver];
 
 	self.config.channelName = self.channelNameTextField.value;
+
+	self.config.label = self.labelTextField.trimmedStringValue;
 
 	self.config.defaultModes = self.defaultModesTextField.trimmedStringValue;
 	self.config.defaultTopic = self.defaultTopicTextField.trimmedStringValue;

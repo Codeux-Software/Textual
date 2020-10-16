@@ -23,6 +23,7 @@
                 <outlet property="enableInlineMediaCheck" destination="HBZ-KH-HBg" id="7cz-Ws-kfR"/>
                 <outlet property="ignoreGeneralEventMessagesCheck" destination="281" id="Nmo-db-2KD"/>
                 <outlet property="ignoreHighlightsCheck" destination="111" id="334"/>
+                <outlet property="labelTextField" destination="I2R-pI-UwU" id="DsP-pg-0gA"/>
                 <outlet property="notificationsController" destination="9qT-tK-TGk" id="xgI-Z3-Unm"/>
                 <outlet property="okButton" destination="RKI-lY-4zM" id="gk7-vj-fV9"/>
                 <outlet property="pushNotificationsCheck" destination="112" id="333"/>
@@ -118,16 +119,16 @@ DQ
             <point key="canvasLocation" x="-303" y="259"/>
         </window>
         <view translatesAutoresizingMaskIntoConstraints="NO" id="109" userLabel="General">
-            <rect key="frame" x="0.0" y="0.0" width="325" height="289"/>
+            <rect key="frame" x="0.0" y="0.0" width="325" height="317"/>
             <subviews>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="122">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="122">
                     <rect key="frame" x="18" y="163" width="123" height="18"/>
                     <buttonCell key="cell" type="check" title="Join on connect" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="131">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="112">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="112">
                     <rect key="frame" x="18" y="133" width="209" height="18"/>
                     <buttonCell key="cell" type="check" title="Show notifications for channel" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="141">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -137,7 +138,7 @@ DQ
                         <action selector="onPushNotificationsCheckChanged:" target="-2" id="0C6-Nq-ny7"/>
                     </connections>
                 </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="279">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="279">
                     <rect key="frame" x="18" y="75" width="147" height="18"/>
                     <buttonCell key="cell" type="check" title="Disable inline media" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="280">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -151,7 +152,7 @@ DQ
                         </binding>
                     </connections>
                 </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="HBZ-KH-HBg">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HBZ-KH-HBg">
                     <rect key="frame" x="18" y="75" width="135" height="18"/>
                     <buttonCell key="cell" type="check" title="Show inline media" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="K3N-Px-fl5">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -162,7 +163,7 @@ DQ
                         <binding destination="nwg-0t-IZ6" name="hidden" keyPath="values.DisplayEventInLogView -&gt; Inline Media" id="hta-DL-5Yo"/>
                     </connections>
                 </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="281">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="281">
                     <rect key="frame" x="18" y="46" width="222" height="18"/>
                     <buttonCell key="cell" type="check" title="Disable general event messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="282">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -173,16 +174,16 @@ DQ
                     </connections>
                 </button>
                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="312">
-                    <rect key="frame" x="20" y="198" width="285" height="5"/>
+                    <rect key="frame" x="20" y="196" width="285" height="5"/>
                 </box>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="356">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="356">
                     <rect key="frame" x="18" y="104" width="230" height="18"/>
                     <buttonCell key="cell" type="check" title="Show unread count in channel list" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="357">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="111">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="111">
                     <rect key="frame" x="18" y="17" width="134" height="18"/>
                     <buttonCell key="cell" type="check" title="Disable highlights" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="142">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -190,10 +191,11 @@ DQ
                     </buttonCell>
                 </button>
                 <gridView xPlacement="fill" yPlacement="fill" rowAlignment="firstBaseline" rowSpacing="8" columnSpacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="H9C-8w-CEX">
-                    <rect key="frame" x="20" y="219" width="285" height="52"/>
+                    <rect key="frame" x="20" y="217" width="285" height="82"/>
                     <rows>
                         <gridRow id="1FA-OV-nfx"/>
                         <gridRow id="oat-Nr-CCb"/>
+                        <gridRow id="MF9-qT-Dc6"/>
                     </rows>
                     <columns>
                         <gridColumn xPlacement="fill" id="Fmr-uR-9WM"/>
@@ -202,7 +204,7 @@ DQ
                     <gridCells>
                         <gridCell row="1FA-OV-nfx" column="Fmr-uR-9WM" id="DWR-8L-Bip">
                             <textField key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="119">
-                                <rect key="frame" x="-2" y="34" width="66" height="16"/>
+                                <rect key="frame" x="-2" y="64" width="66" height="16"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Channel:" id="134">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -212,7 +214,7 @@ DQ
                         </gridCell>
                         <gridCell row="1FA-OV-nfx" column="VpE-fp-4Wj" id="3cV-Yk-wO6">
                             <textField key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="123" customClass="TVCValidatedTextField">
-                                <rect key="frame" x="70" y="30" width="215" height="22"/>
+                                <rect key="frame" x="70" y="60" width="215" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="ZKF-H7-c7z"/>
                                 </constraints>
@@ -226,7 +228,7 @@ DQ
                         </gridCell>
                         <gridCell row="oat-Nr-CCb" column="Fmr-uR-9WM" id="jrg-hM-4Y7">
                             <textField key="contentView" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="118">
-                                <rect key="frame" x="-2" y="4" width="66" height="16"/>
+                                <rect key="frame" x="-2" y="34" width="66" height="16"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Password:" id="135">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -236,7 +238,7 @@ DQ
                         </gridCell>
                         <gridCell row="oat-Nr-CCb" column="VpE-fp-4Wj" id="bK3-aF-kGN">
                             <textField key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="124" customClass="NSSecureTextField">
-                                <rect key="frame" x="70" y="0.0" width="215" height="22"/>
+                                <rect key="frame" x="70" y="30" width="215" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="uj9-Xy-y6u"/>
                                 </constraints>
@@ -251,13 +253,37 @@ DQ
                                 </connections>
                             </textField>
                         </gridCell>
+                        <gridCell row="MF9-qT-Dc6" column="Fmr-uR-9WM" id="rKN-bo-LWD">
+                            <textField key="contentView" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="03P-aP-ZU8">
+                                <rect key="frame" x="-2" y="4" width="66" height="16"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Label:" id="mot-Qn-Rih">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </gridCell>
+                        <gridCell row="MF9-qT-Dc6" column="VpE-fp-4Wj" id="dKo-9J-Vjx">
+                            <textField key="contentView" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="I2R-pI-UwU" customClass="TVCValidatedTextField">
+                                <rect key="frame" x="70" y="0.0" width="215" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="8xO-XU-5mB"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Optional label for Server List" usesSingleLineMode="YES" id="fvI-0j-4a5" customClass="TVCValidatedTextFieldCell">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <accessibility description="Channel Name"/>
+                            </textField>
+                        </gridCell>
                     </gridCells>
                 </gridView>
             </subviews>
             <constraints>
                 <constraint firstItem="281" firstAttribute="top" secondItem="279" secondAttribute="bottom" constant="13" id="1hy-4M-El2"/>
+                <constraint firstItem="312" firstAttribute="top" secondItem="H9C-8w-CEX" secondAttribute="bottom" constant="18" id="2eZ-Jm-Eks"/>
                 <constraint firstItem="111" firstAttribute="top" secondItem="281" secondAttribute="bottom" constant="13" id="47N-xX-dHF"/>
-                <constraint firstItem="312" firstAttribute="top" secondItem="124" secondAttribute="bottom" constant="18" id="66C-kz-9yD"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="HBZ-KH-HBg" secondAttribute="trailing" constant="20" id="6J6-r7-ohM"/>
                 <constraint firstItem="279" firstAttribute="leading" secondItem="HBZ-KH-HBg" secondAttribute="leading" id="7BH-07-dda"/>
                 <constraint firstItem="312" firstAttribute="centerX" secondItem="109" secondAttribute="centerX" id="8O8-bq-l4R"/>
@@ -272,7 +298,7 @@ DQ
                 <constraint firstItem="122" firstAttribute="leading" secondItem="109" secondAttribute="leading" constant="20" id="RjM-wl-Arc"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="112" secondAttribute="trailing" constant="20" id="SUI-An-ryT"/>
                 <constraint firstItem="281" firstAttribute="top" secondItem="HBZ-KH-HBg" secondAttribute="bottom" constant="13" id="TZD-aY-3pG"/>
-                <constraint firstItem="122" firstAttribute="top" secondItem="312" secondAttribute="bottom" constant="20" id="VfF-QA-A6l"/>
+                <constraint firstItem="122" firstAttribute="top" secondItem="312" secondAttribute="bottom" constant="18" id="Xj3-Tb-rNf"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="122" secondAttribute="trailing" constant="20" id="Xvq-dV-1iC"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="279" secondAttribute="trailing" constant="20" id="ZkY-cQ-hdW"/>
                 <constraint firstAttribute="trailing" secondItem="H9C-8w-CEX" secondAttribute="trailing" constant="20" id="cR5-mB-m9A"/>
@@ -287,7 +313,7 @@ DQ
                 <constraint firstAttribute="trailing" secondItem="312" secondAttribute="trailing" constant="20" symbolic="YES" id="uPs-eG-R5D"/>
                 <constraint firstItem="312" firstAttribute="centerX" secondItem="109" secondAttribute="centerX" id="z5p-bq-26v"/>
             </constraints>
-            <point key="canvasLocation" x="75" y="260"/>
+            <point key="canvasLocation" x="74.5" y="221"/>
         </view>
         <view translatesAutoresizingMaskIntoConstraints="NO" id="243">
             <rect key="frame" x="0.0" y="0.0" width="325" height="164"/>
