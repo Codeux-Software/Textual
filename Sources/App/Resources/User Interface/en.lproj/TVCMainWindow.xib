@@ -129,7 +129,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" tableStyle="fullWidth" columnReordering="NO" columnResizing="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="23" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" viewBased="YES" indentationPerLevel="4" outlineTableColumn="4h6-Uy-Vo9" id="MLD-Aa-PLM" customClass="TVCServerList">
+                                                <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" tableStyle="fullWidth" columnReordering="NO" columnResizing="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="23" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" viewBased="YES" indentationPerLevel="6" outlineTableColumn="4h6-Uy-Vo9" id="MLD-Aa-PLM" customClass="TVCServerList">
                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
@@ -147,12 +147,11 @@
                                                             </textFieldCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView identifier="GroupView" id="LOI-ud-jS4" customClass="TVCServerListCellGroupItem">
+                                                                <tableCellView identifier="GroupView" translatesAutoresizingMaskIntoConstraints="NO" id="LOI-ud-jS4" customClass="TVCServerListCellGroupItem">
                                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="23"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                     <subviews>
                                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="wBU-6B-7f4">
-                                                                            <rect key="frame" x="1" y="3" width="149" height="17"/>
+                                                                            <rect key="frame" x="3" y="3" width="147" height="17"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Table View Cell" id="fBN-3b-ksS" customClass="TVCMainWindowSidebarSmoothTextFieldCell">
                                                                                 <font key="font" metaFont="systemBold" size="14"/>
                                                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -163,16 +162,15 @@
                                                                     <constraints>
                                                                         <constraint firstItem="wBU-6B-7f4" firstAttribute="top" relation="greaterThanOrEqual" secondItem="LOI-ud-jS4" secondAttribute="top" constant="3" id="B9Y-uv-4AN"/>
                                                                         <constraint firstAttribute="trailing" secondItem="wBU-6B-7f4" secondAttribute="trailing" constant="2" id="T0c-Wm-Ntv"/>
-                                                                        <constraint firstItem="wBU-6B-7f4" firstAttribute="leading" secondItem="LOI-ud-jS4" secondAttribute="leading" constant="3" id="b3P-cC-qaP"/>
+                                                                        <constraint firstItem="wBU-6B-7f4" firstAttribute="leading" secondItem="LOI-ud-jS4" secondAttribute="leading" constant="5" id="b3P-cC-qaP"/>
                                                                         <constraint firstItem="wBU-6B-7f4" firstAttribute="centerY" secondItem="LOI-ud-jS4" secondAttribute="centerY" id="qGr-Yw-sdX"/>
                                                                     </constraints>
                                                                     <connections>
                                                                         <outlet property="cellTextField" destination="wBU-6B-7f4" id="jkE-JW-N5b"/>
                                                                     </connections>
                                                                 </tableCellView>
-                                                                <tableCellView identifier="ChildView" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" id="AKs-o3-7CO" customClass="TVCServerListCellChildItem">
+                                                                <tableCellView identifier="ChildView" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="AKs-o3-7CO" customClass="TVCServerListCellChildItem">
                                                                     <rect key="frame" x="0.0" y="23" width="150" height="19"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                     <subviews>
                                                                         <imageView wantsLayer="YES" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="68i-pd-Me5">
                                                                             <rect key="frame" x="2" y="2" width="0.0" height="15"/>
