@@ -206,7 +206,7 @@ NSString * const TDCAlertSuppressionPrefix = @"Text Input Prompt Suppression -> 
 
 		/* Exit if suppressed */
 		if ([RZUserDefaults() boolForKey:suppressKey]) {
-			return YES;
+			return TDCAlertResponseDefault;
 		}
 	}
 
