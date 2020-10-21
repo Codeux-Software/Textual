@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -37,14 +37,14 @@
         <window title="Channel Properties" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="1103" y="493" width="325" height="388"/>
+            <rect key="contentRect" x="1103" y="493" width="325" height="496"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="325" height="388"/>
+                <rect key="frame" x="0.0" y="0.0" width="325" height="496"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="187">
-                        <rect key="frame" x="0.0" y="61" width="325" height="289"/>
+                        <rect key="frame" x="0.0" y="61" width="325" height="397"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="325" id="Jl0-cX-I4F"/>
                         </constraints>
@@ -78,7 +78,7 @@ DQ
                         <rect key="frame" x="12" y="58" width="301" height="5"/>
                     </box>
                     <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="185">
-                        <rect key="frame" x="52" y="349" width="222" height="20"/>
+                        <rect key="frame" x="52" y="457" width="222" height="20"/>
                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="186">
                             <font key="font" metaFont="system"/>
                             <segments>
@@ -116,7 +116,7 @@ DQ
             <connections>
                 <outlet property="delegate" destination="-2" id="354"/>
             </connections>
-            <point key="canvasLocation" x="-303" y="259"/>
+            <point key="canvasLocation" x="-303.5" y="312"/>
         </window>
         <view translatesAutoresizingMaskIntoConstraints="NO" id="109" userLabel="General">
             <rect key="frame" x="0.0" y="0.0" width="325" height="397"/>
@@ -414,7 +414,7 @@ DQ
                 <constraint firstItem="xga-3d-zc9" firstAttribute="top" secondItem="S13-Uc-xNq" secondAttribute="bottom" constant="16" id="iph-fJ-4cd"/>
                 <constraint firstAttribute="bottom" secondItem="xga-3d-zc9" secondAttribute="bottom" constant="18" id="zr4-Np-bYr"/>
             </constraints>
-            <point key="canvasLocation" x="75" y="546"/>
+            <point key="canvasLocation" x="75" y="691"/>
         </view>
         <userDefaultsController id="nwg-0t-IZ6" customClass="TPCPreferencesUserDefaultsController"/>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="oPK-zd-8TW" userLabel="Notifications">

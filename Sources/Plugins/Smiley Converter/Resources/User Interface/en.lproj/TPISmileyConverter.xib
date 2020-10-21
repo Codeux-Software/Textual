@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,7 +21,7 @@
             </userGuides>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s9C-FG-WiP">
-                    <rect key="frame" x="98" y="94" width="474" height="32"/>
+                    <rect key="frame" x="144" y="94" width="382" height="32"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="This addon replaces plain text emoticons (e.g. “:-)”) with their emoji equivalent; the result of which is only visible to you." id="fQA-0x-acP">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -29,7 +29,7 @@
                     </textFieldCell>
                 </textField>
                 <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="12" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AEE-0p-afi">
-                    <rect key="frame" x="100" y="30" width="371" height="44"/>
+                    <rect key="frame" x="150" y="30" width="371" height="44"/>
                     <subviews>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="64">
                             <rect key="frame" x="-2" y="27" width="175" height="18"/>
@@ -67,10 +67,9 @@
             </subviews>
             <constraints>
                 <constraint firstItem="AEE-0p-afi" firstAttribute="top" secondItem="s9C-FG-WiP" secondAttribute="bottom" constant="20" id="3oW-li-kdQ"/>
+                <constraint firstItem="s9C-FG-WiP" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="6QC-1C-hj5"/>
                 <constraint firstItem="s9C-FG-WiP" firstAttribute="top" secondItem="1" secondAttribute="top" constant="30" id="E1z-Wc-Pn2"/>
-                <constraint firstAttribute="trailing" secondItem="s9C-FG-WiP" secondAttribute="trailing" constant="100" id="b82-Ic-lGC"/>
-                <constraint firstItem="AEE-0p-afi" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="100" id="dMf-UW-ZgT"/>
-                <constraint firstItem="s9C-FG-WiP" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="100" id="mjl-0e-FTY"/>
+                <constraint firstItem="AEE-0p-afi" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="KwX-MQ-Vn5"/>
                 <constraint firstAttribute="bottom" secondItem="AEE-0p-afi" secondAttribute="bottom" constant="30" id="pA9-Of-mCj"/>
             </constraints>
             <point key="canvasLocation" x="63" y="104"/>

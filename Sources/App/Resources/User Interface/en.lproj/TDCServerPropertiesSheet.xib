@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -103,7 +103,6 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Server Properties" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="382" y="280" width="706" height="350"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="6">
@@ -1921,7 +1920,7 @@ Gw
                             </textFieldCell>
                         </textField>
                         <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="O6l-eN-3Uc">
-                            <rect key="frame" x="5" y="-6" width="416" height="28"/>
+                            <rect key="frame" x="11" y="-6" width="404" height="28"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="400" id="3g8-eg-PIY"/>
                             </constraints>
@@ -1963,7 +1962,7 @@ Gw
                             </textFieldCell>
                         </textField>
                         <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RXW-HB-aEa">
-                            <rect key="frame" x="6" y="-6" width="416" height="28"/>
+                            <rect key="frame" x="12" y="-6" width="404" height="28"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="400" id="LhT-4u-1nw"/>
                             </constraints>
@@ -2098,7 +2097,7 @@ Gw
                     </connections>
                 </popUpButton>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BoR-WW-sT2">
-                    <rect key="frame" x="373" y="61" width="90" height="32"/>
+                    <rect key="frame" x="373" y="61" width="89" height="32"/>
                     <buttonCell key="cell" type="push" title="View List" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LuK-ZI-qT9">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -2413,7 +2412,7 @@ Gw
                     <rect key="frame" x="33" y="217" width="454" height="48"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="SnQ-4b-NG2">
                         <font key="font" metaFont="system"/>
-                        <string key="title">Textual is capable of connecting to one or more alternate servers if the primary server fails to connect. Click the button presented below to modify the alternate servers for this connection.</string>
+                        <string key="title">Textual is capable of automatically connecting to one or more alternate servers if the primary server fails to connect. Click the button presented below to modify the alternate servers for this connection.</string>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -2444,7 +2443,7 @@ Gw
         <arrayController objectClassName="IRCServer" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" automaticallyRearrangesObjects="YES" id="Wea-hF-mxO"/>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="15" height="13"/>
-        <image name="NSRemoveTemplate" width="15" height="4"/>
+        <image name="NSAddTemplate" width="14" height="13"/>
+        <image name="NSRemoveTemplate" width="14" height="4"/>
     </resources>
 </document>
