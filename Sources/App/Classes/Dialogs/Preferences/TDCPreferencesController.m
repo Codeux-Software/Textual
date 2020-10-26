@@ -1667,11 +1667,15 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(originalAlert != nil);
 
-	if (returnCode == TDCAlertResponseAlternate) {
+	if (returnCode == TDCAlertResponseDefault) {
 		[self openPathToTheme];
 	}
 
-	if (returnCode == TDCAlertResponseDefault) {
+	if (returnCode == TDCAlertResponseAlternate) {
+		[self onModifyUserStyleSheetRules:nil];
+	}
+
+	if (returnCode == TDCAlertResponseOther) {
 		[originalAlert.window orderOut:nil];
 
 		BOOL copyingToCloud = NO;
@@ -1696,9 +1700,9 @@ NS_ASSUME_NONNULL_BEGIN
 		[TDCAlert alertSheetWithWindow:NSApp.keyWindow
 								  body:TXTLS(@"TDCPreferencesController[ojj-ap]")
 								 title:TXTLS(@"TDCPreferencesController[5jv-aw]")
-						 defaultButton:TXTLS(@"Prompts[mvh-ms]")
-					   alternateButton:TXTLS(@"Prompts[99q-gg]")
-						   otherButton:nil
+						 defaultButton:TXTLS(@"TDCPreferencesController[6ws-av]")
+					   alternateButton:TXTLS(@"TDCPreferencesController[aib-iy]")
+						   otherButton:TXTLS(@"TDCPreferencesController[dj8-1t]")
 					   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
 						   [self openPathToThemesCallback:buttonClicked withOriginalAlert:underlyingAlert];
 					   }];

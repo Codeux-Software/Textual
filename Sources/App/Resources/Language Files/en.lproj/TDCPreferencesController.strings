@@ -42,7 +42,10 @@
 "721-ie" = "No Location Selected";
 
 "5jv-aw" = "Are you opening this style because you are interested in modifying it?";
-"ojj-ap" = "Click “Yes” to create a copy of this style specifically for that purpose.";
+"ojj-ap" = "It’s possible to modify the appearance of this style without editing its source files.\n\nClick “Edit Style” to add your own style sheet rules. This feature can also be found in the Developers section of Preferences.";
+"aib-iy" = "Edit Style";
+"dj8-1t" = "Create Copy";
+"6ws-av" = "View Files";
 
 "uc0-z7" = "Preferred Selection";
 "q4o-2f" = "The style named “%1$@” has chosen to override the following preferences with ones that it prefers for the best viewing experience:\n\n%2$@";
