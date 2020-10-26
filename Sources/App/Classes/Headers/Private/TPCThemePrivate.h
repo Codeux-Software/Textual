@@ -35,14 +35,16 @@
  *
  *********************************************************************** */
 
-#import "TPCThemeSettings.h"
+#import "TPCTheme.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TPCThemeSettings ()
-- (void)reloadWithPath:(NSString *)path;
+@interface TPCTheme ()
+- (instancetype)initWithURL:(NSURL *)url inStorageLocation:(TPCThemeStorageLocation)storageLocation NS_DESIGNATED_INITIALIZER;
 
 @property (readonly, copy) NSString *applicationTemplateRepositoryPath;
+
+- (void)updateAppearance;
 @end
 
 NS_ASSUME_NONNULL_END

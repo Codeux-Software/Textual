@@ -90,7 +90,7 @@
 #import "TPCPreferencesUserDefaults.h"
 #import "TPCResourceManager.h"
 #import "TPCThemeController.h"
-#import "TPCThemeSettings.h"
+#import "TPCTheme.h"
 #import "THOPluginDispatcherPrivate.h"
 #import "THOPluginManagerPrivate.h"
 #import "THOPluginProtocol.h"

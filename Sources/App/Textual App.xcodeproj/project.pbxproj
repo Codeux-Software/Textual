@@ -814,7 +814,7 @@
 		4C06E53D20EC551D0055D09A /* TPCPreferencesCloudSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31511C20EB673E00448776 /* TPCPreferencesCloudSync.m */; };
 		4C06E53E20EC551D0055D09A /* TPCPreferencesCloudSyncExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31511D20EB673E00448776 /* TPCPreferencesCloudSyncExtension.m */; };
 		4C06E53F20EC551D0055D09A /* TPCThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31511F20EB673E00448776 /* TPCThemeController.m */; };
-		4C06E54020EC551D0055D09A /* TPCThemeSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31512020EB673E00448776 /* TPCThemeSettings.m */; };
+		4C06E54020EC551D0055D09A /* TPCTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31512020EB673E00448776 /* TPCTheme.m */; };
 		4C06E54120EC551D0055D09A /* TPCApplicationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31511420EB673E00448776 /* TPCApplicationInfo.m */; };
 		4C06E54220EC551D0055D09A /* TPCPathInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31511A20EB673E00448776 /* TPCPathInfo.m */; };
 		4C06E54320EC551D0055D09A /* TPCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C06E28820EC4F000055D09A /* TPCPreferences.m */; };
@@ -988,7 +988,7 @@
 		4C06E5F420EC553A0055D09A /* TLOTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C06E29320EC4F570055D09A /* TLOTimer.m */; };
 		4C06E5F520EC553A0055D09A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31514420EB673E00448776 /* main.m */; };
 		4C06E5F820EC553A0055D09A /* TPCThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31511F20EB673E00448776 /* TPCThemeController.m */; };
-		4C06E5F920EC553A0055D09A /* TPCThemeSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31512020EB673E00448776 /* TPCThemeSettings.m */; };
+		4C06E5F920EC553A0055D09A /* TPCTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31512020EB673E00448776 /* TPCTheme.m */; };
 		4C06E5FA20EC553A0055D09A /* TPCApplicationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31511420EB673E00448776 /* TPCApplicationInfo.m */; };
 		4C06E5FB20EC553A0055D09A /* TPCPathInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31511A20EB673E00448776 /* TPCPathInfo.m */; };
 		4C06E5FC20EC553A0055D09A /* TPCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C06E28820EC4F000055D09A /* TPCPreferences.m */; };
@@ -1162,7 +1162,7 @@
 		4C06E6AD20EC55B90055D09A /* TLOTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C06E29320EC4F570055D09A /* TLOTimer.m */; };
 		4C06E6AE20EC55B90055D09A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31514420EB673E00448776 /* main.m */; };
 		4C06E6B120EC55B90055D09A /* TPCThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31511F20EB673E00448776 /* TPCThemeController.m */; };
-		4C06E6B220EC55B90055D09A /* TPCThemeSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31512020EB673E00448776 /* TPCThemeSettings.m */; };
+		4C06E6B220EC55B90055D09A /* TPCTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31512020EB673E00448776 /* TPCTheme.m */; };
 		4C06E6B320EC55B90055D09A /* TPCApplicationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31511420EB673E00448776 /* TPCApplicationInfo.m */; };
 		4C06E6B420EC55B90055D09A /* TPCPathInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31511A20EB673E00448776 /* TPCPathInfo.m */; };
 		4C06E6B520EC55B90055D09A /* TPCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C06E28820EC4F000055D09A /* TPCPreferences.m */; };
@@ -1336,7 +1336,7 @@
 		4C06E76620EC55DB0055D09A /* TLOTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C06E29320EC4F570055D09A /* TLOTimer.m */; };
 		4C06E76720EC55DB0055D09A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31514420EB673E00448776 /* main.m */; };
 		4C06E76A20EC55DB0055D09A /* TPCThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31511F20EB673E00448776 /* TPCThemeController.m */; };
-		4C06E76B20EC55DB0055D09A /* TPCThemeSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31512020EB673E00448776 /* TPCThemeSettings.m */; };
+		4C06E76B20EC55DB0055D09A /* TPCTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31512020EB673E00448776 /* TPCTheme.m */; };
 		4C06E76C20EC55DB0055D09A /* TPCApplicationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31511420EB673E00448776 /* TPCApplicationInfo.m */; };
 		4C06E76D20EC55DB0055D09A /* TPCPathInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31511A20EB673E00448776 /* TPCPathInfo.m */; };
 		4C06E76E20EC55DB0055D09A /* TPCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C06E28820EC4F000055D09A /* TPCPreferences.m */; };
@@ -1465,7 +1465,7 @@
 		4C31552920EB6CB300448776 /* TPCPreferencesUserDefaultsLocal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31519F20EB673E00448776 /* TPCPreferencesUserDefaultsLocal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31552A20EB6CB300448776 /* TPCResourceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31516520EB673E00448776 /* TPCResourceManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31552B20EB6CB300448776 /* TPCThemeController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31517220EB673E00448776 /* TPCThemeController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C31552C20EB6CB300448776 /* TPCThemeSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31517020EB673E00448776 /* TPCThemeSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C31552C20EB6CB300448776 /* TPCTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31517020EB673E00448776 /* TPCTheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31552D20EB6CB300448776 /* TVCAlert.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31516F20EB673E00448776 /* TVCAlert.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31552E20EB6CB300448776 /* TVCAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31516E20EB673E00448776 /* TVCAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31552F20EB6CB300448776 /* TVCAutoExpandingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31517E20EB673E00448776 /* TVCAutoExpandingTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1552,7 +1552,7 @@
 		4C31558020EB6CB300448776 /* TPCPreferencesUserDefaultsLocal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31519F20EB673E00448776 /* TPCPreferencesUserDefaultsLocal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31558120EB6CB300448776 /* TPCResourceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31516520EB673E00448776 /* TPCResourceManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31558220EB6CB300448776 /* TPCThemeController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31517220EB673E00448776 /* TPCThemeController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C31558320EB6CB300448776 /* TPCThemeSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31517020EB673E00448776 /* TPCThemeSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C31558320EB6CB300448776 /* TPCTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31517020EB673E00448776 /* TPCTheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31558420EB6CB300448776 /* TVCAlert.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31516F20EB673E00448776 /* TVCAlert.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31558520EB6CB300448776 /* TVCAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31516E20EB673E00448776 /* TVCAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31558620EB6CB300448776 /* TVCAutoExpandingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31517E20EB673E00448776 /* TVCAutoExpandingTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1639,7 +1639,7 @@
 		4C3155D720EB6CB400448776 /* TPCPreferencesUserDefaultsLocal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31519F20EB673E00448776 /* TPCPreferencesUserDefaultsLocal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3155D820EB6CB400448776 /* TPCResourceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31516520EB673E00448776 /* TPCResourceManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3155D920EB6CB400448776 /* TPCThemeController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31517220EB673E00448776 /* TPCThemeController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C3155DA20EB6CB400448776 /* TPCThemeSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31517020EB673E00448776 /* TPCThemeSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C3155DA20EB6CB400448776 /* TPCTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31517020EB673E00448776 /* TPCTheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3155DB20EB6CB400448776 /* TVCAlert.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31516F20EB673E00448776 /* TVCAlert.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3155DC20EB6CB400448776 /* TVCAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31516E20EB673E00448776 /* TVCAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3155DD20EB6CB400448776 /* TVCAutoExpandingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31517E20EB673E00448776 /* TVCAutoExpandingTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1726,7 +1726,7 @@
 		4C31562E20EB6CB400448776 /* TPCPreferencesUserDefaultsLocal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31519F20EB673E00448776 /* TPCPreferencesUserDefaultsLocal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31562F20EB6CB400448776 /* TPCResourceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31516520EB673E00448776 /* TPCResourceManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31563020EB6CB400448776 /* TPCThemeController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31517220EB673E00448776 /* TPCThemeController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C31563120EB6CB400448776 /* TPCThemeSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31517020EB673E00448776 /* TPCThemeSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C31563120EB6CB400448776 /* TPCTheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31517020EB673E00448776 /* TPCTheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31563220EB6CB400448776 /* TVCAlert.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31516F20EB673E00448776 /* TVCAlert.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31563320EB6CB400448776 /* TVCAppearance.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31516E20EB673E00448776 /* TVCAppearance.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C31563420EB6CB400448776 /* TVCAutoExpandingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31517E20EB673E00448776 /* TVCAutoExpandingTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1847,7 +1847,7 @@
 		4C3156B420EB6D0500448776 /* TPCPreferencesUserDefaultsMigratePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151EC20EB673E00448776 /* TPCPreferencesUserDefaultsMigratePrivate.h */; };
 		4C3156B520EB6D0500448776 /* TPCResourceManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31522520EB673E00448776 /* TPCResourceManagerPrivate.h */; };
 		4C3156B620EB6D0500448776 /* TPCThemeControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31521020EB673E00448776 /* TPCThemeControllerPrivate.h */; };
-		4C3156B720EB6D0500448776 /* TPCThemeSettingsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151D620EB673E00448776 /* TPCThemeSettingsPrivate.h */; };
+		4C3156B720EB6D0500448776 /* TPCThemePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151D620EB673E00448776 /* TPCThemePrivate.h */; };
 		4C3156B820EB6D0500448776 /* TVCAppearancePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151D520EB673E00448776 /* TVCAppearancePrivate.h */; };
 		4C3156B920EB6D0500448776 /* TVCChannelSelectionOutlineViewCellPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151F820EB673E00448776 /* TVCChannelSelectionOutlineViewCellPrivate.h */; };
 		4C3156BA20EB6D0500448776 /* TVCChannelSelectionViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31520520EB673E00448776 /* TVCChannelSelectionViewControllerPrivate.h */; };
@@ -1981,7 +1981,7 @@
 		4C31574720EB6D0500448776 /* TPCPreferencesUserDefaultsMigratePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151EC20EB673E00448776 /* TPCPreferencesUserDefaultsMigratePrivate.h */; };
 		4C31574820EB6D0500448776 /* TPCResourceManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31522520EB673E00448776 /* TPCResourceManagerPrivate.h */; };
 		4C31574920EB6D0500448776 /* TPCThemeControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31521020EB673E00448776 /* TPCThemeControllerPrivate.h */; };
-		4C31574A20EB6D0500448776 /* TPCThemeSettingsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151D620EB673E00448776 /* TPCThemeSettingsPrivate.h */; };
+		4C31574A20EB6D0500448776 /* TPCThemePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151D620EB673E00448776 /* TPCThemePrivate.h */; };
 		4C31574B20EB6D0500448776 /* TVCAppearancePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151D520EB673E00448776 /* TVCAppearancePrivate.h */; };
 		4C31574C20EB6D0500448776 /* TVCChannelSelectionOutlineViewCellPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151F820EB673E00448776 /* TVCChannelSelectionOutlineViewCellPrivate.h */; };
 		4C31574D20EB6D0500448776 /* TVCChannelSelectionViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31520520EB673E00448776 /* TVCChannelSelectionViewControllerPrivate.h */; };
@@ -2115,7 +2115,7 @@
 		4C3157DA20EB6D0600448776 /* TPCPreferencesUserDefaultsMigratePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151EC20EB673E00448776 /* TPCPreferencesUserDefaultsMigratePrivate.h */; };
 		4C3157DB20EB6D0600448776 /* TPCResourceManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31522520EB673E00448776 /* TPCResourceManagerPrivate.h */; };
 		4C3157DC20EB6D0600448776 /* TPCThemeControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31521020EB673E00448776 /* TPCThemeControllerPrivate.h */; };
-		4C3157DD20EB6D0600448776 /* TPCThemeSettingsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151D620EB673E00448776 /* TPCThemeSettingsPrivate.h */; };
+		4C3157DD20EB6D0600448776 /* TPCThemePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151D620EB673E00448776 /* TPCThemePrivate.h */; };
 		4C3157DE20EB6D0600448776 /* TVCAppearancePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151D520EB673E00448776 /* TVCAppearancePrivate.h */; };
 		4C3157DF20EB6D0600448776 /* TVCChannelSelectionOutlineViewCellPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151F820EB673E00448776 /* TVCChannelSelectionOutlineViewCellPrivate.h */; };
 		4C3157E020EB6D0600448776 /* TVCChannelSelectionViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31520520EB673E00448776 /* TVCChannelSelectionViewControllerPrivate.h */; };
@@ -2242,7 +2242,7 @@
 		4C31586D20EB6D0700448776 /* TPCPreferencesUserDefaultsMigratePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151EC20EB673E00448776 /* TPCPreferencesUserDefaultsMigratePrivate.h */; };
 		4C31586E20EB6D0700448776 /* TPCResourceManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31522520EB673E00448776 /* TPCResourceManagerPrivate.h */; };
 		4C31586F20EB6D0700448776 /* TPCThemeControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31521020EB673E00448776 /* TPCThemeControllerPrivate.h */; };
-		4C31587020EB6D0700448776 /* TPCThemeSettingsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151D620EB673E00448776 /* TPCThemeSettingsPrivate.h */; };
+		4C31587020EB6D0700448776 /* TPCThemePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151D620EB673E00448776 /* TPCThemePrivate.h */; };
 		4C31587120EB6D0700448776 /* TVCAppearancePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151D520EB673E00448776 /* TVCAppearancePrivate.h */; };
 		4C31587220EB6D0700448776 /* TVCChannelSelectionOutlineViewCellPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3151F820EB673E00448776 /* TVCChannelSelectionOutlineViewCellPrivate.h */; };
 		4C31587320EB6D0700448776 /* TVCChannelSelectionViewControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C31520520EB673E00448776 /* TVCChannelSelectionViewControllerPrivate.h */; };
@@ -2837,7 +2837,7 @@
 		4C31511C20EB673E00448776 /* TPCPreferencesCloudSync.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPCPreferencesCloudSync.m; sourceTree = "<group>"; };
 		4C31511D20EB673E00448776 /* TPCPreferencesCloudSyncExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPCPreferencesCloudSyncExtension.m; sourceTree = "<group>"; };
 		4C31511F20EB673E00448776 /* TPCThemeController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPCThemeController.m; sourceTree = "<group>"; };
-		4C31512020EB673E00448776 /* TPCThemeSettings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPCThemeSettings.m; sourceTree = "<group>"; };
+		4C31512020EB673E00448776 /* TPCTheme.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPCTheme.m; sourceTree = "<group>"; };
 		4C31512120EB673E00448776 /* TPCPreferencesReload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TPCPreferencesReload.m; sourceTree = "<group>"; };
 		4C31512320EB673E00448776 /* IRCAddressBook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRCAddressBook.m; sourceTree = "<group>"; };
 		4C31512420EB673E00448776 /* IRCChannelConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRCChannelConfig.m; sourceTree = "<group>"; };
@@ -2905,7 +2905,7 @@
 		4C31516D20EB673E00448776 /* TVCServerListAppearance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TVCServerListAppearance.h; sourceTree = "<group>"; };
 		4C31516E20EB673E00448776 /* TVCAppearance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TVCAppearance.h; sourceTree = "<group>"; };
 		4C31516F20EB673E00448776 /* TVCAlert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TVCAlert.h; sourceTree = "<group>"; };
-		4C31517020EB673E00448776 /* TPCThemeSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPCThemeSettings.h; sourceTree = "<group>"; };
+		4C31517020EB673E00448776 /* TPCTheme.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPCTheme.h; sourceTree = "<group>"; };
 		4C31517120EB673E00448776 /* IRCCommandIndex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRCCommandIndex.h; sourceTree = "<group>"; };
 		4C31517220EB673E00448776 /* TPCThemeController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPCThemeController.h; sourceTree = "<group>"; };
 		4C31517320EB673E00448776 /* TXAppearance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TXAppearance.h; sourceTree = "<group>"; };
@@ -3000,7 +3000,7 @@
 		4C3151D220EB673E00448776 /* TPCPathInfoPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPCPathInfoPrivate.h; sourceTree = "<group>"; };
 		4C3151D320EB673E00448776 /* TDCLicenseUpgradeCommonActionsPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TDCLicenseUpgradeCommonActionsPrivate.h; sourceTree = "<group>"; };
 		4C3151D520EB673E00448776 /* TVCAppearancePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TVCAppearancePrivate.h; sourceTree = "<group>"; };
-		4C3151D620EB673E00448776 /* TPCThemeSettingsPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPCThemeSettingsPrivate.h; sourceTree = "<group>"; };
+		4C3151D620EB673E00448776 /* TPCThemePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TPCThemePrivate.h; sourceTree = "<group>"; };
 		4C3151D720EB673E00448776 /* TDCHighlightEntrySheetPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TDCHighlightEntrySheetPrivate.h; sourceTree = "<group>"; };
 		4C3151D820EB673E00448776 /* TextualPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextualPrivate.h; sourceTree = "<group>"; };
 		4C3151D920EB673E00448776 /* TDCChannelSpotlightSearchResultPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TDCChannelSpotlightSearchResultPrivate.h; sourceTree = "<group>"; };
@@ -3811,8 +3811,8 @@
 		4C31511E20EB673E00448776 /* Themes */ = {
 			isa = PBXGroup;
 			children = (
+				4C31512020EB673E00448776 /* TPCTheme.m */,
 				4C31511F20EB673E00448776 /* TPCThemeController.m */,
-				4C31512020EB673E00448776 /* TPCThemeSettings.m */,
 			);
 			path = Themes;
 			sourceTree = "<group>";
@@ -4022,7 +4022,7 @@
 				4C31519F20EB673E00448776 /* TPCPreferencesUserDefaultsLocal.h */,
 				4C31516520EB673E00448776 /* TPCResourceManager.h */,
 				4C31517220EB673E00448776 /* TPCThemeController.h */,
-				4C31517020EB673E00448776 /* TPCThemeSettings.h */,
+				4C31517020EB673E00448776 /* TPCTheme.h */,
 				4C31516F20EB673E00448776 /* TVCAlert.h */,
 				4C31516E20EB673E00448776 /* TVCAppearance.h */,
 				4C31517E20EB673E00448776 /* TVCAutoExpandingTextField.h */,
@@ -4193,7 +4193,7 @@
 				4C06E26120EC4C560055D09A /* TPCPreferencesUserDefaultsPrivate.h */,
 				4C31522520EB673E00448776 /* TPCResourceManagerPrivate.h */,
 				4C31521020EB673E00448776 /* TPCThemeControllerPrivate.h */,
-				4C3151D620EB673E00448776 /* TPCThemeSettingsPrivate.h */,
+				4C3151D620EB673E00448776 /* TPCThemePrivate.h */,
 				4C3151D520EB673E00448776 /* TVCAppearancePrivate.h */,
 				4C3151F820EB673E00448776 /* TVCChannelSelectionOutlineViewCellPrivate.h */,
 				4C31520520EB673E00448776 /* TVCChannelSelectionViewControllerPrivate.h */,
@@ -5038,7 +5038,7 @@
 				4C31554820EB6CB300448776 /* TXGlobalModels.h in Headers */,
 				4C31588E20EB6D0700448776 /* TVCNotificationConfigurationViewControllerPrivate.h in Headers */,
 				4C31553F20EB6CB300448776 /* TVCMemberList.h in Headers */,
-				4C31552C20EB6CB300448776 /* TPCThemeSettings.h in Headers */,
+				4C31552C20EB6CB300448776 /* TPCTheme.h in Headers */,
 				4C31588420EB6D0700448776 /* TVCMainWindowSegmentedControlPrivate.h in Headers */,
 				4C31551420EB6CB300448776 /* TDCSheetBase.h in Headers */,
 				4C31553A20EB6CB300448776 /* TVCMainWindowAppearance.h in Headers */,
@@ -5171,7 +5171,7 @@
 				4C31583A20EB6D0700448776 /* TDCFileTransferDialogPrivate.h in Headers */,
 				4C31581620EB6D0700448776 /* IRCCommandIndexPrivate.h in Headers */,
 				4C31554620EB6CB300448776 /* TXAppearance.h in Headers */,
-				4C31587020EB6D0700448776 /* TPCThemeSettingsPrivate.h in Headers */,
+				4C31587020EB6D0700448776 /* TPCThemePrivate.h in Headers */,
 				4C3154F620EB6CB300448776 /* IRCAddressBook.h in Headers */,
 				4C31586420EB6D0700448776 /* TLOSpeechSynthesizerPrivate.h in Headers */,
 				4C31551E20EB6CB300448776 /* TLOLinkParser.h in Headers */,
@@ -5309,7 +5309,7 @@
 				4C31564D20EB6CB400448776 /* TXGlobalModels.h in Headers */,
 				4C3156D520EB6D0500448776 /* TVCNotificationConfigurationViewControllerPrivate.h in Headers */,
 				4C31564420EB6CB400448776 /* TVCMemberList.h in Headers */,
-				4C31563120EB6CB400448776 /* TPCThemeSettings.h in Headers */,
+				4C31563120EB6CB400448776 /* TPCTheme.h in Headers */,
 				4C3156CB20EB6D0500448776 /* TVCMainWindowSegmentedControlPrivate.h in Headers */,
 				4C31561920EB6CB400448776 /* TDCSheetBase.h in Headers */,
 				4C31563F20EB6CB400448776 /* TVCMainWindowAppearance.h in Headers */,
@@ -5446,7 +5446,7 @@
 				4C31568120EB6D0400448776 /* TDCFileTransferDialogPrivate.h in Headers */,
 				4C31565D20EB6D0400448776 /* IRCCommandIndexPrivate.h in Headers */,
 				4C31564B20EB6CB400448776 /* TXAppearance.h in Headers */,
-				4C3156B720EB6D0500448776 /* TPCThemeSettingsPrivate.h in Headers */,
+				4C3156B720EB6D0500448776 /* TPCThemePrivate.h in Headers */,
 				4C3155FB20EB6CB400448776 /* IRCAddressBook.h in Headers */,
 				4C3156AB20EB6D0500448776 /* TLOSpeechSynthesizerPrivate.h in Headers */,
 				4C06E24B20EC4B970055D09A /* IRCConnectionConfig.h in Headers */,
@@ -5582,7 +5582,7 @@
 				4C31559F20EB6CB300448776 /* TXGlobalModels.h in Headers */,
 				4C3157FB20EB6D0600448776 /* TVCNotificationConfigurationViewControllerPrivate.h in Headers */,
 				4C31559620EB6CB300448776 /* TVCMemberList.h in Headers */,
-				4C31558320EB6CB300448776 /* TPCThemeSettings.h in Headers */,
+				4C31558320EB6CB300448776 /* TPCTheme.h in Headers */,
 				4C3157F120EB6D0600448776 /* TVCMainWindowSegmentedControlPrivate.h in Headers */,
 				4C31556B20EB6CB300448776 /* TDCSheetBase.h in Headers */,
 				4C31559120EB6CB300448776 /* TVCMainWindowAppearance.h in Headers */,
@@ -5719,7 +5719,7 @@
 				4C3157A720EB6D0600448776 /* TDCFileTransferDialogPrivate.h in Headers */,
 				4C31578320EB6D0600448776 /* IRCCommandIndexPrivate.h in Headers */,
 				4C31559D20EB6CB300448776 /* TXAppearance.h in Headers */,
-				4C3157DD20EB6D0600448776 /* TPCThemeSettingsPrivate.h in Headers */,
+				4C3157DD20EB6D0600448776 /* TPCThemePrivate.h in Headers */,
 				4C31554D20EB6CB300448776 /* IRCAddressBook.h in Headers */,
 				4C3157D120EB6D0600448776 /* TLOSpeechSynthesizerPrivate.h in Headers */,
 				4C06E24920EC4B970055D09A /* IRCConnectionConfig.h in Headers */,
@@ -5855,7 +5855,7 @@
 				4C3155F620EB6CB400448776 /* TXGlobalModels.h in Headers */,
 				4C31576820EB6D0500448776 /* TVCNotificationConfigurationViewControllerPrivate.h in Headers */,
 				4C3155ED20EB6CB400448776 /* TVCMemberList.h in Headers */,
-				4C3155DA20EB6CB400448776 /* TPCThemeSettings.h in Headers */,
+				4C3155DA20EB6CB400448776 /* TPCTheme.h in Headers */,
 				4C31575E20EB6D0500448776 /* TVCMainWindowSegmentedControlPrivate.h in Headers */,
 				4C3155C220EB6CB400448776 /* TDCSheetBase.h in Headers */,
 				4C3155E820EB6CB400448776 /* TVCMainWindowAppearance.h in Headers */,
@@ -5992,7 +5992,7 @@
 				4C31571420EB6D0500448776 /* TDCFileTransferDialogPrivate.h in Headers */,
 				4C3156F020EB6D0500448776 /* IRCCommandIndexPrivate.h in Headers */,
 				4C3155F420EB6CB400448776 /* TXAppearance.h in Headers */,
-				4C31574A20EB6D0500448776 /* TPCThemeSettingsPrivate.h in Headers */,
+				4C31574A20EB6D0500448776 /* TPCThemePrivate.h in Headers */,
 				4C3155A420EB6CB400448776 /* IRCAddressBook.h in Headers */,
 				4C31573E20EB6D0500448776 /* TLOSpeechSynthesizerPrivate.h in Headers */,
 				4C06E24A20EC4B970055D09A /* IRCConnectionConfig.h in Headers */,
@@ -7190,7 +7190,7 @@
 				4C06E5F420EC553A0055D09A /* TLOTimer.m in Sources */,
 				4C06E5F520EC553A0055D09A /* main.m in Sources */,
 				4C06E5F820EC553A0055D09A /* TPCThemeController.m in Sources */,
-				4C06E5F920EC553A0055D09A /* TPCThemeSettings.m in Sources */,
+				4C06E5F920EC553A0055D09A /* TPCTheme.m in Sources */,
 				4C06E5FA20EC553A0055D09A /* TPCApplicationInfo.m in Sources */,
 				4C06E5FB20EC553A0055D09A /* TPCPathInfo.m in Sources */,
 				4C469E3C20EC5BDB00094EA4 /* TLOpenLink.swift in Sources */,
@@ -7374,7 +7374,7 @@
 				4C06E53D20EC551D0055D09A /* TPCPreferencesCloudSync.m in Sources */,
 				4C06E53E20EC551D0055D09A /* TPCPreferencesCloudSyncExtension.m in Sources */,
 				4C06E53F20EC551D0055D09A /* TPCThemeController.m in Sources */,
-				4C06E54020EC551D0055D09A /* TPCThemeSettings.m in Sources */,
+				4C06E54020EC551D0055D09A /* TPCTheme.m in Sources */,
 				4C06E54120EC551D0055D09A /* TPCApplicationInfo.m in Sources */,
 				4C06E54220EC551D0055D09A /* TPCPathInfo.m in Sources */,
 				4C06E54320EC551D0055D09A /* TPCPreferences.m in Sources */,
@@ -7560,7 +7560,7 @@
 				4C06E6AD20EC55B90055D09A /* TLOTimer.m in Sources */,
 				4C06E6AE20EC55B90055D09A /* main.m in Sources */,
 				4C06E6B120EC55B90055D09A /* TPCThemeController.m in Sources */,
-				4C06E6B220EC55B90055D09A /* TPCThemeSettings.m in Sources */,
+				4C06E6B220EC55B90055D09A /* TPCTheme.m in Sources */,
 				4C06E6B320EC55B90055D09A /* TPCApplicationInfo.m in Sources */,
 				4C06E6B420EC55B90055D09A /* TPCPathInfo.m in Sources */,
 				4C469E3E20EC5BDB00094EA4 /* TLOpenLink.swift in Sources */,
@@ -7748,7 +7748,7 @@
 				4C06E76620EC55DB0055D09A /* TLOTimer.m in Sources */,
 				4C06E76720EC55DB0055D09A /* main.m in Sources */,
 				4C06E76A20EC55DB0055D09A /* TPCThemeController.m in Sources */,
-				4C06E76B20EC55DB0055D09A /* TPCThemeSettings.m in Sources */,
+				4C06E76B20EC55DB0055D09A /* TPCTheme.m in Sources */,
 				4C06E76C20EC55DB0055D09A /* TPCApplicationInfo.m in Sources */,
 				4C06E76D20EC55DB0055D09A /* TPCPathInfo.m in Sources */,
 				4C469E4020EC5BDC00094EA4 /* TLOpenLink.swift in Sources */,

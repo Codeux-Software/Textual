@@ -51,8 +51,8 @@ NS_ASSUME_NONNULL_BEGIN
 #define mainWindowTextField()		[mainWindow() inputTextField]
 
 #define themeController()			[TXSharedApplication sharedThemeController]
-
-#define themeSettings()				[themeController() customSettings]
+#define theme()						[themeController() theme]
+#define themeSettings()				[themeController() settings]
 
 TEXTUAL_EXTERN NSErrorDomain const TXErrorDomain;
 

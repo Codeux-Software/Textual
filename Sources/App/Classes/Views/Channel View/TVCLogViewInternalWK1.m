@@ -38,7 +38,7 @@
 #include <objc/message.h>
 
 #import "TPCThemeController.h"
-#import "TPCThemeSettings.h"
+#import "TPCTheme.h"
 #import "TVCLogController.h"
 #import "TVCLogPolicyPrivate.h"
 #import "TVCLogScriptEventSinkPrivate.h"

@@ -271,7 +271,7 @@
 	<key>Theme -&gt; Font Size</key>
 	<real>12</real>
 	<key>Theme -&gt; Name</key>
-	<string>resource:Simplified Light</string>
+	<string>resource:Simplified</string>
 	<key>Theme -&gt; Nickname Format</key>
 	<string>&lt;%@%n&gt;</string>
 	<key>Theme -&gt; Timestamp Format</key>

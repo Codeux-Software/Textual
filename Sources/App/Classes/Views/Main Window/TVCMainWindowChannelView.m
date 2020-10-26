@@ -39,7 +39,7 @@
 #import "NSViewHelperPrivate.h"
 #import "TPCPreferencesLocal.h"
 #import "TPCThemeController.h"
-#import "TPCThemeSettings.h"
+#import "TPCTheme.h"
 #import "IRCTreeItem.h"
 #import "TVCLogController.h"
 #import "TVCLogView.h"
@@ -104,15 +104,15 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 - (void)viewDidMoveToWindow
 {
 	if (self.window == nil) {
-		[themeSettings() removeObserver:self forKeyPath:@"underlyingWindowColorIsDark"];
+		[RZNotificationCenter() removeObserver:self];
 
 		return;
 	}
 
-	[themeSettings() addObserver:self
-					  forKeyPath:@"underlyingWindowColorIsDark"
-						 options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew)
-						 context:NULL];
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(themeAppearanceChanged:)
+								   name:TPCThemeAppearanceChangedNotification
+								 object:nil];
 }
 
 - (void)resetSubviews
@@ -317,16 +317,14 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	self.vertical = (arrangement == TXChannelViewArrangedVertically);
 }
 
-- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSString *, id> *)change context:(nullable void *)context
+- (void)themeAppearanceChanged:(NSNotification *)notification
 {
-	if ([keyPath isEqualToString:@"underlyingWindowColorIsDark"]) {
-		[self updateVibrancy];
-	}
+	[self updateVibrancy];
 }
 
 - (void)updateVibrancy
 {
-	if (themeSettings().underlyingWindowColorIsDark) {
+	if (theme().appearance == TPCThemeAppearanceTypeDark || themeSettings().underlyingWindowColorIsDark) {
 		self.appearance = [TXAppearancePropertyCollection appKitDarkAppearance];
 	} else {
 		self.appearance = [TXAppearancePropertyCollection appKitLightAppearance];

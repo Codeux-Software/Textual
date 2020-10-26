@@ -51,7 +51,7 @@
 #import "TPCPreferencesLocalPrivate.h"
 #import "TPCPreferencesUserDefaults.h"
 #import "TPCThemeController.h"
-#import "TPCThemeSettingsPrivate.h"
+#import "TPCThemePrivate.h"
 #import "TLOLinkParser.h"
 #import "TLOLocalization.h"
 #import "TVCLogViewPrivate.h"
@@ -295,13 +295,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (NSURL *)baseURL
 {
-	if (themeController().usesTemporaryPath) {
-		NSString *temporaryPath = themeController().temporaryPath;
-
-		return [NSURL fileURLWithPath:temporaryPath isDirectory:YES];
-	}
-
-	return themeController().baseURL;
+	return themeController().temporaryURL;
 }
 
 - (TVCLogControllerPrintingOperationQueue *)printingQueue
@@ -1521,7 +1515,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	// ************************************************************************** /
 
-	GRMustacheTemplate *template = [themeSettings() templateWithLineType:lineType];
+	GRMustacheTemplate *template = [theme() templateWithLineType:lineType];
 
 	NSString *html = [TVCLogRenderer renderTemplate:template attributes:templateAttributes];
 
@@ -1548,11 +1542,14 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSMutableDictionary *templateTokens = [self generateOverrideStyle];
 
-	templateTokens[@"activeStyleAbsolutePath"] = self.baseURL.path;
-
 	templateTokens[@"applicationResourcePath"] = [TPCPathInfo applicationResources];
 
-	templateTokens[@"applicationTemplatesPath"] = themeSettings().applicationTemplateRepositoryPath;
+	templateTokens[@"applicationTemplatesPath"] = theme().applicationTemplateRepositoryPath;
+
+	templateTokens[@"activeStyleAbsolutePath"] = self.baseURL.path;
+
+	templateTokens[@"activeStyleCSSFiles"] = theme().temporaryCSSFilePaths;
+	templateTokens[@"activeStyleJSFiles"] = theme().temporaryJSFilePaths;
 
 	templateTokens[@"cacheToken"] = themeController().cacheToken;
 

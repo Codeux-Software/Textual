@@ -93,7 +93,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSString *themeName = themeController().name;
 
-	TPCThemeControllerStorageLocation storageLocation = themeController().storageLocation;
+	TPCThemeStorageLocation storageLocation = themeController().storageLocation;
 
 	NSString *storageLocationLabel = [TPCThemeController descriptionForStorageLocation:storageLocation];
 

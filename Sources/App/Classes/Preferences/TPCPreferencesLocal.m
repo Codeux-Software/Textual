@@ -44,7 +44,7 @@
 #import "TPCPreferencesUserDefaultsMigratePrivate.h"
 #import "TPCResourceManager.h"
 #import "TPCThemeController.h"
-#import "TPCThemeSettings.h"
+#import "TPCTheme.h"
 #import "TPCPreferencesLocalPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -585,7 +585,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 {
 	NSParameterAssert(value != nil);
 
-	if ([TPCThemeController themeExists:value]) {
+	if ([themeController() themeExists:value]) {
 		[self setThemeName:value];
 	} else {
 		[RZUserDefaults() setBool:YES forKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];

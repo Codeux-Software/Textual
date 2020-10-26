@@ -240,22 +240,20 @@ ClassWithDesignatedInitializerInitMethod
 
 		WKWebView *webView = self.webViewBacking;
 
-		if (themeController().usesTemporaryPath) {
-			NSString *filename = [NSString stringWithFormat:@"%@.html", [NSString stringWithUUID]];
+		NSString *filename = [NSString stringWithFormat:@"%@.html", [NSString stringWithUUID]];
 
-			NSURL *filePath = [baseURL URLByAppendingPathComponent:filename];
+		NSURL *filePath = [baseURL URLByAppendingPathComponent:filename];
 
-			NSError *fileWriteError = nil;
+		NSError *fileWriteError = nil;
 
-			if ([string writeToURL:filePath atomically:NO encoding:NSUTF8StringEncoding error:&fileWriteError] == NO) {
-				LogToConsoleError("Failed to write temporary file: %@", fileWriteError.localizedDescription);
-			}
+		if ([string writeToURL:filePath atomically:NO encoding:NSUTF8StringEncoding error:&fileWriteError] == NO) {
+			LogToConsoleError("Failed to write temporary file: %@", fileWriteError.localizedDescription);
 
-			[webView loadFileURL:filePath
-		 allowingReadAccessToURL:[TPCPathInfo applicationTemporaryURL]];
-		} else {
-			[webView loadHTMLString:string baseURL:baseURL];
+			return;
 		}
+
+		[webView loadFileURL:filePath
+	 allowingReadAccessToURL:[TPCPathInfo applicationTemporaryURL]];
 	}
 	else
 	{

@@ -35,7 +35,7 @@
  *
  *********************************************************************** */
 
-#import "TPCThemeSettings.h"
+#import "TPCTheme.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

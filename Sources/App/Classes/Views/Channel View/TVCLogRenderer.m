@@ -48,7 +48,7 @@
 #import "IRCUserNicknameColorStyleGeneratorPrivate.h"
 #import "TPCPreferencesLocal.h"
 #import "TPCThemeController.h"
-#import "TPCThemeSettings.h"
+#import "TPCTheme.h"
 #import "THOPluginDispatcherPrivate.h"
 #import "THOUnicodeHelper.h"
 #import "TLOLinkParser.h"
@@ -1042,7 +1042,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute = @"TV
 {
 	NSParameterAssert(templateName != nil);
 
-	GRMustacheTemplate *template = [themeSettings() templateWithName:templateName];
+	GRMustacheTemplate *template = [theme() templateWithName:templateName];
 
 	if (template == nil) {
 		return nil;

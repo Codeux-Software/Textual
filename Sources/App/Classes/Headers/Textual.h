@@ -109,7 +109,7 @@
 	#import "TPCPreferencesUserDefaultsLocal.h"
 	#import "TPCResourceManager.h"
 	#import "TPCThemeController.h"
-	#import "TPCThemeSettings.h"
+	#import "TPCTheme.h"
 
 	/* View Controllers */
 	#import "TVCAlert.h"

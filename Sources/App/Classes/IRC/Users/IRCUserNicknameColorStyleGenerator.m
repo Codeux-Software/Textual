@@ -40,7 +40,7 @@
 
 #import "TPCPreferencesUserDefaults.h"
 #import "TPCThemeController.h"
-#import "TPCThemeSettings.h"
+#import "TPCTheme.h"
 #import "IRCUserNicknameColorStyleGeneratorPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -86,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(stringHash != nil);
 
-	BOOL onLightBackground = (colorStyle == TPCThemeSettingsNicknameColorStyleHashHueLight);
+	BOOL onLightBackground = (colorStyle == TPCThemeSettingsNicknameColorStyleLight);
 
 	unsigned int stringHash32 = stringHash.intValue;
 

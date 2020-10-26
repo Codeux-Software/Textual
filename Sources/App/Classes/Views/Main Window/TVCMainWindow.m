@@ -64,7 +64,7 @@
 #import "TPCPreferencesLocal.h"
 #import "TPCPreferencesUserDefaults.h"
 #import "TPCThemeControllerPrivate.h"
-#import "TPCThemeSettings.h"
+#import "TPCTheme.h"
 #import "TXGlobalModels.h"
 #import "TXMasterControllerPrivate.h"
 #import "TXMenuControllerPrivate.h"
@@ -233,6 +233,11 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 							   selector:@selector(systemAppearanceChanged:)
 								   name:TXSystemAppearanceChangedNotification
 								 object:nil];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(themeAppearanceChanged:)
+								   name:TPCThemeAppearanceChangedNotification
+								 object:nil];
 }
 
 - (void)maybeToggleFullscreenAfterLaunch
@@ -253,6 +258,11 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 	}
 
 	[self toggleFullScreen:nil];
+}
+
+- (void)themeAppearanceChanged:(NSNotification *)notification
+{
+	[self reloadTheme];
 }
 
 - (void)applicationAppearanceChanged:(NSNotification *)notification

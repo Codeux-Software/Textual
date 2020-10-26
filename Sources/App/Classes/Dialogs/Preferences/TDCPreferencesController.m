@@ -1105,9 +1105,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *currentThemeName = themeController().name;
 
-	TPCThemeControllerStorageLocation currentStorageLocation = themeController().storageLocation;
+	TPCThemeStorageLocation currentStorageLocation = themeController().storageLocation;
 
-	[TPCThemeController enumerateAvailableThemesWithBlock:^(NSString *themeName, TPCThemeControllerStorageLocation storageLocation, BOOL multipleVaraints, BOOL *stop) {
+	[themeController() enumerateAvailableThemesWithBlock:^(NSString *themeName, TPCThemeStorageLocation storageLocation, BOOL multipleVaraints, BOOL *stop) {
 		NSString *displayName = themeName;
 
 		if (multipleVaraints) {
@@ -1143,7 +1143,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *newThemeName = context[@"themeName"];
 
-	TPCThemeControllerStorageLocation newStorageLocation = [context unsignedIntegerForKey:@"storageLocation"];
+	TPCThemeStorageLocation newStorageLocation = [context unsignedIntegerForKey:@"storageLocation"];
 
 	NSString *newTheme = [TPCThemeController buildFilename:newThemeName forStorageLocation:newStorageLocation];
 
@@ -1683,9 +1683,9 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 
 		if (copyingToCloud) {
-			[themeController() copyActiveThemeToDestinationLocation:TPCThemeControllerStorageLocationCloud reloadOnCopy:YES openOnCopy:YES];
+			[themeController() copyActiveThemeToDestinationLocation:TPCThemeStorageLocationCloud reloadOnCopy:YES openOnCopy:YES];
 		} else {
-			[themeController() copyActiveThemeToDestinationLocation:TPCThemeControllerStorageLocationCustom reloadOnCopy:YES openOnCopy:YES];
+			[themeController() copyActiveThemeToDestinationLocation:TPCThemeStorageLocationCustom reloadOnCopy:YES openOnCopy:YES];
 		}
 	}
 }
@@ -1711,7 +1711,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)openPathToTheme
 {
-	NSString *filepath = themeController().path;
+	NSString *filepath = themeController().originalPath;
 
 	[RZWorkspace() openFile:filepath];
 }

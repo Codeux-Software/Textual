@@ -2,18 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Appearance</key>
+	<string>dark</string>
 	<key>Channel View Overlay Color</key>
 	<string>#00000066</string>
+	<key>Force Invert Sidebars</key>
+	<true/>
 	<key>Indentation Offset</key>
 	<integer>6</integer>
 	<key>Nickname Color Style</key>
 	<string>HSL-dark</string>
+	<key>Nickname Format</key>
+	<string>%@%n:</string>
 	<key>Template Engine Versions</key>
 	<dict>
 		<key>default</key>
 		<integer>4</integer>
 	</dict>
 	<key>Underlying Window Color</key>
-	<string>#000000</string>
+	<string>#242323</string>
 </dict>
 </plist>

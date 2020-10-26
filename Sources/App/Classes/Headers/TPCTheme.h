@@ -44,16 +44,96 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define TPCThemeSettingsDisabledIndentationOffset	 -99
 
-#define TPCThemeSettingsLatestTemplateEngineVersion		3
+#define TPCThemeSettingsNewestTemplateEngineVersion		4
 
-typedef NS_ENUM(NSUInteger, TPCThemeSettingsNicknameColorStyle) {
-	TPCThemeSettingsNicknameColorStyleHashHueDark,
-	TPCThemeSettingsNicknameColorStyleHashHueLight
+typedef NS_ENUM(NSUInteger, TPCThemeAppearanceType) {
+	TPCThemeAppearanceTypeDefault = 0, // Automatically picked based on window appearance
+	TPCThemeAppearanceTypeDark,
+	TPCThemeAppearanceTypeLight
 };
 
+typedef NS_ENUM(NSUInteger, TPCThemeStorageLocation) {
+	TPCThemeStorageLocationUnknown = 0,
+	TPCThemeStorageLocationBundle,
+	TPCThemeStorageLocationCustom,
+	TPCThemeStorageLocationCloud
+};
+
+typedef NS_ENUM(NSUInteger, TPCThemeSettingsNicknameColorStyle) {
+	TPCThemeSettingsNicknameColorStyleDefault = 0, // Automatically picked based on appearance
+	TPCThemeSettingsNicknameColorStyleDark,
+	TPCThemeSettingsNicknameColorStyleLight
+};
+
+/* If a theme is modified in such a way after it is initalized
+ that it can no longer be used, then this flag is set to YES.
+ A way, amongst many, in which the integrity of a theme can
+ be compromised is by deleting the CSS or JavaScript file. */
+TEXTUAL_EXTERN NSNotificationName const TPCThemeIntegrityCompromisedNotification;
+
+/* If theme has been restored to a usable state. */
+TEXTUAL_EXTERN NSNotificationName const TPCThemeIntegrityRestoredNotification;
+
+/* The theme can change the variety to match appearance changes,
+ or when one variety becomes compromised and another must be used. */
+/* Notification used for first case. */
+TEXTUAL_EXTERN NSNotificationName const TPCThemeAppearanceChangedNotification;
+
+/* Notification used for both cases. */
+TEXTUAL_EXTERN NSNotificationName const TPCThemeVarietyChangedNotification;
+
+/* A CSS or JavaScript file within the theme or one of its
+ varieties has been modified. */
+TEXTUAL_EXTERN NSNotificationName const TPCThemeModifiedNotification;
+
 @class GRMustacheTemplate;
+@class TPCThemeSettings;
+
+@interface TPCTheme : NSObject
+@property (readonly, copy) NSString *name;
+
+@property (readonly, copy) NSURL *originalURL;
+@property (readonly) TPCThemeStorageLocation storageLocation;
+
+@property (readonly) BOOL usable; // If the theme is in a state that can be selected by the user.
+
+@property (readonly) TPCThemeAppearanceType appearance;
+
+/* Global files are listed first with variety specific files second. */
+/* These properties DO NOT list all files of these types.
+ Only files named "design.css" and "scripts.js" respectively. */
+@property (readonly, copy) NSArray<NSURL *> *cssFiles;
+@property (readonly, copy) NSArray<NSURL *> *jsFiles;
+
+@property (readonly, copy) NSArray<NSString *> *cssFilePaths;
+@property (readonly, copy) NSArray<NSString *> *jsFilePaths;
+
+/* Order of repositories is: variety specific -> global -> app */
+@property (readonly, copy) NSArray<GRMustacheTemplateRepository *> *templateRepositories;
+
+/* Settings */
+@property (readonly, strong) TPCThemeSettings *settings;
+
+/* Temporary location */
+/* Themes are copied to a temporary location when they are in use. */
+/* These properties remap the relevant URLs to the temporary location. */
+/* These files will not exist until the theme is in use. */
+@property (readonly, copy) NSURL *temporaryURL;
+
+@property (readonly, copy) NSArray<NSURL *> *temporaryCSSFiles;
+@property (readonly, copy) NSArray<NSURL *> *temporaryJSFiles;
+
+@property (readonly, copy) NSArray<NSString *> *temporaryCSSFilePaths;
+@property (readonly, copy) NSArray<NSString *> *temporaryJSFilePaths;
+
+/* Templates */
+- (nullable GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type;
+- (nullable GRMustacheTemplate *)templateWithName:(NSString *)name;
+@end
 
 @interface TPCThemeSettings : NSObject
+@property (readonly) TPCThemeAppearanceType appearance;
+@property (readonly) BOOL supportsMultipleAppearances;
 @property (readonly) BOOL invertSidebarColors;
 @property (readonly) BOOL js_postHandleEventNotifications;
 @property (readonly) BOOL js_postAppearanceChangesNotification;
@@ -68,12 +148,10 @@ typedef NS_ENUM(NSUInteger, TPCThemeSettingsNicknameColorStyle) {
 @property (readonly) BOOL underlyingWindowColorIsDark;
 @property (readonly) double indentationOffset;
 @property (readonly) TPCThemeSettingsNicknameColorStyle nicknameColorStyle;
+@property (readonly) NSUInteger templateEngineVersion;
 
 - (nullable id)styleSettingsRetrieveValueForKey:(NSString *)key error:(NSString * _Nullable * _Nullable)resultError;
 - (BOOL)styleSettingsSetValue:(nullable id)objectValue forKey:(NSString *)objectKey error:(NSString * _Nullable * _Nullable)resultError;
-
-- (nullable GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type;
-- (nullable GRMustacheTemplate *)templateWithName:(NSString *)name;
 @end
 
 NS_ASSUME_NONNULL_END

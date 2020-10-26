@@ -44,7 +44,7 @@
 #import "TXMasterController.h"
 #import "TPCPreferencesLocal.h"
 #import "TPCThemeController.h"
-#import "TPCThemeSettings.h"
+#import "TPCTheme.h"
 #import "THOPluginDispatcherPrivate.h"
 #import "THOPluginManagerPrivate.h"
 #import "THOPluginProtocolPrivate.h"
@@ -1076,9 +1076,9 @@ ClassWithDesignatedInitializerInitMethod
 	TPCThemeSettingsNicknameColorStyle colorStyleEnum;
 
 	if ([colorStyle isEqualToString:@"HSL-dark"]) {
-		colorStyleEnum = TPCThemeSettingsNicknameColorStyleHashHueDark;
+		colorStyleEnum = TPCThemeSettingsNicknameColorStyleDark;
 	} else if ([colorStyle isEqualToString:@"HSL-light"]) {
-		colorStyleEnum = TPCThemeSettingsNicknameColorStyleHashHueLight;
+		colorStyleEnum = TPCThemeSettingsNicknameColorStyleLight;
 	} else {
 		[self.class throwJavaScriptException:@"Invalid style"
 								   forCaller:context.caller

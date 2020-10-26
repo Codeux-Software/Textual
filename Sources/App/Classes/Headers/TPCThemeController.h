@@ -36,9 +36,9 @@
  *
  *********************************************************************** */
 
-NS_ASSUME_NONNULL_BEGIN
+#import "TPCTheme.h"
 
-@class TPCThemeSettings;
+NS_ASSUME_NONNULL_BEGIN
 
 TEXTUAL_EXTERN NSString * const TPCThemeControllerCloudThemeNameBasicPrefix;
 TEXTUAL_EXTERN NSString * const TPCThemeControllerCloudThemeNameCompletePrefix;
@@ -51,30 +51,23 @@ TEXTUAL_EXTERN NSString * const TPCThemeControllerBundledThemeNameCompletePrefix
 
 TEXTUAL_EXTERN NSNotificationName const TPCThemeControllerThemeListDidChangeNotification;
 
-typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
-	TPCThemeControllerStorageLocationUnknown = 0,
-	TPCThemeControllerStorageLocationBundle,
-	TPCThemeControllerStorageLocationCustom,
-	TPCThemeControllerStorageLocationCloud
-};
-
 /* Theme is not loaded until main window is woken which means
  while you could in theory access this object before then,
  objects below that are marked non-nil will actually be nil. */
-/* Theme settings are allocated when the controller is which
- means that can be observed for changes before theme is loaded. */
 @interface TPCThemeController : NSObject
-@property (readonly, copy) NSURL *baseURL;
-@property (readonly) TPCThemeSettings *customSettings;
-@property (readonly) TPCThemeControllerStorageLocation storageLocation;
+@property (readonly, strong) TPCTheme *theme;
 
-/* Calls for the active theme */
+@property (readonly, strong) TPCThemeSettings *settings;
+
+@property (readonly) TPCThemeStorageLocation storageLocation;
+
 @property (readonly, copy) NSString *name;
 
-@property (readonly) BOOL usesTemporaryPath;
-@property (readonly, copy) NSString *temporaryPath;
+@property (readonly, copy) NSURL *originalURL; // Where original copy of theme is.
+@property (readonly, copy) NSURL *temporaryURL; // Where cached copy of theme is.
 
-@property (readonly, copy) NSString *path;
+@property (readonly, copy) NSString *originalPath;
+@property (readonly, copy) NSString *temporaryPath;
 
 @property (readonly, copy) NSString *cacheToken;
 
@@ -84,23 +77,21 @@ typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
 - (BOOL)validateThemeAndReloadIfNecessary;
 
 /* Calls for all themes */
-+ (void)enumerateAvailableThemesWithBlock:(void(NS_NOESCAPE ^)(NSString *themeName, TPCThemeControllerStorageLocation storageLocation, BOOL multipleVaraints, BOOL *stop))enumerationBlock;
+- (void)enumerateAvailableThemesWithBlock:(void(NS_NOESCAPE ^)(NSString *fileName, TPCThemeStorageLocation storageLocation, BOOL multipleVaraints, BOOL *stop))enumerationBlock;
 
-/* A theme is considered existent if the designated design.css file and scripts.js for
- it exists. Otherwise, the theme is considered nonexistent even if the folder exists. */
-+ (BOOL)themeExists:(NSString *)themeName;
+- (BOOL)themeExists:(NSString *)themeName;
 
 + (nullable NSString *)pathOfThemeWithName:(NSString *)themeName;
-+ (nullable NSString *)pathOfThemeWithName:(NSString *)themeName storageLocation:(nullable TPCThemeControllerStorageLocation *)storageLocation;
++ (nullable NSString *)pathOfThemeWithName:(NSString *)themeName storageLocation:(nullable TPCThemeStorageLocation *)storageLocation;
 
-+ (nullable NSString *)buildFilename:(NSString *)name forStorageLocation:(TPCThemeControllerStorageLocation)storageLocation;
++ (nullable NSString *)buildFilename:(NSString *)name forStorageLocation:(TPCThemeStorageLocation)storageLocation;
 
 + (nullable NSString *)extractThemeSource:(NSString *)source;
 + (nullable NSString *)extractThemeName:(NSString *)source;
 
-+ (TPCThemeControllerStorageLocation)expectedStorageLocationOfThemeWithName:(NSString *)themeName;
++ (TPCThemeStorageLocation)storageLocationOfThemeWithName:(NSString *)themeName;
 
-+ (nullable NSString *)descriptionForStorageLocation:(TPCThemeControllerStorageLocation)storageLocation;
++ (nullable NSString *)descriptionForStorageLocation:(TPCThemeStorageLocation)storageLocation;
 @end
 
 NS_ASSUME_NONNULL_END

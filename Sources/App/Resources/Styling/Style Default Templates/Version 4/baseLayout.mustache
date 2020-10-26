@@ -2,7 +2,9 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset={{userConfiguredTextEncoding}}">
 
-		<link rel="stylesheet" type="text/css" href="{{activeStyleAbsolutePath}}/design.css?{{cacheToken}}" charset="UTF-8">
+		{{#activeStyleCSSFiles}}
+		<link rel="stylesheet" type="text/css" href="{{.}}?{{cacheToken}}" charset="UTF-8">
+		{{/activeStyleCSSFiles}}
 
 		<link rel="stylesheet" type="text/css" href="{{applicationTemplatesPath}}/baseLayout.css?{{cacheToken}}" charset="UTF-8">
 
@@ -13,7 +15,9 @@
 			Textual.initializeCore("{{applicationResourcePath}}");
 		</script>
 
-		<script src="{{activeStyleAbsolutePath}}/scripts.js?{{cacheToken}}" type="text/javascript" charset="UTF-8"></script>
+		{{#activeStyleJSFiles}}
+		<script src="{{.}}?{{cacheToken}}" type="text/javascript" charset="UTF-8"></script>
+		{{/activeStyleJSFiles}}
 
 		<style type="text/css">
 			html, body {

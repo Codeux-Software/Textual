@@ -45,7 +45,7 @@
 #import "TPCPreferencesLocalPrivate.h"
 #import "TPCPreferencesUserDefaults.h"
 #import "TPCThemeController.h"
-#import "TPCThemeSettings.h"
+#import "TPCTheme.h"
 #import "IRCClientConfig.h"
 #import "IRCClientPrivate.h"
 #import "IRCChannelPrivate.h"

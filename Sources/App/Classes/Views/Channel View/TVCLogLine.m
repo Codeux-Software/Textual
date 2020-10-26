@@ -44,7 +44,7 @@
 #import "IRCUserNicknameColorStyleGeneratorPrivate.h"
 #import "TPCPreferencesLocal.h"
 #import "TPCThemeController.h"
-#import "TPCThemeSettings.h"
+#import "TPCTheme.h"
 #import "TLOFileLoggerPrivate.h"
 #import "TVCLogLineInternal.h"
 #import "TVCLogLineXPCPrivate.h"
