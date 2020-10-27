@@ -589,6 +589,8 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 
 	LogToConsoleInfo("Reloading theme because it failed validation.");
 
+	[RZNotificationCenter() postNotificationName:TPCThemeControllerThemeListDidChangeNotification object:self];
+
 	[self presentIntegrityCompromisedAlert];
 }
 
