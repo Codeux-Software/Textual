@@ -502,7 +502,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 
 	[RZNotificationCenter() postNotificationName:TPCThemeWasModifiedNotification object:self];
 
-	self.recentlyModified = YES;
+	self.recentlyModified = NO;
 }
 
 #pragma mark -
