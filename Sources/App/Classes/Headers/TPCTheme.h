@@ -79,7 +79,7 @@ TEXTUAL_EXTERN NSNotificationName const TPCThemeIntegrityRestoredNotification;
 /* Notification used for first case. */
 TEXTUAL_EXTERN NSNotificationName const TPCThemeAppearanceChangedNotification;
 
-/* Notification used for both cases. */
+/* Notification used for second case. */
 TEXTUAL_EXTERN NSNotificationName const TPCThemeVarietyChangedNotification;
 
 /* A CSS or JavaScript file within the theme or one of its

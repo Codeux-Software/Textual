@@ -235,8 +235,13 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 								 object:nil];
 
 	[RZNotificationCenter() addObserver:self
-							   selector:@selector(themeAppearanceChanged:)
-								   name:TPCThemeAppearanceChangedNotification
+							   selector:@selector(themeVarietyChanged:)
+								   name:TPCThemeVarietyChangedNotification
+								 object:nil];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(themeVarietyChanged:)
+								   name:TPCThemeVarietyChangedNotification
 								 object:nil];
 }
 
@@ -260,7 +265,7 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 	[self toggleFullScreen:nil];
 }
 
-- (void)themeAppearanceChanged:(NSNotification *)notification
+- (void)themeVarietyChanged:(NSNotification *)notification
 {
 	[self reloadTheme];
 }

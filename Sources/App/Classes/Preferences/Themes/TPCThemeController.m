@@ -123,11 +123,6 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 								 object:nil];
 
 	[RZNotificationCenter() addObserver:self
-							   selector:@selector(themeVarietyChanged:)
-								   name:TPCThemeVarietyChangedNotification
-								 object:nil];
-
-	[RZNotificationCenter() addObserver:self
 							   selector:@selector(themeIntegrityCompromised:)
 								   name:TPCThemeIntegrityCompromisedNotification
 								 object:nil];
@@ -135,6 +130,16 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(themeWasModified:)
 								   name:TPCThemeWasModifiedNotification
+								 object:nil];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(themeVarietyChanged:)
+								   name:TPCThemeAppearanceChangedNotification
+								 object:nil];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(themeVarietyChanged:)
+								   name:TPCThemeVarietyChangedNotification
 								 object:nil];
 }
 

@@ -712,9 +712,9 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 	/* Do not fire notification if there is not a previous
 	 variety (during init) or we are in a compromised state. */
 	if (previousVariety != nil && self.usable) {
-		[RZNotificationCenter() postNotificationName:TPCThemeVarietyChangedNotification object:self];
-
-		if (previousVariety.appearance != variety.appearance) {
+		if (previousVariety.appearance == variety.appearance) {
+			[RZNotificationCenter() postNotificationName:TPCThemeVarietyChangedNotification object:self];
+		} else {
 			[RZNotificationCenter() postNotificationName:TPCThemeAppearanceChangedNotification object:self];
 		}
 	}
