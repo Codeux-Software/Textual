@@ -418,15 +418,23 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 	 2. To automatically reload the theme when CSS and JavaScript
 	  files changed if that's what the user has configured.
 	  If #1 is triggered, then we do not do #2. */
-	if (variety) {
-		BOOL varietyChanged = [self _verifyInegrityOfFileAtURL:url duringMonitoringOfVariety:variety];
-
-		if (varietyChanged) {
-			return YES; // Change made
-		}
+	if (variety == nil) {
+		return NO;
 	}
 
-#warning TODO: Limit change notifications to only those within the current variety.
+	BOOL varietyChanged = [self _verifyInegrityOfFileAtURL:url duringMonitoringOfVariety:variety];
+
+	if (varietyChanged) {
+		return YES; // Change made
+	}
+
+	/* Limit #2 to scope of active variety. */
+	if (variety != self.variety &&
+		variety != self.globalVariety)
+	{
+		return NO;
+	}
+
 	/* Do #2 */
 	NSString *fileExtension = url.pathExtension;
 

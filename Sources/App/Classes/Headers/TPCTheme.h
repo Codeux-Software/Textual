@@ -82,8 +82,8 @@ TEXTUAL_EXTERN NSNotificationName const TPCThemeAppearanceChangedNotification;
 /* Notification used for second case. */
 TEXTUAL_EXTERN NSNotificationName const TPCThemeVarietyChangedNotification;
 
-/* A CSS or JavaScript file within the theme or one of its
- varieties has been modified. */
+/* A CSS or JavaScript file within the global variety or the variety
+ in use was modified. */
 TEXTUAL_EXTERN NSNotificationName const TPCThemeWasModifiedNotification;
 
 @class GRMustacheTemplate;
