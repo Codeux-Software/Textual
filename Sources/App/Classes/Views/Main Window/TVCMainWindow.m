@@ -236,7 +236,7 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(themeVarietyChanged:)
-								   name:TPCThemeVarietyChangedNotification
+								   name:TPCThemeAppearanceChangedNotification
 								 object:nil];
 
 	[RZNotificationCenter() addObserver:self
