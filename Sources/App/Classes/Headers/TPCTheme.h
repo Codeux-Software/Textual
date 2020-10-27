@@ -40,8 +40,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class GRMustacheTemplate;
-
 #define TPCThemeSettingsDisabledIndentationOffset	 -99
 
 #define TPCThemeSettingsNewestTemplateEngineVersion		4
@@ -86,7 +84,7 @@ TEXTUAL_EXTERN NSNotificationName const TPCThemeVarietyChangedNotification;
  in use was modified. */
 TEXTUAL_EXTERN NSNotificationName const TPCThemeWasModifiedNotification;
 
-@class GRMustacheTemplate;
+@class GRMustacheTemplate, GRMustacheTemplateRepository;
 @class TPCThemeSettings;
 
 @interface TPCTheme : NSObject
