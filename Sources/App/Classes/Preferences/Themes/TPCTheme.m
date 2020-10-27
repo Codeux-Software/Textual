@@ -53,7 +53,7 @@ NSString * const TPCThemeIntegrityCompromisedNotification	= @"TPCThemeIntegrityC
 NSString * const TPCThemeIntegrityRestoredNotification		= @"TPCThemeIntegrityRestoredNotification";
 NSString * const TPCThemeAppearanceChangedNotification		= @"TPCThemeAppearanceChangedNotification";
 NSString * const TPCThemeVarietyChangedNotification			= @"TPCThemeVarietyChangedNotification";
-NSString * const TPCThemeWasModifiedNotification				= @"TPCThemeModifiedNotification";
+NSString * const TPCThemeWasModifiedNotification			= @"TPCThemeWasModifiedNotification";
 
 typedef NS_ENUM(NSUInteger, _TPCThemeChooseVarietyResult) {
 	_TPCThemeChooseVarietyResultNoChange,
