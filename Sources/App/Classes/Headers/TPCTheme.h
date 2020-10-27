@@ -133,7 +133,6 @@ TEXTUAL_EXTERN NSNotificationName const TPCThemeModifiedNotification;
 
 @interface TPCThemeSettings : NSObject
 @property (readonly) TPCThemeAppearanceType appearance;
-@property (readonly) BOOL supportsMultipleAppearances;
 @property (readonly) BOOL invertSidebarColors;
 @property (readonly) BOOL js_postHandleEventNotifications;
 @property (readonly) BOOL js_postAppearanceChangesNotification;

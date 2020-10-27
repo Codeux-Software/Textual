@@ -64,7 +64,6 @@ NSString * const TPCThemeControllerBundledThemeNameBasicPrefix			= @"resource";
 NSString * const TPCThemeControllerBundledThemeNameCompletePrefix		= @"resource:";
 
 NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeControllerThemeListDidChangeNotification";
-NSString * const TPCThemeControllerThemeVarietyDidChangeNotification	= @"TPCThemeControllerThemeVarietyDidChangeNotification";
 
 typedef NSDictionary		<NSString *, TPCTheme *> 	*TPCThemeControllerThemeList;
 typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeListMutable;
