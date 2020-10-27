@@ -281,7 +281,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	NSURL *globalVarietyURL = globalVariety.url;
 
-	if ([url isEqualByStandardizingPaths:globalVarietyURL]) {
+	if ([self _isDirectoryURL:url equalTo:globalVarietyURL]) {
 		return globalVariety;
 	}
 
