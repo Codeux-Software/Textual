@@ -319,7 +319,6 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 			NSURL *fileURL = [NSURL fileURLWithPath:filePath];
 
 			if (flags & kFSEventStreamEventFlagItemCreated ||
-				flags & kFSEventStreamEventFlagItemCloned ||
 				flags & kFSEventStreamEventFlagItemModified ||
 				flags & kFSEventStreamEventFlagItemRemoved ||
 				flags & kFSEventStreamEventFlagItemRenamed)
