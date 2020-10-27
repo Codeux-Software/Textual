@@ -583,9 +583,11 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 		return;
 	}
 
-	if ([self validateThemeAndReloadIfNecessary]) {
-		LogToConsoleInfo("Reloading theme because it failed validation.");
+	if ([self validateThemeAndReloadIfNecessary] == NO) {
+		return;
 	}
+
+	LogToConsoleInfo("Reloading theme because it failed validation.");
 
 	[self presentIntegrityCompromisedAlert];
 }
