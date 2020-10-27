@@ -2,11 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Appearance Varieties</key>
-	<array>
-		<string>dark</string>
-		<string>light</string>
-	</array>
 	<key>Template Engine Versions</key>
 	<dict>
 		<key>default</key>
