@@ -100,12 +100,16 @@
 
 "py0-cr" = "The style named “%@” is not designed to work with this version of Textual";
 "76t-pn" = "Some features will not work correctly with this style selected.";
-"2a3-5s" = "Change Style";
+"2a3-5s" = "Choose Different Style";
 
 "ezn-rm" = "The style named “%@” wants to enable dark mode but styles are no longer allowed to change that preference";
 "193-6o" = "Do you want to keep Textual's light appearance or switch to dark mode?";
 "hf0-w3" = "Keep It Light";
 "hv0-79" = "Paint It Black";
+
+"fjw-hj" = "The style named “%@” has been modified in such a way that it can no longer be used";
+"3wd-gj" = "This usually occurs when one or more critical files have been moved or deleted.";
+"c4z-2b" = "Choose Different Style";
 
 "1fm-up" = "This action will save a copy of your configuration to a location of your choice";
 "syp-al" = "Please note that the following items cannot be exported: custom addons, file transfer download location, log location, and passwords.";

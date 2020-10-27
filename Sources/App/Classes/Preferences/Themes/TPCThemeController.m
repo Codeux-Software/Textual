@@ -127,6 +127,11 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 							   selector:@selector(themeVarietyChanged:)
 								   name:TPCThemeVarietyChangedNotification
 								 object:nil];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(themeIntegrityCompromised:)
+								   name:TPCThemeIntegrityCompromisedNotification
+								 object:nil];
 }
 
 - (void)prepareForApplicationTermination
@@ -573,6 +578,19 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 	[self updatePreferences];
 }
 
+- (void)themeIntegrityCompromised:(NSNotification *)notification
+{
+	if (self.theme != notification.object) {
+		return;
+	}
+
+	if ([self validateThemeAndReloadIfNecessary]) {
+		LogToConsoleInfo("Reloading theme because it failed validation.");
+	}
+
+	[self presentIntegrityCompromisedAlert];
+}
+
 - (void)load
 {
 	/* resetPreferencesForPreferredTheme is called for the configured
@@ -722,13 +740,26 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 			   }];
 }
 
+- (void)presentIntegrityCompromisedAlert
+{
+	[TDCAlert alertWithMessage:TXTLS(@"Prompts[3wd-gj]")
+						 title:TXTLS(@"Prompts[fjw-hj]", self.name)
+				 defaultButton:TXTLS(@"Prompts[c4z-2b]")
+			   alternateButton:TXTLS(@"Prompts[c7s-dq]")
+			   completionBlock:^(TDCAlertResponse buttonClicked, BOOL suppressed, id underlyingAlert) {
+				   if (buttonClicked != TDCAlertResponseDefault) {
+					   return;
+				   }
+
+				   [menuController() showStylePreferences:nil];
+			   }];
+}
+
 - (BOOL)validateThemeAndReloadIfNecessary
 {
 	if ([self resetPreferencesForActiveTheme] == NO) {
 		return NO;
 	}
-
-	LogToConsoleInfo("Reloading theme because it failed validation.");
 
 	[TPCPreferences performReloadAction:TPCPreferencesReloadActionStyle];
 
