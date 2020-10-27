@@ -884,7 +884,7 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 			bundledTheme = validatedTheme;
 		}
 
-		if ([self.class themeExists:bundledTheme] == NO) {
+		if ([self themeExists:bundledTheme] == NO) {
 			if ( suggestedThemeName) {
 				*suggestedThemeName = [TPCPreferences themeNameDefault];
 
@@ -901,7 +901,7 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 		NSString *cloudTheme = [self.class buildFilename:themeName forStorageLocation:TPCThemeStorageLocationCloud];
 
-		if ([self.class themeExists:cloudTheme]) {
+		if ([self themeExists:cloudTheme]) {
 			/* If the theme exists in the cloud, then we go to that. */
 			if ( suggestedThemeName) {
 				*suggestedThemeName = cloudTheme;
@@ -912,10 +912,10 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 #endif
 
 			/* If there is no cloud theme, then we continue validation. */
-			if ([self.class themeExists:validatedTheme] == NO) {
+			if ([self themeExists:validatedTheme] == NO) {
 				NSString *bundledTheme = [self.class buildFilename:themeName forStorageLocation:TPCThemeStorageLocationBundle];
 
-				if ([self.class themeExists:bundledTheme]) {
+				if ([self themeExists:bundledTheme]) {
 					/* Use a bundled theme with the same name if available. */
 					if ( suggestedThemeName) {
 						*suggestedThemeName = bundledTheme;
@@ -940,21 +940,21 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 
 	else if ([themeSource isEqualToString:TPCThemeControllerCloudThemeNameBasicPrefix])
 	{
-		if ([self.class themeExists:validatedTheme] == NO) {
+		if ([self themeExists:validatedTheme] == NO) {
 			/* If the current theme stored in the cloud is not valid, then we try to revert
 			 to a custom one or a bundled one depending which one is available. */
 			NSString *customTheme = [self.class buildFilename:themeName forStorageLocation:TPCThemeStorageLocationCustom];
 
 			NSString *bundledTheme = [self.class buildFilename:themeName forStorageLocation:TPCThemeStorageLocationBundle];
 
-			if ([self.class themeExists:customTheme]) {
+			if ([self themeExists:customTheme]) {
 				/* Use a custom theme with the same name if available. */
 				if ( suggestedThemeName) {
 					*suggestedThemeName = customTheme;
 
 					keyChanged = YES;
 				}
-			} else if ([self.class themeExists:bundledTheme]) {
+			} else if ([self themeExists:bundledTheme]) {
 				/* Use a bundled theme with the same name if available. */
 				if ( suggestedThemeName) {
 					*suggestedThemeName = bundledTheme;

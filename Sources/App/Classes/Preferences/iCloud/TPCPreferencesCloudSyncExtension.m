@@ -94,7 +94,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeThemeNameNotification = @"TPCPr
 		return;
 	}
 
-	if ([TPCThemeController themeExists:remoteValue] == NO) {
+	if ([themeController() themeExists:remoteValue] == NO) {
 		return;
 	}
 
