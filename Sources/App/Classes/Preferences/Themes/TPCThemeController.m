@@ -49,6 +49,7 @@
 #import "TPCPreferencesCloudSync.h"
 #import "TPCPreferencesLocalPrivate.h"
 #import "TPCPreferencesReload.h"
+#import "TPCResourceManager.h"
 #import "TPCThemePrivate.h"
 #import "TPCThemeControllerPrivate.h"
 
@@ -604,7 +605,7 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 	 notification is posted any observers can obtain the most up-to-date
 	 information when accessing -name and other properties. */
 	/* The reload action will also call -reload but that call will
-	 return immediately because we compare the value of self.theme. */ 
+	 return immediately because we compare the value of self.theme. */
 	[self reload];
 
 	[TPCPreferences performReloadAction:TPCPreferencesReloadActionStyle];
@@ -866,9 +867,24 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 
 	if (themeSource == nil || [themeSource isEqualToString:TPCThemeControllerBundledThemeNameBasicPrefix])
 	{
+		/* Remap name of bundled themes. */
+		NSString *bundledTheme = [self remappedThemeName:validatedTheme];
+
+		if (bundledTheme) {
+			if ( suggestedThemeName) {
+				*suggestedThemeName = bundledTheme;
+
+				keyChanged = YES;
+			}
+		}
+
 		/* If the theme is faulted and is a bundled theme, then we can do
 		 nothing except try to recover by using the default one. */
-		if ([self.class themeExists:validatedTheme] == NO) {
+		if (bundledTheme == nil) {
+			bundledTheme = validatedTheme;
+		}
+
+		if ([self.class themeExists:bundledTheme] == NO) {
 			if ( suggestedThemeName) {
 				*suggestedThemeName = [TPCPreferences themeNameDefault];
 
@@ -957,6 +973,25 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 	} // theme source
 
 	return (keyChanged == NO);
+}
+
+- (nullable NSString *)remappedThemeName:(NSString *)themeName
+{
+	NSParameterAssert(themeName != nil);
+
+	static NSDictionary<NSString *, NSString *> *cachedValues = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		NSDictionary *staticValues =
+		[TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
+
+		cachedValues =
+		[staticValues dictionaryForKey:@"TPCThemeController Remapped Themes"];
+	});
+
+	return cachedValues[themeName];
 }
 
 - (BOOL)isBundledTheme

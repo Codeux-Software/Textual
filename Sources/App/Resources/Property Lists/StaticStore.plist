@@ -119,6 +119,15 @@
 		<key>GCDAsyncSocket Cipher List Includes Deprecated Ciphers</key>
 		<string>=</string>
 	</dict>
+	<key>TPCThemeController Remapped Themes</key>
+	<dict>
+		<key>resource:Simplified Light</key>
+		<string>resource:Simplified</string>
+		<key>resource:Simplified Dark</key>
+		<string>resource:Simplified</string>
+		<key>resource:Tomorrow Night (Eighties)</key>
+		<string>resource:Tomorrow</string>
+	</dict>
 	<key>IRCClient List of NickServ Successfully Identified Tokens</key>
 	<array>
 		<string>now recognized</string>
