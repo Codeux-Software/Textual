@@ -588,11 +588,13 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 		return;
 	}
 
-	if ([self validateThemeAndReloadIfNecessary] == NO) {
+	if ([self resetPreferencesForActiveTheme] == NO) { // Validate theme
 		return;
 	}
 
 	LogToConsoleInfo("Reloading theme because it failed validation.");
+
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionStyle];
 
 	[RZNotificationCenter() postNotificationName:TPCThemeControllerThemeListDidChangeNotification object:self];
 
@@ -776,17 +778,6 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 
 				   [menuController() showStylePreferences:nil];
 			   }];
-}
-
-- (BOOL)validateThemeAndReloadIfNecessary
-{
-	if ([self resetPreferencesForActiveTheme] == NO) {
-		return NO;
-	}
-
-	[TPCPreferences performReloadAction:TPCPreferencesReloadActionStyle];
-
-	return YES;
 }
 
 - (void)resetPreferencesForPreferredTheme
