@@ -53,7 +53,7 @@ NSString * const TPCThemeIntegrityCompromisedNotification	= @"TPCThemeIntegrityC
 NSString * const TPCThemeIntegrityRestoredNotification		= @"TPCThemeIntegrityRestoredNotification";
 NSString * const TPCThemeAppearanceChangedNotification		= @"TPCThemeAppearanceChangedNotification";
 NSString * const TPCThemeVarietyChangedNotification			= @"TPCThemeVarietyChangedNotification";
-NSString * const TPCThemeModifiedNotification				= @"TPCThemeModifiedNotification";
+NSString * const TPCThemeWasModifiedNotification				= @"TPCThemeModifiedNotification";
 
 typedef NS_ENUM(NSUInteger, _TPCThemeChooseVarietyResult) {
 	_TPCThemeChooseVarietyResultNoChange,
@@ -492,7 +492,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 		return;
 	}
 
-	[RZNotificationCenter() postNotificationName:TPCThemeModifiedNotification object:self];
+	[RZNotificationCenter() postNotificationName:TPCThemeWasModifiedNotification object:self];
 
 	self.recentlyModified = YES;
 }

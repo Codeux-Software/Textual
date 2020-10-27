@@ -131,6 +131,11 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 							   selector:@selector(themeIntegrityCompromised:)
 								   name:TPCThemeIntegrityCompromisedNotification
 								 object:nil];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(themeWasModified:)
+								   name:TPCThemeWasModifiedNotification
+								 object:nil];
 }
 
 - (void)prepareForApplicationTermination
@@ -592,6 +597,21 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 	[RZNotificationCenter() postNotificationName:TPCThemeControllerThemeListDidChangeNotification object:self];
 
 	[self presentIntegrityCompromisedAlert];
+}
+
+- (void)themeWasModified:(NSNotification *)notification
+{
+	if (self.theme != notification.object) {
+		return;
+	}
+
+	if ([TPCPreferences automaticallyReloadCustomThemesWhenTheyChange] == NO) {
+		return;
+	}
+
+	LogToConsoleInfo("Reloading theme because it was modified.");
+
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionStyle];
 }
 
 - (void)load

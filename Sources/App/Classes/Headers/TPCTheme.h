@@ -84,7 +84,7 @@ TEXTUAL_EXTERN NSNotificationName const TPCThemeVarietyChangedNotification;
 
 /* A CSS or JavaScript file within the theme or one of its
  varieties has been modified. */
-TEXTUAL_EXTERN NSNotificationName const TPCThemeModifiedNotification;
+TEXTUAL_EXTERN NSNotificationName const TPCThemeWasModifiedNotification;
 
 @class GRMustacheTemplate;
 @class TPCThemeSettings;
