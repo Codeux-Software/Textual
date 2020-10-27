@@ -73,9 +73,6 @@ TEXTUAL_EXTERN NSNotificationName const TPCThemeControllerThemeListDidChangeNoti
 
 @property (getter=isBundledTheme, readonly) BOOL bundledTheme;
 
-/* Returns YES if a theme reload was necessary */
-- (BOOL)validateThemeAndReloadIfNecessary;
-
 /* Calls for all themes */
 - (void)enumerateAvailableThemesWithBlock:(void(NS_NOESCAPE ^)(NSString *fileName, TPCThemeStorageLocation storageLocation, BOOL multipleVaraints, BOOL *stop))enumerationBlock;
 
