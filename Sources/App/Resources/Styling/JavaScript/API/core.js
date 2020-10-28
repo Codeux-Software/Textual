@@ -107,8 +107,8 @@ Textual.viewBodyDidLoad					= function() {};
 /*  Textual.appearanceDidChange() can be used to observe changes to the appearance. */
 // app.appearance(callbackFunction);
 
-/*	A boolean entry named "Post Textual.appearanceDidChange() Notifications" must be 
-	added to the styleSettings.plist file in order to enable use of this callback. */
+/*	A boolean entry named "Post Textual.appearanceDidChange() Notifications" must
+    be added to the settings.plist file in order to enable use of this callback. */
 Textual.appearanceDidChange					= function(changedTo) {};
 
 /* *********************************************************************** */
@@ -136,7 +136,7 @@ Textual.appearanceDidChange					= function(changedTo) {};
 */
 
 /*	A boolean entry named "Post Textual.handleEvent() Notifications" must be
-	added to the styleSettings.plist file in order to enable use of this callback. */
+	added to the settings.plist file in order to enable use of this callback. */
 Textual.handleEvent                            = function(eventToken) {};
 
 /* *********************************************************************** */
@@ -269,7 +269,7 @@ Textual.handleEvent                            = function(eventToken) {};
 
 	- Enabling:
 	   A string entry named "Key-value Store Name" must be added to the
-	   styleSettings.plist file in order to enable use of this feature.
+	   settings.plist file in order to enable use of this feature.
 	
 	   The value of this entry is the name to save the store under. 
 
@@ -292,8 +292,8 @@ Textual.styleSettingDidChange                       = function(changedKey) {};
 /*                          Textual Preferences                            */
 /* *********************************************************************** */
 
-/*	A boolean entry named "Post Textual.preferencesDidChange() Notifications" must be
-    added to the styleSettings.plist file in order to enable use of this callback. */
+/*	A boolean entry named "Post Textual.preferencesDidChange() Notifications" must
+	be added to the settings.plist file in order to enable use of this callback. */
 /*	This callback is rate-limit at one call per-second, per-view. */
 /*	This callback exists for extremely specific use cases. In general, if you need
 	something that doesn't exist above, then it's better to ask for it to be added

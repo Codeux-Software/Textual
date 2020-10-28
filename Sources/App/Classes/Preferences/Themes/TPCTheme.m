@@ -1347,7 +1347,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if (storeKey == nil) {
 		if ( resultError) {
-			*resultError = @"Empty key-value store name in styleSettings.plist — Set the key \"Key-value Store Name\" in styleSettings.plist as a string. The current style name is the recommended value.";
+			*resultError = @"Empty key-value store name in settings.plist — Set the key \"Key-value Store Name\" in settings.plist as a string. The current style name is the recommended value.";
 		}
 
 		return nil;
@@ -1376,7 +1376,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	if (storeKey == nil) {
 		if (resultError) {
-			*resultError = @"Empty key-value store name in styleSettings.plist — Set the key \"Key-value Store Name\" in styleSettings.plist as a string. The current style name is the recommended value.";
+			*resultError = @"Empty key-value store name in settings.plist — Set the key \"Key-value Store Name\" in settings.plist as a string. The current style name is the recommended value.";
 		}
 
 		return NO;
