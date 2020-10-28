@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,11 +23,11 @@
             <rect key="contentRect" x="593" y="374" width="600" height="201"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="600" height="199"/>
+                <rect key="frame" x="0.0" y="0.0" width="600" height="201"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="26">
-                        <rect key="frame" x="19" y="163" width="89" height="16"/>
+                        <rect key="frame" x="19" y="165" width="89" height="16"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Topic for %@:" id="27">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -35,7 +35,7 @@
                         </textFieldCell>
                     </textField>
                     <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37">
-                        <rect key="frame" x="20" y="61" width="560" height="94"/>
+                        <rect key="frame" x="20" y="63" width="560" height="94"/>
                         <clipView key="contentView" id="KLN-Zi-fYz">
                             <rect key="frame" x="1" y="1" width="558" height="92"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -70,7 +70,7 @@
                         </connections>
                     </scrollView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9">
-                        <rect key="frame" x="469" y="13" width="118" height="32"/>
+                        <rect key="frame" x="470" y="13" width="117" height="32"/>
                         <buttonCell key="cell" type="push" title="Change Topic" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="20">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -84,7 +84,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="10">
-                        <rect key="frame" x="395" y="13" width="76" height="32"/>
+                        <rect key="frame" x="396" y="13" width="76" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="21">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -104,7 +104,7 @@ Gw
                     <constraint firstAttribute="trailing" secondItem="37" secondAttribute="trailing" constant="20" id="No7-Wc-km1"/>
                     <constraint firstItem="26" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="40" secondAttribute="trailing" id="SvT-gc-Mhc"/>
                     <constraint firstItem="37" firstAttribute="top" secondItem="26" secondAttribute="bottom" constant="8" symbolic="YES" id="UxQ-Tf-Kqm"/>
-                    <constraint firstItem="9" firstAttribute="top" secondItem="40" secondAttribute="bottom" constant="22" id="cnl-Pw-siu"/>
+                    <constraint firstItem="9" firstAttribute="top" secondItem="37" secondAttribute="bottom" constant="23" id="Y5U-NX-EYF"/>
                     <constraint firstAttribute="bottom" secondItem="9" secondAttribute="bottom" constant="20" id="eem-Dd-aGC"/>
                     <constraint firstItem="10" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6" secondAttribute="leading" constant="20" id="hrc-7X-pfb"/>
                     <constraint firstItem="26" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" symbolic="YES" id="kkM-IF-4TV"/>
