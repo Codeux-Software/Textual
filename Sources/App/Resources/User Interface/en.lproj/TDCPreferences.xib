@@ -493,7 +493,7 @@
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="236" minWidth="40" maxWidth="1000" id="WJE-D0-e9x">
+                                                <tableColumn width="235" minWidth="40" maxWidth="1000" id="WJE-D0-e9x">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -551,7 +551,7 @@
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn width="236" minWidth="40" maxWidth="1000" id="FZ6-cu-ERb">
+                                                <tableColumn width="234" minWidth="40" maxWidth="1000" id="FZ6-cu-ERb">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -2811,7 +2811,7 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn identifier="addonCommand" width="456" minWidth="40" maxWidth="1000" id="GzW-ZW-4AC">
+                                    <tableColumn identifier="addonCommand" width="455" minWidth="40" maxWidth="1000" id="GzW-ZW-4AC">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Name">
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -2826,11 +2826,11 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView id="5gM-WP-Vf6">
-                                                <rect key="frame" x="1" y="1" width="465" height="17"/>
+                                                <rect key="frame" x="1" y="1" width="464" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="mh1-TF-o7A">
-                                                        <rect key="frame" x="0.0" y="1" width="465" height="16"/>
+                                                        <rect key="frame" x="0.0" y="1" width="464" height="16"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="gJi-dD-yjf">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -5028,8 +5028,8 @@ You should therefore not rely solely on this preference.</string>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="750" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T5c-TO-S7r">
-                    <rect key="frame" x="185" y="158" width="316" height="226"/>
+                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="750" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XFN-KH-K9I">
+                    <rect key="frame" x="177" y="158" width="316" height="226"/>
                     <subviews>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="1g9-Qk-YQN">
                             <rect key="frame" x="-2" y="209" width="123" height="18"/>
@@ -5272,14 +5272,14 @@ You should therefore not rely solely on this preference.</string>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="V0L-wf-MX5" secondAttribute="bottom" constant="30" id="0Fr-aZ-e5g"/>
                 <constraint firstItem="V0L-wf-MX5" firstAttribute="top" secondItem="f8P-S1-YSA" secondAttribute="bottom" constant="30" id="6vT-lm-ST7"/>
-                <constraint firstItem="84h-O7-xuk" firstAttribute="top" secondItem="b9a-MV-ff4" secondAttribute="bottom" constant="20" id="Ke4-vO-Ub3"/>
+                <constraint firstItem="XFN-KH-K9I" firstAttribute="top" secondItem="eAs-xY-p50" secondAttribute="bottom" constant="20" id="FgW-8y-Wm4"/>
                 <constraint firstItem="f8P-S1-YSA" firstAttribute="top" secondItem="84h-O7-xuk" secondAttribute="bottom" constant="20" id="O4J-YF-RNM"/>
+                <constraint firstItem="XFN-KH-K9I" firstAttribute="centerX" secondItem="dAH-Sl-d77" secondAttribute="centerX" id="PsU-ba-jQk"/>
                 <constraint firstItem="eAs-xY-p50" firstAttribute="leading" secondItem="dAH-Sl-d77" secondAttribute="leading" constant="180" id="aKK-Ts-ebc"/>
+                <constraint firstItem="84h-O7-xuk" firstAttribute="top" secondItem="XFN-KH-K9I" secondAttribute="bottom" constant="20" id="ayJ-3x-yuM"/>
                 <constraint firstItem="V0L-wf-MX5" firstAttribute="centerX" secondItem="dAH-Sl-d77" secondAttribute="centerX" id="b3i-fV-DOR"/>
-                <constraint firstItem="T5c-TO-S7r" firstAttribute="top" secondItem="eAs-xY-p50" secondAttribute="bottom" constant="20" id="hXU-cl-mVf"/>
                 <constraint firstItem="eAs-xY-p50" firstAttribute="centerX" secondItem="dAH-Sl-d77" secondAttribute="centerX" id="hdQ-gY-9vm"/>
                 <constraint firstItem="84h-O7-xuk" firstAttribute="centerX" secondItem="dAH-Sl-d77" secondAttribute="centerX" id="iXb-YZ-e1Y"/>
-                <constraint firstItem="T5c-TO-S7r" firstAttribute="centerX" secondItem="dAH-Sl-d77" secondAttribute="centerX" constant="8" symbolic="YES" id="kUi-cy-IEm"/>
                 <constraint firstItem="eAs-xY-p50" firstAttribute="top" secondItem="dAH-Sl-d77" secondAttribute="top" constant="30" id="sp6-Xk-TNz"/>
                 <constraint firstItem="f8P-S1-YSA" firstAttribute="centerX" secondItem="dAH-Sl-d77" secondAttribute="centerX" id="vVU-lv-eZ3"/>
             </constraints>

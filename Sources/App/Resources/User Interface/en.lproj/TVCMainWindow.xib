@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -339,7 +339,6 @@
                             <constraint firstAttribute="bottom" secondItem="KgM-JY-9PC" secondAttribute="bottom" id="RqD-1B-IBq"/>
                             <constraint firstItem="2k7-ax-6YE" firstAttribute="top" secondItem="dVR-2U-X51" secondAttribute="top" id="TbP-t5-Rvn"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="XJm-Dd-FjI"/>
-                            <constraint firstAttribute="bottom" secondItem="2k7-ax-6YE" secondAttribute="bottom" id="dZf-Si-lV7"/>
                             <constraint firstItem="dCp-Wp-aIX" firstAttribute="leading" secondItem="KgM-JY-9PC" secondAttribute="trailing" constant="1" id="pYD-cE-l8m"/>
                             <constraint firstItem="KgM-JY-9PC" firstAttribute="leading" secondItem="dVR-2U-X51" secondAttribute="leading" id="qYu-Gl-WeD"/>
                         </constraints>
@@ -1968,7 +1967,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ba0-0Q-9bh">
-                    <rect key="frame" x="196" y="13" width="90" height="32"/>
+                    <rect key="frame" x="197" y="13" width="89" height="32"/>
                     <buttonCell key="cell" type="push" title="Continue" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="Ml7-3B-qhV">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -2016,7 +2015,7 @@ To continue using Textual 7, you will need to purchase it.</string>
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="u65-PZ-rca">
-                    <rect key="frame" x="199" y="101" width="122" height="32"/>
+                    <rect key="frame" x="200" y="101" width="121" height="32"/>
                     <buttonCell key="cell" type="push" title="Purchase Now" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="Oyn-9I-e5e">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -2103,11 +2102,11 @@ To continue using Textual 7, you will need to purchase it.</string>
         <image name="FormattingColor_7" width="16" height="16"/>
         <image name="FormattingColor_8" width="16" height="16"/>
         <image name="FormattingColor_9" width="16" height="16"/>
-        <image name="FormattingColor_Rainbow" width="8" height="8"/>
+        <image name="FormattingColor_Rainbow" width="16" height="16"/>
         <image name="MainWindowSegmentedControlUserTemplate" width="20" height="18"/>
         <image name="NSActionTemplate" width="15" height="15"/>
-        <image name="NSAddTemplate" width="15" height="13"/>
-        <image name="NSLockUnlockedTemplate" width="18" height="15"/>
+        <image name="NSAddTemplate" width="14" height="13"/>
+        <image name="NSLockUnlockedTemplate" width="17" height="15"/>
         <image name="applicationIcon" width="512" height="512"/>
     </resources>
 </document>
