@@ -436,7 +436,7 @@ ClassWithDesignatedInitializerInitMethod
 				return;
 			}
 
-			IRCChannelMemberList *memberList = thisChannel.memberInfo;
+			IRCChannelMemberList *memberList = targetChannel.memberInfo;
 
 			[memberList _replaceMember:member withMember:member resort:resort];
 		}];
