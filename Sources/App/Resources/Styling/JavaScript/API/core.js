@@ -109,6 +109,9 @@ Textual.viewBodyDidLoad					= function() {};
 
 /*  A boolean entry named "Post Textual.appearanceDidChange() Notifications" must
     be added to the settings.plist file in order to enable use of this callback. */
+/*  A style that has a variety for each appearance type will never receive a callback.
+    Those styles will have the best variety automatically selected by Textual and the
+    style will be reloaded to refresh the view. */
 Textual.appearanceDidChange					= function(changedTo) {};
 
 /* *********************************************************************** */
