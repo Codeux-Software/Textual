@@ -49,8 +49,7 @@ If you do not have a license key, then set the ``TEXTUAL_BUILT_WITH_LICENSE_MANA
 
 The latest version of Textual requires two things to be built. One is a valid (does not need to be issued by Apple) code signing certificate. The second is an installation of Xcode 10.0 or newer on macOS High Sierra. **Building on anything earlier is not supported because of Swift 4.2 code.**
 
-**DO NOT change the Code Signing Identity setting through Xcode.**
-Once you have your code signing certificate, **DO NOT modify the Build Settings of Textual through Xcode**. Modify the file located at _[Configurations ➜ Build ➜ Code Signing Identity.xcconfig](https://github.com/Codeux-Software/Textual/blob/master/Configurations/Build/Code%20Signing%20Identity.xcconfig)_ instead.
+**DO NOT change the Code Signing Identity setting through Xcode.** Modify the file located at _[Configurations ➜ Build ➜ Code Signing Identity.xcconfig](https://github.com/Codeux-Software/Textual/blob/master/Configurations/Build/Code%20Signing%20Identity.xcconfig)_ instead.
 
 Build Textual using the "Standard Release" build scheme.
 
