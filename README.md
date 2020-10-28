@@ -1,8 +1,8 @@
 # Textual [![GitHub release](https://img.shields.io/github/tag/Codeux-Software/Textual.svg)](https://github.com/Codeux-Software/Textual/blob/master) [![Platform](https://img.shields.io/badge/platform-OS%20X-lightgrey.svg)](http://www.textualapp.com/mac-app-store)
 
-Textual is a customizable application for interacting with Internet Relay Chat (IRC) on macOS.
+Textual is a highly customizable app for interacting with Internet Relay Chat (IRC) chatrooms on macOS.
 
-Textual can be customized with styles written in CSS 3, HTML 5, and JavaScript;  [plugins](https://help.codeux.com/textual/Writing-Plugins.kb) written in Objective-C and Swift, and [scripts](https://help.codeux.com/textual/Writing-Scripts.kb) written in AppleScript (and many other languages)
+Textual can be customized with styles written in CSS, HTML, and JavaScript; [plugins](https://help.codeux.com/textual/Writing-Plugins.kb) written in Objective-C & Swift, and [scripts](https://help.codeux.com/textual/Writing-Scripts.kb) written in AppleScript (plus many other languages)
 
 Precompiled versions of Textual can be purchased in the [Mac App Store](http://www.textualapp.com/mac-app-store) or [directly from Codeux Software](https://www.textualapp.com/fastspring-store/).
 
@@ -19,13 +19,9 @@ Precompiled versions of Textual can be purchased in the [Mac App Store](http://w
 - \#textual on chat.freenode.net
 - Guides: [Writing Plugins](https://help.codeux.com/textual/Writing-Plugins.kb), [Writing Scripts](https://help.codeux.com/textual/Writing-Scripts.kb)
 
-## Note Regarding Support
+## Note Regarding Downloading Source Code
 
-Please be aware that while it is within your right to compile Textual, **Codeux Software will not provide support for the building process because it encourages the use of potentially unstable code**. If you do succeed in building Textual, then you will not be turned away when asking for support using the application itself.
-
-## Note Regarding Downloading Textual
-
-Textual is dependent on several other projects to build. This repository is automatically linked against these other projects using what are known as "submodules" — Clicking the "Download ZIP" button to build a copy of Textual will not download a copy of these projects that Textual depends on. Therefore, to properly build Textual, Textual must be cloned using [Github for Mac](https://mac.github.com/) or by using the following commands in Terminal:
+Textual is dependent on several other projects to build. This repository is automatically linked against these other projects using what are known as "submodules" — Clicking the "Download ZIP" button to build a copy of Textual will not download a copy of these projects. The source code must be cloned using [Github for Mac](https://mac.github.com/) or by using the following commands in Terminal:
 
 ```
 git clone https://github.com/Codeux-Software/Textual.git Textual
@@ -39,25 +35,24 @@ git submodule update --init --recursive
 
 **TEXTUAL DOES NOT REQUIRE A CERTIFICATE ISSUED BY APPLE TO BUILD** which means there is absolutely no reason to turn code signing off.
 
+**DO NOT change the Code Signing Identity setting through Xcode.** Textual uses a configuration file to specify the code signing identity. This allows it to be used accross all projects associated with Textual without having to modify each.
+
+**DO** edit the file located at _[Configurations ➜ Build ➜ Code Signing Identity.xcconfig](https://github.com/Codeux-Software/Textual/blob/master/Configurations/Build/Code%20Signing%20Identity.xcconfig)_
+
 ## Note Regarding Trial Mode
 
-To avoid patch files and/or a separate repository; the code which is responsible for licensing paid copies of Textual is in the source code that you download from here.
+The code which is responsible for licensing paid copies of Textual is in the source code that you download from here.
 
-If you do not have a license key, then set the ``TEXTUAL_BUILT_WITH_LICENSE_MANAGER`` flag to 0 in the Standard Release configuration file to disable the inclusion of this code at build time.
+If you do not have a license key, then set the ``TEXTUAL_BUILT_WITH_LICENSE_MANAGER`` flag to `0` in the `Standard Release` configuration file to disable the inclusion of this code at build time.
 
 ## Building Textual
 
 The latest version of Textual requires two things to be built. One is a valid (does not need to be issued by Apple) code signing certificate. The second is an installation of Xcode 10.0 or newer on macOS High Sierra. **Building on anything earlier is not supported because of Swift 4.2 code.**
 
-If you are an Apple registered developer, then obtaining a signing certificate is not very difficult. However, if you are not, a self-signed certificate for "code signing" will work fine. The steps to produce one of these self-signed certificates is very simple to find using Google.
+**DO NOT change the Code Signing Identity setting through Xcode.**
+Once you have your code signing certificate, **DO NOT modify the Build Settings of Textual through Xcode**. Modify the file located at _[Configurations ➜ Build ➜ Code Signing Identity.xcconfig](https://github.com/Codeux-Software/Textual/blob/master/Configurations/Build/Code%20Signing%20Identity.xcconfig)_ instead.
 
-Once you have your code signing certificate, **DO NOT modify the Build Settings of Textual through Xcode**. Instead,  modify the file at the path: **Configurations ➜ Build ➜ Code Signing Identity.xcconfig** — The contents of this file defines the name of the certificate which will be used for code signing.
-
-After defining your code signing certificate, build Textual using the "Standard Release" build scheme.
-
-When you build Textual for the first time, a framework that Textual is dependent on (Encryption Kit) will download several open source libraries (libgpg-error, libgcrypt, and libotr) from the Internet which means if you do not have an active Internet connection, these files will not download and the build will fail.
-
-The build process can take up to a minute or more to complete because in addition to building Textual itself, Xcode has to build these open source libraries as well.
+Build Textual using the "Standard Release" build scheme.
 
 ## Original Limechat License
 
@@ -98,7 +93,7 @@ SUCH DAMAGE.
 Unless stated otherwise by Textual's [Acknowledgements.pdf](Acknowledgements.pdf) document, the license presented below shall govern the distribution of and modifications to; the work hosted by this repository.
 
 <pre>
-Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+Copyright (c) 2010 - 2020 Codeux Software, LLC & respective contributors.
       Please see Acknowledgements.pdf for additional information.
 
 Redistribution and use in source and binary forms, with or without
