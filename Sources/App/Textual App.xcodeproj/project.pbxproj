@@ -3370,7 +3370,7 @@
 		4C4A0D6C1C973E9000064A23 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Application Properties/Info.plist"; sourceTree = "<group>"; };
 		4C4A0D6D1C973E9000064A23 /* InfoAppStore.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = InfoAppStore.plist; path = "Application Properties/InfoAppStore.plist"; sourceTree = "<group>"; };
 		4C51327720F76E980033B703 /* TLOLocalization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TLOLocalization.swift; path = ../../../Shared/Library/TLOLocalization.swift; sourceTree = "<group>"; };
-		4C52379215C18F6700414852 /* Style Default Templates */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Style Default Templates"; path = "Resources/Styling/Style Default Templates"; sourceTree = SOURCE_ROOT; };
+		4C52379215C18F6700414852 /* Style Default Templates */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Style Default Templates"; sourceTree = "<group>"; };
 		4C5274E020F8D78700B18F9D /* IRCConnectionErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnectionErrors.h; path = ../../../Shared/Headers/IRCConnectionErrors.h; sourceTree = "<group>"; };
 		4C5274E520F8D7CD00B18F9D /* IRCConnectionErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnectionErrors.m; path = ../../../Shared/IRC/IRCConnectionErrors.m; sourceTree = "<group>"; };
 		4C58B570186011AC00834882 /* Acknowledgements.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Acknowledgements.pdf; path = ../../Acknowledgements.pdf; sourceTree = SOURCE_ROOT; };
@@ -3398,7 +3398,7 @@
 		4CB873DB22B4A56B005AB046 /* TDCPreferencesUserStyleSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDCPreferencesUserStyleSheet.m; sourceTree = "<group>"; };
 		4CC4A7371F8A1404008FF15F /* GRMustache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GRMustache.framework; path = "../../Frameworks/Static Libraries/Libraries/GRMustache.framework"; sourceTree = SOURCE_ROOT; };
 		4CC70202171E1CB400BDFAE0 /* BuildConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuildConfig.h; path = ../../.tmp/BuildConfig.h; sourceTree = SOURCE_ROOT; };
-		4CCD93FC1CA7291300335381 /* JavaScript */ = {isa = PBXFileReference; lastKnownFileType = folder; name = JavaScript; path = Resources/Styling/JavaScript; sourceTree = SOURCE_ROOT; };
+		4CCD93FC1CA7291300335381 /* JavaScript */ = {isa = PBXFileReference; lastKnownFileType = folder; path = JavaScript; sourceTree = "<group>"; };
 		4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4CD6F7BB1CA7747600842597 /* ExportArchive.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = ExportArchive.sh; path = "Build Scripts/ExportArchive.sh"; sourceTree = "<group>"; };
 		4CEFEDAF22B4B6E8002CEE19 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TDCPreferencesUserStyleSheet.strings; sourceTree = "<group>"; };
