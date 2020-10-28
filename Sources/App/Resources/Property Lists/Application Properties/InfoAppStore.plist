@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>7.2.0</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2010 - 2018 Codeux Software, LLC. All rights reserved.</string>
+	<string>Copyright © 2010 - 2020 Codeux Software, LLC. All rights reserved.</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
