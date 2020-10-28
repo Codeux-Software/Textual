@@ -50,6 +50,8 @@
 	<string>MacBook Air (13-inch, Early 2015)</string>
 	<key>MacBookAir8,1</key>
 	<string>MacBook Air (13-inch, Late 2018)</string>
+	<key> MacBookAir9,1</key>
+	<string>MacBook Air (Early 2020)</string>
 	<key>MacBookPro1,1</key>
 	<string>MacBook Pro (Original)</string>
 	<key>MacBookPro1,2</key>
@@ -138,6 +140,10 @@
 	<string>Mac Pro (Early 2009)</string>
 	<key>MacPro5,1</key>
 	<string>Mac Pro (Mid-2010)</string>
+	<key>MacPro6,1</key>
+	<string>Mac Pro (Late 2013)</string>
+	<key>MacPro7,1</key>
+	<string>Mac Pro (Mid-2019)</string>
 	<key>Macmini1,1</key>
 	<string>Mac Mini (Original)</string>
 	<key>Macmini2,1</key>
@@ -228,8 +234,6 @@
 	<string>iMac (Early 2008)</string>
 	<key>iMac9,1</key>
 	<string>iMac (Early 2009)</string>
-	<key>MacPro6,1</key>
-	<string>Mac Pro (Late 2013)</string>
 	<key>Parallels</key>
 	<string>Parallels Desktop Virtual Machine</string>
 	<key>VMware</key>
