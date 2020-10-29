@@ -1406,18 +1406,6 @@
 		4C0BA6D01990798800857343 /* SmileyConverter.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C956893194A8862003D97FD /* SmileyConverter.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C0BA6D11990798800857343 /* ZNCAdditions.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C0BA6D31990798800857343 /* Acknowledgements.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgements.pdf */; };
-		4C17166B254A589E004BE8AE /* IRC Connection Host.xpc in Resources */ = {isa = PBXBuildFile; fileRef = 4C171668254A589D004BE8AE /* IRC Connection Host.xpc */; };
-		4C17166C254A589E004BE8AE /* IRC Connection Host.xpc in Resources */ = {isa = PBXBuildFile; fileRef = 4C171668254A589D004BE8AE /* IRC Connection Host.xpc */; };
-		4C17166D254A589E004BE8AE /* IRC Connection Host.xpc in Resources */ = {isa = PBXBuildFile; fileRef = 4C171668254A589D004BE8AE /* IRC Connection Host.xpc */; };
-		4C17166E254A589E004BE8AE /* IRC Connection Host.xpc in Resources */ = {isa = PBXBuildFile; fileRef = 4C171668254A589D004BE8AE /* IRC Connection Host.xpc */; };
-		4C17166F254A589E004BE8AE /* Inline Content Loader.xpc in Resources */ = {isa = PBXBuildFile; fileRef = 4C171669254A589D004BE8AE /* Inline Content Loader.xpc */; };
-		4C171670254A589E004BE8AE /* Inline Content Loader.xpc in Resources */ = {isa = PBXBuildFile; fileRef = 4C171669254A589D004BE8AE /* Inline Content Loader.xpc */; };
-		4C171671254A589E004BE8AE /* Inline Content Loader.xpc in Resources */ = {isa = PBXBuildFile; fileRef = 4C171669254A589D004BE8AE /* Inline Content Loader.xpc */; };
-		4C171672254A589E004BE8AE /* Inline Content Loader.xpc in Resources */ = {isa = PBXBuildFile; fileRef = 4C171669254A589D004BE8AE /* Inline Content Loader.xpc */; };
-		4C171673254A589E004BE8AE /* Scrollback History Manager.xpc in Resources */ = {isa = PBXBuildFile; fileRef = 4C17166A254A589E004BE8AE /* Scrollback History Manager.xpc */; };
-		4C171674254A589E004BE8AE /* Scrollback History Manager.xpc in Resources */ = {isa = PBXBuildFile; fileRef = 4C17166A254A589E004BE8AE /* Scrollback History Manager.xpc */; };
-		4C171675254A589E004BE8AE /* Scrollback History Manager.xpc in Resources */ = {isa = PBXBuildFile; fileRef = 4C17166A254A589E004BE8AE /* Scrollback History Manager.xpc */; };
-		4C171676254A589E004BE8AE /* Scrollback History Manager.xpc in Resources */ = {isa = PBXBuildFile; fileRef = 4C17166A254A589E004BE8AE /* Scrollback History Manager.xpc */; };
 		4C171679254A58B4004BE8AE /* Inline Content Loader.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C171669254A589D004BE8AE /* Inline Content Loader.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4C17167A254A58B4004BE8AE /* IRC Connection Host.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C171668254A589D004BE8AE /* IRC Connection Host.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4C17167B254A58B4004BE8AE /* Scrollback History Manager.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 4C17166A254A589E004BE8AE /* Scrollback History Manager.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -6345,7 +6333,6 @@
 				4C06E0A820EC4A540055D09A /* FormattingColor_5.png in Resources */,
 				4C06DFB820EC49FA0055D09A /* VibrantLightServerListViewPrivateMessageUserIconActive@2x.tif in Resources */,
 				4C06E0A120EC4A540055D09A /* FormattingColor_Rainbow.tif in Resources */,
-				4C171673254A589E004BE8AE /* Scrollback History Manager.xpc in Resources */,
 				4C06E30420EC4FF00055D09A /* TDCChannelInviteSheet.strings in Resources */,
 				4CAC9D841F2B076800AD5F12 /* Textual-Extras-MAS.pkg in Resources */,
 				4C06E22220EC4AC50055D09A /* TDCChannelSpotlightAppearance.plist in Resources */,
@@ -6404,7 +6391,6 @@
 				4C06E2F820EC4FF00055D09A /* TDCChannelBanListSheet.strings in Resources */,
 				4C06DF1F20EC49A50055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */,
 				4C06E04620EC4A100055D09A /* DIGreenBadgeCenter.png in Resources */,
-				4C17166B254A589E004BE8AE /* IRC Connection Host.xpc in Resources */,
 				4C06E34020EC4FF00055D09A /* TDCChannelModifyTopicSheet.strings in Resources */,
 				4C06E19620EC4AC40055D09A /* TDCServerEndpointListSheet.xib in Resources */,
 				4C06E06520EC4A4D0055D09A /* encryptionLockIconLight.tif in Resources */,
@@ -6422,7 +6408,6 @@
 				4C06E19E20EC4AC40055D09A /* TDCChannelSpotlightController.xib in Resources */,
 				4C06E1D220EC4AC40055D09A /* TDCPreferences.xib in Resources */,
 				4C06E20E20EC4AC50055D09A /* TVCMemberListAppearance.plist in Resources */,
-				4C17166F254A589E004BE8AE /* Inline Content Loader.xpc in Resources */,
 				4C06E0FE20EC4A620055D09A /* TPWTB_Addons@2x.png in Resources */,
 				4C06E1DE20EC4AC40055D09A /* TDCWelcomeSheet.xib in Resources */,
 				4C06E1AA20EC4AC40055D09A /* TDCChannelBanListSheet.xib in Resources */,
@@ -6499,7 +6484,6 @@
 				4C33341E20CC471A00ACB9AD /* Bundled Scripts in Resources */,
 				4C06DF3420EC49A60055D09A /* IRCCommandIndexRemoteData.plist in Resources */,
 				4C33342320CC475300ACB9AD /* Bundled Styles in Resources */,
-				4C171671254A589E004BE8AE /* Inline Content Loader.xpc in Resources */,
 				4C06E07C20EC4A540055D09A /* FormattingColor_12.png in Resources */,
 				4C06E1D020EC4AC40055D09A /* TDCLicenseUpgradeActivateSheet.xib in Resources */,
 				4C06E12020EC4A630055D09A /* TPWTB_Controls@2x.png in Resources */,
@@ -6541,7 +6525,6 @@
 				4C06E12120EC4A630055D09A /* TPWTB_Interface.png in Resources */,
 				4C06DF3220EC49A60055D09A /* 3rdPartyStaticStoreSparkleFramework.plist in Resources */,
 				4C06E22C20EC4AC50055D09A /* TVCMainWindowTextViewAppearance.plist in Resources */,
-				4C17166D254A589E004BE8AE /* IRC Connection Host.xpc in Resources */,
 				4C06E11E20EC4A630055D09A /* TPWTB_Addons@2x.png in Resources */,
 				4C06E08820EC4A540055D09A /* FormattingColor_2.png in Resources */,
 				4CCD93FF1CA7291300335381 /* JavaScript in Resources */,
@@ -6592,7 +6575,6 @@
 				4C06E20420EC4AC50055D09A /* TVCMainWindow.xib in Resources */,
 				4C06DFEF20EC49FB0055D09A /* VibrantDarkServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4C06DFF020EC49FB0055D09A /* VibrantLightServerListViewPrivateMessageUserIconInactive@2x.tif in Resources */,
-				4C171675254A589E004BE8AE /* Scrollback History Manager.xpc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6651,7 +6633,6 @@
 				4C33341F20CC471A00ACB9AD /* Bundled Scripts in Resources */,
 				4C06DF3D20EC49A70055D09A /* IRCCommandIndexRemoteData.plist in Resources */,
 				4C33342420CC475300ACB9AD /* Bundled Styles in Resources */,
-				4C171672254A589E004BE8AE /* Inline Content Loader.xpc in Resources */,
 				4C06E06A20EC4A530055D09A /* FormattingColor_12.png in Resources */,
 				4C06E1D120EC4AC40055D09A /* TDCLicenseUpgradeActivateSheet.xib in Resources */,
 				4C06E13020EC4A640055D09A /* TPWTB_Controls@2x.png in Resources */,
@@ -6693,7 +6674,6 @@
 				4C06E13120EC4A640055D09A /* TPWTB_Interface.png in Resources */,
 				4C06DF3B20EC49A70055D09A /* 3rdPartyStaticStoreSparkleFramework.plist in Resources */,
 				4C06E22D20EC4AC50055D09A /* TVCMainWindowTextViewAppearance.plist in Resources */,
-				4C17166E254A589E004BE8AE /* IRC Connection Host.xpc in Resources */,
 				4C06E12E20EC4A640055D09A /* TPWTB_Addons@2x.png in Resources */,
 				4C06E07620EC4A530055D09A /* FormattingColor_2.png in Resources */,
 				4C47319B20C7599800713C91 /* JavaScript in Resources */,
@@ -6744,7 +6724,6 @@
 				4C06E20520EC4AC50055D09A /* TVCMainWindow.xib in Resources */,
 				4C06E00A20EC49FB0055D09A /* VibrantDarkServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4C06E00B20EC49FB0055D09A /* VibrantLightServerListViewPrivateMessageUserIconInactive@2x.tif in Resources */,
-				4C171676254A589E004BE8AE /* Scrollback History Manager.xpc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6803,7 +6782,6 @@
 				4CCD93FE1CA7291300335381 /* JavaScript in Resources */,
 				4C06DF2B20EC49A60055D09A /* IRCCommandIndexRemoteData.plist in Resources */,
 				4C33341D20CC471A00ACB9AD /* Bundled Scripts in Resources */,
-				4C171670254A589E004BE8AE /* Inline Content Loader.xpc in Resources */,
 				4C06E08E20EC4A540055D09A /* FormattingColor_12.png in Resources */,
 				4C06E1CF20EC4AC40055D09A /* TDCLicenseUpgradeActivateSheet.xib in Resources */,
 				4C06E11020EC4A630055D09A /* TPWTB_Controls@2x.png in Resources */,
@@ -6845,7 +6823,6 @@
 				4C06E11120EC4A630055D09A /* TPWTB_Interface.png in Resources */,
 				4C06DF2920EC49A60055D09A /* 3rdPartyStaticStoreSparkleFramework.plist in Resources */,
 				4C06E22B20EC4AC50055D09A /* TVCMainWindowTextViewAppearance.plist in Resources */,
-				4C17166C254A589E004BE8AE /* IRC Connection Host.xpc in Resources */,
 				4C06E10E20EC4A630055D09A /* TPWTB_Addons@2x.png in Resources */,
 				4C06E09A20EC4A540055D09A /* FormattingColor_2.png in Resources */,
 				4C33342220CC475300ACB9AD /* Bundled Styles in Resources */,
@@ -6896,7 +6873,6 @@
 				4C06E20320EC4AC50055D09A /* TVCMainWindow.xib in Resources */,
 				4C06DFD420EC49FA0055D09A /* VibrantDarkServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4C06DFD520EC49FA0055D09A /* VibrantLightServerListViewPrivateMessageUserIconInactive@2x.tif in Resources */,
-				4C171674254A589E004BE8AE /* Scrollback History Manager.xpc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
