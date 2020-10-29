@@ -130,21 +130,15 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 
 - (void)notify:(TXNotificationType)eventType title:(nullable NSString *)eventTitle description:(nullable NSString *)eventDescription userInfo:(nullable NSDictionary<NSString *,id> *)eventContext
 {
-	NSUInteger eventPriority = 0;
-
 	switch (eventType) {
 		case TXNotificationTypeHighlight:
 		{
-			eventPriority = 1;
-
 			eventTitle = TXTLS(@"Notifications[qka-f3]", eventTitle);
 
 			break;
 		}
 		case TXNotificationTypeNewPrivateMessage:
 		{
-			eventPriority = 1;
-
 			eventTitle = TXTLS(@"Notifications[ltn-hf]");
 
 			break;
