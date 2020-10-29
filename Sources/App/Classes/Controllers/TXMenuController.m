@@ -661,9 +661,9 @@ NS_ASSUME_NONNULL_BEGIN
 			menuItem.hidden = (isMainWindowMain == NO);
 
 			if (tag == MTMMWindowSortChannelList) {
-				[menuItem.menu itemWithTag:MTMMWindowSortChannelListSeparator].hidden = (isMainWindowMain = NO);
+				[menuItem.menu itemWithTag:MTMMWindowSortChannelListSeparator].hidden = (isMainWindowMain == NO);
 			} else if (tag == MTMMWindowResetWindowToDefaultSize) {
-				[menuItem.menu itemWithTag:MTMMWindowResetWindowToDefaultSizeSeparator].hidden = (isMainWindowMain = NO);
+				[menuItem.menu itemWithTag:MTMMWindowResetWindowToDefaultSizeSeparator].hidden = (isMainWindowMain == NO);
 			}
 
 			return YES;
