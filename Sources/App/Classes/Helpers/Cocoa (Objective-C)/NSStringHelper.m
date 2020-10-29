@@ -92,10 +92,10 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 	}
 
 	/* Find first ! starting from left side of string */
-	NSRange bang1pos = [self rangeOfString:@"!" options:0];
+	NSRange bang1pos = [self rangeOfString:@"!" options:NSLiteralSearch];
 
 	/* Find first @ starting from the right side of string */
-	NSRange bang2pos = [self rangeOfString:@"@" options:NSBackwardsSearch];
+	NSRange bang2pos = [self rangeOfString:@"@" options:(NSLiteralSearch | NSBackwardsSearch)];
 
 	if ((bang1pos.location == NSNotFound) ||
 		(bang2pos.location == NSNotFound) ||
