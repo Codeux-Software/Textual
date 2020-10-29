@@ -2452,10 +2452,10 @@
 		4CAB27582537EE66009B1F07 /* IRCChannelMemberListPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB27562537EE66009B1F07 /* IRCChannelMemberListPrivate.h */; };
 		4CAB27592537EE66009B1F07 /* IRCChannelMemberListPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB27562537EE66009B1F07 /* IRCChannelMemberListPrivate.h */; };
 		4CAB275A2537EE66009B1F07 /* IRCChannelMemberListPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB27562537EE66009B1F07 /* IRCChannelMemberListPrivate.h */; };
-		4CAB275E2537F71B009B1F07 /* IRCChannelMemberList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB275D2537F71B009B1F07 /* IRCChannelMemberList.h */; };
-		4CAB275F2537F71B009B1F07 /* IRCChannelMemberList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB275D2537F71B009B1F07 /* IRCChannelMemberList.h */; };
-		4CAB27602537F71B009B1F07 /* IRCChannelMemberList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB275D2537F71B009B1F07 /* IRCChannelMemberList.h */; };
-		4CAB27612537F71B009B1F07 /* IRCChannelMemberList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB275D2537F71B009B1F07 /* IRCChannelMemberList.h */; };
+		4CAB275E2537F71B009B1F07 /* IRCChannelMemberList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB275D2537F71B009B1F07 /* IRCChannelMemberList.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CAB275F2537F71B009B1F07 /* IRCChannelMemberList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB275D2537F71B009B1F07 /* IRCChannelMemberList.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CAB27602537F71B009B1F07 /* IRCChannelMemberList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB275D2537F71B009B1F07 /* IRCChannelMemberList.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CAB27612537F71B009B1F07 /* IRCChannelMemberList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CAB275D2537F71B009B1F07 /* IRCChannelMemberList.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CAB2765253863BF009B1F07 /* IRCChannelMemberListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB2764253863BF009B1F07 /* IRCChannelMemberListController.m */; };
 		4CAB2766253863BF009B1F07 /* IRCChannelMemberListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB2764253863BF009B1F07 /* IRCChannelMemberListController.m */; };
 		4CAB2767253863BF009B1F07 /* IRCChannelMemberListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB2764253863BF009B1F07 /* IRCChannelMemberListController.m */; };
@@ -5023,6 +5023,7 @@
 			files = (
 				4C31585220EB6D0700448776 /* TDCServerPropertiesSheetPrivate.h in Headers */,
 				4C31583B20EB6D0700448776 /* TDCFileTransferDialogTableCellPrivate.h in Headers */,
+				4CAB275E2537F71B009B1F07 /* IRCChannelMemberList.h in Headers */,
 				4C31581D20EB6D0700448776 /* IRCServerPrivate.h in Headers */,
 				4C3158AC20EB6D0F00448776 /* IRCHighlightLogEntryInternal.h in Headers */,
 				4C31588C20EB6D0700448776 /* TVCMemberListPrivate.h in Headers */,
@@ -5227,7 +5228,6 @@
 				4C31553B20EB6CB300448776 /* TVCMainWindowLoadingScreen.h in Headers */,
 				4C3158A620EB6D0F00448776 /* TVCLogLineInternal.h in Headers */,
 				4C31550D20EB6CB300448776 /* IRCUserRelations.h in Headers */,
-				4CAB275E2537F71B009B1F07 /* IRCChannelMemberList.h in Headers */,
 				4C31588220EB6D0700448776 /* TVCMainWindowLoadingScreenPrivate.h in Headers */,
 				4C31550A20EB6CB300448776 /* IRCServer.h in Headers */,
 				4C31582820EB6D0700448776 /* SwiftBridgingHeaderPrivate.h in Headers */,
@@ -5293,6 +5293,7 @@
 			files = (
 				4C31569920EB6D0500448776 /* TDCServerPropertiesSheetPrivate.h in Headers */,
 				4C31568220EB6D0400448776 /* TDCFileTransferDialogTableCellPrivate.h in Headers */,
+				4CAB27612537F71B009B1F07 /* IRCChannelMemberList.h in Headers */,
 				4C31566420EB6D0400448776 /* IRCServerPrivate.h in Headers */,
 				4C3158DF20EB6D1000448776 /* IRCHighlightLogEntryInternal.h in Headers */,
 				4C3156D320EB6D0500448776 /* TVCMemberListPrivate.h in Headers */,
@@ -5432,7 +5433,6 @@
 				4C3156E220EB6D0500448776 /* TXWindowControllerPrivate.h in Headers */,
 				4C3156AE20EB6D0500448776 /* TPCPathInfoPrivate.h in Headers */,
 				4CEFEDAA22B4AF41002CEE19 /* TDCPreferencesUserStyleSheetPrivate.h in Headers */,
-				4CAB27612537F71B009B1F07 /* IRCChannelMemberList.h in Headers */,
 				4C31564520EB6CB400448776 /* TVCMemberListAppearance.h in Headers */,
 				4C3158E120EB6D1600448776 /* GTMEncodeHTML.h in Headers */,
 				4C31569820EB6D0500448776 /* TDCServerHighlightListSheetPrivate.h in Headers */,
@@ -5566,6 +5566,7 @@
 			files = (
 				4C3157BF20EB6D0600448776 /* TDCServerPropertiesSheetPrivate.h in Headers */,
 				4C3157A820EB6D0600448776 /* TDCFileTransferDialogTableCellPrivate.h in Headers */,
+				4CAB275F2537F71B009B1F07 /* IRCChannelMemberList.h in Headers */,
 				4C31578A20EB6D0600448776 /* IRCServerPrivate.h in Headers */,
 				4C3158BD20EB6D0F00448776 /* IRCHighlightLogEntryInternal.h in Headers */,
 				4C3157F920EB6D0600448776 /* TVCMemberListPrivate.h in Headers */,
@@ -5705,7 +5706,6 @@
 				4C31580820EB6D0600448776 /* TXWindowControllerPrivate.h in Headers */,
 				4C3157D420EB6D0600448776 /* TPCPathInfoPrivate.h in Headers */,
 				4CEFEDAC22B4AF42002CEE19 /* TDCPreferencesUserStyleSheetPrivate.h in Headers */,
-				4CAB275F2537F71B009B1F07 /* IRCChannelMemberList.h in Headers */,
 				4C31559720EB6CB300448776 /* TVCMemberListAppearance.h in Headers */,
 				4C3158E520EB6D1600448776 /* GTMEncodeHTML.h in Headers */,
 				4C3157BE20EB6D0600448776 /* TDCServerHighlightListSheetPrivate.h in Headers */,
@@ -5838,6 +5838,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C31572C20EB6D0500448776 /* TDCServerPropertiesSheetPrivate.h in Headers */,
+				4CAB27602537F71B009B1F07 /* IRCChannelMemberList.h in Headers */,
 				4C31571520EB6D0500448776 /* TDCFileTransferDialogTableCellPrivate.h in Headers */,
 				4C3156F720EB6D0500448776 /* IRCServerPrivate.h in Headers */,
 				4C3158CE20EB6D1000448776 /* IRCHighlightLogEntryInternal.h in Headers */,
@@ -5978,7 +5979,6 @@
 				4C31577520EB6D0500448776 /* TXWindowControllerPrivate.h in Headers */,
 				4C31574120EB6D0500448776 /* TPCPathInfoPrivate.h in Headers */,
 				4CEFEDAB22B4AF42002CEE19 /* TDCPreferencesUserStyleSheetPrivate.h in Headers */,
-				4CAB27602537F71B009B1F07 /* IRCChannelMemberList.h in Headers */,
 				4C3155EE20EB6CB400448776 /* TVCMemberListAppearance.h in Headers */,
 				4C3158E320EB6D1600448776 /* GTMEncodeHTML.h in Headers */,
 				4C31572B20EB6D0500448776 /* TDCServerHighlightListSheetPrivate.h in Headers */,
