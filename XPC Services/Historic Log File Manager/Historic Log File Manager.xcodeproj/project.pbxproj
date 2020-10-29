@@ -20,7 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4C442C881E13B3D200B187F4 /* HistoricLogFileManager.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = HistoricLogFileManager.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C442C881E13B3D200B187F4 /* Scrollback History Manager.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = "Scrollback History Manager.xpc"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C469E4220EC5E5300094EA4 /* HSLHistoricLogProcessDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSLHistoricLogProcessDelegate.m; sourceTree = "<group>"; };
 		4C469E4320EC5E5300094EA4 /* HLSHistoricLogViewContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLSHistoricLogViewContext.m; sourceTree = "<group>"; };
 		4C469E4420EC5E5300094EA4 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -87,7 +87,7 @@
 		4C442C891E13B3D200B187F4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4C442C881E13B3D200B187F4 /* HistoricLogFileManager.xpc */,
+				4C442C881E13B3D200B187F4 /* Scrollback History Manager.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -338,7 +338,7 @@
 			);
 			name = "Historic Log File Manager";
 			productName = "Historic Log File Manager";
-			productReference = 4C442C881E13B3D200B187F4 /* HistoricLogFileManager.xpc */;
+			productReference = 4C442C881E13B3D200B187F4 /* Scrollback History Manager.xpc */;
 			productType = "com.apple.product-type.xpc-service";
 		};
 /* End PBXNativeTarget section */
@@ -424,8 +424,8 @@
 				CODE_SIGN_ENTITLEMENTS = "${PROJECT_DIR}/Configurations/Sandbox/Release.entitlements";
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/HSLHistoricLogPCHPrivate.h";
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-HistoricLogFileManager";
-				PRODUCT_NAME = HistoricLogFileManager;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-ScrollbackHistoryManager";
+				PRODUCT_NAME = "Scrollback History Manager";
 			};
 			name = Debug;
 		};
@@ -435,8 +435,8 @@
 				CODE_SIGN_ENTITLEMENTS = "${PROJECT_DIR}/Configurations/Sandbox/Release.entitlements";
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/HSLHistoricLogPCHPrivate.h";
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-HistoricLogFileManager";
-				PRODUCT_NAME = HistoricLogFileManager;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-ScrollbackHistoryManager";
+				PRODUCT_NAME = "Scrollback History Manager";
 			};
 			name = Release;
 		};
@@ -453,8 +453,8 @@
 				CODE_SIGN_ENTITLEMENTS = "${PROJECT_DIR}/Configurations/Sandbox/App Store.entitlements";
 				GCC_PREFIX_HEADER = "${SRCROOT}/Classes/Headers/Private/HSLHistoricLogPCHPrivate.h";
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-HistoricLogFileManager";
-				PRODUCT_NAME = HistoricLogFileManager;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-ScrollbackHistoryManager";
+				PRODUCT_NAME = "Scrollback History Manager";
 			};
 			name = "Release (App Store)";
 		};

@@ -99,7 +99,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4C1406421F11942B00C73D53 /* InlineContentLoader.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = InlineContentLoader.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C1406421F11942B00C73D53 /* Inline Content Loader.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = "Inline Content Loader.xpc"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C1EAB161F89F2BF00A4E647 /* BuildConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BuildConfig.h; path = ../../.tmp/BuildConfig.h; sourceTree = SOURCE_ROOT; };
 		4C469F4220EC60F000094EA4 /* ICLHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLHelpers.h; sourceTree = "<group>"; };
 		4C469F4420EC60F000094EA4 /* ICLPayloadInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICLPayloadInternal.h; sourceTree = "<group>"; };
@@ -211,7 +211,7 @@
 		4C1406431F11942B00C73D53 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4C1406421F11942B00C73D53 /* InlineContentLoader.xpc */,
+				4C1406421F11942B00C73D53 /* Inline Content Loader.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -585,7 +585,7 @@
 			);
 			name = "Inline Content Loader";
 			productName = "Connection Manager";
-			productReference = 4C1406421F11942B00C73D53 /* InlineContentLoader.xpc */;
+			productReference = 4C1406421F11942B00C73D53 /* Inline Content Loader.xpc */;
 			productType = "com.apple.product-type.xpc-service";
 		};
 /* End PBXNativeTarget section */
@@ -697,7 +697,7 @@
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/Classes/Headers/Private/ICLProcessPCHPrivate.h";
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-InlineContentLoader";
-				PRODUCT_NAME = InlineContentLoader;
+				PRODUCT_NAME = "Inline Content Loader";
 			};
 			name = Debug;
 		};
@@ -708,7 +708,7 @@
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/Classes/Headers/Private/ICLProcessPCHPrivate.h";
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-InlineContentLoader";
-				PRODUCT_NAME = InlineContentLoader;
+				PRODUCT_NAME = "Inline Content Loader";
 			};
 			name = Release;
 		};
@@ -726,7 +726,7 @@
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/Classes/Headers/Private/ICLProcessPCHPrivate.h";
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-InlineContentLoader";
-				PRODUCT_NAME = InlineContentLoader;
+				PRODUCT_NAME = "Inline Content Loader";
 			};
 			name = "Release (App Store)";
 		};

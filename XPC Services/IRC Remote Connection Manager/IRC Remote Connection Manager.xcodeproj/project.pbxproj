@@ -33,7 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4C1406421F11942B00C73D53 /* RemoteConnectionManager.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = RemoteConnectionManager.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C1406421F11942B00C73D53 /* IRC Connection Host.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = "IRC Connection Host.xpc"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C36AAD020F27BDA007CA939 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SecureTransportErrorCodes.strings; sourceTree = "<group>"; };
 		4C469FFD20EC626E00094EA4 /* IRCConnectionSocketNWF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRCConnectionSocketNWF.swift; sourceTree = "<group>"; };
 		4C469FFE20EC626E00094EA4 /* IRCConnectionSocketClassic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IRCConnectionSocketClassic.swift; sourceTree = "<group>"; };
@@ -125,7 +125,7 @@
 		4C1406431F11942B00C73D53 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4C1406421F11942B00C73D53 /* RemoteConnectionManager.xpc */,
+				4C1406421F11942B00C73D53 /* IRC Connection Host.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -472,7 +472,7 @@
 			);
 			name = "IRC Remote Connection Manager";
 			productName = "Connection Manager";
-			productReference = 4C1406421F11942B00C73D53 /* RemoteConnectionManager.xpc */;
+			productReference = 4C1406421F11942B00C73D53 /* IRC Connection Host.xpc */;
 			productType = "com.apple.product-type.xpc-service";
 		};
 /* End PBXNativeTarget section */
@@ -592,8 +592,8 @@
 				DEVELOPMENT_TEAM = "";
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/Classes/Headers/Private/RCMProcessPCHPrivate.h";
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-RemoteConnectionManager";
-				PRODUCT_NAME = RemoteConnectionManager;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-IRCConnectionHost";
+				PRODUCT_NAME = "IRC Connection Host";
 			};
 			name = Debug;
 		};
@@ -605,8 +605,8 @@
 				DEVELOPMENT_TEAM = "";
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/Classes/Headers/Private/RCMProcessPCHPrivate.h";
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-RemoteConnectionManager";
-				PRODUCT_NAME = RemoteConnectionManager;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-IRCConnectionHost";
+				PRODUCT_NAME = "IRC Connection Host";
 			};
 			name = Release;
 		};
@@ -626,8 +626,8 @@
 				DEVELOPMENT_TEAM = "";
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/Classes/Headers/Private/RCMProcessPCHPrivate.h";
 				INFOPLIST_FILE = "Resources/Property Lists/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-RemoteConnectionManager";
-				PRODUCT_NAME = RemoteConnectionManager;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-utilities.Textual-IRCConnectionHost";
+				PRODUCT_NAME = "IRC Connection Host";
 			};
 			name = "Release (App Store)";
 		};
