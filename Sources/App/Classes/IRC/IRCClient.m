@@ -4220,6 +4220,10 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 			[mainWindow() select:query];
 
+			if (stringIn.length > 0) {
+				[self sendText:stringIn asCommand:IRCRemoteCommandPrivmsg toChannel:query];
+			}
+
 			break;
 		}
 		case IRCLocalCommandQuote: // Command: QUOTE
