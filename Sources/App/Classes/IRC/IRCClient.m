@@ -3114,8 +3114,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 					}
 
 					[client sendText:stringIn asCommand:sendAsCommand toChannel:channel];
-
-					[client setUnreadStateForChannel:channel];
 				}
 			}
 
