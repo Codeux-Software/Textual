@@ -39,6 +39,7 @@
 #import "NSObjectHelperPrivate.h"
 #import "TXMasterControllerPrivate.h"
 #import "TPCPreferencesLocalPrivate.h"
+#import "TPCThemeControllerPrivate.h"
 #import "IRCClientPrivate.h"
 #import "IRCChannelPrivate.h"
 #import "IRCCommandIndexPrivate.h"
@@ -247,6 +248,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Active style */
 	if ((reloadAction & TPCPreferencesReloadActionStyle) == TPCPreferencesReloadActionStyle) {
+		[themeController() reload];
+
 		[mainWindow() reloadTheme];
 
 		didReloadActiveStyle = YES;

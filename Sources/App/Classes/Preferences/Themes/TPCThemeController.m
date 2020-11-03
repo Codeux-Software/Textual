@@ -600,14 +600,6 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 
 	LogToConsoleInfo("Reloading theme because it failed validation.");
 
-	/* Reload action works asynchronously. We cheat a little here by
-	 calling -reload internally so that when the theme list did change
-	 notification is posted any observers can obtain the most up-to-date
-	 information when accessing -name and other properties. */
-	/* The reload action will also call -reload but that call will
-	 return immediately because we compare the value of self.theme. */
-	[self reload];
-
 	[TPCPreferences performReloadAction:TPCPreferencesReloadActionStyle];
 
 	[RZNotificationCenter() postNotificationName:TPCThemeControllerThemeListDidChangeNotification object:self];

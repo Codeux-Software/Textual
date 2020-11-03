@@ -979,8 +979,6 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 
 - (void)_reloadTheme_performReload
 {
-	[themeController() reload];
-
 	for (IRCClient *u in worldController().clientList) {
 		[u.viewController reloadTheme];
 
