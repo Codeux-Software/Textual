@@ -129,6 +129,11 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 								 object:nil];
 
 	[RZNotificationCenter() addObserver:self
+							   selector:@selector(themeWasDeleted:)
+								   name:TPCThemeWasDeletedNotification
+								 object:nil];
+
+	[RZNotificationCenter() addObserver:self
 							   selector:@selector(themeWasModified:)
 								   name:TPCThemeWasModifiedNotification
 								 object:nil];
@@ -224,6 +229,26 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 	return NO;
 }
 
+- (void)metadata:(void (^ NS_NOESCAPE)(NSString *fileName, TPCThemeStorageLocation storageLocation))metadataBlock ofThemeNamed:(NSString *)themeName
+{
+	NSParameterAssert(metadataBlock != nil);
+	NSParameterAssert(themeName != nil);
+
+	NSString *fileName = [self.class extractThemeName:themeName];
+
+	if (fileName == nil) {
+		return;
+	}
+
+	TPCThemeStorageLocation storageLocation = [self.class storageLocationOfThemeWithName:themeName];
+
+	if (storageLocation == TPCThemeStorageLocationUnknown) {
+		return;
+	}
+
+	metadataBlock(fileName, storageLocation);
+}
+
 - (BOOL)themeExists:(NSString *)themeName
 {
 	TPCTheme *theme = [self themeNamed:themeName createIfNecessary:YES];
@@ -240,38 +265,33 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 {
 	NSParameterAssert(themeName != nil);
 
-	NSString *fileName = [self.class extractThemeName:themeName];
+	__block TPCTheme *theme = nil;
 
-	if (fileName == nil) {
-		return nil;
-	}
+	[self metadata:^(NSString *fileName, TPCThemeStorageLocation storageLocation) {
+		TPCThemeControllerThemeListMutable list = [self mutableListForStorageLocation:storageLocation];
 
-	TPCThemeStorageLocation storageLocation = [self.class storageLocationOfThemeWithName:themeName];
+		if (list == nil) {
+			return;
+		}
 
-	if (storageLocation == TPCThemeStorageLocationUnknown) {
-		return nil;
-	}
+		NSString *filePath = [self.class pathOfThemeWithFilename:fileName storageLocation:storageLocation];
 
-	TPCThemeControllerThemeListMutable list = [self mutableListForStorageLocation:storageLocation];
+		if (filePath == nil) {
+			return;
+		}
 
-	if (list == nil) {
-		return nil;
-	}
+		NSURL *fileURL = [NSURL fileURLWithPath:filePath isDirectory:YES];
 
-	NSString *filePath = [self.class pathOfThemeWithFilename:fileName storageLocation:storageLocation];
+		theme =
+		[self themeAtURL:fileURL
+			withFilename:fileName
+		 storageLocation:storageLocation
+				  inList:list
+	   createIfNecessary:createIfNecessary
+		  skipFileExists:NO];
+	} ofThemeNamed:themeName];
 
-	if (filePath == nil) {
-		return nil;
-	}
-
-	NSURL *fileURL = [NSURL fileURLWithPath:filePath isDirectory:YES];
-
-	return [self themeAtURL:fileURL
-			   withFilename:fileName
-			storageLocation:storageLocation
-					 inList:list
-		  createIfNecessary:createIfNecessary
-			 skipFileExists:NO];
+	return theme;
 }
 
 - (nullable TPCTheme *)themeAtURL:(NSURL *)url withFilename:(NSString *)name storageLocation:(TPCThemeStorageLocation)storageLocation inList:(TPCThemeControllerThemeListMutable)list createIfNecessary:(BOOL)createIfNecessary skipFileExists:(BOOL)skipFileExists
@@ -321,9 +341,10 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 
 - (void)add:(BOOL)addOrRemove theme:(nullable TPCTheme *)theme withFilename:(NSString *)name storageLocation:(TPCThemeStorageLocation)storageLocation
 {
-	NSParameterAssert(theme != nil);
-	NSParameterAssert(addOrRemove && name != nil);
-	NSParameterAssert(addOrRemove && name.length > 0);
+	NSParameterAssert((addOrRemove && theme != nil) ||
+					   addOrRemove == NO);
+	NSParameterAssert(name != nil);
+	NSParameterAssert(name.length > 0);
 	NSParameterAssert(storageLocation != TPCThemeStorageLocationUnknown);
 
 	TPCThemeControllerThemeListMutable list = [self mutableListForStorageLocation:storageLocation];
@@ -590,7 +611,9 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 
 - (void)themeIntegrityCompromised:(NSNotification *)notification
 {
-	if (self.theme != notification.object) {
+	TPCTheme *theme = notification.object;
+
+	if (self.theme != theme) {
 		return;
 	}
 
@@ -607,9 +630,35 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 	[self presentIntegrityCompromisedAlert];
 }
 
+- (void)themeWasDeleted:(NSNotification *)notification
+{
+	TPCTheme *theme = notification.object;
+
+	[self removeThemeWithFilename:theme.name storageLocation:theme.storageLocation];
+
+	if (self.theme != theme) {
+		return;
+	}
+
+	if ([self resetPreferencesForActiveTheme] == NO) { // Validate theme
+		LogToConsoleFault("This should be an impossible condition.");
+		LogStackTrace();
+
+		return;
+	}
+
+	LogToConsoleInfo("Reloading theme because it was deleted.");
+
+	[TPCPreferences performReloadAction:TPCPreferencesReloadActionStyle];
+
+	[RZNotificationCenter() postNotificationName:TPCThemeControllerThemeListDidChangeNotification object:self];
+}
+
 - (void)themeWasModified:(NSNotification *)notification
 {
-	if (self.theme != notification.object) {
+	TPCTheme *theme = notification.object;
+
+	if (self.theme != theme) {
 		return;
 	}
 
