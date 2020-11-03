@@ -64,13 +64,19 @@ typedef NS_ENUM(NSUInteger, TPCThemeSettingsNicknameColorStyle) {
 };
 
 /* If a theme is modified in such a way after it is initalized
- that it can no longer be used, then this flag is set to YES.
+ that it can no longer be used, then this notification is posted.
  A way, amongst many, in which the integrity of a theme can
  be compromised is by deleting the CSS or JavaScript file. */
 TEXTUAL_EXTERN NSNotificationName const TPCThemeIntegrityCompromisedNotification;
 
 /* If theme has been restored to a usable state. */
 TEXTUAL_EXTERN NSNotificationName const TPCThemeIntegrityRestoredNotification;
+
+/* If the theme has been deleted. Drop reference to theme object
+ when this occurs. Holding a reference to a theme object after
+ it has been deleted can result in undefined behavior especially
+ if another theme is installed using the same URL. */
+TEXTUAL_EXTERN NSNotificationName const TPCThemeWasDeletedNotification;
 
 /* The theme can change the variety to match appearance changes,
  or when one variety becomes compromised and another must be used. */
