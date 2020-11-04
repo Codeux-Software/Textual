@@ -90,7 +90,7 @@ typedef NS_OPTIONS(NSUInteger, _TPCThemeMonitoringResult) {
 @property (nonatomic, copy, readwrite) NSArray<GRMustacheTemplateRepository *> *templateRepositories;
 @property (nonatomic, strong) GRMustacheTemplateRepository *defaultTemplateRepository;
 @property (nonatomic, strong, readwrite) TPCThemeSettings *settings;
-@property (nonatomic, assign, nullable) FSEventStreamRef eventStreamRef;
+@property (nonatomic, strong, nullable) XRFileSystemMonitor *fileSystemMonitor;
 @end
 
 @interface TPCThemeVariety : NSObject
@@ -283,10 +283,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(url1 != nil);
 	NSParameterAssert(url2 != nil);
 
-	const char *left = url1.fileSystemRepresentation;
-	const char *right = url2.fileSystemRepresentation;
-
-	return (strcmp(left, right) == 0);
+	return [url1 isEqualByFileRepresentation:url2];
 }
 
 - (nullable TPCThemeVariety *)_varietyAtURL:(NSURL *)url
@@ -313,90 +310,33 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return variety;
 }
 
-void _themeMonitorCallback(ConstFSEventStreamRef streamRef,
-						   void *clientCallBackInfo,
-						   size_t numEvents,
-						   void *eventPaths,
-						   const FSEventStreamEventFlags eventFlags[],
-						   const FSEventStreamEventId eventIds[])
-{
-	@autoreleasepool {
-		TPCTheme *theme = (__bridge TPCTheme *)(clientCallBackInfo);
-
-		_TPCThemeMonitoringResult result = _TPCThemeMonitoringResultNoChange;
-
-		NSArray *transformedPaths = (__bridge NSArray *)(eventPaths);
-
-		for (NSUInteger i = 0; i < numEvents; i++) {
-			FSEventStreamEventFlags flags = eventFlags[i];
-
-			NSString *filePath = transformedPaths[i];
-
-			NSURL *fileURL = [NSURL fileURLWithPath:filePath];
-
-			if (flags & kFSEventStreamEventFlagItemCreated ||
-				flags & kFSEventStreamEventFlagItemModified ||
-				flags & kFSEventStreamEventFlagItemRemoved ||
-				flags & kFSEventStreamEventFlagItemRenamed)
-			{
-				result |= [theme _reactToMonitoringEventAtURL:fileURL withFlags:flags];
-			}
-		} // for
-
-		if (result == _TPCThemeMonitoringResultNoChange) {
-			return;
-		}
-
-		[theme _concludeMonitoringEventWithResult:result];
-	} // autorelease
-}
-
 - (void)_stopMonitoring
 {
-	FSEventStreamRef eventStreamRef = self.eventStreamRef;
+	XRFileSystemMonitor *monitor = self.fileSystemMonitor;
 
-	if (eventStreamRef == NULL) {
+	if (monitor == nil) {
 		return;
 	}
 
-	FSEventStreamStop(eventStreamRef);
-	FSEventStreamInvalidate(eventStreamRef);
-	FSEventStreamRelease(eventStreamRef);
+	[monitor stopMonitoring];
 
-	self.eventStreamRef = NULL;
+	self.fileSystemMonitor = nil;
 }
 
 - (void)_startMonitoring
 {
-	NSString *pathToWatch = self.originalURL.path;
+	NSURL *url = self.originalURL;
 
-	CFArrayRef pathsToWatchRef = (__bridge CFArrayRef)@[pathToWatch];
+	__weak TPCTheme *weakSelf = self;
 
-	CFAbsoluteTime latency = 5.0;
+	  XRFileSystemMonitor *monitor =
+	[[XRFileSystemMonitor alloc] initWithFileURL:url callbackBlock:^(NSArray<XRFileSystemEvent *> *events) {
+		[weakSelf _reactToMonitoringEvents:events];
+	}];
 
-	FSEventStreamContext context;
+	[monitor startMonitoring];
 
-	context.version = 0;
-	context.info = (__bridge void *)(self);
-	context.retain = NULL;
-	context.release = NULL;
-	context.copyDescription = NULL;
-
-	FSEventStreamRef stream = FSEventStreamCreate(NULL,
-												  &_themeMonitorCallback,
-												  &context,
-												  pathsToWatchRef,
-												  kFSEventStreamEventIdSinceNow,
-												  latency,
-												  (kFSEventStreamCreateFlagFileEvents |
-												   kFSEventStreamCreateFlagNoDefer |
-												   kFSEventStreamCreateFlagUseCFTypes));
-
-	FSEventStreamScheduleWithRunLoop(stream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
-
-	FSEventStreamStart(stream);
-
-	self.eventStreamRef = stream;
+	self.fileSystemMonitor = monitor;
 }
 
 - (void)_concludeMonitoringEventWithResult:(_TPCThemeMonitoringResult)result
@@ -424,6 +364,19 @@ void _themeMonitorCallback(ConstFSEventStreamRef streamRef,
 	{
 		[self _notifyRecentlyModified];
 	}
+}
+
+- (void)_reactToMonitoringEvents:(NSArray<XRFileSystemEvent *> *)events
+{
+	NSParameterAssert(events != nil);
+
+	_TPCThemeMonitoringResult result = _TPCThemeMonitoringResultNoChange;
+
+	for (XRFileSystemEvent *event in events) {
+		result |= [self _reactToMonitoringEventAtURL:event.url withFlags:event.flags];
+	}
+
+	[self _concludeMonitoringEventWithResult:result];
 }
 
 - (_TPCThemeMonitoringResult)_reactToMonitoringEventAtURL:(NSURL *)url withFlags:(FSEventStreamEventFlags)flags
@@ -894,9 +847,7 @@ void _themeMonitorCallback(ConstFSEventStreamRef streamRef,
 {
 	NSParameterAssert(urls != nil);
 
-	return [urls arrayByApplyingBlock:^NSString *(NSURL *url, NSUInteger index, BOOL *stop) {
-		return url.path;
-	}];
+	return [NSArray pathsArrayForFileURLs:urls];
 }
 
 #pragma mark -
