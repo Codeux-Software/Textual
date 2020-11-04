@@ -337,7 +337,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		[weakSelf _reactToMonitoringEvents:events];
 	}];
 
-	[monitor startMonitoring];
+	[monitor startMonitoringWithLatency:5.0];
 
 	self.fileSystemMonitor = monitor;
 }
