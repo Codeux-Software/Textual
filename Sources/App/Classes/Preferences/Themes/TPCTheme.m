@@ -283,6 +283,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	NSParameterAssert(url1 != nil);
 	NSParameterAssert(url2 != nil);
 
+	/* The file representation is compared instead of the
+	 resource identifier because the resource identifier
+	 returns nil when the URL no longer exists. */
 	return [url1 isEqualByFileRepresentation:url2];
 }
 
