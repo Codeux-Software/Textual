@@ -46,7 +46,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)load;
 - (void)reload;
 
-- (void)reloadMonitoringActiveThemePath;
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+/* We should probably do this internally by monitoring for
+ a notification that access to the cloud container changed,
+ but I don't want to touch the iCloud code. It's gross. */
+- (void)reloadThemeMonitoring;
+#endif
 
 - (void)recreateTemporaryCopyOfThemeIfNecessary;
 

@@ -36,8 +36,6 @@
  *
  *********************************************************************** */
 
-#warning TODO: Add monitoring for changes to themes including being deleted.
-
 #import "TXAppearance.h"
 #import "TXGlobalModels.h"
 #import "TXMasterController.h"
@@ -92,6 +90,7 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 @property (nonatomic, strong) TPCThemeControllerThemeListMutable bundledThemes;
 @property (nonatomic, strong) TPCThemeControllerThemeListMutable customThemes;
 @property (nonatomic, strong) TPCThemeControllerThemeListMutable cloudThemes;
+@property (nonatomic, strong) XRFileSystemMonitor *themeMonitor;
 @end
 
 #pragma mark -
@@ -117,6 +116,8 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 	self.cloudThemes = [NSMutableDictionary dictionary];
 
 	[self populateThemes];
+
+	[self startMonitoringThemes];
 
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(applicationAppearanceChanged:)
@@ -159,7 +160,7 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 
 	LogToConsoleTerminationProgress("Removing theme change observers.");
 
-//	[self stopMonitoringActiveThemePath];
+	[self stopMonitoringThemes];
 
 	LogToConsoleTerminationProgress("Empty theme cache.");
 
@@ -296,6 +297,17 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 
 - (nullable TPCTheme *)themeAtURL:(NSURL *)url withFilename:(NSString *)name storageLocation:(TPCThemeStorageLocation)storageLocation inList:(TPCThemeControllerThemeListMutable)list createIfNecessary:(BOOL)createIfNecessary skipFileExists:(BOOL)skipFileExists
 {
+	return [self themeAtURL:url
+			   withFilename:name
+			storageLocation:storageLocation
+					 inList:list
+		  createIfNecessary:createIfNecessary
+				 wasCreated:NULL
+			 skipFileExists:skipFileExists];
+}
+
+- (nullable TPCTheme *)themeAtURL:(NSURL *)url withFilename:(NSString *)name storageLocation:(TPCThemeStorageLocation)storageLocation inList:(TPCThemeControllerThemeListMutable)list createIfNecessary:(BOOL)createIfNecessary wasCreated:(nullable BOOL *)wasCreated skipFileExists:(BOOL)skipFileExists
+{
 	NSParameterAssert(url != nil);
 	NSParameterAssert(url.isFileURL);
 	NSParameterAssert(name != nil);
@@ -325,6 +337,10 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 	theme = [[TPCTheme alloc] initWithURL:url inStorageLocation:storageLocation];
 
 	[self addTheme:theme withFilename:name storageLocation:storageLocation];
+
+	if ( wasCreated) {
+		*wasCreated = YES;
+	}
 
 	return theme;
 }
@@ -465,6 +481,150 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 	}
 
 	return nil;
+}
+
+- (void)startMonitoringThemes
+{
+	NSMutableArray<NSURL *> *urls = [NSMutableArray arrayWithCapacity:2];
+
+	NSMutableDictionary<NSURL *, NSNumber *> *context = [NSMutableDictionary dictionaryWithCapacity:2];
+
+	void (^_addStorageLocation)(TPCThemeStorageLocation) = ^(TPCThemeStorageLocation storageLocation)
+	{
+		NSString *path = [self.class pathOfStorageLocation:storageLocation];
+
+		if (path == nil) {
+			return;
+		}
+
+		NSURL *url = [NSURL fileURLWithPath:path isDirectory:YES];
+
+		[urls addObject:url];
+
+		[context setObject:@(storageLocation) forKey:url];
+	};
+
+	_addStorageLocation(TPCThemeStorageLocationCustom);
+	_addStorageLocation(TPCThemeStorageLocationCloud);
+
+	__weak TPCThemeController *weakSelf = self;
+
+	  XRFileSystemMonitor *monitor =
+	[[XRFileSystemMonitor alloc] initWithFileURLs:urls context:context callbackBlock:^(NSArray<XRFileSystemEvent *> *events) {
+		[weakSelf reactToMonitoringEvents:events];
+	}];
+
+	[monitor startMonitoringWithLatency:1.0];
+
+	self.themeMonitor = monitor;
+}
+
+- (void)stopMonitoringThemes
+{
+	XRFileSystemMonitor *monitor = self.themeMonitor;
+
+	if (monitor == nil) {
+		return;
+	}
+
+	[monitor stopMonitoring];
+
+	self.themeMonitor = nil;
+}
+
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+- (void)reloadThemeMonitoring
+{
+	[self stopMonitoringThemes];
+
+	[self startMonitoringThemes];
+}
+#endif
+
+- (void)reactToMonitoringEvents:(NSArray<XRFileSystemEvent *> *)events
+{
+	NSParameterAssert(events != nil);
+
+	for (XRFileSystemEvent *event in events) {
+		[self reactToMonitoringEvent:event];
+	}
+}
+
+- (void)reactToMonitoringEvent:(XRFileSystemEvent *)event
+{
+	NSParameterAssert(event != nil);
+
+	/* The purpose of the theme monitor is to recognize when
+	 new themes have appeared aso that we can make them an
+	 option for the user immediately. To accomplish this we
+	 monitor the directory of each storage location. */
+	/* Monitor is recrusive which means we have to use flags
+	 and context information to narrow scope of events. */
+	FSEventStreamEventFlags flags = event.flags;
+
+	if ((flags & kFSEventStreamEventFlagItemIsDir) != kFSEventStreamEventFlagItemIsDir) {
+//		LogToConsoleDebug("Ignoring monitoring event for non-directory.");
+
+		return;
+	}
+
+	/* Each URL that is monitored is assigned the storage location
+	 enum value as its context object. We can use this to understand
+	 with certainty which storage location an event is related to. */
+	NSURL *url = event.url;
+
+	NSURL *parentURL = url.URLByDeletingLastPathComponent;
+
+	/* If the parent URL of this event does not contain an object,
+	 then the event is not related to a subfolder of the storage location. */
+	NSNumber *parentContext = [self.themeMonitor contextObjectForURL:parentURL];
+
+	if (parentContext == nil) {
+//		LogToConsoleDebug("Ignoring monitoring event for unrelated directory.");
+
+		return;
+	}
+
+	TPCThemeStorageLocation storageLocation = parentContext.unsignedIntegerValue;
+
+	[self reactToMonitoringEventAtURL:url storageLocation:storageLocation flags:flags];
+}
+
+- (void)reactToMonitoringEventAtURL:(NSURL *)url storageLocation:(TPCThemeStorageLocation)storageLocation flags:(FSEventStreamEventFlags)flags
+{
+	NSParameterAssert(url != nil);
+	NSParameterAssert(storageLocation != TPCThemeStorageLocationUnknown);
+
+	/* TPCTheme objects will announce when they are deleted.
+	 We are not interested in events related to those. */
+	if ([RZFileManager() fileExistsAtURL:url] == NO) {
+		return;
+	}
+
+	/* Create theme */
+	NSString *themeName = [url resourceValueForKey:NSURLNameKey];
+
+	TPCThemeControllerThemeListMutable themeList = [self mutableListForStorageLocation:storageLocation];
+
+	BOOL themeCreated = NO;
+
+	TPCTheme *theme =
+	[self themeAtURL:url
+		withFilename:themeName
+	 storageLocation:storageLocation
+			  inList:themeList
+   createIfNecessary:YES
+		  wasCreated:&themeCreated
+	  skipFileExists:YES];
+
+	/* Only post notification if the theme was created. */
+	if (themeCreated == NO) {
+		return;
+	}
+
+	LogToConsoleDebug("Theme '%@' named '%@' at '%@' created.", theme, themeName, url);
+
+	[RZNotificationCenter() postNotificationName:TPCThemeControllerThemeListDidChangeNotification object:self];
 }
 
 - (void)populateThemes
@@ -637,6 +797,8 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 	[self removeThemeWithFilename:theme.name storageLocation:theme.storageLocation];
 
 	if (self.theme != theme) {
+		[RZNotificationCenter() postNotificationName:TPCThemeControllerThemeListDidChangeNotification object:self];
+
 		return;
 	}
 
