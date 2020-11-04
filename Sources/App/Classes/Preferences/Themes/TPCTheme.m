@@ -344,8 +344,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)_concludeMonitoringEventWithResult:(_TPCThemeMonitoringResult)result
 {
-	NSParameterAssert(result != _TPCThemeMonitoringResultNoChange);
-
 	/* Theme was deleted */
 	if ((result & _TPCThemeMonitoringResultThemeDeleted) == _TPCThemeMonitoringResultThemeDeleted) {
 		[self _reactToDeletion];
