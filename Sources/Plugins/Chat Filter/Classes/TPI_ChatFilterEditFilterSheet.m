@@ -71,7 +71,10 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterEditFilterSheetSelection)
 @property (nonatomic, weak) IBOutlet NSTokenField *filterActionTokenServerAddress;
 @property (nonatomic, weak) IBOutlet NSView *filterLimitedToHostView;
 @property (nonatomic, weak) IBOutlet NSView *filterLimitedToSelectionHostView;
-@property (nonatomic, weak) IBOutlet NSMatrix *filterLimitToMatrix;
+@property (nonatomic, weak) IBOutlet NSButton *filterLimitToNoLimitButton;
+@property (nonatomic, weak) IBOutlet NSButton *filterLimitToOnlyChannelsButton;
+@property (nonatomic, weak) IBOutlet NSButton *filterLimitToOnlyPrivateMessagesButton;
+@property (nonatomic, weak) IBOutlet NSButton *filterLimitToSpecificItemsButton;
 @property (nonatomic, weak) IBOutlet NSButton *filterIgnoreContentCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterIgnoreOperatorsCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterLogMatchCheck;
@@ -158,6 +161,7 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterEditFilterSheetSelection)
 	[self updateEnabledStateOfFilterEvents];
 	[self updateEnableStateOfFilterActionTokenField];
 	[self updateEnabledStateOfComponentsConstrainedByFilterEvents];
+	[self updateFilterLimitedToMatrix];
 	[self updateVisibilityOfLimitedToTableHostView];
 
 	[self toggleOkButton];
@@ -214,10 +218,6 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterEditFilterSheetSelection)
 		[self.filterEventNumericTextField performValidation];
 	}
 
-	NSCell *filterLimitedToMatrixCell = [self.filterLimitToMatrix cellWithTag:self.filter.filterLimitedToValue];
-
-	[self.filterLimitToMatrix selectCell:filterLimitedToMatrixCell];
-
 	NSArray *filterLimitedToClientsIDs = self.filter.filterLimitedToClientsIDs;
 	NSArray *filterLimitedToChannelsIDs = self.filter.filterLimitedToChannelsIDs;
 
@@ -251,8 +251,6 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterEditFilterSheetSelection)
 	self.filter.filterIgnoreOperators = (self.filterIgnoreOperatorsCheck.state == NSOnState);
 
 	self.filter.filterIgnoreContent = (self.filterIgnoreContentCheck.state == NSOnState);
-
-	self.filter.filterLimitedToValue = [self.filterLimitToMatrix selectedTag];
 
 	self.filter.filterLogMatch = (self.filterLogMatchCheck.state == NSOnState);
 
@@ -716,7 +714,7 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterEditFilterSheetSelection)
 
 - (void)updateVisibilityOfLimitedToTableHostView
 {
-	if (self.filterLimitToMatrix.selectedTag == TPI_ChatFilterLimitToValueSpecificItems) {
+	if (self.filter.filterLimitedToValue == TPI_ChatFilterLimitToValueSpecificItems) {
 		self.filterLimitedToHostView.hidden = NO;
 	} else {
 		self.filterLimitedToHostView.hidden = YES;
@@ -730,7 +728,7 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterEditFilterSheetSelection)
 
 - (void)updateEnabledStateOfFilterEvents
 {
-	BOOL enabled = (self.filterLimitToMatrix.selectedTag != TPI_ChatFilterLimitToValuePrivateMessages);
+	BOOL enabled = (self.filter.filterLimitedToValue != TPI_ChatFilterLimitToValuePrivateMessages);
 
 	self.filterEventUserJoinedChannelCheck.enabled = enabled;
 	self.filterEventUserLeftChannelCheck.enabled = enabled;
@@ -760,6 +758,16 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterEditFilterSheetSelection)
 	BOOL enabled = (self.filterLimitedToMyselfCheck.state == NSOffState);
 
 	self.filterSenderMatchTextField.enabled = enabled;
+}
+
+- (void)updateFilterLimitedToMatrix
+{
+	TPI_ChatFilterLimitToValue limitedTo = self.filter.filterLimitedToValue;
+
+	self.filterLimitToNoLimitButton.state = (limitedTo == TPI_ChatFilterLimitToValueNoLimit);
+	self.filterLimitToOnlyChannelsButton.state = (limitedTo == TPI_ChatFilterLimitToValueChannels);
+	self.filterLimitToOnlyPrivateMessagesButton.state = (limitedTo == TPI_ChatFilterLimitToValuePrivateMessages);
+	self.filterLimitToSpecificItemsButton.state = (limitedTo == TPI_ChatFilterLimitToValueSpecificItems);
 }
 
 - (void)filterLimitedToMyselfChanged:(id)sender
@@ -794,6 +802,8 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterEditFilterSheetSelection)
 
 - (void)filterLimitedToMatrixChanged:(id)sender
 {
+	self.filter.filterLimitedToValue = [sender tag];
+
 	[self updateVisibilityOfLimitedToTableHostView];
 
 	[self updateEnabledStateOfFilterEvents];

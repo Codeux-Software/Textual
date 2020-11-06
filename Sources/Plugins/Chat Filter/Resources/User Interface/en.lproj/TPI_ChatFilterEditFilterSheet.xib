@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -37,8 +37,11 @@
                 <outlet property="filterForwardToDestinationTextField" destination="muN-88-pns" id="bY7-q6-27g"/>
                 <outlet property="filterIgnoreContentCheck" destination="vdu-cW-fcy" id="1fS-BW-6xG"/>
                 <outlet property="filterIgnoreOperatorsCheck" destination="1Ft-El-Wak" id="Rh1-xw-ueF"/>
-                <outlet property="filterLimitToMatrix" destination="bT2-rB-pWP" id="jR3-Br-WDr"/>
+                <outlet property="filterLimitToNoLimitButton" destination="9q9-HZ-VJB" id="z3I-Y3-WPX"/>
+                <outlet property="filterLimitToOnlyChannelsButton" destination="FHv-4p-uKe" id="hNk-YZ-sGm"/>
+                <outlet property="filterLimitToOnlyPrivateMessagesButton" destination="oUe-SK-peo" id="dS5-Wm-fZV"/>
                 <outlet property="filterLimitToSelectionOutlineView" destination="TdM-lk-raw" id="6z7-P1-1qV"/>
+                <outlet property="filterLimitToSpecificItemsButton" destination="E3h-aN-eRj" id="Geu-UE-xEI"/>
                 <outlet property="filterLimitedToHostView" destination="gTG-wG-y2s" id="zee-bm-f1M"/>
                 <outlet property="filterLimitedToMyselfCheck" destination="X5X-m4-re0" id="9Zk-xV-VDm"/>
                 <outlet property="filterLimitedToSelectionHostView" destination="akH-fU-k99" id="E06-30-IMS"/>
@@ -366,7 +369,7 @@ Gw
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="u00-83-eYs">
-                                            <rect key="frame" x="106" y="448" width="88" height="16"/>
+                                            <rect key="frame" x="106" y="447" width="88" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Limit Filter to:" id="ewY-OS-bvC">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -404,18 +407,12 @@ Gw
                                                 <constraint firstItem="ogw-Wl-ucj" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="akH-fU-k99" secondAttribute="trailing" id="yJe-cp-CHC"/>
                                             </constraints>
                                         </customView>
-                                        <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bT2-rB-pWP">
-                                            <rect key="frame" x="200" y="386" width="224" height="78"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="cellSize" width="224" height="18"/>
-                                            <size key="intercellSpacing" width="4" height="2"/>
-                                            <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="fzb-eu-Ds5">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <cells>
-                                                <column>
-                                                    <buttonCell type="radio" title="Only Channels" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="ICX-1r-s75">
+                                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="4" verticalStackHuggingPriority="750" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LKc-x8-6lo">
+                                            <rect key="frame" x="202" y="387" width="222" height="76"/>
+                                            <subviews>
+                                                <button tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="FHv-4p-uKe">
+                                                    <rect key="frame" x="-2" y="59" width="114" height="18"/>
+                                                    <buttonCell key="cell" type="radio" title="Only Channels" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="ICX-1r-s75">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                         <accessibility description="Limit filter to only channels"/>
@@ -423,7 +420,10 @@ Gw
                                                             <action selector="filterLimitedToMatrixChanged:" target="-2" id="j7l-Vv-eVD"/>
                                                         </connections>
                                                     </buttonCell>
-                                                    <buttonCell type="radio" title="Only Queries (Private Messages)" imagePosition="left" alignment="left" tag="2" inset="2" id="Q2E-uO-tiy">
+                                                </button>
+                                                <button tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="oUe-SK-peo">
+                                                    <rect key="frame" x="-2" y="39" width="224" height="18"/>
+                                                    <buttonCell key="cell" type="radio" title="Only Queries (Private Messages)" imagePosition="left" alignment="left" tag="2" inset="2" id="Q2E-uO-tiy">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                         <accessibility description="Limit filter to only queries"/>
@@ -431,7 +431,10 @@ Gw
                                                             <action selector="filterLimitedToMatrixChanged:" target="-2" id="fny-qx-vln"/>
                                                         </connections>
                                                     </buttonCell>
-                                                    <buttonCell type="radio" title="Specific Items" imagePosition="left" alignment="left" tag="3" inset="2" id="DUz-zW-Mca">
+                                                </button>
+                                                <button tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="E3h-aN-eRj">
+                                                    <rect key="frame" x="-2" y="19" width="112" height="18"/>
+                                                    <buttonCell key="cell" type="radio" title="Specific Items" imagePosition="left" alignment="left" tag="3" inset="2" id="DUz-zW-Mca">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                         <accessibility description="Limit filter to specific items"/>
@@ -439,7 +442,10 @@ Gw
                                                             <action selector="filterLimitedToMatrixChanged:" target="-2" id="yKu-8x-mVS"/>
                                                         </connections>
                                                     </buttonCell>
-                                                    <buttonCell type="radio" title="Do Not Limit" imagePosition="left" alignment="left" inset="2" id="6UK-tM-xg2">
+                                                </button>
+                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="9q9-HZ-VJB">
+                                                    <rect key="frame" x="-2" y="-1" width="102" height="18"/>
+                                                    <buttonCell key="cell" type="radio" title="Do Not Limit" imagePosition="left" alignment="left" inset="2" id="6UK-tM-xg2">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                         <accessibility description="Do not limit filter"/>
@@ -447,22 +453,31 @@ Gw
                                                             <action selector="filterLimitedToMatrixChanged:" target="-2" id="fjs-Cm-Kkz"/>
                                                         </connections>
                                                     </buttonCell>
-                                                </column>
-                                            </cells>
-                                            <connections>
-                                                <accessibilityConnection property="title" destination="u00-83-eYs" id="LCQ-vZ-EPq"/>
-                                            </connections>
-                                        </matrix>
+                                                </button>
+                                            </subviews>
+                                            <visibilityPriorities>
+                                                <integer value="1000"/>
+                                                <integer value="1000"/>
+                                                <integer value="1000"/>
+                                                <integer value="1000"/>
+                                            </visibilityPriorities>
+                                            <customSpacing>
+                                                <real value="3.4028234663852886e+38"/>
+                                                <real value="3.4028234663852886e+38"/>
+                                                <real value="3.4028234663852886e+38"/>
+                                                <real value="3.4028234663852886e+38"/>
+                                            </customSpacing>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="bT2-rB-pWP" firstAttribute="top" secondItem="u00-83-eYs" secondAttribute="top" id="Ch9-5F-xgz"/>
-                                        <constraint firstItem="bT2-rB-pWP" firstAttribute="leading" secondItem="u00-83-eYs" secondAttribute="trailing" constant="8" symbolic="YES" id="K5S-1O-LZk"/>
-                                        <constraint firstItem="bT2-rB-pWP" firstAttribute="top" secondItem="oIh-tI-HKB" secondAttribute="top" constant="24" id="cpr-1n-hza"/>
+                                        <constraint firstItem="u00-83-eYs" firstAttribute="centerY" secondItem="FHv-4p-uKe" secondAttribute="centerY" id="7QU-5O-2Iy"/>
+                                        <constraint firstItem="FHv-4p-uKe" firstAttribute="leading" secondItem="u00-83-eYs" secondAttribute="trailing" constant="10" id="XPP-6Q-asR"/>
+                                        <constraint firstItem="LKc-x8-6lo" firstAttribute="top" secondItem="oIh-tI-HKB" secondAttribute="top" constant="25" id="fXR-QL-EQv"/>
+                                        <constraint firstItem="gTG-wG-y2s" firstAttribute="top" secondItem="LKc-x8-6lo" secondAttribute="bottom" constant="19" id="lPI-Yf-ZRA"/>
                                         <constraint firstAttribute="bottom" secondItem="gTG-wG-y2s" secondAttribute="bottom" id="oHi-up-1Pv"/>
                                         <constraint firstAttribute="trailing" secondItem="gTG-wG-y2s" secondAttribute="trailing" id="t1C-Pk-18A"/>
                                         <constraint firstItem="gTG-wG-y2s" firstAttribute="leading" secondItem="oIh-tI-HKB" secondAttribute="leading" id="ws1-Kd-Xx8"/>
                                         <constraint firstItem="u00-83-eYs" firstAttribute="leading" secondItem="oIh-tI-HKB" secondAttribute="leading" constant="108" id="z13-jd-j5k"/>
-                                        <constraint firstItem="gTG-wG-y2s" firstAttribute="top" secondItem="bT2-rB-pWP" secondAttribute="bottom" constant="18" id="zA1-Su-3Bw"/>
                                     </constraints>
                                 </view>
                             </tabViewItem>
@@ -1039,7 +1054,7 @@ This information is for your records and does not alter the behavior of the filt
             <connections>
                 <outlet property="delegate" destination="-2" id="rly-7V-5kS"/>
             </connections>
-            <point key="canvasLocation" x="26.5" y="242"/>
+            <point key="canvasLocation" x="-485" y="182"/>
         </window>
         <customObject id="TdM-lk-raw" customClass="TVCChannelSelectionViewController"/>
         <numberFormatter formatterBehavior="default10_4" localizesFormat="NO" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="vGQ-Aw-wDg" customClass="TPI_NumberOnlyTextFieldFormatter">
