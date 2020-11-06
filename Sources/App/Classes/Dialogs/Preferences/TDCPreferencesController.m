@@ -36,6 +36,8 @@
  *
  *********************************************************************** */
 
+#warning TODO: Radio groups that are manually set need to be updated when iCloud syncs.
+
 #import "NSViewHelper.h"
 #import "TXMasterController.h"
 #import "TXMenuController.h"
