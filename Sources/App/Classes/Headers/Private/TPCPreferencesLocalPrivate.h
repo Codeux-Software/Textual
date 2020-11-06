@@ -66,6 +66,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)setHighlightCurrentNickname:(BOOL)highlightCurrentNickname;
 
++ (void)setLocationToSendNotices:(TXNoticeSendLocation)locationToSendNotices;
+
 + (void)setAppearance:(TXPreferredAppearance)appearance;
 
 + (void)setThemeName:(NSString *)value;

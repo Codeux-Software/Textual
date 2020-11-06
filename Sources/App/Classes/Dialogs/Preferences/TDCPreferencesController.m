@@ -151,6 +151,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSButton *checkForUpdatesDontCheck;
 @property (nonatomic, weak) IBOutlet NSButton *checkForUpdatesAutomaticallyCheck;
 @property (nonatomic, weak) IBOutlet NSButton *checkForUpdatesAutomaticallyDownload;
+@property (nonatomic, weak) IBOutlet NSButton *forwardNoticeToServerConsoleButton;
+@property (nonatomic, weak) IBOutlet NSButton *forwardNoticeToSelectedChannelButton;
+@property (nonatomic, weak) IBOutlet NSButton *forwardNoticeToQueryButton;
 @property (nonatomic, weak) IBOutlet NSStackView *contentViewGeneralStackView;
 @property (nonatomic, weak) IBOutlet NSView *contentViewGeneralCheckForUpdatesView;
 @property (nonatomic, weak) IBOutlet NSView *contentViewGeneralShareDataView;
@@ -171,6 +174,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)onChangedCloudSyncingServices:(id)sender;
 - (IBAction)onChangedCloudSyncingServicesServersOnly:(id)sender;
 - (IBAction)onChangedDisableNicknameColorHashing:(id)sender;
+- (IBAction)onChangedForwardNoticeTo:(id)sender;
 - (IBAction)onChangedHighlightLogging:(id)sender;
 - (IBAction)onChangedHighlightType:(id)sender;
 - (IBAction)onChangedInlineMediaOption:(id)sender;
@@ -267,6 +271,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[self updateCheckForUpdatesMatrix];
 	[self updateFileTransferDownloadDestinationFolder];
+	[self updateForwardNoticeToMatrix];
 	[self updateThemeSelection];
 	[self updateTranscriptFolder];
 
@@ -1261,6 +1266,23 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)userStyleSheetWillClose:(TDCPreferencesUserStyleSheet *)sender
 {
 	self.userStyleSheet = nil;
+}
+
+#pragma mark -
+#pragma mark Forward Notice To
+
+- (void)updateForwardNoticeToMatrix
+{
+	TXNoticeSendLocation location = [TPCPreferences locationToSendNotices];
+
+	self.forwardNoticeToServerConsoleButton.state = (location == TXNoticeSendLocationServerConsole);
+	self.forwardNoticeToSelectedChannelButton.state = (location == TXNoticeSendLocationSelectedChannel);
+	self.forwardNoticeToQueryButton.state = (location == TXNoticeSendLocationQuery);
+}
+
+- (void)onChangedForwardNoticeTo:(id)sender
+{
+	[TPCPreferences setLocationToSendNotices:[sender tag]];
 }
 
 #pragma mark -

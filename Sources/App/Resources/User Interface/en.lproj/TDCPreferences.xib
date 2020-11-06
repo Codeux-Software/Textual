@@ -40,6 +40,9 @@
                 <outlet property="excludeKeywordsTable" destination="Vqz-0J-ajG" id="Zh5-qx-YFn"/>
                 <outlet property="fileTransferDownloadDestinationButton" destination="wNd-qD-qDv" id="af3-0V-JEt"/>
                 <outlet property="fileTransferManuallyEnteredIPAddressTextField" destination="gsf-QD-Vkr" id="d3X-Uo-t0B"/>
+                <outlet property="forwardNoticeToQueryButton" destination="uum-Jf-eoo" id="uC4-P1-IBK"/>
+                <outlet property="forwardNoticeToSelectedChannelButton" destination="IcT-S0-dsA" id="FY1-ni-7In"/>
+                <outlet property="forwardNoticeToServerConsoleButton" destination="Fsx-cd-pY6" id="DJW-aV-hhk"/>
                 <outlet property="highlightKeywordsArrayController" destination="4310" id="Wre-n3-NQF"/>
                 <outlet property="highlightKeywordsTable" destination="nIO-jH-FEm" id="rwr-Mr-P5g"/>
                 <outlet property="highlightNicknameButton" destination="IVv-zw-dDv" id="5mn-VV-cM3"/>
@@ -3074,49 +3077,13 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                     <rect key="frame" x="40" y="155" width="590" height="5"/>
                 </box>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xEg-Db-K0K">
-                    <rect key="frame" x="84" y="71" width="121" height="16"/>
+                    <rect key="frame" x="84" y="70" width="121" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Forward notices to:" id="UgN-n4-JIQ">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6AC-Oj-s1p">
-                    <rect key="frame" x="211" y="30" width="136" height="58"/>
-                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    <size key="cellSize" width="136" height="18"/>
-                    <size key="intercellSpacing" width="4" height="2"/>
-                    <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="xxQ-T6-iej">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <cells>
-                        <column>
-                            <buttonCell type="radio" title="Server Console" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="z5q-kx-Kkh">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                                <connections>
-                                    <accessibilityConnection property="title" destination="xEg-Db-K0K" id="VZZ-8n-zTJ"/>
-                                </connections>
-                            </buttonCell>
-                            <buttonCell type="radio" title="Selected Channel" imagePosition="left" alignment="left" inset="2" id="pyb-8n-QN7">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                                <connections>
-                                    <accessibilityConnection property="title" destination="xEg-Db-K0K" id="c9E-jI-QRc"/>
-                                </connections>
-                            </buttonCell>
-                            <buttonCell type="radio" title="Private Message" imagePosition="left" alignment="left" inset="2" id="Nyc-Yz-lSg">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                        </column>
-                    </cells>
-                    <connections>
-                        <accessibilityConnection property="title" destination="xEg-Db-K0K" id="bBh-oz-2Sv"/>
-                        <binding destination="G2Q-fc-ddg" name="selectedIndex" keyPath="values.DestinationOfNonserverNotices" id="Go7-JY-fnA"/>
-                    </connections>
-                </matrix>
                 <stackView distribution="fillEqually" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="750" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IzG-w4-VXU">
                     <rect key="frame" x="86" y="176" width="268" height="106"/>
                     <subviews>
@@ -3174,26 +3141,71 @@ Messages are not saved between app launches unless “Restore scrollback from pr
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
+                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="4" verticalStackHuggingPriority="750" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NSe-gI-Nm7">
+                    <rect key="frame" x="211" y="30" width="131" height="56"/>
+                    <subviews>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fsx-cd-pY6">
+                            <rect key="frame" x="-2" y="39" width="119" height="18"/>
+                            <buttonCell key="cell" type="radio" title="Server Console" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="cCE-T0-zar">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="onChangedForwardNoticeTo:" target="-2" id="yYL-au-VTX"/>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="IcT-S0-dsA">
+                            <rect key="frame" x="-2" y="19" width="133" height="18"/>
+                            <buttonCell key="cell" type="radio" title="Selected Channel" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="isT-C5-ie1">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="onChangedForwardNoticeTo:" target="-2" id="AJG-j9-QYI"/>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="uum-Jf-eoo">
+                            <rect key="frame" x="-2" y="-1" width="126" height="18"/>
+                            <buttonCell key="cell" type="radio" title="Private Message" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="EZN-9J-FUP">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="onChangedForwardNoticeTo:" target="-2" id="SOt-2E-iuy"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
             </subviews>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="NSe-gI-Nm7" secondAttribute="bottom" constant="30" id="1dN-lF-kaF"/>
+                <constraint firstItem="NSe-gI-Nm7" firstAttribute="top" secondItem="nlA-Ew-LSZ" secondAttribute="bottom" constant="18" id="9av-VF-gTL"/>
                 <constraint firstItem="xEg-Db-K0K" firstAttribute="leading" secondItem="1YF-k7-FrW" secondAttribute="leading" constant="86" id="AGv-v2-P6L"/>
-                <constraint firstAttribute="bottom" secondItem="6AC-Oj-s1p" secondAttribute="bottom" constant="30" id="CO2-9e-4iv"/>
+                <constraint firstItem="xEg-Db-K0K" firstAttribute="firstBaseline" secondItem="Fsx-cd-pY6" secondAttribute="firstBaseline" id="H41-vB-ut3"/>
                 <constraint firstItem="vT0-4B-zbA" firstAttribute="top" secondItem="IzG-w4-VXU" secondAttribute="bottom" constant="18" id="QAA-Pn-lmw"/>
                 <constraint firstItem="nlA-Ew-LSZ" firstAttribute="leading" secondItem="vT0-4B-zbA" secondAttribute="leading" id="RgL-aY-fFR"/>
-                <constraint firstItem="6AC-Oj-s1p" firstAttribute="top" secondItem="nlA-Ew-LSZ" secondAttribute="bottom" constant="16" id="Rtr-m6-4wB"/>
                 <constraint firstItem="nlA-Ew-LSZ" firstAttribute="top" secondItem="zY5-8K-Mie" secondAttribute="bottom" constant="18" id="UeX-tm-lpF"/>
                 <constraint firstItem="vT0-4B-zbA" firstAttribute="centerX" secondItem="1YF-k7-FrW" secondAttribute="centerX" id="YjD-wK-T5a"/>
-                <constraint firstItem="xEg-Db-K0K" firstAttribute="top" secondItem="6AC-Oj-s1p" secondAttribute="top" constant="1" id="Zrl-cX-dmd"/>
-                <constraint firstItem="6AC-Oj-s1p" firstAttribute="leading" secondItem="xEg-Db-K0K" secondAttribute="trailing" constant="8" symbolic="YES" id="a0G-Rd-NfT"/>
                 <constraint firstItem="IzG-w4-VXU" firstAttribute="top" secondItem="1YF-k7-FrW" secondAttribute="top" constant="30" id="jEP-hD-E8s"/>
                 <constraint firstItem="zY5-8K-Mie" firstAttribute="leading" secondItem="1YF-k7-FrW" secondAttribute="leading" constant="86" id="lBH-G6-Xgm"/>
                 <constraint firstItem="vT0-4B-zbA" firstAttribute="leading" secondItem="1YF-k7-FrW" secondAttribute="leading" constant="40" id="o7G-Ls-gg0"/>
+                <constraint firstItem="NSe-gI-Nm7" firstAttribute="leading" secondItem="xEg-Db-K0K" secondAttribute="trailing" constant="8" symbolic="YES" id="qOK-eG-qwn"/>
                 <constraint firstItem="zY5-8K-Mie" firstAttribute="top" secondItem="vT0-4B-zbA" secondAttribute="bottom" constant="18" id="qlS-6I-6ce"/>
                 <constraint firstItem="IzG-w4-VXU" firstAttribute="leading" secondItem="1YF-k7-FrW" secondAttribute="leading" constant="86" id="vh9-lM-yjf"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="zY5-8K-Mie" secondAttribute="trailing" constant="20" id="wGo-fC-jSY"/>
                 <constraint firstItem="vT0-4B-zbA" firstAttribute="trailing" secondItem="nlA-Ew-LSZ" secondAttribute="trailing" id="xBF-TR-lYT"/>
             </constraints>
-            <point key="canvasLocation" x="318" y="-3586"/>
+            <point key="canvasLocation" x="318" y="-3584"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="n4A-Pk-quE" userLabel="Flood Control">
             <rect key="frame" x="0.0" y="0.0" width="670" height="434"/>

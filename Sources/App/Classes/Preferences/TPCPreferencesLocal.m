@@ -468,6 +468,11 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 	return (TXNoticeSendLocation)[RZUserDefaults() unsignedIntegerForKey:@"DestinationOfNonserverNotices"];
 }
 
++ (void)setLocationToSendNotices:(TXNoticeSendLocation)locationToSendNotices
+{
+	[RZUserDefaults() setUnsignedInteger:locationToSendNotices forKey:@"DestinationOfNonserverNotices"];
+}
+
 + (TXCommandWKeyAction)commandWKeyAction
 {
 	return (TXCommandWKeyAction)[RZUserDefaults() unsignedIntegerForKey:@"Keyboard -> Command+W Key Action"];
