@@ -77,7 +77,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)sheetDidEndWithReturnCode:(NSInteger)returnCode
 {
-	[self.sheet close];
+	[self.sheet orderOut:nil];
 }
 
 - (void)ok:(id)sender
