@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17503.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TXApplication">
@@ -41,7 +41,7 @@
                 <outlet property="userControlMenu" destination="327" id="Qyi-GH-9oZ"/>
             </connections>
         </customObject>
-        <menu title="Menu" showsStateColumn="NO" id="367" userLabel="Add Server Menu">
+        <menu title="Menu" id="367" userLabel="Add Server Menu">
             <items>
                 <menuItem title="Add Server…" tag="1400" id="369">
                     <connections>
@@ -173,7 +173,7 @@
             </connections>
             <point key="canvasLocation" x="-452" y="-306"/>
         </menu>
-        <menu showsStateColumn="NO" id="963" userLabel="Join Channel Menu">
+        <menu id="963" userLabel="Join Channel Menu">
             <items>
                 <menuItem title="Join Channel" tag="1000" id="964">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -1351,7 +1351,7 @@ CA
             </connections>
             <point key="canvasLocation" x="-222" y="-61"/>
         </menu>
-        <menu title="Menu" showsStateColumn="NO" id="426" userLabel="Open URL Menu">
+        <menu title="Menu" id="426" userLabel="Open URL Menu">
             <items>
                 <menuItem title="Copy URL" tag="1100" id="427">
                     <connections>
