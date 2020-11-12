@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)endSheet
 {
-	[NSApp endSheet:self.sheet];
+	[self.window endSheet:self.sheet];
 }
 
 - (void)sheetDidEndWithReturnCode:(NSInteger)returnCode
