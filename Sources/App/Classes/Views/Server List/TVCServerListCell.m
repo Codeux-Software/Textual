@@ -60,7 +60,6 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface TVCServerListCell ()
-@property (nonatomic, weak, nullable) IBOutlet NSButton *disclosureTriangle;
 @property (nonatomic, weak) IBOutlet NSTextField *cellTextField;
 @property (nonatomic, weak) IBOutlet NSImageView *messageCountBadgeImageView;
 // Deactivating thse constraints will dereference them.
@@ -73,6 +72,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) TVCServerListAppearance *userInterfaceObjects;
 @property (readonly) TVCServerListCellDrawingContext *drawingContext;
 @property (readonly) IRCTreeItem *cellItem;
+@end
+
+@interface TVCServerListCellGroupItem ()
+@property (nonatomic, weak, nullable) NSButton *disclosureTriangle;
 @end
 
 @interface TVCServerListCellDrawingContext : NSObject
@@ -577,6 +580,67 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @implementation TVCServerListCellGroupItem
+
+#pragma mark -
+#pragma mark Disclosure Triangle
+
+- (void)setNeedsDisplay:(BOOL)needsDisplay
+{
+	if (needsDisplay) {
+		[self updateDisclosureTriangle];
+	}
+
+	[super setNeedsDisplay:needsDisplay];
+}
+
+- (void)updateDisclosureTriangle
+{
+	NSButton *disclosureTriangle = self.disclosureTriangle;
+
+	if (disclosureTriangle == nil) {
+		return;
+	}
+
+	TVCServerListRowCell *rowCell = self.rowCell;
+
+	BOOL isSelected = rowCell.isSelected;
+
+	[self updateGroupDisclosureTriangle:disclosureTriangle isSelected:isSelected];
+}
+
+- (void)updateGroupDisclosureTriangle:(NSButton *)disclosureTriangle isSelected:(BOOL)isSelected
+{
+	NSParameterAssert(disclosureTriangle != nil);
+
+	TVCServerListAppearance *appearance = self.userInterfaceObjects;
+
+	/* The defaults are only saved if none is already set which means
+	 we can always call to this here, even if we set a different image,
+	 because it will only save the value once. */
+	[appearance setOutlineViewDefaultDisclosureTriangle:disclosureTriangle.image];
+	[appearance setOutlineViewAlternateDisclosureTriangle:disclosureTriangle.alternateImage];
+
+	/* Change disclosure button image. */
+	NSImage *primaryImage = [appearance disclosureTriangleInContext:YES selected:isSelected];
+	NSImage *alternateImage = [appearance disclosureTriangleInContext:NO selected:isSelected];
+
+	if (primaryImage == nil && alternateImage == nil) {
+		return;
+	}
+
+	NSButtonCell *buttonCell = disclosureTriangle.cell;
+
+	if (primaryImage) {
+		buttonCell.image = primaryImage;
+	}
+
+	if (alternateImage) {
+		buttonCell.alternateImage = alternateImage;
+	}
+
+	buttonCell.highlightsBy = NSNoCellMask;
+}
+
 @end
 
 @implementation TVCServerListCellChildItem
@@ -680,6 +744,24 @@ NS_ASSUME_NONNULL_BEGIN
 	} else {
 		[super drawSelectionInRect:dirtyRect];
 	} // selectionColor
+}
+
+- (void)didAddSubview:(NSView *)subview
+{
+	if (self.isGroupItem &&
+		[subview isKindOfClass:[NSButton class]] &&
+		[[subview identifier] isEqual:NSOutlineViewDisclosureButtonKey])
+	{
+		NSButton *disclosureTriangle = (NSButton *)subview;
+
+		TVCServerListCellGroupItem *childCell = self.childCell;
+
+		childCell.disclosureTriangle = disclosureTriangle;
+
+		[childCell updateDisclosureTriangle];
+	}
+
+	[super didAddSubview:subview];
 }
 
 #pragma mark -

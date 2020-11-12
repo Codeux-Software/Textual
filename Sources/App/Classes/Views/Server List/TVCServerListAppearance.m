@@ -205,6 +205,50 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Everything Else
 
+- (void)setOutlineViewDefaultDisclosureTriangle:(NSImage *)image
+{
+	if (self.serverList.outlineViewDefaultDisclosureTriangle == nil) {
+		self.serverList.outlineViewDefaultDisclosureTriangle = image;
+	}
+}
+
+- (void)setOutlineViewAlternateDisclosureTriangle:(NSImage *)image
+{
+	if (self.serverList.outlineViewAlternateDisclosureTriangle == nil) {
+		self.serverList.outlineViewAlternateDisclosureTriangle = image;
+	}
+}
+
+- (nullable NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected
+{
+	TXAppearanceType appearanceType = self.appearanceType;
+
+	switch (appearanceType) {
+		case TXAppearanceTypeYosemiteLight:
+		{
+			if (up) {
+				return self.serverList.outlineViewDefaultDisclosureTriangle;
+			} else {
+				return self.serverList.outlineViewAlternateDisclosureTriangle;
+			}
+		} // Yosemite
+		case TXAppearanceTypeYosemiteDark:
+		{
+			if (up) {
+				return [NSImage imageNamed:@"YosemiteDarkServerListViewDisclosureUp"];
+			} else {
+				return [NSImage imageNamed:@"YosemiteDarkServerListViewDisclosureDown"];
+			}
+		} // Yosemite
+		default:
+		{
+			break;
+		}
+	} // switch()
+
+	return nil;
+}
+
 - (nullable NSString *)statusIconForActiveChannel:(BOOL)isActive selected:(BOOL)isSelected activeWindow:(BOOL)isActiveWindow treatAsTemplate:(BOOL *)treatAsTemplate
 {
 	NSParameterAssert(treatAsTemplate != NULL);
