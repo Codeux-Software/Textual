@@ -336,11 +336,8 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="KgM-JY-9PC" firstAttribute="top" secondItem="dVR-2U-X51" secondAttribute="top" id="8Ld-b3-95S"/>
-                            <constraint firstAttribute="bottom" secondItem="KgM-JY-9PC" secondAttribute="bottom" id="RqD-1B-IBq"/>
                             <constraint firstItem="2k7-ax-6YE" firstAttribute="top" secondItem="dVR-2U-X51" secondAttribute="top" id="TbP-t5-Rvn"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="XJm-Dd-FjI"/>
-                            <constraint firstItem="dCp-Wp-aIX" firstAttribute="leading" secondItem="KgM-JY-9PC" secondAttribute="trailing" constant="1" id="pYD-cE-l8m"/>
-                            <constraint firstItem="KgM-JY-9PC" firstAttribute="leading" secondItem="dVR-2U-X51" secondAttribute="leading" id="qYu-Gl-WeD"/>
                         </constraints>
                         <holdingPriorities>
                             <real value="355"/>
