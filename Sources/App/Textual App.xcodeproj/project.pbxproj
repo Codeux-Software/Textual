@@ -2446,12 +2446,6 @@
 		4CA3867224C42142005F66F4 /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866C24C42142005F66F4 /* AppCenterCrashes.framework */; };
 		4CA3867324C42142005F66F4 /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866C24C42142005F66F4 /* AppCenterCrashes.framework */; };
 		4CA3867424C42142005F66F4 /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866C24C42142005F66F4 /* AppCenterCrashes.framework */; };
-		4CA3867524C42161005F66F4 /* AppCenter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866B24C42142005F66F4 /* AppCenter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4CA3867624C42161005F66F4 /* AppCenterCrashes.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866C24C42142005F66F4 /* AppCenterCrashes.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4CA3867924C4216B005F66F4 /* AppCenter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866B24C42142005F66F4 /* AppCenter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4CA3867A24C4216B005F66F4 /* AppCenterCrashes.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866C24C42142005F66F4 /* AppCenterCrashes.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4CA3867B24C42196005F66F4 /* AppCenter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866B24C42142005F66F4 /* AppCenter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4CA3867C24C42196005F66F4 /* AppCenterCrashes.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA3866C24C42142005F66F4 /* AppCenterCrashes.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CAB27512537EE44009B1F07 /* IRCChannelMemberList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB27502537EE43009B1F07 /* IRCChannelMemberList.m */; };
 		4CAB27522537EE44009B1F07 /* IRCChannelMemberList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB27502537EE43009B1F07 /* IRCChannelMemberList.m */; };
 		4CAB27532537EE44009B1F07 /* IRCChannelMemberList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB27502537EE43009B1F07 /* IRCChannelMemberList.m */; };
@@ -2538,8 +2532,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4CA3867524C42161005F66F4 /* AppCenter.framework in Embed Frameworks */,
-				4CA3867624C42161005F66F4 /* AppCenterCrashes.framework in Embed Frameworks */,
 				4C06E44520EC53D70055D09A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C06E44720EC53D70055D09A /* CocoaExtensions.framework in Embed Frameworks */,
 				4C06E44920EC53D70055D09A /* EncryptionKit.framework in Embed Frameworks */,
@@ -2554,8 +2546,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4CA3867924C4216B005F66F4 /* AppCenter.framework in Embed Frameworks */,
-				4CA3867A24C4216B005F66F4 /* AppCenterCrashes.framework in Embed Frameworks */,
 				4C06E47320EC541C0055D09A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C06E47520EC541C0055D09A /* CocoaExtensions.framework in Embed Frameworks */,
 				4C06E47720EC541C0055D09A /* EncryptionKit.framework in Embed Frameworks */,
@@ -2571,8 +2561,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4CA3867B24C42196005F66F4 /* AppCenter.framework in Embed Frameworks */,
-				4CA3867C24C42196005F66F4 /* AppCenterCrashes.framework in Embed Frameworks */,
 				4C06E49520EC54610055D09A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C06E49720EC54610055D09A /* CocoaExtensions.framework in Embed Frameworks */,
 				4C06E49920EC54610055D09A /* EncryptionKit.framework in Embed Frameworks */,
