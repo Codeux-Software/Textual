@@ -237,9 +237,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *applicationIdentifier = acData[@"Application Identifier"];
 
-	[MSAppCenter start:applicationIdentifier withServices:@[[MSCrashes class]]];
+	[MSACAppCenter start:applicationIdentifier withServices:@[[MSACCrashes class]]];
 
-	[MSCrashes setUserConfirmationHandler:^BOOL(NSArray<MSErrorReport *> *errorReports) {
+	[MSACCrashes setUserConfirmationHandler:^BOOL(NSArray<MSACErrorReport *> *errorReports) {
 		TDCAlertResponse response =
 		[TDCAlert modalAlertWithMessage:TXTLS(@"Prompts[oe3-i3]")
 								  title:TXTLS(@"Prompts[h49-h5]")
@@ -250,19 +250,19 @@ NS_ASSUME_NONNULL_BEGIN
 		switch (response) {
 			case TDCAlertResponseDefault:
 			{
-				[MSCrashes notifyWithUserConfirmation:MSUserConfirmationSend];
+				[MSACCrashes notifyWithUserConfirmation:MSACUserConfirmationSend];
 
 				break;
 			}
 			case TDCAlertResponseAlternate:
 			{
-				[MSCrashes notifyWithUserConfirmation:MSUserConfirmationDontSend];
+				[MSACCrashes notifyWithUserConfirmation:MSACUserConfirmationDontSend];
 
 				break;
 			}
 			case TDCAlertResponseOther:
 			{
-				[MSCrashes notifyWithUserConfirmation:MSUserConfirmationAlways];
+				[MSACCrashes notifyWithUserConfirmation:MSACUserConfirmationAlways];
 
 				break;
 			}
