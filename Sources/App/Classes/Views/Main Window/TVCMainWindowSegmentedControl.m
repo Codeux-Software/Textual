@@ -64,6 +64,32 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
+- (void)awakeFromNib
+{
+	[super awakeFromNib];
+
+	if (TEXTUAL_RUNNING_ON_HIGHSIERRA) {
+		return;
+	}
+
+	/* NSSegmentDistributionFillEqually was added in macOS 10.13.
+	 We support back to macOS 10.12. On macOS 10.12, we take the
+	 overall width of the segmented control and divide it by three,
+	 then set that value for each cell. */
+	NSInteger segmentCount = self.segmentCount;
+
+	CGFloat dividerWidth = 1.0;
+
+	/* We subtract 1 from number of segments and multiple that against the
+	 divider width to give us the width of the dividers. We then subtract
+	 that value from the width divided by the number of segments. */
+	CGFloat segmentWidth = fabs((self.segmentedControllerWidthConstraint.constant / segmentCount) - (dividerWidth * (segmentCount - 1)));
+
+	for (NSUInteger segment = 0; segment < segmentCount; segment++) {
+		[self setWidth:segmentWidth forSegment:segment];
+	}
+}
+
 - (void)updateSegmentedControllerOrigin
 {
 	if ([TPCPreferences hideMainWindowSegmentedController]) {
