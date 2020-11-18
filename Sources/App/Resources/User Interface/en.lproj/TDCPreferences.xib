@@ -429,13 +429,14 @@
                 </stackView>
             </subviews>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="lAf-Xj-H1K" secondAttribute="bottom" constant="30" id="4aJ-Kq-DdN"/>
                 <constraint firstItem="GlR-W9-ZJo" firstAttribute="centerX" secondItem="Eyz-5p-IkU" secondAttribute="centerX" id="F6Q-dn-TP8"/>
                 <constraint firstItem="bKt-Ac-1I2" firstAttribute="top" secondItem="Eyz-5p-IkU" secondAttribute="top" constant="30" id="Ma8-cM-aWR"/>
                 <constraint firstItem="GlR-W9-ZJo" firstAttribute="leading" secondItem="Eyz-5p-IkU" secondAttribute="leading" constant="40" id="aU0-D3-FEb"/>
                 <constraint firstAttribute="trailing" secondItem="lAf-Xj-H1K" secondAttribute="trailing" id="cSA-z1-DxP"/>
                 <constraint firstItem="lAf-Xj-H1K" firstAttribute="leading" secondItem="Eyz-5p-IkU" secondAttribute="leading" id="cvm-7s-bPC"/>
-                <constraint firstAttribute="bottom" secondItem="Arz-w3-aT6" secondAttribute="bottom" constant="30" id="fsQ-b1-Dq2"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bKt-Ac-1I2" secondAttribute="trailing" constant="20" id="hPW-7n-PiW"/>
+                <constraint firstAttribute="height" priority="550" id="qUa-FR-bK6"/>
                 <constraint firstItem="lAf-Xj-H1K" firstAttribute="top" secondItem="GlR-W9-ZJo" secondAttribute="bottom" constant="18" id="sh8-NW-aa2"/>
                 <constraint firstItem="GlR-W9-ZJo" firstAttribute="top" secondItem="bKt-Ac-1I2" secondAttribute="bottom" constant="18" id="whZ-Hz-BUA"/>
                 <constraint firstItem="bKt-Ac-1I2" firstAttribute="leading" secondItem="Eyz-5p-IkU" secondAttribute="leading" constant="42" id="xOx-Fd-rV8"/>
