@@ -104,9 +104,9 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 		return;
 	}
 
-	[self expandServerList];
-
 	[self expandMemberList];
+
+	[self expandServerList];
 
 	// Set after expanding views so that -resizeWithOldSuperviewSize:
 	// does not save the views' frames prematurely
