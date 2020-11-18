@@ -122,9 +122,8 @@
                             <visualEffectView blendingMode="behindWindow" material="underWindowBackground" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="KgM-JY-9PC">
                                 <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                 <subviews>
-                                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="23" horizontalPageScroll="10" verticalLineScroll="23" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KbE-36-qMw">
+                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="23" horizontalPageScroll="10" verticalLineScroll="23" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KbE-36-qMw">
                                         <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" id="pGy-N5-8Z2">
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -170,7 +169,7 @@
                                                                     </connections>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="ChildView" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="AKs-o3-7CO" customClass="TVCServerListCellChildItem">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="19"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="120" height="19"/>
                                                                     <subviews>
                                                                         <imageView wantsLayer="YES" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="68i-pd-Me5">
                                                                             <rect key="frame" x="2" y="2" width="0.0" height="15"/>
@@ -185,7 +184,7 @@
                                                                             </textFieldCell>
                                                                         </textField>
                                                                         <imageView wantsLayer="YES" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Ybi-Bk-q6V">
-                                                                            <rect key="frame" x="148" y="1" width="0.0" height="17"/>
+                                                                            <rect key="frame" x="118" y="1" width="0.0" height="17"/>
                                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="AgO-Mi-Fwf"/>
                                                                         </imageView>
                                                                     </subviews>
@@ -235,6 +234,10 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="5hi-RS-NLb"/>
+                                    <constraint firstItem="KbE-36-qMw" firstAttribute="leading" secondItem="KgM-JY-9PC" secondAttribute="leading" id="HLq-Mw-ou6"/>
+                                    <constraint firstAttribute="trailing" secondItem="KbE-36-qMw" secondAttribute="trailing" id="VJb-Js-hLp"/>
+                                    <constraint firstAttribute="bottom" secondItem="KbE-36-qMw" secondAttribute="bottom" id="gyb-Dl-0Zg"/>
+                                    <constraint firstItem="KbE-36-qMw" firstAttribute="top" secondItem="KgM-JY-9PC" secondAttribute="top" id="hKK-kV-GA5"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="uvA-9N-e8z"/>
                                 </constraints>
                             </visualEffectView>
@@ -247,9 +250,8 @@
                             <visualEffectView blendingMode="behindWindow" material="underWindowBackground" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="2k7-ax-6YE">
                                 <rect key="frame" x="650" y="0.0" width="150" height="439"/>
                                 <subviews>
-                                    <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="10" verticalLineScroll="20" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KMX-Oo-KOu">
+                                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="10" verticalLineScroll="20" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KMX-Oo-KOu">
                                         <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" id="dMW-Pm-dRv">
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -331,13 +333,17 @@
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="1fo-ar-fxS"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="FXS-Qi-nKW"/>
+                                    <constraint firstItem="KMX-Oo-KOu" firstAttribute="leading" secondItem="2k7-ax-6YE" secondAttribute="leading" id="Mkw-jR-Ly1"/>
+                                    <constraint firstAttribute="trailing" secondItem="KMX-Oo-KOu" secondAttribute="trailing" id="MmJ-z4-jtY"/>
+                                    <constraint firstItem="KMX-Oo-KOu" firstAttribute="top" secondItem="2k7-ax-6YE" secondAttribute="top" id="e3L-2B-wg6"/>
+                                    <constraint firstAttribute="bottom" secondItem="KMX-Oo-KOu" secondAttribute="bottom" id="jjE-gq-Ni4"/>
                                 </constraints>
                             </visualEffectView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="KgM-JY-9PC" firstAttribute="top" secondItem="dVR-2U-X51" secondAttribute="top" id="8Ld-b3-95S"/>
-                            <constraint firstItem="2k7-ax-6YE" firstAttribute="top" secondItem="dVR-2U-X51" secondAttribute="top" id="TbP-t5-Rvn"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="XJm-Dd-FjI"/>
+                            <constraint firstItem="2k7-ax-6YE" firstAttribute="top" secondItem="dVR-2U-X51" secondAttribute="top" id="XRJ-Ei-CKy"/>
+                            <constraint firstItem="KgM-JY-9PC" firstAttribute="top" secondItem="dVR-2U-X51" secondAttribute="top" id="qdp-pc-Cjr"/>
                         </constraints>
                         <holdingPriorities>
                             <real value="355"/>
