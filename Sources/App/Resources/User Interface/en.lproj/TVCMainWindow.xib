@@ -149,7 +149,7 @@
                                                                 <tableCellView identifier="GroupView" translatesAutoresizingMaskIntoConstraints="NO" id="LOI-ud-jS4" customClass="TVCServerListCellGroupItem">
                                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="23"/>
                                                                     <subviews>
-                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="wBU-6B-7f4">
+                                                                        <textField horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="wBU-6B-7f4">
                                                                             <rect key="frame" x="3" y="3" width="147" height="17"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Table View Cell" id="fBN-3b-ksS" customClass="TVCMainWindowSidebarSmoothTextFieldCell">
                                                                                 <font key="font" metaFont="systemBold" size="14"/>
@@ -168,14 +168,14 @@
                                                                         <outlet property="cellTextField" destination="wBU-6B-7f4" id="jkE-JW-N5b"/>
                                                                     </connections>
                                                                 </tableCellView>
-                                                                <tableCellView identifier="ChildView" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="AKs-o3-7CO" customClass="TVCServerListCellChildItem">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="120" height="19"/>
+                                                                <tableCellView identifier="ChildView" translatesAutoresizingMaskIntoConstraints="NO" id="AKs-o3-7CO" customClass="TVCServerListCellChildItem">
+                                                                    <rect key="frame" x="0.0" y="23" width="150" height="19"/>
                                                                     <subviews>
                                                                         <imageView wantsLayer="YES" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="68i-pd-Me5">
                                                                             <rect key="frame" x="2" y="2" width="0.0" height="15"/>
                                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="L7W-3b-gZZ"/>
                                                                         </imageView>
-                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="YvY-15-HQ3">
+                                                                        <textField horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="YvY-15-HQ3">
                                                                             <rect key="frame" x="6" y="2" width="90" height="15"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Table View Cell" id="aWH-di-A9U" customClass="TVCMainWindowSidebarSmoothTextFieldCell">
                                                                                 <font key="font" metaFont="cellTitle"/>
@@ -184,7 +184,7 @@
                                                                             </textFieldCell>
                                                                         </textField>
                                                                         <imageView wantsLayer="YES" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Ybi-Bk-q6V">
-                                                                            <rect key="frame" x="118" y="1" width="0.0" height="17"/>
+                                                                            <rect key="frame" x="148" y="1" width="0.0" height="17"/>
                                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="AgO-Mi-Fwf"/>
                                                                         </imageView>
                                                                     </subviews>
@@ -274,9 +274,8 @@
                                                             </textFieldCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView identifier="GroupView" id="nyR-GE-ZXL" customClass="TVCMemberListCell">
+                                                                <tableCellView identifier="GroupView" translatesAutoresizingMaskIntoConstraints="NO" id="nyR-GE-ZXL" customClass="TVCMemberListCell">
                                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="20"/>
-                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <imageView wantsLayer="YES" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Lq2-t9-aDp">
                                                                             <rect key="frame" x="0.0" y="2" width="16" height="16"/>
@@ -285,7 +284,7 @@
                                                                             </constraints>
                                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="FormattingColor_2" id="G8T-wi-HCu"/>
                                                                         </imageView>
-                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="jld-0X-vn0">
+                                                                        <textField horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="jld-0X-vn0">
                                                                             <rect key="frame" x="20" y="2" width="132" height="16"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Label" id="Mby-SL-PEz" customClass="TVCMainWindowSidebarSmoothTextFieldCell">
                                                                                 <font key="font" metaFont="cellTitle"/>
