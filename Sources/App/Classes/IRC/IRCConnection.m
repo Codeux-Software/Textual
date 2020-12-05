@@ -368,7 +368,7 @@ ClassWithDesignatedInitializerInitMethod
 	if ([self.trustPanel respondsToSelector:dismissSelector]) {
 		self.trustPanelDoNotInvokeCompletionBlock = YES;
 
-		(void)objc_msgSend(self.trustPanel, dismissSelector, NSModalResponseCancel);
+		((void (*)(id, SEL, const NSModalResponse))objc_msgSend)(self.trustPanel, dismissSelector, NSModalResponseCancel);
 	}
 }
 

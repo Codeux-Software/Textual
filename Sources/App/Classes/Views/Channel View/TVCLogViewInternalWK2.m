@@ -299,7 +299,7 @@ create_normal_pool:
 	}
 
 	if ([self respondsToSelector:@selector(_findString:options:maxCount:)]) {
-		(void)objc_msgSend(self, @selector(_findString:options:maxCount:), searchString, findOptions, 1);
+		((void (*)(id, SEL, NSString *, _WKFindOptions, int))objc_msgSend)(self, @selector(_findString:options:maxCount:), searchString, findOptions, 1);
 	}
 }
 

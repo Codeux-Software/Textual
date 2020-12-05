@@ -3527,7 +3527,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 				IRCClientConfigMutable *mutableClientConfig = [client.config mutableCopy];
 
-				(void)objc_msgSend(mutableClientConfig, selector, featureValue);
+				((void (*)(id, SEL, BOOL))objc_msgSend)(mutableClientConfig, selector, featureValue);
 
 				client.config = mutableClientConfig;
 			};

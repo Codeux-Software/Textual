@@ -162,7 +162,7 @@ ClassWithDesignatedInitializerInitMethod
 		NSString *selectorName = codeMap[@(e.keyCode)];
 
 		if (selectorName) {
-			objc_msgSend(self.target, NSSelectorFromString(selectorName), e);
+			((void (*)(id, SEL, NSEvent *))objc_msgSend)(self.target, NSSelectorFromString(selectorName), e);
 
 			return YES;
 		}
@@ -177,7 +177,7 @@ ClassWithDesignatedInitializerInitMethod
 			NSString *selectorName = characterMap[@([characterString characterAtIndex:0])];
 
 			if (selectorName) {
-				objc_msgSend(self.target, NSSelectorFromString(selectorName), e);
+				((void (*)(id, SEL, NSEvent *))objc_msgSend)(self.target, NSSelectorFromString(selectorName), e);
 
 				return YES;
 			}
