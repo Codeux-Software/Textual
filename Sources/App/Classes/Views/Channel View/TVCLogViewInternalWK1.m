@@ -72,7 +72,8 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 		_sharedWebViewPreferences.usesPageCache = NO;
 
 		if ([_sharedWebViewPreferences respondsToSelector:@selector(setShouldRespectImageOrientation:)]) {
-			(void)objc_msgSend(_sharedWebViewPreferences, @selector(setShouldRespectImageOrientation:), YES);
+//			(void)objc_msgSend(_sharedWebViewPreferences, @selector(setShouldRespectImageOrientation:), YES);
+			((void(*)(WebPreferences *, SEL, bool))objc_msgSend)(_sharedWebViewPreferences, @selector(setShouldRespectImageOrientation:), YES);
 		}
 
 		_sharedWebPolicy = [TVCLogPolicy new];

@@ -299,7 +299,9 @@ create_normal_pool:
 	}
 
 	if ([self respondsToSelector:@selector(_findString:options:maxCount:)]) {
-		(void)objc_msgSend(self, @selector(_findString:options:maxCount:), searchString, findOptions, 1);
+//		(void)objc_msgSend(self, @selector(_findString:options:maxCount:), searchString, findOptions, 1);
+		((void (*)(TVCLogViewInternalWK2*, SEL, NSString*, _WKFindOptions, int))objc_msgSend)
+			(self, @selector(_findString:options:maxCount:), searchString, findOptions, 1);
 	}
 }
 

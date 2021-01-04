@@ -136,9 +136,13 @@ ClassWithDesignatedInitializerInitMethod
 			argument = [self.webView webScriptObjectToCommon:argument];
 		}
 
-		(void)objc_msgSend(self, handlerSelector, argument, self.webView);
+//		(void)objc_msgSend(self, handlerSelector, argument, self.webView);
+		((void (*)(TVCLogScriptEventSink*, SEL, id, id))objc_msgSend)
+			(self, handlerSelector, argument, self.webView);
 	} else {
-		(void)objc_msgSend(self, handlerSelector, nil, self.webView);
+//		(void)objc_msgSend(self, handlerSelector, nil, self.webView);
+		((void (*)(TVCLogScriptEventSink*, SEL, id, id))objc_msgSend)
+			(self, handlerSelector, nil, self.webView);
 	}
 
 	return @(YES);
@@ -208,7 +212,9 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	(void)objc_msgSend(self, handlerSelector, message.body, message.webView);
+//	(void)objc_msgSend(self, handlerSelector, message.body, message.webView);
+	((void (*)(TVCLogScriptEventSink*, SEL, id, id))objc_msgSend)
+		(self, handlerSelector, message.body, message.webView);
 }
 
 - (void)processInputData:(id)inputData
@@ -358,7 +364,8 @@ ClassWithDesignatedInitializerInitMethod
 
 	context.completionBlock = completionBlock;
 
-	(void)objc_msgSend(self, selector, context);
+//	(void)objc_msgSend(self, selector, context);
+	((void (*)(TVCLogScriptEventSink*, SEL, TVCLogScriptEventSinkContext*))objc_msgSend)(self, selector, context);
 }
 
 + (void)logToJavaScriptConsole:(NSString *)message inWebView:(TVCLogView *)webView, ...
