@@ -42,7 +42,7 @@
                             <action selector="entryActionsSegmentedControlClicked:" target="-2" id="mor-eT-ZoC"/>
                         </connections>
                     </segmentedControl>
-                    <textField horizontalHuggingPriority="250" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pOF-VD-WZg">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pOF-VD-WZg">
                         <rect key="frame" x="18" y="296" width="659" height="48"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="qeA-Ep-V8r">
                             <font key="font" metaFont="system"/>

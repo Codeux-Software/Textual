@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -12,7 +12,7 @@
                 <outlet property="checkForUpdatesAutomaticallyCheck" destination="KM0-Vm-IZi" id="R4h-yt-2DP"/>
                 <outlet property="checkForUpdatesAutomaticallyDownload" destination="rkY-hK-RL3" id="5QO-sY-KiJ"/>
                 <outlet property="checkForUpdatesDontCheck" destination="eyl-gj-5fj" id="K7p-w3-6hU"/>
-                <outlet property="contentViewBehavior" destination="iMS-Ox-Uda" id="Sff-A7-UVB"/>
+                <outlet property="contentViewBehavior" destination="Yrc-pc-3Zr" id="tdC-pL-8hL"/>
                 <outlet property="contentViewChannelManagement" destination="kTM-XW-Yb5" id="yM5-Ac-xep"/>
                 <outlet property="contentViewCommandScope" destination="1YF-k7-FrW" id="cvJ-I0-CaK"/>
                 <outlet property="contentViewCompatibility" destination="e8Q-5b-yYH" id="ydU-7E-b7E"/>
@@ -924,126 +924,102 @@
             <point key="canvasLocation" x="329" y="-7248"/>
         </customView>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="iMS-Ox-Uda" userLabel="Behavior">
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Yrc-pc-3Zr" userLabel="Behavior">
             <rect key="frame" x="0.0" y="0.0" width="670" height="272"/>
             <subviews>
-                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L9T-Bt-ocM">
-                    <rect key="frame" x="42" y="113" width="338" height="76"/>
-                    <subviews>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="utM-Q1-sGF">
-                            <rect key="frame" x="-2" y="59" width="286" height="18"/>
-                            <buttonCell key="cell" type="check" title="Automatically rejoin a channel when kicked" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Nkc-L0-NtE">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.RejoinChannelOnLocalKick" id="xpQ-Wh-bHK"/>
-                            </connections>
-                        </button>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="yv4-kq-hGk">
-                            <rect key="frame" x="-2" y="29" width="275" height="18"/>
-                            <buttonCell key="cell" type="check" title="Automatically join a channel when invited" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Pgv-nE-Knz">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutojoinChannelOnInvite" id="i37-ut-Rgq"/>
-                            </connections>
-                        </button>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="JM9-RW-haB">
-                            <rect key="frame" x="-2" y="-1" width="340" height="18"/>
-                            <buttonCell key="cell" type="check" title="Toggle away status when your display goes to sleep" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="1ry-tP-lAO">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.SetAwayOnScreenSleep" id="wDN-ce-Q4g"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <visibilityPriorities>
-                        <integer value="1000"/>
-                        <integer value="1000"/>
-                        <integer value="1000"/>
-                    </visibilityPriorities>
-                    <customSpacing>
-                        <real value="3.4028234663852886e+38"/>
-                        <real value="3.4028234663852886e+38"/>
-                        <real value="3.4028234663852886e+38"/>
-                    </customSpacing>
-                </stackView>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8PV-b6-FPf">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dcr-ig-DFq">
                     <rect key="frame" x="40" y="225" width="255" height="18"/>
-                    <buttonCell key="cell" type="check" title="Open browser links in the background" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="rXX-bl-Nod">
+                    <buttonCell key="cell" type="check" title="Open browser links in the background" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="78p-ZY-hL0">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.OpenClickedLinksInBackgroundBrowser" id="Seg-zl-RZ9"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.OpenClickedLinksInBackgroundBrowser" id="0lJ-iu-aCv"/>
                     </connections>
                 </button>
-                <box verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="2D6-bf-BeE">
-                    <rect key="frame" x="40" y="205" width="593" height="5"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="v0P-5y-TR3"/>
-                    </constraints>
+                <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Fmc-YR-xfp">
+                    <rect key="frame" x="40" y="205" width="590" height="5"/>
                 </box>
-                <box verticalHuggingPriority="750" alphaValue="0.5" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="jWh-Iw-2qB">
-                    <rect key="frame" x="40" y="92" width="593" height="5"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="WVo-hN-ecn"/>
-                    </constraints>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p8O-gX-t0n">
+                    <rect key="frame" x="40" y="172" width="286" height="18"/>
+                    <buttonCell key="cell" type="check" title="Automatically rejoin a channel when kicked" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="RRR-Ng-LIU">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.RejoinChannelOnLocalKick" id="4g7-xO-cAm"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VYB-Yi-fp6">
+                    <rect key="frame" x="40" y="142" width="275" height="18"/>
+                    <buttonCell key="cell" type="check" title="Automatically join a channel when invited" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Onr-Yr-Ms6">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutojoinChannelOnInvite" id="nOM-Na-bNT"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xKd-AN-3BU">
+                    <rect key="frame" x="40" y="112" width="340" height="18"/>
+                    <buttonCell key="cell" type="check" title="Toggle away status when your display goes to sleep" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="oRS-41-peI">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.SetAwayOnScreenSleep" id="9hY-eU-AQr"/>
+                    </connections>
+                </button>
+                <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="sEi-KB-hee">
+                    <rect key="frame" x="40" y="92" width="590" height="5"/>
                 </box>
-                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="750" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hNi-fm-OQo">
-                    <rect key="frame" x="42" y="30" width="328" height="46"/>
-                    <subviews>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="eWo-gj-0bg">
-                            <rect key="frame" x="-2" y="29" width="275" height="18"/>
-                            <buttonCell key="cell" type="check" title="Restore scrollback from previous session" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="DCq-oI-cZI">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ReloadScrollbackOnLaunch" id="Eou-Vg-voa"/>
-                            </connections>
-                        </button>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="jsp-Va-CUL">
-                            <rect key="frame" x="-2" y="-1" width="330" height="18"/>
-                            <buttonCell key="cell" type="check" title="Restore the state of queries from previous session" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="bug-cd-agU">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="onChangedUserListModeSortOrder:" target="-2" id="Ugy-oW-9r2"/>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ServerListRetainsQueriesBetweenRestarts" id="zmH-iS-MbS"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <visibilityPriorities>
-                        <integer value="1000"/>
-                        <integer value="1000"/>
-                    </visibilityPriorities>
-                    <customSpacing>
-                        <real value="3.4028234663852886e+38"/>
-                        <real value="3.4028234663852886e+38"/>
-                    </customSpacing>
-                </stackView>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OwD-V4-eKh">
+                    <rect key="frame" x="40" y="59" width="275" height="18"/>
+                    <buttonCell key="cell" type="check" title="Restore scrollback from previous session" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="rdw-r8-Wgf">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ReloadScrollbackOnLaunch" id="EXo-2P-e31"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2fI-fE-Q2a">
+                    <rect key="frame" x="40" y="29" width="330" height="18"/>
+                    <buttonCell key="cell" type="check" title="Restore the state of queries from previous session" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="kq6-SH-wmj">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ServerListRetainsQueriesBetweenRestarts" id="kpU-pS-LO5"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
-                <constraint firstItem="8PV-b6-FPf" firstAttribute="top" secondItem="iMS-Ox-Uda" secondAttribute="top" constant="30" id="9x9-g8-y94"/>
-                <constraint firstItem="2D6-bf-BeE" firstAttribute="top" secondItem="8PV-b6-FPf" secondAttribute="bottom" constant="18" id="Nk7-QF-XpT"/>
-                <constraint firstItem="L9T-Bt-ocM" firstAttribute="top" secondItem="2D6-bf-BeE" secondAttribute="bottom" constant="18" id="OFP-qG-qHE"/>
-                <constraint firstItem="8PV-b6-FPf" firstAttribute="leading" secondItem="iMS-Ox-Uda" secondAttribute="leading" constant="42" id="Por-gA-2R0"/>
-                <constraint firstItem="hNi-fm-OQo" firstAttribute="top" secondItem="jWh-Iw-2qB" secondAttribute="bottom" constant="18" id="Qra-Kw-QEf"/>
-                <constraint firstItem="jWh-Iw-2qB" firstAttribute="trailing" secondItem="2D6-bf-BeE" secondAttribute="trailing" id="REb-4s-7vD"/>
-                <constraint firstItem="jWh-Iw-2qB" firstAttribute="leading" secondItem="2D6-bf-BeE" secondAttribute="leading" id="Y3c-t6-xhS"/>
-                <constraint firstItem="2D6-bf-BeE" firstAttribute="leading" secondItem="iMS-Ox-Uda" secondAttribute="leading" constant="40" id="YtB-n0-TNB"/>
-                <constraint firstItem="2D6-bf-BeE" firstAttribute="centerX" secondItem="iMS-Ox-Uda" secondAttribute="centerX" constant="1.5" id="baB-wB-f4a"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="8PV-b6-FPf" secondAttribute="trailing" constant="20" id="fWM-iw-JHP"/>
-                <constraint firstItem="jWh-Iw-2qB" firstAttribute="top" secondItem="L9T-Bt-ocM" secondAttribute="bottom" constant="18" id="iiB-rh-3eL"/>
-                <constraint firstAttribute="bottom" secondItem="hNi-fm-OQo" secondAttribute="bottom" constant="30" id="l4F-Dg-RMg"/>
-                <constraint firstItem="hNi-fm-OQo" firstAttribute="leading" secondItem="iMS-Ox-Uda" secondAttribute="leading" constant="42" id="w8u-Ce-0rU"/>
-                <constraint firstItem="L9T-Bt-ocM" firstAttribute="leading" secondItem="iMS-Ox-Uda" secondAttribute="leading" constant="42" id="yYB-CO-DTw"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xKd-AN-3BU" secondAttribute="trailing" constant="20" id="0fF-fv-xsc"/>
+                <constraint firstItem="2fI-fE-Q2a" firstAttribute="leading" secondItem="OwD-V4-eKh" secondAttribute="leading" id="1D5-i0-ou3"/>
+                <constraint firstItem="Fmc-YR-xfp" firstAttribute="leading" secondItem="Yrc-pc-3Zr" secondAttribute="leading" constant="40" id="3IW-UR-ErE"/>
+                <constraint firstAttribute="bottom" secondItem="2fI-fE-Q2a" secondAttribute="bottom" constant="30" id="5OK-SG-6Vw"/>
+                <constraint firstItem="p8O-gX-t0n" firstAttribute="leading" secondItem="Yrc-pc-3Zr" secondAttribute="leading" constant="42" id="6fB-zi-Wbh"/>
+                <constraint firstItem="Fmc-YR-xfp" firstAttribute="top" secondItem="dcr-ig-DFq" secondAttribute="bottom" constant="18" id="91D-nO-ZaO"/>
+                <constraint firstItem="xKd-AN-3BU" firstAttribute="top" secondItem="VYB-Yi-fp6" secondAttribute="bottom" constant="14" id="AQv-0d-a36"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="VYB-Yi-fp6" secondAttribute="trailing" constant="20" id="Cf4-5J-lO7"/>
+                <constraint firstItem="sEi-KB-hee" firstAttribute="leading" secondItem="Fmc-YR-xfp" secondAttribute="leading" id="FfB-ff-ZiE"/>
+                <constraint firstItem="p8O-gX-t0n" firstAttribute="top" secondItem="Fmc-YR-xfp" secondAttribute="bottom" constant="18" id="Gkj-5o-yAv"/>
+                <constraint firstItem="OwD-V4-eKh" firstAttribute="top" secondItem="sEi-KB-hee" secondAttribute="bottom" constant="18" id="HdJ-qi-BEz"/>
+                <constraint firstItem="OwD-V4-eKh" firstAttribute="leading" secondItem="Yrc-pc-3Zr" secondAttribute="leading" constant="42" id="K05-fJ-sdg"/>
+                <constraint firstItem="Fmc-YR-xfp" firstAttribute="centerX" secondItem="Yrc-pc-3Zr" secondAttribute="centerX" id="U7v-yX-Yhb"/>
+                <constraint firstItem="sEi-KB-hee" firstAttribute="trailing" secondItem="Fmc-YR-xfp" secondAttribute="trailing" id="Wi0-2j-m0a"/>
+                <constraint firstItem="dcr-ig-DFq" firstAttribute="top" secondItem="Yrc-pc-3Zr" secondAttribute="top" constant="30" id="XV2-ff-i46"/>
+                <constraint firstItem="dcr-ig-DFq" firstAttribute="leading" secondItem="Yrc-pc-3Zr" secondAttribute="leading" constant="42" id="Xlp-sE-GmQ"/>
+                <constraint firstItem="sEi-KB-hee" firstAttribute="top" secondItem="xKd-AN-3BU" secondAttribute="bottom" constant="18" id="Yde-nj-z0M"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2fI-fE-Q2a" secondAttribute="trailing" constant="20" id="goS-dF-HI1"/>
+                <constraint firstItem="VYB-Yi-fp6" firstAttribute="top" secondItem="p8O-gX-t0n" secondAttribute="bottom" constant="14" id="ngU-q7-jKV"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="p8O-gX-t0n" secondAttribute="trailing" constant="20" id="o5j-UO-RTO"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="OwD-V4-eKh" secondAttribute="trailing" constant="20" id="pja-2Z-LuY"/>
+                <constraint firstItem="xKd-AN-3BU" firstAttribute="leading" secondItem="VYB-Yi-fp6" secondAttribute="leading" id="qDW-Kc-cZq"/>
+                <constraint firstItem="VYB-Yi-fp6" firstAttribute="leading" secondItem="p8O-gX-t0n" secondAttribute="leading" id="sS5-Ry-hhS"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dcr-ig-DFq" secondAttribute="trailing" constant="20" id="yM2-MK-thd"/>
+                <constraint firstItem="2fI-fE-Q2a" firstAttribute="top" secondItem="OwD-V4-eKh" secondAttribute="bottom" constant="14" id="zK3-2W-liT"/>
             </constraints>
             <point key="canvasLocation" x="318" y="-6756"/>
         </customView>
@@ -4484,7 +4460,7 @@ You should therefore not rely solely on this preference.</string>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="d6J-SH-Xgl" userLabel="Default Identity">
             <rect key="frame" x="0.0" y="0.0" width="679" height="243"/>
             <subviews>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H70-fl-X2H">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="H70-fl-X2H">
                     <rect key="frame" x="110" y="197" width="459" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="The following information will be filled in when creating a NEW connection." id="DJW-g4-9G4">
                         <font key="font" metaFont="system"/>

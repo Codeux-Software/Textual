@@ -486,7 +486,7 @@ Gw
                                     <rect key="frame" x="10" y="33" width="543" height="488"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i3Y-vE-Mwp">
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="i3Y-vE-Mwp">
                                             <rect key="frame" x="18" y="436" width="507" height="32"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="mDU-Qi-dI8">
                                                 <font key="font" metaFont="system"/>
