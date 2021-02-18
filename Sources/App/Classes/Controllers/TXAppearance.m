@@ -239,8 +239,7 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 		} else {
 			appearanceType = TXAppearanceTypeBigSurLight;
 		} // isAppearanceDark
-	}
-	if (onMojave)
+	} else if (onMojave)
 	{
 		if (isAppearanceDark) {
 			appearanceType = TXAppearanceTypeMojaveDark;
