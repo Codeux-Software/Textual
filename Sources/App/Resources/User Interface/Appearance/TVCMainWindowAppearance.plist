@@ -36,8 +36,10 @@
 			<string>0.65</string>
 		</dict>
 	</dict>
-	<key>Mojave</key>
+	<key>CommonModern</key>
 	<dict>
+		<key>comment</key>
+		<string>Modern = Mojave and later</string>
 		<key>inheritFrom</key>
 		<string>Common</string>
 		<key>titlebarAccessoryViewBackgroundColor</key>
@@ -51,10 +53,10 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>MojaveDark</key>
+	<key>CommonModernDark</key>
 	<dict>
 		<key>inheritFrom</key>
-		<string>Mojave</string>
+		<string>CommonModern</string>
 		<key>loadingScreenBackgroundColor</key>
 		<dict>
 			<key>type</key>
@@ -63,10 +65,10 @@
 			<string>windowBackgroundColor</string>
 		</dict>
 	</dict>
-	<key>MojaveLight</key>
+	<key>CommonModernLight</key>
 	<dict>
 		<key>inheritFrom</key>
-		<string>Mojave</string>
+		<string>CommonModern</string>
 		<key>loadingScreenBackgroundColor</key>
 		<dict>
 			<key>type</key>
@@ -74,6 +76,37 @@
 			<key>value</key>
 			<string>1.0</string>
 		</dict>
+	</dict>
+
+	<key>BigSur</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>CommonModern</string>
+	</dict>
+	<key>BigSurDark</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>CommonModernDark</string>
+	</dict>
+	<key>BigSurLight</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>CommonModernLight</string>
+	</dict>
+	<key>Mojave</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>CommonModern</string>
+	</dict>
+	<key>MojaveDark</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>CommonModernDark</string>
+	</dict>
+	<key>MojaveLight</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>CommonModernLight</string>
 	</dict>
 	<key>Yosemite</key>
 	<dict>

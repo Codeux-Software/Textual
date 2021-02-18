@@ -43,6 +43,8 @@ typedef NS_ENUM(NSUInteger, TXAppearanceType)
 	TXAppearanceTypeYosemiteDark,
 	TXAppearanceTypeMojaveLight,
 	TXAppearanceTypeMojaveDark,
+	TXAppearanceTypeBigSurLight,
+	TXAppearanceTypeBigSurDark,
 };
 
 /* TXAppKitAppearanceTarget defines which items the NSAppearance

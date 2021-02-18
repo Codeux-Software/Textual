@@ -258,6 +258,7 @@ NS_ASSUME_NONNULL_BEGIN
 	switch (appearanceType) {
 		case TXAppearanceTypeYosemiteLight:
 		case TXAppearanceTypeMojaveLight:
+		case TXAppearanceTypeBigSurLight:
 		{
 			/* When the window is not in focus, when this item is selected, and when we are not
 			 using vibrant dark mode; the outline view does not turn our icon to a light variant
@@ -280,9 +281,10 @@ NS_ASSUME_NONNULL_BEGIN
 			} else {
 				return @"channelRoomStatusIconLightInactive";
 			}
-		} // Yosemite, Mojave
+		} // Yosemite, Mojave, Big Sur
 		case TXAppearanceTypeYosemiteDark:
 		case TXAppearanceTypeMojaveDark:
+		case TXAppearanceTypeBigSurDark:
 		{
 			*treatAsTemplate = NO;
 
@@ -291,7 +293,7 @@ NS_ASSUME_NONNULL_BEGIN
 			} else {
 				return @"channelRoomStatusIconDarkInactive";
 			}
-		} // Yosemite, Mojave
+		} // Yosemite, Mojave, Big Sur
 	} // switch()
 }
 
@@ -304,6 +306,7 @@ NS_ASSUME_NONNULL_BEGIN
 	switch (appearanceType) {
 		case TXAppearanceTypeYosemiteLight:
 		case TXAppearanceTypeMojaveLight:
+		case TXAppearanceTypeBigSurLight:
 		{
 			*treatAsTemplate = YES;
 
@@ -312,9 +315,10 @@ NS_ASSUME_NONNULL_BEGIN
 			} else {
 				return @"VibrantLightServerListViewPrivateMessageUserIconInactive";
 			}
-		} // Yosemite, Mojave
+		} // Yosemite, Mojave, Big Sur
 		case TXAppearanceTypeYosemiteDark:
 		case TXAppearanceTypeMojaveDark:
+		case TXAppearanceTypeBigSurDark:
 		{
 			*treatAsTemplate = NO;
 
@@ -323,7 +327,7 @@ NS_ASSUME_NONNULL_BEGIN
 			} else {
 				return @"VibrantDarkServerListViewPrivateMessageUserIconInactive";
 			}
-		} // Yosemite, Mojave
+		} // Yosemite, Mojave, Big Sur
 	} // switch()
 }
 

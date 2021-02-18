@@ -21,8 +21,10 @@
 			<true/>
 		</dict>
 	</dict>
-	<key>Mojave</key>
+	<key>CommonModern</key>
 	<dict>
+		<key>comment</key>
+		<string>Modern = Mojave and later</string>
 		<key>inheritFrom</key>
 		<string>Common</string>
 		<key>Server Cell</key>
@@ -85,10 +87,10 @@
 			<integer>6</integer>
 		</dict>
 	</dict>
-	<key>MojaveDark</key>
+	<key>CommonModernDark</key>
 	<dict>
 		<key>inheritFrom</key>
-		<string>Mojave</string>
+		<string>CommonModern</string>
 		<key>Server Cell</key>
 		<dict>
 			<key>rowEmphasized</key>
@@ -341,10 +343,10 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>MojaveLight</key>
+	<key>CommonModernLight</key>
 	<dict>
 		<key>inheritFrom</key>
-		<string>Mojave</string>
+		<string>CommonModern</string>
 		<key>Server Cell</key>
 		<dict>
 			<key>normalTextColor</key>
@@ -592,6 +594,36 @@
 				</dict>
 			</dict>
 		</dict>
+	</dict>
+	<key>BigSur</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>CommonModern</string>
+	</dict>
+	<key>BigSurDark</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>CommonModernDark</string>
+	</dict>
+	<key>BigSurLight</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>CommonModernLight</string>
+	</dict>
+	<key>Mojave</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>CommonModern</string>
+	</dict>
+	<key>MojaveDark</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>CommonModernDark</string>
+	</dict>
+	<key>MojaveLight</key>
+	<dict>
+		<key>inheritFrom</key>
+		<string>CommonModernLight</string>
 	</dict>
 	<key>Yosemite</key>
 	<dict>

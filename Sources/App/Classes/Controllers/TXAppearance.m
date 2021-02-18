@@ -123,6 +123,14 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 		{
 			return @"MojaveDark";
 		}
+		case TXAppearanceTypeBigSurLight:
+		{
+			return @"BigSurLight";
+		}
+		case TXAppearanceTypeBigSurDark:
+		{
+			return @"BigSurDark";
+		}
 	}
 
 	return nil;
@@ -173,6 +181,7 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 	TXAppearanceType appearanceType;
 
 	BOOL onMojave = TEXTUAL_RUNNING_ON_MOJAVE;
+	BOOL onBigSur = TEXTUAL_RUNNING_ON_BIGSUR;
 
 	BOOL isAppearanceDark = NO;
 
@@ -182,6 +191,8 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 	switch (preferredAppearance) {
 		case TXPreferredAppearanceInherited:
 		{
+			/* OS Version checks are X or LATER which means we can
+			 cover Mojave and Big Sur together with one condition. */
 			if (onMojave)
 			{
 				/* We only inherit from the system on Mojave.
@@ -204,9 +215,31 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 		}
 	}
 
-	/* Determine best appearance and define other properties */
+	/* Determine best appearance inheritance approach */
+	/* Before Mojave, appearance needs to be applied to every view.
+	 After Mojave, views properly inherit the appearance of the parent
+	 window or the system. If the user selects a specific appearance,
+	 then we apply that to the parent window on Mojave and later to
+	 allow views to inherit that. If the user selects the system
+	 appearance, then we apply nothing and allow it to be inherited
+	 from the system. */
 	TXAppKitAppearanceTarget appKitAppearanceTarget = TXAppKitAppearanceTargetNone;
 
+	if (onMojave == NO) {
+		appKitAppearanceTarget = TXAppKitAppearanceTargetView;
+	} else if (preferredAppearance != TXPreferredAppearanceInherited) {
+		appKitAppearanceTarget = TXAppKitAppearanceTargetWindow;
+	}
+
+	/* Determine best appearance */
+	if (onBigSur)
+	{
+		if (isAppearanceDark) {
+			appearanceType = TXAppearanceTypeBigSurDark;
+		} else {
+			appearanceType = TXAppearanceTypeBigSurLight;
+		} // isAppearanceDark
+	}
 	if (onMojave)
 	{
 		if (isAppearanceDark) {
@@ -214,17 +247,6 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 		} else {
 			appearanceType = TXAppearanceTypeMojaveLight;
 		} // isAppearanceDark
-
-		/* On Mojave, if the user doesn't select a specific appearance,
-		 then we don't set an NSAppearance object on anything. */
-		/* When the user selects a specific appearance, we set the
-		 prefer the NSAppearance object be set on the window because
-		 visual effect views have correct inheritance as of Mojave
-		 which means they don't need to set the object on individual
-		 views, unlike earlier versions of macOS. */
-		if (preferredAppearance != TXPreferredAppearanceInherited) {
-			appKitAppearanceTarget = TXAppKitAppearanceTargetWindow;
-		}
 	}
 	else
 	{
@@ -233,11 +255,6 @@ NSString * const TXSystemAppearanceChangedNotification = @"TXSystemAppearanceCha
 		} else {
 			appearanceType = TXAppearanceTypeYosemiteLight;
 		} // isAppearanceDark
-
-		/* On Yosemite through to High Sierra, we set the NSAppearance
-		 object on individual views. We do this for dark and light
-		 appearance because we want to set vibrant light. Not aqua. */
-		appKitAppearanceTarget = TXAppKitAppearanceTargetView;
 	} // macOS Version
 
 	/* Test for changes */
