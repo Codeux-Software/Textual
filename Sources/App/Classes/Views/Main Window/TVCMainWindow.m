@@ -172,6 +172,8 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 
 	self.alphaValue = [TPCPreferences mainWindowTransparency];
 
+	[self addAccessoryViewsToTitlebar];
+
 	[self updateAppearance];
 
 	[self reloadLoadingScreen];
@@ -181,8 +183,6 @@ NSString * const TVCMainWindowSelectionChangedNotification = @"TVCMainWindowSele
 	[self makeKeyAndOrderFront:nil];
 
 	[self loadWindowState];
-
-	[self addAccessoryViewsToTitlebar];
 
 	[self updateChannelViewArrangement];
 
