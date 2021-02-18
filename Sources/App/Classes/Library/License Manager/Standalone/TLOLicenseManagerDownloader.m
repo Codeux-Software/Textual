@@ -248,10 +248,10 @@ typedef void (^TLOLicenseManagerDownloaderConnectionCompletionBlock)(TLOLicenseM
 	id apiStatusContext = nil;
 
 	/* Helper blocks */
-	void (^performCompletionBlock)(void) = ^(void)
+	void (^performCompletionBlock)(BOOL) = ^(BOOL success)
 	{
 		if (self.completionBlock) {
-			self.completionBlock(NO, apiStatusCode, apiStatusContext);
+			self.completionBlock(success, apiStatusCode, apiStatusContext);
 		}
 	};
 
@@ -269,14 +269,14 @@ typedef void (^TLOLicenseManagerDownloaderConnectionCompletionBlock)(TLOLicenseM
 			[self presentTryAgainLaterErrorDialog];
 		}
 
-		performCompletionBlock();
+		performCompletionBlock(NO);
 	};
 
 	void (^presentErrorUnconditionally)(void) = ^(void)
 	{
 		[self presentTryAgainLaterErrorDialog];
 
-		performCompletionBlock();
+		performCompletionBlock(NO);
 	};
 
 	/* Convert contents into a dictionary */
@@ -332,6 +332,8 @@ typedef void (^TLOLicenseManagerDownloaderConnectionCompletionBlock)(TLOLicenseM
 								  defaultButton:TXTLS(@"Prompts[c7s-dq]")
 								alternateButton:nil];
 			}
+
+			return performCompletionBlock(YES);
 		}
 		else if (requestType == TLOLicenseManagerDownloaderRequestTypeSendLostLicense && apiStatusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
 		{
@@ -361,6 +363,8 @@ typedef void (^TLOLicenseManagerDownloaderConnectionCompletionBlock)(TLOLicenseM
 								  defaultButton:TXTLS(@"Prompts[c7s-dq]")
 								alternateButton:nil];
 			}
+
+			return performCompletionBlock(YES);
 		}
 		else if (requestType == TLOLicenseManagerDownloaderRequestTypeMigrateAppStore && apiStatusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
 		{
@@ -390,6 +394,8 @@ typedef void (^TLOLicenseManagerDownloaderConnectionCompletionBlock)(TLOLicenseM
 								  defaultButton:TXTLS(@"Prompts[c7s-dq]")
 								alternateButton:nil];
 			}
+
+			return performCompletionBlock(YES);
 		}
 		else if (requestType == TLOLicenseManagerDownloaderRequestTypeLicenseUpgradeEligibility && apiStatusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
 		{
@@ -402,6 +408,8 @@ typedef void (^TLOLicenseManagerDownloaderConnectionCompletionBlock)(TLOLicenseM
 			if (self.actionBlock != nil) {
 				(void)self.actionBlock(apiStatusCode, apiStatusContext);
 			}
+
+			return performCompletionBlock(YES);
 		}
 		else if (requestType == TLOLicenseManagerDownloaderRequestTypeReceiptUpgradeEligibility && apiStatusCode == TLOLicenseManagerDownloaderRequestStatusCodeSuccess)
 		{
@@ -414,6 +422,8 @@ typedef void (^TLOLicenseManagerDownloaderConnectionCompletionBlock)(TLOLicenseM
 			if (self.actionBlock != nil) {
 				(void)self.actionBlock(apiStatusCode, apiStatusContext);
 			}
+
+			return performCompletionBlock(YES);
 		}
 	}
 	else // TLOLicenseManagerDownloaderRequestStatusCodeSuccess
@@ -582,12 +592,10 @@ typedef void (^TLOLicenseManagerDownloaderConnectionCompletionBlock)(TLOLicenseM
 		 supported by this code. */
 		if (presentError) {
 			presentErrorUnconditionally();
-
-			return;
+		} else {
+			performCompletionBlock(NO);
 		}
 	} // TLOLicenseManagerDownloaderRequestStatusCodeSuccess
-
-	performCompletionBlock();
 }
 
 - (void)presentTryAgainLaterErrorDialog
