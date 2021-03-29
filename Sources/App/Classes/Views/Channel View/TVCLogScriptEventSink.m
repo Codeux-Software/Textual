@@ -129,17 +129,23 @@ ClassWithDesignatedInitializerInitMethod
 		return @(NO);
 	}
 
+	id argument = nil;
 	if (arguments && arguments.count > 0) {
-		id argument = arguments[0];
+		argument = arguments[0];
 
 		if ([argument isKindOfClass:[WebScriptObject class]]) {
 			argument = [self.webView webScriptObjectToCommon:argument];
 		}
-
-		(void)objc_msgSend(self, handlerSelector, argument, self.webView);
-	} else {
-		(void)objc_msgSend(self, handlerSelector, nil, self.webView);
 	}
+
+	NSMethodSignature *signature = [self methodSignatureForSelector:handlerSelector];
+	NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+	[invocation setTarget:self];
+	[invocation setSelector:handlerSelector];
+	[invocation setArgument:&argument atIndex:2];
+	TVCLogView *webView = self.webView;
+	[invocation setArgument:&webView atIndex:3];
+	[invocation invoke];
 
 	return @(YES);
 }
@@ -208,7 +214,15 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	(void)objc_msgSend(self, handlerSelector, message.body, message.webView);
+	NSMethodSignature *signature = [self methodSignatureForSelector:handlerSelector];
+	NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+	[invocation setTarget:self];
+	[invocation setSelector:handlerSelector];
+	id body = message.body;
+	[invocation setArgument:&body atIndex:2];
+	WKWebView *webView = message.webView;
+	[invocation setArgument:&webView atIndex:3];
+	[invocation invoke];
 }
 
 - (void)processInputData:(id)inputData
@@ -358,7 +372,12 @@ ClassWithDesignatedInitializerInitMethod
 
 	context.completionBlock = completionBlock;
 
-	(void)objc_msgSend(self, selector, context);
+	NSMethodSignature *signature = [self methodSignatureForSelector:selector];
+	NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+	[invocation setTarget:self];
+	[invocation setSelector:selector];
+	[invocation setArgument:&context atIndex:2];
+	[invocation invoke];
 }
 
 + (void)logToJavaScriptConsole:(NSString *)message inWebView:(TVCLogView *)webView, ...
