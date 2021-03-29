@@ -14,7 +14,7 @@
          location = "group:Frameworks/Encryption Kit/Encryption Kit.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:/Users/michael/Projects/Textual/Frameworks/Auto Hyperlinks/Hyperlink Processor.xcodeproj">
+         location = "group:Frameworks/Auto Hyperlinks/Hyperlink Processor.xcodeproj">
       </FileRef>
    </Group>
    <Group
