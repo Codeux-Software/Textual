@@ -50,8 +50,10 @@
 	<string>MacBook Air (13-inch, Early 2015)</string>
 	<key>MacBookAir8,1</key>
 	<string>MacBook Air (13-inch, Late 2018)</string>
-	<key> MacBookAir9,1</key>
+	<key>MacBookAir9,1</key>
 	<string>MacBook Air (Early 2020)</string>
+	<key>MacBookAir10,1</key>
+	<string>MacBook Air (M1, 2020)</string>
 	<key>MacBookPro1,1</key>
 	<string>MacBook Pro (Original)</string>
 	<key>MacBookPro1,2</key>
@@ -130,6 +132,8 @@
 	<string>MacBook Pro (13-inch, 2020, Four Thunderbolt 3 ports)</string>
 	<key>MacBookPro16,3</key>
 	<string>MacBook Pro (13-inch, 2020, Two Thunderbolt 3 ports)</string>
+	<key>MacBookPro17,1</key>
+	<string>MacBook Pro (13-inch, M1, 2020)</string>
 	<key>MacPro1,1*</key>
 	<string>Mac Pro (Original)</string>
 	<key>MacPro2,1</key>
@@ -166,6 +170,8 @@
 	<string>Mac Mini (Late 2014)</string>
 	<key>Macmini8,1</key>
 	<string>Mac Mini (Late 2018)</string>
+	<key>Macmini9,1</key>
+	<string>Mac mini (M1, 2020)</string>
 	<key>Xserve1,1</key>
 	<string>Xserve (Original)</string>
 	<key>Xserve2,1</key>
