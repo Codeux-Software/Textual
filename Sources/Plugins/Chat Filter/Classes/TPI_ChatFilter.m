@@ -58,6 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 		@"filterLogMatch"				: @(NO),
 
 		@"filterLimitedToValue"			: @(TPI_ChatFilterLimitToValueNoLimit),
+		@"filterAgeComparator"			: @(TPI_ChatFilterAgeComparatorGreaterThan)
 	};
 }
 
@@ -160,6 +161,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	[defaultsMutable assignUnsignedIntegerTo:&self->_filterActionFloodControlInterval forKey:@"filterActionFloodControlInterval"];
 	[defaultsMutable assignUnsignedIntegerTo:&self->_filterLimitedToValue forKey:@"filterLimitedToValue"];
+	[defaultsMutable assignUnsignedIntegerTo:&self->_filterAgeComparator forKey:@"filterAgeComparator"];
+	[defaultsMutable assignUnsignedIntegerTo:&self->_filterAgeLimit forKey:@"filterAgeLimit"];
 
 	/* Maintain backwards compatibility by setting old key names */
 	/* dic is accessed instead of defaultsMutable because filterEvents will always 
@@ -224,6 +227,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	[dic setUnsignedInteger:self.filterActionFloodControlInterval forKey:@"filterActionFloodControlInterval"];
 	[dic setUnsignedInteger:self.filterEvents forKey:@"filterEvents"];
 	[dic setUnsignedInteger:self.filterLimitedToValue forKey:@"filterLimitedToValue"];
+	[dic setUnsignedInteger:self.filterAgeComparator forKey:@"filterAgeComparator"];
+	[dic setUnsignedInteger:self.filterAgeLimit forKey:@"filterAgeLimit"];
 
 	return [dic dictionaryByRemovingDefaults:self->_defaults];
 }
@@ -354,6 +359,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 @implementation TPI_ChatFilterMutable
 
+@dynamic filterAgeComparator;
+@dynamic filterAgeLimit;
 @dynamic filterIgnoreContent;
 @dynamic filterIgnoreOperators;
 @dynamic filterLogMatch;
@@ -446,6 +453,20 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 		self->_filterEventsNumerics = [filterEventsNumerics copy];
 
 		[self purgeIsCommandEnabledResponses];
+	}
+}
+
+- (void)setFilterAgeComparator:(TPI_ChatFilterAgeComparator)filterAgeComparator
+{
+	if (self->_filterAgeComparator != filterAgeComparator) {
+		self->_filterAgeComparator = filterAgeComparator;
+	}
+}
+
+- (void)setFilterAgeLimit:(NSUInteger)filterAgeLimit
+{
+	if (self->_filterAgeLimit != filterAgeLimit) {
+		self->_filterAgeLimit = filterAgeLimit;
 	}
 }
 

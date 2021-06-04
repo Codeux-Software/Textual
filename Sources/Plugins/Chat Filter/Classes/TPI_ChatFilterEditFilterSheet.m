@@ -52,6 +52,7 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterEditFilterSheetSelection)
 @interface TPI_ChatFilterEditFilterSheet () <NSTokenFieldDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate>
 @property (nonatomic, strong) TPI_ChatFilterMutable *filter;
 @property (nonatomic, weak) IBOutlet NSTabView *contentViewTabView;
+@property (nonatomic, weak) IBOutlet NSTextField *filterAgeLimitTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *filterMatchTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *filterSenderMatchTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *filterTitleTextField;
@@ -71,6 +72,7 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterEditFilterSheetSelection)
 @property (nonatomic, weak) IBOutlet NSTokenField *filterActionTokenServerAddress;
 @property (nonatomic, weak) IBOutlet NSView *filterLimitedToHostView;
 @property (nonatomic, weak) IBOutlet NSView *filterLimitedToSelectionHostView;
+@property (nonatomic, weak) IBOutlet NSPopUpButton *filterAgeLimitComparatorButton;
 @property (nonatomic, weak) IBOutlet NSButton *filterLimitToNoLimitButton;
 @property (nonatomic, weak) IBOutlet NSButton *filterLimitToOnlyChannelsButton;
 @property (nonatomic, weak) IBOutlet NSButton *filterLimitToOnlyPrivateMessagesButton;
@@ -180,6 +182,9 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterEditFilterSheetSelection)
 
 	[self setTokens:self.filter.filterAction inTokenField:self.filterActionTokenField];
 
+	[self.filterAgeLimitComparatorButton selectItemWithTag:self.filter.filterAgeComparator];
+	self.filterAgeLimitTextField.integerValue = self.filter.filterAgeLimit;
+
 	self.filterActionFloodControlIntervalTextField.integerValue = self.filter.filterActionFloodControlInterval;
 
 	self.filterTitleTextField.stringValue = self.filter.filterTitle;
@@ -232,6 +237,16 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterEditFilterSheetSelection)
 	NSString *filterActionStringValue = [self stringValueForTokenField:self.filterActionTokenField];
 
 	self.filter.filterAction = filterActionStringValue;
+
+	self.filter.filterAgeComparator = self.filterAgeLimitComparatorButton.selectedTag;
+
+	NSInteger filterAgeLimit = self.filterAgeLimitTextField.integerValue;
+
+	if (filterAgeLimit < 0) {
+		filterAgeLimit = 0;
+	}
+
+	self.filter.filterAgeLimit = filterAgeLimit;
 
 	NSInteger filterActionFloodControlInterval = self.filterActionFloodControlIntervalTextField.integerValue;
 

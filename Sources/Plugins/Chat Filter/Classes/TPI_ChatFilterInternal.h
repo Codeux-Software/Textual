@@ -48,10 +48,12 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL _filterLimitedToMyself;
 	TPI_ChatFilterEventType _filterEvents;
 	TPI_ChatFilterLimitToValue _filterLimitedToValue;
+	TPI_ChatFilterAgeComparator _filterAgeComparator;
+	NSUInteger _filterAgeLimit;
+	NSUInteger _filterActionFloodControlInterval;
 	NSArray<NSString *> *_filterLimitedToChannelsIDs;
 	NSArray<NSString *> *_filterLimitedToClientsIDs;
 	NSArray<NSString *> *_filterEventsNumerics;
-	NSUInteger _filterActionFloodControlInterval;
 	NSString *_filterAction;
 	NSString *_filterForwardToDestination;
 	NSString *_filterMatch;

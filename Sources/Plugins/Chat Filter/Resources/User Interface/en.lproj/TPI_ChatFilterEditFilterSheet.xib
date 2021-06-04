@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,6 +21,8 @@
                 <outlet property="filterActionTokenSenderNickname" destination="hz3-ib-naL" id="lTr-TP-eWR"/>
                 <outlet property="filterActionTokenSenderUsername" destination="bEr-mb-T5p" id="2Cf-jr-JUh"/>
                 <outlet property="filterActionTokenServerAddress" destination="Jah-Fc-rje" id="oPJ-5V-cvy"/>
+                <outlet property="filterAgeLimitComparatorButton" destination="Xr8-gb-6HM" id="b2W-B3-Flz"/>
+                <outlet property="filterAgeLimitTextField" destination="I4P-3t-P4o" id="pjZ-La-jTo"/>
                 <outlet property="filterEventActionMessageCheck" destination="hzt-Z8-IHO" id="vhl-IU-eHs"/>
                 <outlet property="filterEventChannelModeChangedCheck" destination="OCm-2d-5iT" id="9u7-xF-6cs"/>
                 <outlet property="filterEventChannelModeReceivedCheck" destination="gIz-IY-KJJ" id="D7m-7T-DVF"/>
@@ -709,11 +711,11 @@ Gw
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vGk-i7-DUZ">
-                                            <rect key="frame" x="62" y="422" width="419" height="46"/>
+                                            <rect key="frame" x="62" y="422" width="288" height="46"/>
                                             <subviews>
                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="1Ft-El-Wak">
-                                                    <rect key="frame" x="-2" y="29" width="421" height="18"/>
-                                                    <buttonCell key="cell" type="check" title="Filter does not apply to users ranked Half-Operator (+h) or above" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="8eG-ng-a2k">
+                                                    <rect key="frame" x="-2" y="29" width="279" height="18"/>
+                                                    <buttonCell key="cell" type="check" title="Filter does not apply to channel operators" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="8eG-ng-a2k">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                         <connections>
@@ -798,12 +800,100 @@ Gw
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
+                                        <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="PKp-Xg-xep">
+                                            <rect key="frame" x="40" y="289" width="463" height="5"/>
+                                        </box>
+                                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="7" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lpB-Zj-mN2">
+                                            <rect key="frame" x="58" y="228" width="346" height="45"/>
+                                            <subviews>
+                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="zst-8r-iIf">
+                                                    <rect key="frame" x="-2" y="29" width="350" height="16"/>
+                                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Filter does not apply to users that have been in a channel" id="HeF-bg-gNR">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2wE-BB-IEK">
+                                                    <rect key="frame" x="0.0" y="0.0" width="257" height="22"/>
+                                                    <subviews>
+                                                        <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xr8-gb-6HM">
+                                                            <rect key="frame" x="-3" y="-3" width="119" height="25"/>
+                                                            <popUpButtonCell key="cell" type="push" title="Less Than" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="zqM-dB-S3H" id="UdZ-L1-s8b">
+                                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                                <font key="font" metaFont="menu"/>
+                                                                <menu key="menu" id="Lf6-ga-yf7">
+                                                                    <items>
+                                                                        <menuItem title="Less Than" state="on" tag="1" id="zqM-dB-S3H"/>
+                                                                        <menuItem title="Greater Than" tag="2" id="qXs-Ny-a3z"/>
+                                                                    </items>
+                                                                </menu>
+                                                            </popUpButtonCell>
+                                                        </popUpButton>
+                                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="I4P-3t-P4o">
+                                                            <rect key="frame" x="120" y="0.0" width="77" height="22"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="22" id="Kzl-6X-ufl"/>
+                                                            </constraints>
+                                                            <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="0" drawsBackground="YES" id="BXS-Xv-xW5">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                            <connections>
+                                                                <accessibilityConnection property="title" destination="zst-8r-iIf" id="5o9-EV-FUe"/>
+                                                                <outlet property="delegate" destination="-2" id="PhL-bM-B3R"/>
+                                                            </connections>
+                                                        </textField>
+                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1MO-Ig-foo">
+                                                            <rect key="frame" x="203" y="3" width="56" height="16"/>
+                                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="seconds" id="tsb-Vd-Lzv">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                    </subviews>
+                                                    <visibilityPriorities>
+                                                        <integer value="1000"/>
+                                                        <integer value="1000"/>
+                                                        <integer value="1000"/>
+                                                    </visibilityPriorities>
+                                                    <customSpacing>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                    </customSpacing>
+                                                </stackView>
+                                            </subviews>
+                                            <visibilityPriorities>
+                                                <integer value="1000"/>
+                                                <integer value="1000"/>
+                                            </visibilityPriorities>
+                                            <customSpacing>
+                                                <real value="3.4028234663852886e+38"/>
+                                                <real value="3.4028234663852886e+38"/>
+                                            </customSpacing>
+                                        </stackView>
+                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dTa-NJ-Hl9">
+                                            <rect key="frame" x="74" y="205" width="268" height="15"/>
+                                            <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Change value to zero (0) to disable limitations." id="oM0-ZH-E1b">
+                                                <font key="font" metaFont="cellTitle"/>
+                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="Gvj-AU-dTW" firstAttribute="top" secondItem="X5X-m4-re0" secondAttribute="bottom" constant="8" symbolic="YES" id="2au-nN-M3b"/>
+                                        <constraint firstItem="PKp-Xg-xep" firstAttribute="top" secondItem="ovl-ei-0Qj" secondAttribute="bottom" constant="18" id="3sY-Ub-Wz9"/>
+                                        <constraint firstItem="lpB-Zj-mN2" firstAttribute="leading" secondItem="Sbg-tS-i4H" secondAttribute="leading" constant="58" id="4En-mT-O4X"/>
+                                        <constraint firstItem="vGk-i7-DUZ" firstAttribute="leading" secondItem="Sbg-tS-i4H" secondAttribute="leading" constant="62" id="6c4-6q-zS4"/>
                                         <constraint firstItem="0Vj-YR-p2q" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Sbg-tS-i4H" secondAttribute="leading" constant="20" id="AN6-Er-35o"/>
                                         <constraint firstItem="0Vj-YR-p2q" firstAttribute="trailing" secondItem="k4d-KT-PP4" secondAttribute="trailing" id="BG4-5N-5zL"/>
                                         <constraint firstItem="Gvj-AU-dTW" firstAttribute="leading" secondItem="X5X-m4-re0" secondAttribute="leading" constant="18" id="BhM-We-cF1"/>
+                                        <constraint firstItem="PKp-Xg-xep" firstAttribute="trailing" secondItem="U3o-oI-ojF" secondAttribute="trailing" id="E5h-yo-2hg"/>
+                                        <constraint firstItem="dTa-NJ-Hl9" firstAttribute="leading" secondItem="lpB-Zj-mN2" secondAttribute="leading" constant="18" id="GL2-qY-EzT"/>
                                         <constraint firstItem="ovl-ei-0Qj" firstAttribute="leading" secondItem="k4d-KT-PP4" secondAttribute="trailing" constant="8" id="JcA-AY-bmQ"/>
                                         <constraint firstItem="0Vj-YR-p2q" firstAttribute="top" secondItem="k4d-KT-PP4" secondAttribute="bottom" id="T5A-Wm-b9Z"/>
                                         <constraint firstItem="k4d-KT-PP4" firstAttribute="top" secondItem="ovl-ei-0Qj" secondAttribute="top" id="Usw-w6-Oyr"/>
@@ -812,11 +902,14 @@ Gw
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Gvj-AU-dTW" secondAttribute="trailing" constant="20" id="bix-b2-pEJ"/>
                                         <constraint firstAttribute="trailing" secondItem="gFi-Zi-mq8" secondAttribute="trailing" constant="58" id="d0Q-98-fkW"/>
                                         <constraint firstItem="U3o-oI-ojF" firstAttribute="centerX" secondItem="Sbg-tS-i4H" secondAttribute="centerX" id="dlQ-cJ-LQZ"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dTa-NJ-Hl9" secondAttribute="trailing" constant="20" id="gOc-f6-iDW"/>
                                         <constraint firstItem="ovl-ei-0Qj" firstAttribute="top" secondItem="U3o-oI-ojF" secondAttribute="bottom" constant="18" id="j5j-iC-JlJ"/>
                                         <constraint firstItem="U3o-oI-ojF" firstAttribute="centerX" secondItem="Sbg-tS-i4H" secondAttribute="centerX" id="oPB-1B-70H"/>
-                                        <constraint firstItem="vGk-i7-DUZ" firstAttribute="centerX" secondItem="Sbg-tS-i4H" secondAttribute="centerX" id="oZH-NG-IyA"/>
+                                        <constraint firstItem="lpB-Zj-mN2" firstAttribute="top" secondItem="PKp-Xg-xep" secondAttribute="bottom" constant="18" id="p4y-g1-eUJ"/>
                                         <constraint firstItem="k4d-KT-PP4" firstAttribute="leading" secondItem="Sbg-tS-i4H" secondAttribute="leading" constant="58" id="pYh-vh-LHX"/>
+                                        <constraint firstItem="dTa-NJ-Hl9" firstAttribute="top" secondItem="lpB-Zj-mN2" secondAttribute="bottom" constant="8" id="rdt-rO-u8O"/>
                                         <constraint firstItem="gFi-Zi-mq8" firstAttribute="centerY" secondItem="ovl-ei-0Qj" secondAttribute="centerY" id="sOp-7n-imY"/>
+                                        <constraint firstItem="PKp-Xg-xep" firstAttribute="leading" secondItem="U3o-oI-ojF" secondAttribute="leading" id="uc3-Sc-neH"/>
                                         <constraint firstItem="gFi-Zi-mq8" firstAttribute="leading" secondItem="ovl-ei-0Qj" secondAttribute="trailing" constant="8" id="w3d-TM-7cv"/>
                                         <constraint firstItem="vGk-i7-DUZ" firstAttribute="top" secondItem="Sbg-tS-i4H" secondAttribute="top" constant="20" id="w9D-9e-zzK"/>
                                     </constraints>
@@ -1054,7 +1147,7 @@ This information is for your records and does not alter the behavior of the filt
             <connections>
                 <outlet property="delegate" destination="-2" id="rly-7V-5kS"/>
             </connections>
-            <point key="canvasLocation" x="-485" y="182"/>
+            <point key="canvasLocation" x="-485.5" y="182"/>
         </window>
         <customObject id="TdM-lk-raw" customClass="TVCChannelSelectionViewController"/>
         <numberFormatter formatterBehavior="default10_4" localizesFormat="NO" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="vGQ-Aw-wDg" customClass="TPI_NumberOnlyTextFieldFormatter">

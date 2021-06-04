@@ -46,6 +46,12 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterLimitToValue) {
 	TPI_ChatFilterLimitToValueSpecificItems			= 3
 };
 
+typedef NS_ENUM(NSUInteger, TPI_ChatFilterAgeComparator) {
+	TPI_ChatFilterAgeComparatorNone				= 0,
+	TPI_ChatFilterAgeComparatorLessThan			= 1, // Filter only executes if age of user is < limit
+	TPI_ChatFilterAgeComparatorGreaterThan		= 2 // Filter only executes if age of user is >= limit
+};
+
 typedef NS_OPTIONS(NSUInteger, TPI_ChatFilterEventType) {
 	TPI_ChatFilterEventTypeNumeric					= 1 << 0,
 	TPI_ChatFilterEventTypePlainTextMessage			= 1 << 1,
@@ -69,10 +75,12 @@ typedef NS_OPTIONS(NSUInteger, TPI_ChatFilterEventType) {
 @property (readonly) BOOL filterLimitedToMyself;
 @property (readonly) TPI_ChatFilterEventType filterEvents;
 @property (readonly) TPI_ChatFilterLimitToValue filterLimitedToValue;
+@property (readonly) TPI_ChatFilterAgeComparator filterAgeComparator;
+@property (readonly) NSUInteger filterAgeLimit;
+@property (readonly) NSUInteger filterActionFloodControlInterval;
 @property (readonly, copy) NSArray<NSString *> *filterLimitedToChannelsIDs;
 @property (readonly, copy) NSArray<NSString *> *filterLimitedToClientsIDs;
 @property (readonly, copy) NSArray<NSString *> *filterEventsNumerics;
-@property (readonly) NSUInteger filterActionFloodControlInterval;
 @property (readonly, copy) NSString *filterAction;
 @property (readonly, copy) NSString *filterDescription;
 @property (readonly, copy) NSString *filterForwardToDestination;
@@ -104,10 +112,12 @@ typedef NS_OPTIONS(NSUInteger, TPI_ChatFilterEventType) {
 @property (nonatomic, assign, readwrite) BOOL filterLimitedToMyself;
 @property (nonatomic, assign, readwrite) TPI_ChatFilterEventType filterEvents;
 @property (nonatomic, assign, readwrite) TPI_ChatFilterLimitToValue filterLimitedToValue;
+@property (nonatomic, assign, readwrite) TPI_ChatFilterAgeComparator filterAgeComparator;
+@property (nonatomic, assign, readwrite) NSUInteger filterAgeLimit;
+@property (nonatomic, assign, readwrite) NSUInteger filterActionFloodControlInterval;
 @property (nonatomic, copy, readwrite) NSArray<NSString *> *filterLimitedToChannelsIDs;
 @property (nonatomic, copy, readwrite) NSArray<NSString *> *filterLimitedToClientsIDs;
 @property (nonatomic, copy, readwrite) NSArray<NSString *> *filterEventsNumerics;
-@property (nonatomic, assign, readwrite) NSUInteger filterActionFloodControlInterval;
 @property (nonatomic, copy, readwrite) NSString *filterAction;
 @property (nonatomic, copy, readwrite) NSString *filterForwardToDestination;
 @property (nonatomic, copy, readwrite) NSString *filterMatch;

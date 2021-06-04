@@ -112,9 +112,9 @@ NS_ASSUME_NONNULL_BEGIN
 	return YES;
 }
 
-- (BOOL)testFilterSender:(TPI_ChatFilter *)filter authoredBy:(IRCPrefix *)textAuthor onClient:(IRCClient *)client
+- (BOOL)testFilterSender:(TPI_ChatFilter *)filter authoredBy:(IRCPrefix *)textAuthor destinedFor:(nullable IRCChannel *)textDestination onClient:(IRCClient *)client
 {
-	/* Check whether the sender is mysql */
+	/* Check whether the sender is myself */
 	if (filter.filterLimitedToMyself) {
 		NSString *comparisonValue1 = client.userNickname;
 
@@ -142,6 +142,58 @@ NS_ASSUME_NONNULL_BEGIN
 		if ([XRRegularExpression string:comparisonHostmask isMatchedByRegex:filterSenderMatch withoutCase:YES] == NO) {
 			/* If a filter specifies a sender match and the match for
 			 this particular filter fails, then skip this filter. */
+
+			return NO;
+		}
+	}
+
+	/* For the next few checks we can ignore them if destination is not a channel. */
+	if (textDestination.isChannel == NO || textAuthor.isServer) {
+		return YES;
+	}
+
+	IRCChannelUser *senderUser = [textDestination findMember:textAuthor.nickname];
+
+	if (senderUser == nil) {
+		LogToConsoleDebug("senderUser == nil — Skipping to next filter");
+
+		return NO;
+	}
+
+	/* Check age of sender */
+	NSInteger filterAgeLimit = filter.filterAgeLimit;
+
+	if (filterAgeLimit > 0) {
+		NSInteger ageLimitDelta = [NSDate timeIntervalSinceNow:senderUser.creationTime];
+
+		switch (filter.filterAgeComparator) {
+			case TPI_ChatFilterAgeComparatorLessThan:
+			{
+				if (ageLimitDelta < filterAgeLimit) {
+					return NO; // ignore this filter
+				}
+
+				break;
+			}
+			case TPI_ChatFilterAgeComparatorGreaterThan:
+			{
+				if (ageLimitDelta >= filterAgeLimit) {
+					return NO; // ignore this filter
+				}
+
+				break;
+			}
+			default:
+			{
+				break;
+			}
+		} // switch()
+	}
+
+	/* Is sender an operator? */
+	if (filter.filterIgnoreOperators) {
+		if (senderUser.halfOp) {
+			/* User is at least a Half-op, ignore this filter. */
 
 			return NO;
 		}
@@ -198,7 +250,7 @@ NS_ASSUME_NONNULL_BEGIN
 				continue;
 			}
 
-			if ([self testFilterSender:filter authoredBy:textAuthor onClient:client] == NO) {
+			if ([self testFilterSender:filter authoredBy:textAuthor destinedFor:textDestination onClient:client] == NO) {
 				continue;
 			}
 
@@ -252,11 +304,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)receivedText:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(nullable IRCChannel *)textDestination asLineType:(TVCLogLineType)lineType onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt wasEncrypted:(BOOL)wasEncrypted
 {
 	/* Begin processing filters */
-	/* Finding the IRCUser instance for the sender has a lot of overhead involved
-	 which means it is easier to store it in a variable here and find only once. */
-	/* This only works because textDestination is same for each filter check. */
-	IRCChannelUser *senderUser = nil;
-
 	NSArray *filters = self.parentObject.filterArrayController.content;
 
 	for (TPI_ChatFilter *filter in filters) {
@@ -281,28 +328,8 @@ NS_ASSUME_NONNULL_BEGIN
 				continue;
 			}
 
-			if ([self testFilterSender:filter authoredBy:textAuthor onClient:client] == NO) {
+			if ([self testFilterSender:filter authoredBy:textAuthor destinedFor:textDestination onClient:client] == NO) {
 				continue;
-			}
-
-			if (filter.filterIgnoreOperators && textDestination.isChannel) {
-				if (textAuthor.isServer == NO) {
-					if (senderUser == nil) {
-						senderUser = [textDestination findMember:textAuthor.nickname];
-
-						if (senderUser) {
-							if (senderUser.halfOp) {
-								/* User is at least a Half-op, ignore this filter. */
-
-								continue;
-							}
-						} else {
-							LogToConsoleDebug("senderUser == nil — Skipping to next filter");
-
-							continue;
-						}
-					}
-				}
 			}
 
 			if ([self testFilterMatch:filter againstText:text allowingNilText:NO] == NO) {
