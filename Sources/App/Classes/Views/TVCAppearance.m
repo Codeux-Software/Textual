@@ -133,29 +133,57 @@ ClassWithDesignatedInitializerInitMethod
 	 NSParameterAssert(appearanceIn != nil);
 	 NSParameterAssert(otherAppearances != nil);
 
+	 /* Object can be an array of strings or a string. */
+	 id inheritedName = [appearanceIn objectForKey:@"inheritFrom"];
+
+	 if (inheritedName == nil) {
+		 return appearanceIn;
+	 }
+
 	 /* The array of references is the dictionaries that will be combined. */
-	 NSMutableArray<NSDictionary<NSString *, id> *> *inheritedProperties = nil;
+	 __block NSMutableArray<NSDictionary<NSString *, id> *> *inheritedProperties = [NSMutableArray array];
 
-	 NSDictionary *lastInheritance = appearanceIn;
+	 typedef void (^inheritLogicType)(id);
+	 __weak __block inheritLogicType inheritLogicWeak = nil;
 
-	 NSString *lastInheritanceName = nil;
+	 inheritLogicType inheritLogic = ^(id inheritedName)
+	 {
+		 NSDictionary *lastInheritance = nil;
 
-	 while ((lastInheritanceName = [lastInheritance stringForKey:@"inheritFrom"])) {
-		 lastInheritance = [otherAppearances dictionaryForKey:lastInheritanceName];
+		 /* Allow for multiple inheritance */
+		 if ([inheritedName isKindOfClass:[NSArray class]]) {
+			 for (id name in inheritedName) {
+				 inheritLogicWeak(name);
+			 }
 
-		 /* A missing inheritance is considered a hard failure */
-		 if (lastInheritance == nil) {
-			 return nil;
+			 return;
+		 } else if ([inheritedName isKindOfClass:[NSString class]]) {
+			 lastInheritance = [otherAppearances dictionaryForKey:inheritedName];
 		 }
 
-		 if (inheritedProperties == nil) {
-			 inheritedProperties = [NSMutableArray array];
+		 /* No inhertiance */
+		 if (lastInheritance == nil) {
+			 return;
 		 }
 
 		 /* Add the properties to the beginning of the array
 		  so that we don't need to use a revers enumerator. */
 		 [inheritedProperties insertObject:lastInheritance atIndex:0];
-	 }
+
+		 /* Is there deeper inheritance? */
+		 id nextInheritance = [lastInheritance objectForKey:@"inheritFrom"];
+
+		 if (nextInheritance == nil) {
+			 return;
+		 }
+
+		 inheritLogicWeak(nextInheritance);
+	 };
+
+	 /* Inherit from the first appearance. */
+	 inheritLogicWeak = inheritLogic;
+
+	 inheritLogic(inheritedName);
 
 	 /* If nothing was inherited, return original input. */
 	 if (inheritedProperties == nil) {
