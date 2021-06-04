@@ -78,6 +78,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 - (void)prepareInitialState
 {
 	self->_lastWeightFade = CFAbsoluteTimeGetCurrent();
+
+	self->_creationTime = [[NSDate date] timeIntervalSince1970];
 }
 
 - (void)populateDefaultsPostflight

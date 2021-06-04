@@ -46,6 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 	double _incomingWeight;
 	double _outgoingWeight;
 	CFAbsoluteTime _lastWeightFade;
+	NSTimeInterval _creationTime;
 }
 
 @end

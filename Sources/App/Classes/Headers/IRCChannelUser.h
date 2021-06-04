@@ -85,6 +85,9 @@ typedef NS_OPTIONS(NSUInteger, IRCUserRank) {
 @property (readonly) double totalWeight; // (incoming + outgoing) with decay
 @property (readonly) double incomingWeight;
 @property (readonly) double outgoingWeight;
+
+/* Timestamp instance of IRCChannelUser was created. */
+@property (readonly) NSTimeInterval creationTime;
 @end
 
 #pragma mark -
