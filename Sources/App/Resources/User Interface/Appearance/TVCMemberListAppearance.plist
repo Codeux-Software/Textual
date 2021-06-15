@@ -343,7 +343,7 @@
 		<key>Mark Badge</key>
 		<dict>
 			<key>leftMargin</key>
-			<integer>2</integer>
+			<integer>5</integer>
 		</dict>
 	</dict>
 	<key>MojaveDark</key>
@@ -402,7 +402,7 @@
 				<integer>15</integer>
 			</dict>
 			<key>leftMargin</key>
-			<integer>2</integer>
+			<integer>5</integer>
 		</dict>
 	</dict>
 	<key>YosemiteDark</key>
