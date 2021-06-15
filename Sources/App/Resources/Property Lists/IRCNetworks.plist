@@ -137,6 +137,15 @@
 		<key>prefersSecuredConnection</key>
 		<true/>
 	</dict>
+	<key>Libera Chat</key>
+	<dict>
+		<key>serverAddress</key>
+		<string>irc.libera.chat</string>
+		<key>serverPort</key>
+		<real>6697</real>
+		<key>prefersSecuredConnection</key>
+		<true/>
+	</dict>
 	<key>LizardIRC</key>
 	<dict>
 		<key>serverAddress</key>
@@ -298,6 +307,6 @@
 		<integer>6697</integer>
 		<key>prefersSecuredConnection</key>
 		<true/>
-	</dict>	
+	</dict>
 </dict>
 </plist>
