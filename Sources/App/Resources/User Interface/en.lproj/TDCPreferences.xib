@@ -5017,7 +5017,7 @@ You should therefore not rely solely on this preference.</string>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="1g9-Qk-YQN">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1g9-Qk-YQN">
                     <rect key="frame" x="175" y="367" width="123" height="18"/>
                     <buttonCell key="cell" type="check" title="Enable App Nap" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="2nA-D4-FnZ">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -5027,7 +5027,7 @@ You should therefore not rely solely on this preference.</string>
                         <binding destination="-2" name="value" keyPath="self.appNapEnabled" id="kVr-7F-VmC"/>
                     </connections>
                 </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="2Bh-Ce-CLv">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2Bh-Ce-CLv">
                     <rect key="frame" x="175" y="337" width="122" height="18"/>
                     <buttonCell key="cell" type="check" title="Enable WebKit2" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="W5w-EG-kiD">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -5037,7 +5037,7 @@ You should therefore not rely solely on this preference.</string>
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.UsesWebKit2WhenAvailable" id="Xds-VT-o1A"/>
                     </connections>
                 </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="adq-18-C3D">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="adq-18-C3D">
                     <rect key="frame" x="175" y="307" width="318" height="18"/>
                     <buttonCell key="cell" type="check" title="Limit number of processes spawned by WebKit2" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="HKB-82-0XP">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -5047,7 +5047,7 @@ You should therefore not rely solely on this preference.</string>
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.WebViewProcessPoolSizeIsLimited" id="rPc-UM-cTW"/>
                     </connections>
                 </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="r5x-9F-a6i">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r5x-9F-a6i">
                     <rect key="frame" x="175" y="277" width="218" height="18"/>
                     <buttonCell key="cell" type="check" title="Enable link previews in WebKit2" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="d67-Dk-gJt">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -5057,7 +5057,7 @@ You should therefore not rely solely on this preference.</string>
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.WebViewPreviewLinks" id="ONL-hI-tz0"/>
                     </connections>
                 </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="wM2-5T-Kcv">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wM2-5T-Kcv">
                     <rect key="frame" x="175" y="247" width="178" height="18"/>
                     <buttonCell key="cell" type="check" title="Enable custom scrollbars" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="wiu-qq-etM">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -5071,7 +5071,7 @@ You should therefore not rely solely on this preference.</string>
                         </binding>
                     </connections>
                 </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="p75-KN-Sms">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p75-KN-Sms">
                     <rect key="frame" x="175" y="217" width="135" height="18"/>
                     <buttonCell key="cell" type="check" title="Load history lazily" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="xQW-RJ-brS">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -5081,7 +5081,7 @@ You should therefore not rely solely on this preference.</string>
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.Optimizations -&gt; Load History Lazily" id="4d0-ks-wbl"/>
                     </connections>
                 </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="Xl2-g8-NiZ">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xl2-g8-NiZ">
                     <rect key="frame" x="175" y="187" width="284" height="18"/>
                     <buttonCell key="cell" type="check" title="Server list and user list appear transparent" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4Sf-cU-A93">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -5095,7 +5095,7 @@ You should therefore not rely solely on this preference.</string>
                         </binding>
                     </connections>
                 </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="b9a-MV-ff4">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="b9a-MV-ff4">
                     <rect key="frame" x="175" y="157" width="164" height="18"/>
                     <buttonCell key="cell" type="check" title="Prefer modern sockets" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="mEq-pf-DPP">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
