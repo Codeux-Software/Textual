@@ -152,7 +152,7 @@ ClassWithDesignatedInitializerInitMethod
 
 		 /* Allow for multiple inheritance */
 		 if ([inheritedName isKindOfClass:[NSArray class]]) {
-			 for (id name in inheritedName) {
+			 for (id name in ((NSArray *)inheritedName).reverseObjectEnumerator) {
 				 inheritLogicWeak(name);
 			 }
 
