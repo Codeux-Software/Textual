@@ -64,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSImageView *messageCountBadgeImageView;
 // Deactivating thse constraints will dereference them.
 // We need to maintrain a strong reference.
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint *cellTextFieldLeftMargin;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *cellTextFieldLeftMarginConstraint;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *messageCountBadgeLeadingConstraint;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *messageCountBadgeTrailingConstraint;
 @property (readonly) BOOL isGroupItem;
@@ -661,7 +661,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	TVCServerListAppearance *appearance = self.userInterfaceObjects;
 
-	self.cellTextFieldLeftMargin.constant = appearance.serverLabelLeftMargin;
+	self.cellTextFieldLeftMarginConstraint.constant = appearance.serverLabelLeftMargin;
 }
 
 - (void)applicationAppearanceChanged

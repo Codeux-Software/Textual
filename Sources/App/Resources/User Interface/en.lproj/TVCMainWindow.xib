@@ -166,7 +166,7 @@
                                                                     </constraints>
                                                                     <connections>
                                                                         <outlet property="cellTextField" destination="wBU-6B-7f4" id="jkE-JW-N5b"/>
-                                                                        <outlet property="cellTextFieldLeftMargin" destination="b3P-cC-qaP" id="tHh-1P-ny4"/>
+                                                                        <outlet property="cellTextFieldLeftMarginConstraint" destination="b3P-cC-qaP" id="Dar-F2-ajG"/>
                                                                     </connections>
                                                                 </tableCellView>
                                                                 <tableCellView identifier="ChildView" translatesAutoresizingMaskIntoConstraints="NO" id="AKs-o3-7CO" customClass="TVCServerListCellChildItem">
