@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -5017,119 +5017,94 @@ You should therefore not rely solely on this preference.</string>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="750" verticalHuggingPriority="750" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XFN-KH-K9I">
-                    <rect key="frame" x="177" y="158" width="316" height="226"/>
-                    <subviews>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="1g9-Qk-YQN">
-                            <rect key="frame" x="-2" y="209" width="123" height="18"/>
-                            <buttonCell key="cell" type="check" title="Enable App Nap" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="2nA-D4-FnZ">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="-2" name="value" keyPath="self.appNapEnabled" id="kVr-7F-VmC"/>
-                            </connections>
-                        </button>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="2Bh-Ce-CLv">
-                            <rect key="frame" x="-2" y="179" width="122" height="18"/>
-                            <buttonCell key="cell" type="check" title="Enable WebKit2" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="W5w-EG-kiD">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.UsesWebKit2WhenAvailable" id="Xds-VT-o1A"/>
-                            </connections>
-                        </button>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="adq-18-C3D">
-                            <rect key="frame" x="-2" y="149" width="318" height="18"/>
-                            <buttonCell key="cell" type="check" title="Limit number of processes spawned by WebKit2" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="HKB-82-0XP">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.WebViewProcessPoolSizeIsLimited" id="rPc-UM-cTW"/>
-                            </connections>
-                        </button>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="r5x-9F-a6i">
-                            <rect key="frame" x="-2" y="119" width="218" height="18"/>
-                            <buttonCell key="cell" type="check" title="Enable link previews in WebKit2" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="d67-Dk-gJt">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.WebViewPreviewLinks" id="ONL-hI-tz0"/>
-                            </connections>
-                        </button>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="wM2-5T-Kcv">
-                            <rect key="frame" x="-2" y="89" width="178" height="18"/>
-                            <buttonCell key="cell" type="check" title="Enable custom scrollbars" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="wiu-qq-etM">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.WebViewDoNotUsesCustomScrollers" id="0SS-ZD-V6A">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                    </dictionary>
-                                </binding>
-                            </connections>
-                        </button>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="p75-KN-Sms">
-                            <rect key="frame" x="-2" y="59" width="135" height="18"/>
-                            <buttonCell key="cell" type="check" title="Load history lazily" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="xQW-RJ-brS">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.Optimizations -&gt; Load History Lazily" id="4d0-ks-wbl"/>
-                            </connections>
-                        </button>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="Xl2-g8-NiZ">
-                            <rect key="frame" x="-2" y="29" width="284" height="18"/>
-                            <buttonCell key="cell" type="check" title="Server list and user list appear transparent" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4Sf-cU-A93">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisableSidebarTranslucency" id="QoU-AQ-Kep">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                    </dictionary>
-                                </binding>
-                            </connections>
-                        </button>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="b9a-MV-ff4">
-                            <rect key="frame" x="-2" y="-1" width="164" height="18"/>
-                            <buttonCell key="cell" type="check" title="Prefer modern sockets" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="mEq-pf-DPP">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.PreferModernSockets" id="b4l-BF-WXC"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <visibilityPriorities>
-                        <integer value="1000"/>
-                        <integer value="1000"/>
-                        <integer value="1000"/>
-                        <integer value="1000"/>
-                        <integer value="1000"/>
-                        <integer value="1000"/>
-                        <integer value="1000"/>
-                        <integer value="1000"/>
-                    </visibilityPriorities>
-                    <customSpacing>
-                        <real value="3.4028234663852886e+38"/>
-                        <real value="3.4028234663852886e+38"/>
-                        <real value="3.4028234663852886e+38"/>
-                        <real value="3.4028234663852886e+38"/>
-                        <real value="3.4028234663852886e+38"/>
-                        <real value="3.4028234663852886e+38"/>
-                        <real value="3.4028234663852886e+38"/>
-                        <real value="3.4028234663852886e+38"/>
-                    </customSpacing>
-                </stackView>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="1g9-Qk-YQN">
+                    <rect key="frame" x="175" y="367" width="123" height="18"/>
+                    <buttonCell key="cell" type="check" title="Enable App Nap" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="2nA-D4-FnZ">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="self.appNapEnabled" id="kVr-7F-VmC"/>
+                    </connections>
+                </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="2Bh-Ce-CLv">
+                    <rect key="frame" x="175" y="337" width="122" height="18"/>
+                    <buttonCell key="cell" type="check" title="Enable WebKit2" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="W5w-EG-kiD">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.UsesWebKit2WhenAvailable" id="Xds-VT-o1A"/>
+                    </connections>
+                </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="adq-18-C3D">
+                    <rect key="frame" x="175" y="307" width="318" height="18"/>
+                    <buttonCell key="cell" type="check" title="Limit number of processes spawned by WebKit2" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="HKB-82-0XP">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.WebViewProcessPoolSizeIsLimited" id="rPc-UM-cTW"/>
+                    </connections>
+                </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="r5x-9F-a6i">
+                    <rect key="frame" x="175" y="277" width="218" height="18"/>
+                    <buttonCell key="cell" type="check" title="Enable link previews in WebKit2" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="d67-Dk-gJt">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.WebViewPreviewLinks" id="ONL-hI-tz0"/>
+                    </connections>
+                </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="wM2-5T-Kcv">
+                    <rect key="frame" x="175" y="247" width="178" height="18"/>
+                    <buttonCell key="cell" type="check" title="Enable custom scrollbars" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="wiu-qq-etM">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.WebViewDoNotUsesCustomScrollers" id="0SS-ZD-V6A">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="p75-KN-Sms">
+                    <rect key="frame" x="175" y="217" width="135" height="18"/>
+                    <buttonCell key="cell" type="check" title="Load history lazily" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="xQW-RJ-brS">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.Optimizations -&gt; Load History Lazily" id="4d0-ks-wbl"/>
+                    </connections>
+                </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="Xl2-g8-NiZ">
+                    <rect key="frame" x="175" y="187" width="284" height="18"/>
+                    <buttonCell key="cell" type="check" title="Server list and user list appear transparent" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4Sf-cU-A93">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisableSidebarTranslucency" id="QoU-AQ-Kep">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="b9a-MV-ff4">
+                    <rect key="frame" x="175" y="157" width="164" height="18"/>
+                    <buttonCell key="cell" type="check" title="Prefer modern sockets" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="mEq-pf-DPP">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.PreferModernSockets" id="b4l-BF-WXC"/>
+                    </connections>
+                </button>
                 <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" spacing="10" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="84h-O7-xuk">
                     <rect key="frame" x="147" y="119" width="376" height="19"/>
                     <subviews>
@@ -5260,17 +5235,39 @@ You should therefore not rely solely on this preference.</string>
             </subviews>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="V0L-wf-MX5" secondAttribute="bottom" constant="30" id="0Fr-aZ-e5g"/>
+                <constraint firstItem="1g9-Qk-YQN" firstAttribute="leading" secondItem="dAH-Sl-d77" secondAttribute="leading" constant="177" id="1CJ-7V-YNV"/>
+                <constraint firstItem="2Bh-Ce-CLv" firstAttribute="leading" secondItem="1g9-Qk-YQN" secondAttribute="leading" id="5rh-fw-QlF"/>
+                <constraint firstItem="wM2-5T-Kcv" firstAttribute="leading" secondItem="r5x-9F-a6i" secondAttribute="leading" id="6Dq-GT-HFz"/>
                 <constraint firstItem="V0L-wf-MX5" firstAttribute="top" secondItem="f8P-S1-YSA" secondAttribute="bottom" constant="30" id="6vT-lm-ST7"/>
-                <constraint firstItem="XFN-KH-K9I" firstAttribute="top" secondItem="eAs-xY-p50" secondAttribute="bottom" constant="20" id="FgW-8y-Wm4"/>
+                <constraint firstItem="Xl2-g8-NiZ" firstAttribute="top" secondItem="p75-KN-Sms" secondAttribute="bottom" constant="14" id="7Ne-Xm-P3m"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Xl2-g8-NiZ" secondAttribute="trailing" constant="20" id="8Bm-6k-qGz"/>
+                <constraint firstItem="Xl2-g8-NiZ" firstAttribute="leading" secondItem="p75-KN-Sms" secondAttribute="leading" id="8T5-Jf-1tN"/>
+                <constraint firstItem="r5x-9F-a6i" firstAttribute="top" secondItem="adq-18-C3D" secondAttribute="bottom" constant="14" id="FCc-GZ-gYS"/>
+                <constraint firstItem="1g9-Qk-YQN" firstAttribute="top" secondItem="eAs-xY-p50" secondAttribute="bottom" constant="20" id="HMb-sy-AN0"/>
+                <constraint firstItem="adq-18-C3D" firstAttribute="top" secondItem="2Bh-Ce-CLv" secondAttribute="bottom" constant="14" id="J1W-A9-0fe"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1g9-Qk-YQN" secondAttribute="trailing" constant="20" id="Lb5-wb-qfE"/>
+                <constraint firstItem="p75-KN-Sms" firstAttribute="top" secondItem="wM2-5T-Kcv" secondAttribute="bottom" constant="14" id="N4f-uj-Iz9"/>
                 <constraint firstItem="f8P-S1-YSA" firstAttribute="top" secondItem="84h-O7-xuk" secondAttribute="bottom" constant="20" id="O4J-YF-RNM"/>
-                <constraint firstItem="XFN-KH-K9I" firstAttribute="centerX" secondItem="dAH-Sl-d77" secondAttribute="centerX" id="PsU-ba-jQk"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="r5x-9F-a6i" secondAttribute="trailing" constant="20" id="R9Q-hl-OIQ"/>
+                <constraint firstItem="b9a-MV-ff4" firstAttribute="leading" secondItem="Xl2-g8-NiZ" secondAttribute="leading" id="U90-po-07Z"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wM2-5T-Kcv" secondAttribute="trailing" constant="20" id="ZFf-wU-k9n"/>
                 <constraint firstItem="eAs-xY-p50" firstAttribute="leading" secondItem="dAH-Sl-d77" secondAttribute="leading" constant="180" id="aKK-Ts-ebc"/>
-                <constraint firstItem="84h-O7-xuk" firstAttribute="top" secondItem="XFN-KH-K9I" secondAttribute="bottom" constant="20" id="ayJ-3x-yuM"/>
+                <constraint firstItem="2Bh-Ce-CLv" firstAttribute="top" secondItem="1g9-Qk-YQN" secondAttribute="bottom" constant="14" id="aLP-1I-qPp"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2Bh-Ce-CLv" secondAttribute="trailing" constant="20" id="aSY-hh-GGq"/>
+                <constraint firstItem="r5x-9F-a6i" firstAttribute="leading" secondItem="adq-18-C3D" secondAttribute="leading" id="aqP-MD-gGa"/>
                 <constraint firstItem="V0L-wf-MX5" firstAttribute="centerX" secondItem="dAH-Sl-d77" secondAttribute="centerX" id="b3i-fV-DOR"/>
+                <constraint firstItem="adq-18-C3D" firstAttribute="leading" secondItem="2Bh-Ce-CLv" secondAttribute="leading" id="bde-YN-Yv0"/>
+                <constraint firstItem="p75-KN-Sms" firstAttribute="leading" secondItem="wM2-5T-Kcv" secondAttribute="leading" id="e4k-oI-brN"/>
+                <constraint firstItem="b9a-MV-ff4" firstAttribute="top" secondItem="Xl2-g8-NiZ" secondAttribute="bottom" constant="14" id="gmW-wv-0i4"/>
+                <constraint firstItem="84h-O7-xuk" firstAttribute="top" secondItem="b9a-MV-ff4" secondAttribute="bottom" constant="20" id="hSG-4J-THF"/>
                 <constraint firstItem="eAs-xY-p50" firstAttribute="centerX" secondItem="dAH-Sl-d77" secondAttribute="centerX" id="hdQ-gY-9vm"/>
                 <constraint firstItem="84h-O7-xuk" firstAttribute="centerX" secondItem="dAH-Sl-d77" secondAttribute="centerX" id="iXb-YZ-e1Y"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="p75-KN-Sms" secondAttribute="trailing" constant="20" id="sfB-ps-xYd"/>
                 <constraint firstItem="eAs-xY-p50" firstAttribute="top" secondItem="dAH-Sl-d77" secondAttribute="top" constant="30" id="sp6-Xk-TNz"/>
                 <constraint firstItem="f8P-S1-YSA" firstAttribute="centerX" secondItem="dAH-Sl-d77" secondAttribute="centerX" id="vVU-lv-eZ3"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="adq-18-C3D" secondAttribute="trailing" constant="20" id="w0h-VN-UgA"/>
+                <constraint firstItem="wM2-5T-Kcv" firstAttribute="top" secondItem="r5x-9F-a6i" secondAttribute="bottom" constant="14" id="yJy-do-LTO"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="b9a-MV-ff4" secondAttribute="trailing" constant="20" id="zLm-GZ-r0m"/>
             </constraints>
             <point key="canvasLocation" x="318" y="395"/>
         </customView>
