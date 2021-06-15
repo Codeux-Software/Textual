@@ -51,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Server Cell
 
 @property (readonly) BOOL serverRowEmphasized;
+@property (readonly) CGFloat serverLabelLeftMargin;
 @property (readonly, copy, nullable) NSColor *serverTextColorActiveWindow;
 @property (readonly, copy, nullable) NSColor *serverTextColorInactiveWindow;
 @property (readonly, copy, nullable) NSColor *serverDisabledTextColorActiveWindow;

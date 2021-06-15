@@ -300,16 +300,6 @@ NSString * const TVCServerListDragType = @"TVCServerListDragType";
 #endif
 }
 
-- (BOOL)sendApplicationAppearanceChangedToSubviews
-{
-	return NO;
-}
-
-- (BOOL)sendSystemAppearanceChangedToSubviews
-{
-	return NO;
-}
-
 - (void)applicationAppearanceChanged
 {
 	TVCServerListAppearance *appearance = self.mainWindow.userInterfaceObjects.serverList;

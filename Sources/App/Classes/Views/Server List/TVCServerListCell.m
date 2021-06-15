@@ -64,6 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSImageView *messageCountBadgeImageView;
 // Deactivating thse constraints will dereference them.
 // We need to maintrain a strong reference.
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *cellTextFieldLeftMargin;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *messageCountBadgeLeadingConstraint;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *messageCountBadgeTrailingConstraint;
 @property (readonly) BOOL isGroupItem;
@@ -91,6 +92,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Cell Drawing
+
+- (void)defineConstraints
+{
+
+}
 
 - (BOOL)wantsUpdateLayer
 {
@@ -577,6 +583,16 @@ NS_ASSUME_NONNULL_BEGIN
 	return drawingContext;
 }
 
+- (BOOL)needsDisplayWhenApplicationAppearanceChanges
+{
+	return NO;
+}
+
+- (BOOL)needsDisplayWhenSystemAppearanceChanges
+{
+	return NO;
+}
+
 @end
 
 @implementation TVCServerListCellGroupItem
@@ -639,6 +655,20 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	buttonCell.highlightsBy = NSNoCellMask;
+}
+
+- (void)defineConstraints
+{
+	TVCServerListAppearance *appearance = self.userInterfaceObjects;
+
+	self.cellTextFieldLeftMargin.constant = appearance.serverLabelLeftMargin;
+}
+
+- (void)applicationAppearanceChanged
+{
+	[super defineConstraints];
+
+	[self defineConstraints];
 }
 
 @end
@@ -748,13 +778,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)didAddSubview:(NSView *)subview
 {
+	TVCServerListCellGroupItem *childCell = self.childCell;
+
+	[childCell defineConstraints];
+
 	if (self.isGroupItem &&
 		[subview isKindOfClass:[NSButton class]] &&
 		[[subview identifier] isEqual:NSOutlineViewDisclosureButtonKey])
 	{
 		NSButton *disclosureTriangle = (NSButton *)subview;
-
-		TVCServerListCellGroupItem *childCell = self.childCell;
 
 		childCell.disclosureTriangle = disclosureTriangle;
 

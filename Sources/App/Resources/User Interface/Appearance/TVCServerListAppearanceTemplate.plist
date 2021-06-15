@@ -29,6 +29,8 @@
 		</dict>
 		<key>Server Cell</key>
 		<dict>
+			<key>labelLeftMargin</key>
+			<string>0</string>
 			<key>rowEmphasized</key>
 			<false/>
 			<key>selectionImage</key>

@@ -73,6 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Channel Cell
 
 @property (nonatomic, assign, readwrite) BOOL channelRowEmphasized;
+@property (nonatomic, assign, readwrite) CGFloat serverLabelLeftMargin;
 @property (nonatomic, copy, nullable, readwrite) NSColor *channelTextColorActiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *channelTextColorInactiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *channelDisabledTextColorActiveWindow;
@@ -154,6 +155,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSDictionary *serverCell = properties[@"Server Cell"];
 
 	self.serverRowEmphasized = [serverCell boolForKey:@"rowEmphasized"];
+	self.serverLabelLeftMargin = [serverCell floatForKey:@"labelLeftMargin"];
 	self.serverTextColorActiveWindow = [self colorInGroup:serverCell withKey:@"normalTextColor" forActiveWindow:YES];
 	self.serverTextColorInactiveWindow = [self colorInGroup:serverCell withKey:@"normalTextColor" forActiveWindow:NO];
 	self.serverDisabledTextColorActiveWindow = [self colorInGroup:serverCell withKey:@"disabledTextColor" forActiveWindow:YES];
