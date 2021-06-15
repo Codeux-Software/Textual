@@ -67,6 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) TVCMemberListAppearance *userInterfaceObjects;
 @property (readonly) IRCChannelUser *cellItem;
 @property (readonly) NSInteger rowIndex;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *markBadgeLeftMarginConstraint;
 @end
 
 @interface TVCMemberListCellDrawingContext : NSObject
@@ -79,6 +80,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Drawing
+
+- (void)defineConstraints
+{
+	TVCMemberListAppearance *appearance = self.userInterfaceObjects;
+
+	self.markBadgeLeftMarginConstraint.constant = appearance.markBadgeLeftMargin;
+}
+
+- (void)applicationAppearanceChanged
+{
+	[self defineConstraints];
+}
 
 - (BOOL)wantsUpdateLayer
 {
@@ -685,6 +698,15 @@ NS_ASSUME_NONNULL_BEGIN
 	} else {
 		[super drawSelectionInRect:dirtyRect];
 	} // selectionColor
+}
+
+- (void)didAddSubview:(NSView *)subview
+{
+	TVCMemberListCell *childCell = self.childCell;
+
+	[childCell defineConstraints];
+
+	[super didAddSubview:subview];
 }
 
 #pragma mark -

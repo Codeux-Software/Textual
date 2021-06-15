@@ -306,6 +306,7 @@
                                                                     <connections>
                                                                         <outlet property="cellTextField" destination="jld-0X-vn0" id="L5s-IO-xaA"/>
                                                                         <outlet property="imageView" destination="Lq2-t9-aDp" id="3RI-Vl-ylD"/>
+                                                                        <outlet property="markBadgeLeftMarginConstraint" destination="fBT-mI-gYa" id="h1u-iC-3ui"/>
                                                                     </connections>
                                                                 </tableCellView>
                                                             </prototypeCellViews>

@@ -221,6 +221,8 @@
 					<real>10</real>
 				</dict>
 			</dict>
+			<key>leftMargin</key>
+			<integer>0</integer>
 		</dict>
 	</dict>
 </dict>

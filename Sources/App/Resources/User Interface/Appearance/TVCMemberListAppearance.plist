@@ -10,6 +10,11 @@
 		<integer>120</integer>
 		<key>maximumWidth</key>
 		<integer>300</integer>
+		<key>Mark Badge</key>
+		<dict>
+			<key>leftMargin</key>
+			<integer>0</integer>
+		</dict>
 		<key>Member Cell</key>
 		<dict>
 			<key>rowEmphasized</key>
@@ -333,15 +338,29 @@
 		<key>inheritFrom</key>
 		<string>CommonModernLight</string>
 	</dict>
+	<key>Mojave</key>
+	<dict>
+		<key>Mark Badge</key>
+		<dict>
+			<key>leftMargin</key>
+			<integer>2</integer>
+		</dict>
+	</dict>
 	<key>MojaveDark</key>
 	<dict>
 		<key>inheritFrom</key>
-		<string>CommonModernDark</string>
+		<array>
+			<string>CommonModernDark</string>
+			<string>Mojave</string>
+		</array>
 	</dict>
 	<key>MojaveLight</key>
 	<dict>
 		<key>inheritFrom</key>
-		<string>CommonModernLight</string>
+		<array>
+			<string>CommonModernLight</string>
+			<string>Mojave</string>
+		</array>
 	</dict>
 	<key>Yosemite</key>
 	<dict>
@@ -382,6 +401,8 @@
 				<key>weight</key>
 				<integer>15</integer>
 			</dict>
+			<key>leftMargin</key>
+			<integer>2</integer>
 		</dict>
 	</dict>
 	<key>YosemiteDark</key>

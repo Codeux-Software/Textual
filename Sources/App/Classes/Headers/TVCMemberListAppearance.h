@@ -64,6 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Mark Badge
 
+@property (readonly) CGFloat markBadgeLeftMargin;
 @property (readonly, copy, nullable) NSColor *markBadgeBackgroundColorActiveWindow;
 @property (readonly, copy, nullable) NSColor *markBadgeBackgroundColorInactiveWindow;
 @property (readonly, copy, nullable) NSColor *markBadgeSelectedBackgroundColorActiveWindow;

@@ -72,6 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Mark Badge
 
+@property (nonatomic, assign, readwrite) CGFloat markBadgeLeftMargin;
 @property (nonatomic, copy, nullable, readwrite) NSColor *markBadgeBackgroundColorActiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *markBadgeBackgroundColorInactiveWindow;
 @property (nonatomic, copy, nullable, readwrite) NSColor *markBadgeSelectedBackgroundColorActiveWindow;
@@ -143,6 +144,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSDictionary *markBadge = properties[@"Mark Badge"];
 
+	self.markBadgeLeftMargin = [markBadge floatForKey:@"leftMargin"];
 	self.markBadgeBackgroundColorActiveWindow = [self colorInGroup:markBadge withKey:@"normalBackgroundColor" forActiveWindow:YES];
 	self.markBadgeBackgroundColorInactiveWindow = [self colorInGroup:markBadge withKey:@"normalBackgroundColor" forActiveWindow:NO];
 	self.markBadgeSelectedBackgroundColorActiveWindow = [self colorInGroup:markBadge withKey:@"selectedBackgroundColor" forActiveWindow:YES];
