@@ -115,12 +115,6 @@
 			</dict>
 		</dict>
 	</dict>
-
-	<key>BigSur</key>
-	<dict>
-		<key>inheritFrom</key>
-		<string>CommonModern</string>
-	</dict>
 	<key>BigSurDark</key>
 	<dict>
 		<key>inheritFrom</key>
@@ -130,11 +124,6 @@
 	<dict>
 		<key>inheritFrom</key>
 		<string>CommonModernLight</string>
-	</dict>
-	<key>Mojave</key>
-	<dict>
-		<key>inheritFrom</key>
-		<string>CommonModern</string>
 	</dict>
 	<key>MojaveDark</key>
 	<dict>
@@ -146,15 +135,10 @@
 		<key>inheritFrom</key>
 		<string>CommonModernLight</string>
 	</dict>
-	<key>Yosemite</key>
-	<dict>
-		<key>inheritFrom</key>
-		<string>Common</string>
-	</dict>
 	<key>YosemiteDark</key>
 	<dict>
 		<key>inheritFrom</key>
-		<string>Yosemite</string>
+		<string>CommonModernDark</string>
 		<key>Search Field</key>
 		<dict>
 			<key>noResultsTextColor</key>
@@ -219,7 +203,7 @@
 	<key>YosemiteLight</key>
 	<dict>
 		<key>inheritFrom</key>
-		<string>Yosemite</string>
+		<string>CommonModernLight</string>
 		<key>Search Field</key>
 		<dict>
 			<key>noResultsTextColor</key>

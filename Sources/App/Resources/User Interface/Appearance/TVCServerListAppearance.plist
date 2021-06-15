@@ -595,11 +595,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>BigSur</key>
-	<dict>
-		<key>inheritFrom</key>
-		<string>CommonModern</string>
-	</dict>
 	<key>BigSurDark</key>
 	<dict>
 		<key>inheritFrom</key>
@@ -609,11 +604,6 @@
 	<dict>
 		<key>inheritFrom</key>
 		<string>CommonModernLight</string>
-	</dict>
-	<key>Mojave</key>
-	<dict>
-		<key>inheritFrom</key>
-		<string>CommonModern</string>
 	</dict>
 	<key>MojaveDark</key>
 	<dict>
@@ -627,8 +617,6 @@
 	</dict>
 	<key>Yosemite</key>
 	<dict>
-		<key>inheritFrom</key>
-		<string>Common</string>
 		<key>Server Cell</key>
 		<dict>
 			<key>rowHeight</key>
@@ -694,7 +682,10 @@
 	<key>YosemiteDark</key>
 	<dict>
 		<key>inheritFrom</key>
-		<string>Yosemite</string>
+		<array>
+			<string>CommonModernDark</string>
+			<string>Yosemite</string>
+		</array>
 		<key>selectionColor</key>
 		<dict>
 			<key>activeWindow</key>
@@ -963,7 +954,10 @@
 	<key>YosemiteLight</key>
 	<dict>
 		<key>inheritFrom</key>
-		<string>Yosemite</string>
+		<array>
+			<string>CommonModernLight</string>
+			<string>Yosemite</string>
+		</array>
 		<key>Server Cell</key>
 		<dict>
 			<key>normalTextColor</key>

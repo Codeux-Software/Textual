@@ -77,26 +77,28 @@
 			<string>1.0</string>
 		</dict>
 	</dict>
-
 	<key>BigSur</key>
 	<dict>
 		<key>inheritFrom</key>
 		<string>CommonModern</string>
+		<key>titlebarAccessoryViewRightMargin</key>
+		<integer>5</integer>
 	</dict>
 	<key>BigSurDark</key>
 	<dict>
 		<key>inheritFrom</key>
-		<string>CommonModernDark</string>
+		<array>
+			<string>CommonModernDark</string>
+			<string>BigSur</string>
+		</array>
 	</dict>
 	<key>BigSurLight</key>
 	<dict>
 		<key>inheritFrom</key>
-		<string>CommonModernLight</string>
-	</dict>
-	<key>Mojave</key>
-	<dict>
-		<key>inheritFrom</key>
-		<string>CommonModern</string>
+		<array>
+			<string>CommonModernLight</string>
+			<string>BigSur</string>
+		</array>
 	</dict>
 	<key>MojaveDark</key>
 	<dict>
@@ -110,8 +112,6 @@
 	</dict>
 	<key>Yosemite</key>
 	<dict>
-		<key>inheritFrom</key>
-		<string>Common</string>
 		<key>loadingScreenBackgroundColor</key>
 		<dict>
 			<key>type</key>
@@ -133,12 +133,18 @@
 	<key>YosemiteDark</key>
 	<dict>
 		<key>inheritFrom</key>
-		<string>Yosemite</string>
+		<array>
+			<string>CommonModernDark</string>
+			<string>Yosemite</string>
+		</array>
 	</dict>
 	<key>YosemiteLight</key>
 	<dict>
 		<key>inheritFrom</key>
-		<string>Yosemite</string>
+		<array>
+			<string>CommonModernLight</string>
+			<string>Yosemite</string>
+		</array>
 	</dict>
 </dict>
 </plist>
