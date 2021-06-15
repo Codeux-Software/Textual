@@ -57,6 +57,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readonly, copy, nullable) NSColor *titlebarAccessoryViewBackgroundColorActiveWindow;
 @property (readonly, copy, nullable) NSColor *titlebarAccessoryViewBackgroundColorInactiveWindow;
+
+@property (readonly) CGFloat titlebarAccessoryViewLeftMargin;
+@property (readonly) CGFloat titlebarAccessoryViewRightMargin;
 @end
 
 NS_ASSUME_NONNULL_END

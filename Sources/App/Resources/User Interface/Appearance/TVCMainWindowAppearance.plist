@@ -4,6 +4,10 @@
 <dict>
 	<key>Common</key>
 	<dict>
+		<key>titlebarAccessoryViewLeftMargin</key>
+		<integer>3</integer>
+		<key>titlebarAccessoryViewRightMargin</key>
+		<integer>3</integer>
 		<key>channelViewOverlayDefaultBackgroundColor</key>
 		<dict>
 			<key>activeWindow</key>
@@ -79,8 +83,6 @@
 	</dict>
 	<key>BigSur</key>
 	<dict>
-		<key>inheritFrom</key>
-		<string>CommonModern</string>
 		<key>titlebarAccessoryViewRightMargin</key>
 		<integer>5</integer>
 	</dict>

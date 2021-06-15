@@ -176,9 +176,23 @@ NS_ASSUME_NONNULL_BEGIN
 	[drawingPath fill];
 }
 
-- (BOOL)needsDisplayWhenMainWindowAppearanceChanges
+- (void)applicationAppearanceChanged
 {
-	return YES;
+	TVCMainWindowAppearance *appearance = self.mainWindow.userInterfaceObjects;
+
+	[self _updateAppearance:appearance];
+}
+
+- (void)_updateAppearance:(TVCMainWindowAppearance *)appearance
+{
+	NSParameterAssert(appearance != nil);
+
+	self.lockButtonLeftMarginConstraint.constant = appearance.titlebarAccessoryViewLeftMargin;
+	self.lockButtonRightMarginConstraint.constant = appearance.titlebarAccessoryViewRightMargin;
+
+	[self sizeToFit];
+
+	self.needsDisplay = YES;
 }
 
 @end

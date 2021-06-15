@@ -114,11 +114,19 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)notifyApplicationAppearanceChanged
 {
 	[self.contentView.superview notifyApplicationAppearanceChanged];
+
+	for (NSTitlebarAccessoryViewController *viewController in self.titlebarAccessoryViewControllers) {
+		[viewController.view notifyApplicationAppearanceChanged];
+	}
 }
 
 - (void)notifySystemAppearanceChanged
 {
 	[self.contentView.superview notifySystemAppearanceChanged];
+
+	for (NSTitlebarAccessoryViewController *viewController in self.titlebarAccessoryViewControllers) {
+		[viewController.view notifySystemAppearanceChanged];
+	}
 }
 
 @end

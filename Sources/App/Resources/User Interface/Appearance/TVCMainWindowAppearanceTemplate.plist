@@ -59,6 +59,10 @@
 				<string>0.0 0.0 0.0</string>
 			</dict>
 		</dict>
+		<key>titlebarAccessoryViewLeftMargin</key>
+		<integer>0</integer>
+		<key>titlebarAccessoryViewRightMargin</key>
+		<integer>0</integer>
 	</dict>
 </dict>
 </plist>
