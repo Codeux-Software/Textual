@@ -7,7 +7,7 @@
 		<key>titlebarAccessoryViewLeftMargin</key>
 		<integer>3</integer>
 		<key>titlebarAccessoryViewRightMargin</key>
-		<integer>3</integer>
+		<integer>5</integer>
 		<key>channelViewOverlayDefaultBackgroundColor</key>
 		<dict>
 			<key>activeWindow</key>
@@ -81,36 +81,36 @@
 			<string>1.0</string>
 		</dict>
 	</dict>
-	<key>BigSur</key>
-	<dict>
-		<key>titlebarAccessoryViewRightMargin</key>
-		<integer>5</integer>
-	</dict>
 	<key>BigSurDark</key>
-	<dict>
-		<key>inheritFrom</key>
-		<array>
-			<string>CommonModernDark</string>
-			<string>BigSur</string>
-		</array>
-	</dict>
-	<key>BigSurLight</key>
-	<dict>
-		<key>inheritFrom</key>
-		<array>
-			<string>CommonModernLight</string>
-			<string>BigSur</string>
-		</array>
-	</dict>
-	<key>MojaveDark</key>
 	<dict>
 		<key>inheritFrom</key>
 		<string>CommonModernDark</string>
 	</dict>
-	<key>MojaveLight</key>
+	<key>BigSurLight</key>
 	<dict>
 		<key>inheritFrom</key>
 		<string>CommonModernLight</string>
+	</dict>
+	<key>Mojave</key>
+	<dict>
+		<key>titlebarAccessoryViewRightMargin</key>
+		<integer>3</integer>
+	</dict>
+	<key>MojaveDark</key>
+	<dict>
+		<key>inheritFrom</key>
+		<array>
+			<string>CommonModernDark</string>
+			<string>Mojave</string>
+		</array>
+	</dict>
+	<key>MojaveLight</key>
+	<dict>
+		<key>inheritFrom</key>
+		<array>
+			<string>CommonModernLight</string>
+			<string>Mojave</string>
+		</array>
 	</dict>
 	<key>Yosemite</key>
 	<dict>
@@ -131,6 +131,8 @@
 				<string>0.462 0.462 0.462</string>
 			</dict>
 		</dict>
+		<key>titlebarAccessoryViewRightMargin</key>
+		<integer>3</integer>
 	</dict>
 	<key>YosemiteDark</key>
 	<dict>
