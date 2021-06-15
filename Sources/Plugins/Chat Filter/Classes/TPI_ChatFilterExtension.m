@@ -68,6 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)filterAdd:(id)sender;
 - (IBAction)filterRemove:(id)sender;
 - (IBAction)filterEdit:(id)sender;
+- (IBAction)filterDuplicate:(id)sender;
 - (IBAction)filterExport:(id)sender;
 - (IBAction)filterImport:(id)sender;
 @end
@@ -284,6 +285,19 @@ NS_ASSUME_NONNULL_BEGIN
 	self.activeChatFilterIndex = (-1);
 
 	self.activeChatFilterEditSheet = nil;
+}
+
+- (void)filterDuplicate:(id)sender
+{
+	NSInteger selectedRow = self.filterTable.selectedRow;
+
+	TPI_ChatFilter *filter = self.filterArrayController.arrangedObjects[selectedRow];
+
+	TPI_ChatFilterMutable *filterNew = [filter mutableCopy];
+
+	filterNew.filterTitle = [filterNew.filterTitle stringByAppendingString:@" (Duplicate)"];
+
+	[self editFilter:[filterNew copy] atIndex:(-1)];
 }
 
 - (void)filterExport:(id)sender
