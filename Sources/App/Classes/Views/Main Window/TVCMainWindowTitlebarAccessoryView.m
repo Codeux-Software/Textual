@@ -54,6 +54,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL drawsCustomBackgroundColor;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *lockButtonLeftMarginConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *lockButtonRightMarginConstraint;
+
+/* Accessory views are wrapped around an NSToolbarFullScreenWindow object
+ when in full screen. That means the view cannot use the helper property
+ in NSView named -mainWindow which wraps around -window. Instead, we have
+ to be excplicit and use a reference. */
+
+@property (nonatomic, weak) IBOutlet TVCMainWindow *mainWindowRef;
 @end
 
 @implementation TVCMainWindowTitlebarAccessoryViewLockButton
@@ -148,7 +155,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	TVCMainWindowAppearance *appearance = self.mainWindow.userInterfaceObjects;
+	TVCMainWindowAppearance *appearance = self.mainWindowRef.userInterfaceObjects;
 
 	if (appearance == nil) {
 		return;
@@ -178,7 +185,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)applicationAppearanceChanged
 {
-	TVCMainWindowAppearance *appearance = self.mainWindow.userInterfaceObjects;
+	TVCMainWindowAppearance *appearance = self.mainWindowRef.userInterfaceObjects;
 
 	[self _updateAppearance:appearance];
 }
