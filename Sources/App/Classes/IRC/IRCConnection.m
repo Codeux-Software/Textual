@@ -295,7 +295,11 @@ ClassWithDesignatedInitializerInitMethod
 			promptInformativeText = TXTLS(@"Prompts[iun-45]", policyName, protocolSummary);
 		}
 
-#warning TODO: Calling -keyWindow outside of main thread.
+		__block NSWindow *window = nil;
+
+		[self performBlockOnMainThread:^{
+			window = [NSApp keyWindow];
+		}];
 
 		(void)
 		[RCMTrustPanel presentTrustPanelInWindow:[NSApp keyWindow]
