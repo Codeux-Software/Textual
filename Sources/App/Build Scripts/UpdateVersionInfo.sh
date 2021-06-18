@@ -54,6 +54,10 @@ fi
 # information so it does not need to constantly access the Info.plist file.
 bundleVersionShort=$(/usr/libexec/PlistBuddy -c "Print \"CFBundleShortVersionString\"" Info.plist)
 
+mkdir -p "./Build Headers"
+
+cd "./Build Headers"
+
 echo "
 /* ANY CHANGES TO THIS FILE WILL NOT BE SAVED AND WILL NOT BE COMMITTED */
 
