@@ -249,7 +249,7 @@ InlineMediaPrototype.prototype.didLoadMediaWithPayload = function(payload) /* PU
 	this.didLoadMedia(mediaId, mediaElement);
 };
 
-InlineMediaPrototype.prototype._didLoadMediaModifyAnchor = function(mediaId) /* PUBLIC */
+InlineMediaPrototype.prototype._didLoadMediaModifyAnchor = function(mediaId) /* PRIVATE */
 {
 	var anchor = document.getInlineMediaAnchorById(mediaId);
 
