@@ -71,8 +71,15 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 		_sharedWebViewPreferences.cacheModel = WebCacheModelDocumentViewer;
 		_sharedWebViewPreferences.usesPageCache = NO;
 
-		if ([_sharedWebViewPreferences respondsToSelector:@selector(setShouldRespectImageOrientation:)]) {
-			(void)objc_msgSend(_sharedWebViewPreferences, @selector(setShouldRespectImageOrientation:), YES);
+		SEL sel = @selector(setShouldRespectImageOrientation:);
+		if ([_sharedWebViewPreferences respondsToSelector:sel]) {
+			NSMethodSignature *signature = [_sharedWebViewPreferences methodSignatureForSelector:sel];
+			NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+			[invocation setTarget:_sharedWebViewPreferences];
+			[invocation setSelector:sel];
+			BOOL yes = YES;
+			[invocation setArgument:&yes atIndex:2];
+			[invocation invoke];
 		}
 
 		_sharedWebPolicy = [TVCLogPolicy new];

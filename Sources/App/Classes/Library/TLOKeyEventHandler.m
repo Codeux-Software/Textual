@@ -162,7 +162,13 @@ ClassWithDesignatedInitializerInitMethod
 		NSString *selectorName = codeMap[@(e.keyCode)];
 
 		if (selectorName) {
-			objc_msgSend(self.target, NSSelectorFromString(selectorName), e);
+			SEL sel = NSSelectorFromString(selectorName);
+			NSMethodSignature *signature = [self.target methodSignatureForSelector:sel];
+			NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+			[invocation setTarget:self.target];
+			[invocation setSelector:sel];
+			[invocation setArgument:&e atIndex:2];
+			[invocation invoke];
 
 			return YES;
 		}
@@ -177,7 +183,13 @@ ClassWithDesignatedInitializerInitMethod
 			NSString *selectorName = characterMap[@([characterString characterAtIndex:0])];
 
 			if (selectorName) {
-				objc_msgSend(self.target, NSSelectorFromString(selectorName), e);
+				SEL sel = NSSelectorFromString(selectorName);
+				NSMethodSignature *signature = [self.target methodSignatureForSelector:sel];
+				NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+				[invocation setTarget:self.target];
+				[invocation setSelector:sel];
+				[invocation setArgument:&e atIndex:2];
+				[invocation invoke];
 
 				return YES;
 			}

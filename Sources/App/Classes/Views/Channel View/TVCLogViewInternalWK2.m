@@ -298,8 +298,17 @@ create_normal_pool:
 		findOptions |= _WKFindOptionsBackwards;
 	}
 
-	if ([self respondsToSelector:@selector(_findString:options:maxCount:)]) {
-		(void)objc_msgSend(self, @selector(_findString:options:maxCount:), searchString, findOptions, 1);
+	SEL sel = @selector(_findString:options:maxCount:);
+	if ([self respondsToSelector:sel]) {
+		NSMethodSignature *signature = [self methodSignatureForSelector:sel];
+		NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+		[invocation setTarget:self];
+		[invocation setSelector:sel];
+		[invocation setArgument:&searchString atIndex:2];
+		[invocation setArgument:&findOptions atIndex:3];
+		int one = 1;
+		[invocation setArgument:&one atIndex:4];
+		[invocation invoke];
 	}
 }
 

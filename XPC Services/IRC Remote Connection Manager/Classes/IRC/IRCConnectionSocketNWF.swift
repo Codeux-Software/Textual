@@ -108,7 +108,12 @@ final class ConnectionSocketNWF: ConnectionSocket, ConnectionSocketProtocol
 												includeDeprecated: (config.connectionPrefersModernCiphersOnly == false))
 
 			for cipherSuite in cipherSuites {
-				sec_protocol_options_add_tls_ciphersuite(secOptions, cipherSuite.uint32Value as SSLCipherSuite)
+#if ((os(iOS) && !targetEnvironment(macCatalyst)) || (os(macOS) && arch(arm64)))
+				let coercedSuite = cipherSuite.uint16Value as SSLCipherSuite;
+#else
+				let coercedSuite = cipherSuite.uint32Value as SSLCipherSuite;
+#endif
+				sec_protocol_options_add_tls_ciphersuite(secOptions, coercedSuite);
 			}
 		}
 
