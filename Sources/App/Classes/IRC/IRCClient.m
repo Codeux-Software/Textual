@@ -3528,10 +3528,14 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				IRCClientConfigMutable *mutableClientConfig = [client.config mutableCopy];
 
 				NSMethodSignature *signature = [mutableClientConfig methodSignatureForSelector:selector];
+
 				NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+
 				[invocation setTarget:mutableClientConfig];
 				[invocation setSelector:selector];
+
 				[invocation setArgument:&featureValue atIndex:2];
+
 				[invocation invoke];
 
 				client.config = mutableClientConfig;

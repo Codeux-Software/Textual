@@ -130,6 +130,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	id argument = nil;
+
 	if (arguments && arguments.count > 0) {
 		argument = arguments[0];
 
@@ -139,12 +140,17 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	NSMethodSignature *signature = [self methodSignatureForSelector:handlerSelector];
+
 	NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+
 	[invocation setTarget:self];
+
 	[invocation setSelector:handlerSelector];
 	[invocation setArgument:&argument atIndex:2];
+
 	TVCLogView *webView = self.webView;
 	[invocation setArgument:&webView atIndex:3];
+
 	[invocation invoke];
 
 	return @(YES);
@@ -215,13 +221,18 @@ ClassWithDesignatedInitializerInitMethod
 	}
 
 	NSMethodSignature *signature = [self methodSignatureForSelector:handlerSelector];
+
 	NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+
 	[invocation setTarget:self];
 	[invocation setSelector:handlerSelector];
+
 	id body = message.body;
 	[invocation setArgument:&body atIndex:2];
+
 	WKWebView *webView = message.webView;
 	[invocation setArgument:&webView atIndex:3];
+
 	[invocation invoke];
 }
 
@@ -373,10 +384,14 @@ ClassWithDesignatedInitializerInitMethod
 	context.completionBlock = completionBlock;
 
 	NSMethodSignature *signature = [self methodSignatureForSelector:selector];
+
 	NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+
 	[invocation setTarget:self];
 	[invocation setSelector:selector];
+
 	[invocation setArgument:&context atIndex:2];
+
 	[invocation invoke];
 }
 
@@ -1388,8 +1403,7 @@ ClassWithDesignatedInitializerInitMethod
 		return;
 	}
 
-	NSInvocation *invocation =
-	[NSInvocation invocationWithMethodSignature:methodSignature];
+	NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
 
 	invocation.target = [TPCPreferences class];
 
