@@ -4,6 +4,8 @@
 <dict>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.social-networking</string>
+	<key>LSRequiresNativeExecution</key>
+	<true/>
 	<key>CFBundleSignature</key>
 	<string>TXTL</string>
 	<key>CFBundleDisplayName</key>
