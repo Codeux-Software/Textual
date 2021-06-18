@@ -81,4 +81,12 @@ else
 	mv "_BuildConfig.h" "BuildConfig.h"
 fi
 
+# ------ #
+
+# Compile list of enabled features
+exec "${PROJECT_DIR}/Build Scripts/UpdateFeatureFlags.sh" > "${TEXTUAL_WORKSPACE_TEMP_DIR}/Script-Logs/UpdateFeatureFlags.txt"
+
+# ------ #
+
+# Exit with success
 exit 0;

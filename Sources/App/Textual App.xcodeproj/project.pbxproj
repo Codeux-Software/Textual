@@ -2428,6 +2428,10 @@
 		4C58B572186011B900834882 /* Acknowledgements.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgements.pdf */; };
 		4C58B573186011BE00834882 /* Acknowledgements.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgements.pdf */; };
 		4C5BA3CB16F1302F00A96CA2 /* Style Default Templates in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379215C18F6700414852 /* Style Default Templates */; };
+		4C7961C8267D288300D37F07 /* FeatureFlags.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7961C7267D288300D37F07 /* FeatureFlags.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C7961C9267D288300D37F07 /* FeatureFlags.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7961C7267D288300D37F07 /* FeatureFlags.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C7961CA267D288300D37F07 /* FeatureFlags.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7961C7267D288300D37F07 /* FeatureFlags.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C7961CB267D288300D37F07 /* FeatureFlags.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7961C7267D288300D37F07 /* FeatureFlags.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04FF1D1210EC00295E82 /* BuildConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC70202171E1CB400BDFAE0 /* BuildConfig.h */; };
 		4C7B05001D1210F300295E82 /* BuildConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC70202171E1CB400BDFAE0 /* BuildConfig.h */; };
 		4C7B05011D12110500295E82 /* BuildConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC70202171E1CB400BDFAE0 /* BuildConfig.h */; };
@@ -3377,6 +3381,8 @@
 		4C58B570186011AC00834882 /* Acknowledgements.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Acknowledgements.pdf; path = ../../Acknowledgements.pdf; sourceTree = SOURCE_ROOT; };
 		4C5BA4E616F1302F00A96CA2 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C761BAE1E155CB100A505B7 /* BuildServices.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = BuildServices.sh; path = "Build Scripts/BuildServices.sh"; sourceTree = "<group>"; };
+		4C7961C6267D25B400D37F07 /* UpdateFeatureFlags.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = UpdateFeatureFlags.sh; path = "Build Scripts/UpdateFeatureFlags.sh"; sourceTree = "<group>"; };
+		4C7961C7267D288300D37F07 /* FeatureFlags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeatureFlags.h; path = ../../../../.tmp/FeatureFlags.h; sourceTree = "<group>"; };
 		4C83B9101BA9BEB800BD7718 /* ChatFilterExtension.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ChatFilterExtension.bundle; path = "../../.tmp/SharedBuildProducts-Extensions/ChatFilterExtension.bundle"; sourceTree = SOURCE_ROOT; };
 		4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EncryptionKit.framework; path = "../../.tmp/SharedBuildProducts-Frameworks/EncryptionKit.framework"; sourceTree = SOURCE_ROOT; };
 		4C956893194A8862003D97FD /* SmileyConverter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SmileyConverter.bundle; path = "../../.tmp/SharedBuildProducts-Extensions/SmileyConverter.bundle"; sourceTree = SOURCE_ROOT; };
@@ -3957,6 +3963,7 @@
 				4C31516120EB673E00448776 /* External Libraries */,
 				4C31518420EB673E00448776 /* Internal */,
 				4C3151AB20EB673E00448776 /* Private */,
+				4C7961C7267D288300D37F07 /* FeatureFlags.h */,
 				4C31524120EB673E00448776 /* IRC.h */,
 				4C3151A720EB673E00448776 /* IRCAddressBook.h */,
 				4C31517620EB673E00448776 /* IRCAddressBookUserTracking.h */,
@@ -4019,8 +4026,8 @@
 				4C06E27520EC4E850055D09A /* TPCPreferencesUserDefaults.h */,
 				4C31519F20EB673E00448776 /* TPCPreferencesUserDefaultsLocal.h */,
 				4C31516520EB673E00448776 /* TPCResourceManager.h */,
-				4C31517220EB673E00448776 /* TPCThemeController.h */,
 				4C31517020EB673E00448776 /* TPCTheme.h */,
+				4C31517220EB673E00448776 /* TPCThemeController.h */,
 				4C31516F20EB673E00448776 /* TVCAlert.h */,
 				4C31516E20EB673E00448776 /* TVCAppearance.h */,
 				4C31517E20EB673E00448776 /* TVCAutoExpandingTextField.h */,
@@ -5009,6 +5016,7 @@
 				4C761BAE1E155CB100A505B7 /* BuildServices.sh */,
 				4CD6F7BB1CA7747600842597 /* ExportArchive.sh */,
 				4C48B46320E4D06900CF5F84 /* MergeSwift.sh */,
+				4C7961C6267D25B400D37F07 /* UpdateFeatureFlags.sh */,
 				5D9B8EB8170A0EB400919CB0 /* UpdateVersionInfo.sh */,
 			);
 			name = "Build Scripts";
@@ -5021,6 +5029,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C7961C8267D288300D37F07 /* FeatureFlags.h in Headers */,
 				4C31585220EB6D0700448776 /* TDCServerPropertiesSheetPrivate.h in Headers */,
 				4C31583B20EB6D0700448776 /* TDCFileTransferDialogTableCellPrivate.h in Headers */,
 				4CAB275E2537F71B009B1F07 /* IRCChannelMemberList.h in Headers */,
@@ -5291,6 +5300,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C7961CB267D288300D37F07 /* FeatureFlags.h in Headers */,
 				4C31569920EB6D0500448776 /* TDCServerPropertiesSheetPrivate.h in Headers */,
 				4C31568220EB6D0400448776 /* TDCFileTransferDialogTableCellPrivate.h in Headers */,
 				4CAB27612537F71B009B1F07 /* IRCChannelMemberList.h in Headers */,
@@ -5564,6 +5574,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C7961C9267D288300D37F07 /* FeatureFlags.h in Headers */,
 				4C3157BF20EB6D0600448776 /* TDCServerPropertiesSheetPrivate.h in Headers */,
 				4C3157A820EB6D0600448776 /* TDCFileTransferDialogTableCellPrivate.h in Headers */,
 				4CAB275F2537F71B009B1F07 /* IRCChannelMemberList.h in Headers */,
@@ -5837,6 +5848,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C7961CA267D288300D37F07 /* FeatureFlags.h in Headers */,
 				4C31572C20EB6D0500448776 /* TDCServerPropertiesSheetPrivate.h in Headers */,
 				4CAB27602537F71B009B1F07 /* IRCChannelMemberList.h in Headers */,
 				4C31571520EB6D0500448776 /* TDCFileTransferDialogTableCellPrivate.h in Headers */,
