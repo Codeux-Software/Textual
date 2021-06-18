@@ -163,10 +163,14 @@
 "u48-aa" = "Sound has been muted";
 
 /* /myversion/ command */
-"ccb-ur" = "%1$@ %2$@ (Build %3$@) (%4$@)";
+"ccb-ur" = "%1$@ %2$@ (Build %3$@) (%4$@) as a %5$@ binary on an %6$@ Mac.";
 "9fp-8h" = "Mac App Store";
 "b8p-44" = "Standalone Version";
 "pqj-1y" = "I am using %@";
+"458-au" = "classic";
+"y2i-pb" = "universal";
+"swz-uj" = "Intel";
+"g1u-os" = "Apple Silicon";
 
 /* /timer/ command */
 "jj9-94" = "Invalid Syntax. Type “/timer help” for more information.";

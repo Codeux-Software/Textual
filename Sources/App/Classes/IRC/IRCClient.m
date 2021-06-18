@@ -4114,7 +4114,23 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 				downloadSource = TXTLS(@"IRC[b8p-44]");
 			}
 
-			NSString *message = TXTLS(@"IRC[ccb-ur]", applicationName, versionShort, versionLong, downloadSource);
+			NSString *buildType = nil;
+
+#if TEXTUAL_BUILT_AS_UNIVERSAL_BINARY == 1
+			buildType = TXTLS(@"IRC[y2i-pb]");
+#else
+			buildType = TXTLS(@"IRC[458-au]");
+#endif
+
+			NSString *hostType = nil;
+
+#if TARGET_CPU_ARM64
+			hostType = TXTLS(@"IRC[g1u-os]");
+#elif TARGET_CPU_X86_64
+			hostType = TXTLS(@"IRC[swz-uj]");
+#endif
+
+			NSString *message = TXTLS(@"IRC[ccb-ur]", applicationName, versionShort, versionLong, downloadSource, buildType, hostType);
 
 			if (targetChannel) {
 				message = TXTLS(@"IRC[pqj-1y]", message);

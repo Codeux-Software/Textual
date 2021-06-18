@@ -14,3 +14,10 @@ TEXTUAL_PRODUCT_BINARY = ${TEXTUAL_PRODUCT_LOCATION}/Contents/MacOS/${TEXTUAL_PR
 TEXTUAL_WORKSPACE_TEMP_DIR = ${TEXTUAL_WORKSPACE_DIR}/.tmp
 
 SHARED_PRECOMPS_DIR = ${TEXTUAL_WORKSPACE_TEMP_DIR}/SharedPCH
+
+// TEXTUAL_BUILT_AS_UNIVERSAL_BINARY acts an easy way to
+// modify code based on the type of binary being built.
+// As with other feature flags, changing this value only
+// adds or excludes certain chunks of code. It doesn't
+// change the underlying build process.
+TEXTUAL_BUILT_AS_UNIVERSAL_BINARY = 1
