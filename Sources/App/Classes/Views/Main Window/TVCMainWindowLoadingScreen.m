@@ -120,7 +120,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[self addSubview:view];
 
-	NSArray * constraints = @[
+	NSArray *constraints = @[
 	/* Center view on both axis. */
 	 [NSLayoutConstraint constraintWithItem:view
 								  attribute:NSLayoutAttributeCenterX
