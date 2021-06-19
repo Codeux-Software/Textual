@@ -180,7 +180,7 @@ NS_ASSUME_NONNULL_BEGIN
 			LogToConsoleInfo("iCloud access is not available.");
 		}
 
-		[themeController() reloadMonitoringActiveThemePath];
+		[themeController() reloadThemeMonitoring];
 	});
 }
 

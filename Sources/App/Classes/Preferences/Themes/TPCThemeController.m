@@ -330,7 +330,7 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if ([RZFileManager() isUbiquitousItemAtURLDownloaded:url] == NO) {
-		return NO;
+		return nil;
 	}
 #endif
 
