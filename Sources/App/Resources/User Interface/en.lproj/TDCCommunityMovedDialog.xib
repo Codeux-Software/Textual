@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TDCCommunityMovedDialog">
+            <connections>
+                <outlet property="window" destination="1" id="25"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Important Notice" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" tabbingMode="disallowed" id="1">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <rect key="contentRect" x="1150" y="679" width="430" height="485"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+            <view key="contentView" id="2">
+                <rect key="frame" x="0.0" y="0.0" width="430" height="482"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView translatesAutoresizingMaskIntoConstraints="NO" id="FdS-nE-DW4">
+                        <rect key="frame" x="139" y="310" width="152" height="152"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="FdS-nE-DW4" secondAttribute="height" multiplier="1:1" id="GyI-Yx-4hV"/>
+                            <constraint firstAttribute="width" constant="152" id="yrb-Py-mHs"/>
+                        </constraints>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIcon" id="57f-hj-6Xr"/>
+                    </imageView>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qfj-xk-QNh">
+                        <rect key="frame" x="34" y="263" width="363" height="35"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Support channel has moved" id="gy5-5o-tPE">
+                            <font key="font" metaFont="system" size="30"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="wU9-Wo-EUS">
+                        <rect key="frame" x="18" y="125" width="394" height="128"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="m8p-7G-8Jg">
+                            <font key="font" metaFont="system"/>
+                            <string key="title">You are seeing this message because your connection to freenode joins #textual or one of its sister channels.
+
+The official Textual community is no longer located on freenode. It has moved to Libera Chat which can be reached by connecting to irc.libera.chat.
+
+Sorry for any inconvenience this may cause.</string>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Le-Ic-7po">
+                        <rect key="frame" x="181" y="78" width="69" height="32"/>
+                        <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="wjP-q7-54z">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <accessibility description="Begin Setup"/>
+                        <connections>
+                            <action selector="ok:" target="-2" id="aYJ-fM-Fhs"/>
+                        </connections>
+                    </button>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fpF-Zt-xOI">
+                        <rect key="frame" x="243" y="310" width="48" height="48"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="fpF-Zt-xOI" secondAttribute="height" multiplier="1:1" id="AQv-GU-mkj"/>
+                            <constraint firstAttribute="width" constant="48" id="p5h-5S-fOC"/>
+                        </constraints>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSCaution" id="bqr-ui-RHC"/>
+                    </imageView>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="gQs-hv-FuB">
+                        <rect key="frame" x="28" y="20" width="374" height="30"/>
+                        <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="The intent of this message is to inform. You will only see it once. Your access to freenode will not be hindered in any way." id="5kt-DS-OqJ">
+                            <font key="font" metaFont="cellTitle"/>
+                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="fpF-Zt-xOI" firstAttribute="bottom" secondItem="FdS-nE-DW4" secondAttribute="bottom" id="6Q3-Df-llh"/>
+                    <constraint firstItem="gQs-hv-FuB" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="30" id="FP2-EY-EWl"/>
+                    <constraint firstItem="FdS-nE-DW4" firstAttribute="width" secondItem="FdS-nE-DW4" secondAttribute="height" multiplier="1:1" id="HYj-6i-ysd"/>
+                    <constraint firstItem="FdS-nE-DW4" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="HtW-3i-kUI"/>
+                    <constraint firstItem="FdS-nE-DW4" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" symbolic="YES" id="MLj-73-M7B"/>
+                    <constraint firstItem="gQs-hv-FuB" firstAttribute="top" secondItem="8Le-Ic-7po" secondAttribute="bottom" constant="35" id="Mda-0M-4Do"/>
+                    <constraint firstItem="wU9-Wo-EUS" firstAttribute="top" secondItem="qfj-xk-QNh" secondAttribute="bottom" constant="10" id="NV7-rq-8Cl"/>
+                    <constraint firstAttribute="bottom" secondItem="gQs-hv-FuB" secondAttribute="bottom" constant="20" id="RBc-7e-3By"/>
+                    <constraint firstItem="8Le-Ic-7po" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="ZMO-jb-uJg"/>
+                    <constraint firstItem="fpF-Zt-xOI" firstAttribute="width" secondItem="fpF-Zt-xOI" secondAttribute="height" multiplier="1:1" id="clf-WT-8KO"/>
+                    <constraint firstItem="qfj-xk-QNh" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="dxa-mU-s7n"/>
+                    <constraint firstItem="wU9-Wo-EUS" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="fa3-Ug-LT9"/>
+                    <constraint firstItem="qfj-xk-QNh" firstAttribute="top" secondItem="FdS-nE-DW4" secondAttribute="bottom" constant="12" id="kuh-cq-hnx"/>
+                    <constraint firstItem="8Le-Ic-7po" firstAttribute="top" secondItem="wU9-Wo-EUS" secondAttribute="bottom" constant="20" id="s8S-yC-IZG"/>
+                    <constraint firstItem="gQs-hv-FuB" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="t4F-5P-cxh"/>
+                    <constraint firstItem="fpF-Zt-xOI" firstAttribute="trailing" secondItem="FdS-nE-DW4" secondAttribute="trailing" id="tQo-Rt-gp9"/>
+                    <constraint firstItem="wU9-Wo-EUS" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" id="wov-v4-cls"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="27"/>
+            </connections>
+            <point key="canvasLocation" x="24" y="162.5"/>
+        </window>
+    </objects>
+    <resources>
+        <image name="NSCaution" width="32" height="32"/>
+        <image name="applicationIcon" width="512" height="512"/>
+    </resources>
+</document>

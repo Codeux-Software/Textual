@@ -66,6 +66,7 @@
 #import "TDCChannelModifyTopicSheetPrivate.h"
 #import "TDCChannelPropertiesSheetPrivate.h"
 #import "TDCChannelSpotlightControllerPrivate.h"
+#import "TDCCommunityMovedDialogPrivate.h"
 #import "TDCFileTransferDialogPrivate.h"
 #import "TDCInputPrompt.h"
 #import "TDCLicenseManagerDialogPrivate.h"
@@ -3461,6 +3462,27 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)aboutDialogWillClose:(TDCAboutDialog *)sender
+{
+	[windowController() removeWindowFromWindowList:sender];
+}
+
+#pragma mark -
+#pragma mark Community Moved Window
+
+- (void)showCommunityMovedWindow:(id)sender
+{
+	_popWindowViewIfExists(@"TDCCommunityMovedDialog");
+
+	TDCCommunityMovedDialog *dialog = [TDCCommunityMovedDialog new];
+
+	dialog.delegate = (id)self;
+
+	[dialog show];
+
+	[windowController() addWindowToWindowList:dialog];
+}
+
+- (void)communityMovedDialogWillClose:(TDCCommunityMovedDialog *)sender
 {
 	[windowController() removeWindowFromWindowList:sender];
 }

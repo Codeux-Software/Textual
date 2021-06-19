@@ -119,6 +119,7 @@
 #import "TVCServerListPrivate.h"
 #import "TDCAlert.h"
 #import "TDCChannelBanListSheetPrivate.h"
+#import "TDCCommunityMovedDialogPrivate.h"
 #import "TDCFileTransferDialogPrivate.h"
 #import "TDCFileTransferDialogTransferControllerPrivate.h"
 #import "TDCServerChannelListDialogPrivate.h"
@@ -9035,6 +9036,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	/* We need time for the server to send its configuration */
 	[self performSelectorInCommonModes:@selector(populateISONTrackedUsersList) withObject:nil afterDelay:10.0];
+
+	/* Inform user community moved */
+	[self informCommunityMoved];
 }
 
 - (void)receiveNumericReply:(IRCMessage *)m
@@ -13475,6 +13479,45 @@ present_error:
 - (void)serverChannelDialogWillClose:(TDCServerChannelListDialog *)sender
 {
 	[windowController() removeWindowFromWindowList:[self channelListDialogWindowKey]];
+}
+
+#pragma mark -
+#pragma mark Community Moved Window
+
+- (void)informCommunityMoved
+{
+	BOOL appeared = [RZUserDefaults() boolForKey:TDCCommunityMovedDialogApppearedDefaultsKey];
+
+	if (appeared) {
+		return;
+	}
+
+	if ([self.serverAddress hasSuffix:@".freenode.net"] == NO) {
+		return;
+	}
+
+	BOOL hasChannel = NO;
+
+	for (IRCChannel *channel in self.channelList) {
+		if ([channel.name isEqualToString:@"#textual"] == NO &&
+			[channel.name hasPrefix:@"#textual-"] == NO)
+		{
+			continue;
+		}
+
+		hasChannel = YES;
+
+		break;
+	}
+
+	if (hasChannel == NO) {
+		return;
+	}
+
+	[menuController() showCommunityMovedWindow:nil];
+
+	/* The dialog will set the _appeared_ key after user
+	 has interacted with it to ensure that they read it. */
 }
 
 @end

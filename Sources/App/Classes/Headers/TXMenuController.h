@@ -468,6 +468,7 @@ enum
 - (IBAction)showChannelModifyTopicSheet:(id)sender;
 - (IBAction)showChannelPropertiesSheet:(id)sender;
 - (IBAction)showChannelSpotlightWindow:(id)sender NS_AVAILABLE_MAC(10_10);
+- (IBAction)showCommunityMovedWindow:(id)sender;
 - (IBAction)showFileTransfersWindow:(id)sender;
 - (IBAction)showFindPrompt:(id)sender;
 - (IBAction)showHiddenPreferences:(id)sender;
