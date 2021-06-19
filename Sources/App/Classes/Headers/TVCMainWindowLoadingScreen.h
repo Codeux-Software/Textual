@@ -39,7 +39,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /* Animation is disabled unless an animated method is invoked */
-@interface TVCMainWindowLoadingScreenView : NSBox
+@interface TVCMainWindowLoadingScreenView : NSVisualEffectView
 - (void)showProgressViewWithReason:(NSString *)progressReason;
 - (void)setProgressViewReason:(NSString *)progressReason;
 

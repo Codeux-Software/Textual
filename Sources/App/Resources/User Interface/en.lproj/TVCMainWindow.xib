@@ -358,36 +358,30 @@
                             <outlet property="serverListWidthMinConstraint" destination="5hi-RS-NLb" id="hAB-Sl-TOZ"/>
                         </connections>
                     </splitView>
-                    <box autoresizesSubviews="NO" boxType="custom" borderType="none" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="ub4-hV-1Sb" userLabel="Loading Screen" customClass="TVCMainWindowLoadingScreenView">
+                    <visualEffectView blendingMode="withinWindow" material="underWindowBackground" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="Se1-ja-hFN" customClass="TVCMainWindowLoadingScreenView">
                         <rect key="frame" x="0.0" y="38" width="800" height="439"/>
-                        <view key="contentView" id="9wH-wD-nA6">
-                            <rect key="frame" x="0.0" y="0.0" width="800" height="439"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        </view>
-                        <color key="borderColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <connections>
-                            <outlet property="progressView" destination="9NQ-ho-u6f" id="0CH-5c-hss"/>
-                            <outlet property="progressViewDescriptionTextField" destination="krn-AQ-P4T" id="rai-gM-7Xr"/>
-                            <outlet property="progressViewIndicator" destination="WS7-Zg-h6u" id="ird-nD-sIX"/>
-                            <outlet property="trialExpiredView" destination="dlj-jp-O6P" id="mP4-8S-yws"/>
-                            <outlet property="welcomeAddServerView" destination="c10-eB-wRJ" id="KRv-Pp-SPz"/>
-                            <outlet property="welcomeAddServerViewContinueButton" destination="ba0-0Q-9bh" id="cOw-3W-ltC"/>
+                            <outlet property="progressView" destination="9NQ-ho-u6f" id="KI1-yZ-V2x"/>
+                            <outlet property="progressViewDescriptionTextField" destination="krn-AQ-P4T" id="EH8-wP-FzB"/>
+                            <outlet property="progressViewIndicator" destination="WS7-Zg-h6u" id="XYt-hu-zhy"/>
+                            <outlet property="trialExpiredView" destination="dlj-jp-O6P" id="hIg-fZ-s9L"/>
+                            <outlet property="welcomeAddServerView" destination="c10-eB-wRJ" id="YGC-SF-VWn"/>
+                            <outlet property="welcomeAddServerViewContinueButton" destination="ba0-0Q-9bh" id="t0n-Ip-wMq"/>
                         </connections>
-                    </box>
+                    </visualEffectView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="dVR-2U-X51" firstAttribute="top" secondItem="2" secondAttribute="top" id="2ro-j0-acT"/>
+                    <constraint firstItem="phB-0r-qij" firstAttribute="top" secondItem="Se1-ja-hFN" secondAttribute="bottom" id="54i-0J-hb3"/>
                     <constraint firstAttribute="trailing" secondItem="phB-0r-qij" secondAttribute="trailing" id="6oD-Jp-7wd"/>
                     <constraint firstAttribute="bottom" secondItem="phB-0r-qij" secondAttribute="bottom" id="KD5-T4-WZX"/>
+                    <constraint firstItem="Se1-ja-hFN" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="NUA-6d-cnz"/>
                     <constraint firstItem="dVR-2U-X51" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="P6K-zr-yLh"/>
-                    <constraint firstItem="ub4-hV-1Sb" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="Rec-VA-7Ht"/>
-                    <constraint firstAttribute="trailing" secondItem="ub4-hV-1Sb" secondAttribute="trailing" id="SMg-WT-9d1"/>
+                    <constraint firstAttribute="trailing" secondItem="Se1-ja-hFN" secondAttribute="trailing" id="jua-U4-RDu"/>
+                    <constraint firstItem="Se1-ja-hFN" firstAttribute="top" secondItem="2" secondAttribute="top" id="k1T-uE-HVD"/>
                     <constraint firstAttribute="trailing" secondItem="dVR-2U-X51" secondAttribute="trailing" id="lT7-88-ztW"/>
-                    <constraint firstItem="phB-0r-qij" firstAttribute="top" secondItem="ub4-hV-1Sb" secondAttribute="bottom" id="per-Pw-EjD"/>
                     <constraint firstItem="phB-0r-qij" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="qin-63-ACL"/>
                     <constraint firstItem="phB-0r-qij" firstAttribute="top" secondItem="dVR-2U-X51" secondAttribute="bottom" id="sZP-Ep-9Fh"/>
-                    <constraint firstItem="ub4-hV-1Sb" firstAttribute="top" secondItem="2" secondAttribute="top" id="ttG-jU-iEy"/>
                 </constraints>
             </view>
             <connections>
@@ -395,7 +389,7 @@
                 <outlet property="contentSplitView" destination="dVR-2U-X51" id="UTS-m3-2nd"/>
                 <outlet property="formattingMenu" destination="j7v-mc-UwU" id="4X3-MP-pDp"/>
                 <outlet property="inputTextField" destination="Ub5-no-pBU" id="mCF-mM-bHc"/>
-                <outlet property="loadingScreen" destination="ub4-hV-1Sb" id="gj3-1L-ncT"/>
+                <outlet property="loadingScreen" destination="Se1-ja-hFN" id="niK-Fq-MHr"/>
                 <outlet property="mainMenuProxy" destination="U6M-jc-NbT" id="QeA-Xy-1ah"/>
                 <outlet property="memberList" destination="bgh-q2-4XX" id="j80-GF-rXN"/>
                 <outlet property="serverList" destination="MLD-Aa-PLM" id="SZb-p4-bEc"/>
@@ -2085,6 +2079,7 @@ To continue using Textual 7, you will need to purchase it.</string>
             <point key="canvasLocation" x="52" y="1002"/>
         </customView>
         <arrayController objectClassName="IRCChannelMember" preservesSelection="NO" selectsInsertedObjects="NO" avoidsEmptySelection="NO" id="hdH-wA-Q1P" customClass="IRCChannelMemberListController">
+            <classReference key="objectClass" className="IRCChannelMember"/>
             <connections>
                 <outlet property="tableView" destination="bgh-q2-4XX" id="hkO-aM-hXC"/>
             </connections>

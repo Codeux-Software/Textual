@@ -259,16 +259,20 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	TVCMainWindowAppearance *appearance = self.mainWindow.userInterfaceObjects;
 
-	[self _updateAppearance:appearance];
+	[self updateVibrancyWithAppearance:appearance];
 }
 
-- (void)_updateAppearance:(TVCMainWindowAppearance *)appearance
+- (void)updateVibrancyWithAppearance:(TVCMainWindowAppearance *)appearance
 {
 	NSParameterAssert(appearance != nil);
 
-	self.fillColor = appearance.loadingScreenBackgroundColor;
+	NSAppearance *appKitAppearance = nil;
 
-	self.needsDisplay = YES;
+	if (appearance.appKitAppearanceTarget == TXAppKitAppearanceTargetView) {
+		appKitAppearance = appearance.appKitAppearance;
+	}
+
+	self.appearance = appKitAppearance;
 }
 
 @end
