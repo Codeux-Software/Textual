@@ -280,10 +280,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 	BOOL receiveBetaUpdates = [TPCPreferences receiveBetaUpdates];
 
-	if (receiveBetaUpdates == NO) {
+	if (receiveBetaUpdates) {
+		if ([TPCPreferences receiveUniversalBetaUpdates]) {
+			[RZUserDefaults() setObject:sparkleData[@"SUFeedURL-beta-universal"] forKey:@"SUFeedURL"];
+		} else {
+			[RZUserDefaults() setObject:sparkleData[@"SUFeedURL-beta"] forKey:@"SUFeedURL"];
+		}
+	} else { // beta
 		[RZUserDefaults() setObject:sparkleData[@"SUFeedURL"] forKey:@"SUFeedURL"];
-	} else {
-		[RZUserDefaults() setObject:sparkleData[@"SUFeedURL-beta"] forKey:@"SUFeedURL"];
 	}
 
 	SUUpdater *updater = [SUUpdater sharedUpdater];

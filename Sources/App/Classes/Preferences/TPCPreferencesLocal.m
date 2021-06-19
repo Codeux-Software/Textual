@@ -525,14 +525,14 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 #pragma mark Updates
 
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-+ (void)setReceiveBetaUpdates:(BOOL)receiveBetaUpdates
-{
-	[RZUserDefaults() setBool:receiveBetaUpdates forKey:@"ReceiveBetaUpdates"];
-}
-
 + (BOOL)receiveBetaUpdates
 {
 	return [RZUserDefaults() boolForKey:@"ReceiveBetaUpdates"];
+}
+
++ (BOOL)receiveUniversalBetaUpdates
+{
+	return [RZUserDefaults() boolForKey:@"ReceiveUniversalBetaUpdates"];
 }
 #endif
 

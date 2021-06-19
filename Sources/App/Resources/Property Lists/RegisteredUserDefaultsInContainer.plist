@@ -208,6 +208,8 @@
 	<true/>
 	<key>ReceiveBetaUpdates</key>
 	<false/>
+	<key>ReceiveUniversalBetaUpdates</key>
+	<false/>
 	<key>RejoinChannelOnLocalKick</key>
 	<false/>
 	<key>ReloadScrollbackOnLaunch</key>

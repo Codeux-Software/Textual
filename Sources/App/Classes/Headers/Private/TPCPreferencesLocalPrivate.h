@@ -47,10 +47,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)setDeveloperModeEnabled:(BOOL)developerModeEnabled;
 
-#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-+ (void)setReceiveBetaUpdates:(BOOL)receiveBetaUpdates;
-#endif
-
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 + (void)setTextEncryptionIsOpportunistic:(BOOL)textEncryptionIsOpportunistic;
 + (void)setTextEncryptionIsRequired:(BOOL)textEncryptionIsRequired;
