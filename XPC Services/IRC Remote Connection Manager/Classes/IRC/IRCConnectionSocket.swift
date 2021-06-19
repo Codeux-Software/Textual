@@ -223,7 +223,7 @@ extension ConnectionError
 	}
 }
 
-protocol ConnectionSocketDelegate: class
+protocol ConnectionSocketDelegate: AnyObject
 {
 	func connection(_ connection: ConnectionSocket, willConnectToProxy address: String, on port: UInt16)
 	func connection(_ connection: ConnectionSocket, willConnectTo address: String, on port: UInt16)
