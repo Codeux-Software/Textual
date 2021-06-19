@@ -42,10 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TDCCommunityMovedDialogApppearedDefaultsKey = @"TDCCommunityMovedDialogApppeared";
 
-@interface TDCCommunityMovedDialog ()
-- (IBAction)close:(id)sender;
-@end
-
 @implementation TDCCommunityMovedDialog
 
 - (instancetype)init
