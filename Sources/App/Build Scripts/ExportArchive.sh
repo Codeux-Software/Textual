@@ -15,7 +15,11 @@ cd "${EXPORT_PATH}"
 
 GIT_COMMIT_HASH=`git rev-parse --short HEAD`
 
-ZIP_FILE_NAME="Textual-${GIT_COMMIT_HASH}.zip"
+if [ "${TEXTUAL_BUILT_AS_UNIVERSAL_BINARY}" == "1" ]; then
+	ZIP_FILE_NAME="Textual-${GIT_COMMIT_HASH}-universal.zip"
+else
+	ZIP_FILE_NAME="Textual-${GIT_COMMIT_HASH}.zip"
+fi
 
 zip -y -r -X "./${ZIP_FILE_NAME}" "./${FULL_PRODUCT_NAME}/"
 
