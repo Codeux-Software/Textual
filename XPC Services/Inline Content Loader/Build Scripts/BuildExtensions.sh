@@ -10,6 +10,7 @@ cd "${PROJECT_DIR}/Extensions/Core Media/"
 
 xcodebuild -target "Inline Content Loader Core Media" \
  -configuration "${ICL_EXTENSION_BUILD_SCHEME}" \
+ ARCHS="${ARCHS}" \
  CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
  DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
  PROVISIONING_PROFILE_SPECIFIER="" \

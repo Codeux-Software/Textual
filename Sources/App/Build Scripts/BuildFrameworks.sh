@@ -2,12 +2,15 @@
 
 set -e
 
+echo "Building using architecture: ${ARCHS}"
+
 CONFIGURATION_BUILD_DIR="${TEXTUAL_WORKSPACE_TEMP_DIR}/SharedBuildProducts-Frameworks"
 
 xcb() {
     target=$1
     xcodebuild -target "$target" \
         -configuration "${TEXTUAL_FRAMEWORK_BUILD_SCHEME}" \
+        ARCHS="${ARCHS}" \
         CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
         CONFIGURATION_BUILD_DIR="${CONFIGURATION_BUILD_DIR}" \
         DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
