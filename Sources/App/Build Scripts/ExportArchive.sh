@@ -82,7 +82,7 @@ cd "${DWARF_DSYM_FOLDER_PATH}"
 
 DYSM_EXPORT_PATH="${ARCHSPEC_PATH}/Debug symbols.zip"
 
-zip -y -r -X "${DYSM_EXPORT_PATH}" "./${DWARF_DSYM_FILE_NAME}"
+zip -y -r -X "${DYSM_EXPORT_PATH}" *
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 

@@ -14,7 +14,8 @@ xcb() {
         CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" \
         CONFIGURATION_BUILD_DIR="${CONFIGURATION_BUILD_DIR}" \
         DEVELOPMENT_TEAM="${DEVELOPMENT_TEAM}" \
-        PROVISIONING_PROFILE_SPECIFIER=""
+        PROVISIONING_PROFILE_SPECIFIER="" \
+        DWARF_DSYM_FOLDER_PATH="${DWARF_DSYM_FOLDER_PATH}"
 }
 
 # Assumes the name and filename of the framework is the same just without spaces.
