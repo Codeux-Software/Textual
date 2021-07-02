@@ -154,16 +154,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 	IRCChannelUser *senderUser = [textDestination findMember:textAuthor.nickname];
 
-	if (senderUser == nil) {
-		LogToConsoleDebug("senderUser == nil — Skipping to next filter");
-
-		return NO;
-	}
-
 	/* Check age of sender */
 	NSInteger filterAgeLimit = filter.filterAgeLimit;
 
 	if (filterAgeLimit > 0) {
+		/* The value of senderUser is checked here and not where it is
+		 declared so that filters that do not rely on the value of this
+		 object are passed over. */
+		if (senderUser == nil) {
+			return NO;
+		}
+
 		NSInteger ageLimitDelta = [NSDate timeIntervalSinceNow:senderUser.creationTime];
 
 		switch (filter.filterAgeComparator) {
@@ -192,6 +193,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Is sender an operator? */
 	if (filter.filterIgnoreOperators) {
+		if (senderUser == nil) {
+			return NO;
+		}
+
 		if (senderUser.halfOp) {
 			/* User is at least a Half-op, ignore this filter. */
 
