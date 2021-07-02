@@ -17,13 +17,7 @@ xcb() {
         PROVISIONING_PROFILE_SPECIFIER=""
 }
 
-#Handle special case first
-if [ "${TEXTUAL_BUILD_SCHEME_TOKEN}" == "appstore" ]; then
-    cd "${TEXTUAL_WORKSPACE_DIR}/Frameworks/Apple Receipt Loader/"
-    xcb "libreceipt"
-fi
-
-#Assumes a the name and filename of the framework is the same just without spaces.
+# Assumes the name and filename of the framework is the same just without spaces.
 frameworks=(
     'Auto Hyperlinks'
     'Encryption Kit'
