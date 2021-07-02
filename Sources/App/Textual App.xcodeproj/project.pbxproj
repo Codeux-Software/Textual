@@ -2480,6 +2480,12 @@
 		4CCD93FD1CA7291300335381 /* JavaScript in Resources */ = {isa = PBXBuildFile; fileRef = 4CCD93FC1CA7291300335381 /* JavaScript */; };
 		4CCD93FE1CA7291300335381 /* JavaScript in Resources */ = {isa = PBXBuildFile; fileRef = 4CCD93FC1CA7291300335381 /* JavaScript */; };
 		4CCD93FF1CA7291300335381 /* JavaScript in Resources */ = {isa = PBXBuildFile; fileRef = 4CCD93FC1CA7291300335381 /* JavaScript */; };
+		4CEE0BDD268F3C9B004CB3C3 /* BragSpam.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D911836E6A100C14835 /* BragSpam.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4CEE0BDE268F3C9B004CB3C3 /* ChatFilterExtension.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C83B9101BA9BEB800BD7718 /* ChatFilterExtension.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4CEE0BDF268F3C9B004CB3C3 /* SmileyConverter.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C956893194A8862003D97FD /* SmileyConverter.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4CEE0BE0268F3C9B004CB3C3 /* SpammerParadise.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4CEE0BE1268F3C9B004CB3C3 /* SystemProfiler.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4CEE0BE2268F3C9B004CB3C3 /* ZNCAdditions.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CEFEDAA22B4AF41002CEE19 /* TDCPreferencesUserStyleSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB873D622B4A497005AB046 /* TDCPreferencesUserStyleSheetPrivate.h */; };
 		4CEFEDAB22B4AF42002CEE19 /* TDCPreferencesUserStyleSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB873D622B4A497005AB046 /* TDCPreferencesUserStyleSheetPrivate.h */; };
 		4CEFEDAC22B4AF42002CEE19 /* TDCPreferencesUserStyleSheetPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB873D622B4A497005AB046 /* TDCPreferencesUserStyleSheetPrivate.h */; };
@@ -2716,6 +2722,22 @@
 				4C58B572186011B900834882 /* Acknowledgements.pdf in Copy Acknowledgements */,
 			);
 			name = "Copy Acknowledgements";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4CEE0BDC268F3C8D004CB3C3 /* Copy Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "Bundled Extensions";
+			dstSubfolderSpec = 7;
+			files = (
+				4CEE0BDD268F3C9B004CB3C3 /* BragSpam.bundle in Copy Extensions */,
+				4CEE0BDE268F3C9B004CB3C3 /* ChatFilterExtension.bundle in Copy Extensions */,
+				4CEE0BDF268F3C9B004CB3C3 /* SmileyConverter.bundle in Copy Extensions */,
+				4CEE0BE0268F3C9B004CB3C3 /* SpammerParadise.bundle in Copy Extensions */,
+				4CEE0BE1268F3C9B004CB3C3 /* SystemProfiler.bundle in Copy Extensions */,
+				4CEE0BE2268F3C9B004CB3C3 /* ZNCAdditions.bundle in Copy Extensions */,
+			);
+			name = "Copy Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -6191,6 +6213,8 @@
 				4C0444F316F1602900EBB665 /* Sources */,
 				4C5BA3D916F1302F00A96CA2 /* Headers */,
 				4C06E44320EC539E0055D09A /* Embed Frameworks */,
+				4CEE0BDB268F3C68004CB3C3 /* Build Extensions */,
+				4CEE0BDC268F3C8D004CB3C3 /* Copy Extensions */,
 				4C761BB01E155DD900A505B7 /* Build XPC Services */,
 				4C761BA41E155C4300A505B7 /* Copy XPC Services */,
 				4C48B46520E4D37C00CF5F84 /* Merge Swift Libraries */,
@@ -7073,6 +7097,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\nexec \"${PROJECT_DIR}/Build Scripts/BuildFrameworks.sh\"\n";
+		};
+		4CEE0BDB268F3C68004CB3C3 /* Build Extensions */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build Extensions";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\nexec \"${PROJECT_DIR}/Build Scripts/BuildExtensions.sh\" | tee \"${TEXTUAL_WORKSPACE_TEMP_DIR}/Script-Logs/BuildExtensions.txt\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
