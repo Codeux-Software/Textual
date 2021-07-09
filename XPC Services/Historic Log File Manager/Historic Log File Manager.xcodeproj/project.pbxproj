@@ -347,7 +347,7 @@
 		4C442C801E13B3D200B187F4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1250;
+				LastUpgradeCheck = 1300;
 				ORGANIZATIONNAME = "Codeux Software, LLC";
 				TargetAttributes = {
 					4C442C871E13B3D200B187F4 = {
