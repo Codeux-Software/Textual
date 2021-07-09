@@ -65,24 +65,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if ( oldList) {
 		[oldList assignController:nil];
-
-		self.memberList = nil;
-
-		/* If we were already assigned to a list, but will now be
-		 assigned to nothing, then clear contents and do nothing more. */
-		if (channel == nil) {
-			self.content = @[];
-
-			return;
-		}
 	}
 
-	/* Assign to channel */
 	IRCChannelMemberList *newList = channel.memberInfo;
 
-	[newList assignController:self];
+	if ( newList) {
+		[newList assignController:self];
+	}
 
+	/* It is acceptable and correct behavior to assign nil
+	 to -memberList when there is none so there is no reason
+	 to place this assignment in the condition above. */
 	self.memberList = newList;
+
+	if (channel == nil || newList == nil) {
+		self.content = @[];
+	}
 }
 
 - (void)replaceContents:(NSArray<IRCChannelUser *> *)contents
