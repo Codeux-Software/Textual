@@ -491,9 +491,9 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)_ircConnectionDidDisconnectWithError:(nullable NSError *)disconnectError
 {
-	[self closeInsecureCertificateTrustPanel];
-
 	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[self closeInsecureCertificateTrustPanel];
+
 		[self.client ircConnection:self didDisconnectWithError:disconnectError];
 	});
 }
