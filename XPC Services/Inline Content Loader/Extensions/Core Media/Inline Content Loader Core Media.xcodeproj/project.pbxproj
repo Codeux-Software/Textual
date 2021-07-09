@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -559,6 +559,7 @@
 		4CA1FE501FA606890095901F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				CLASSPREFIX = ICP;
 				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Codeux Software, LLC";
