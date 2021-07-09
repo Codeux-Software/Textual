@@ -3015,6 +3015,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[RZUserDefaults() setBool:NO forKey:key];
 	}
+
+#if TEXTUAL_BUILT_WITH_APPCENTER_SDK_ENABLED == 1
+	[RZUserDefaults() removeObjectForKey:@"MSAppCenterCrashesUserConfirmation"];
+#endif
 }
 
 #pragma mark -
