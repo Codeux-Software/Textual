@@ -405,30 +405,16 @@
                                         <real value="3.4028234663852886e+38"/>
                                     </customSpacing>
                                 </stackView>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vah-p1-HXY">
-                                    <rect key="frame" x="259" y="-1" width="141" height="18"/>
-                                    <buttonCell key="cell" type="check" title="for universal builds" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Twp-8R-kHT">
-                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="system"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="onChangedCheckForBetaUpdates:" target="-2" id="iL0-Ri-Qtk"/>
-                                        <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.ReceiveBetaUpdates" id="GYu-qg-Pcu"/>
-                                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ReceiveUniversalBetaUpdates" id="UhF-x6-UWb"/>
-                                    </connections>
-                                </button>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="L50-Ud-iP2" firstAttribute="leading" secondItem="Arz-w3-aT6" secondAttribute="leading" constant="42" id="2ci-88-Tqp"/>
-                                <constraint firstItem="Vah-p1-HXY" firstAttribute="firstBaseline" secondItem="jfn-Sc-y1D" secondAttribute="firstBaseline" id="2vi-av-cbT"/>
                                 <constraint firstItem="rs1-p6-eOx" firstAttribute="leading" secondItem="L50-Ud-iP2" secondAttribute="trailing" constant="8" symbolic="YES" id="ILV-3z-JJV"/>
                                 <constraint firstItem="jfn-Sc-y1D" firstAttribute="leading" secondItem="rs1-p6-eOx" secondAttribute="leading" id="TJ6-iz-bg5"/>
                                 <constraint firstItem="jfn-Sc-y1D" firstAttribute="top" secondItem="rs1-p6-eOx" secondAttribute="bottom" constant="14" id="VDa-qC-Sx1"/>
                                 <constraint firstItem="rs1-p6-eOx" firstAttribute="top" secondItem="Arz-w3-aT6" secondAttribute="top" id="cow-PV-Rx2"/>
-                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Vah-p1-HXY" secondAttribute="trailing" constant="20" id="imq-4o-RQ9"/>
                                 <constraint firstItem="L50-Ud-iP2" firstAttribute="firstBaseline" secondItem="rkY-hK-RL3" secondAttribute="firstBaseline" id="mNv-78-rHy"/>
                                 <constraint firstAttribute="bottom" secondItem="jfn-Sc-y1D" secondAttribute="bottom" id="sJr-Sh-fkA"/>
-                                <constraint firstItem="Vah-p1-HXY" firstAttribute="leading" secondItem="jfn-Sc-y1D" secondAttribute="trailing" constant="8" symbolic="YES" id="uR1-AI-ahQ"/>
+                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jfn-Sc-y1D" secondAttribute="trailing" constant="20" id="xQS-HA-Q0r"/>
                             </constraints>
                         </customView>
                     </subviews>

@@ -529,11 +529,6 @@ NSUInteger const TPCPreferencesDictionaryVersion = 602;
 {
 	return [RZUserDefaults() boolForKey:@"ReceiveBetaUpdates"];
 }
-
-+ (BOOL)receiveUniversalBetaUpdates
-{
-	return [RZUserDefaults() boolForKey:@"ReceiveUniversalBetaUpdates"];
-}
 #endif
 
 #pragma mark -

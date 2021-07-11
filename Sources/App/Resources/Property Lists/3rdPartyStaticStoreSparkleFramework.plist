@@ -6,8 +6,6 @@
 	<string>https://textual-updates-backend.codeux.com/sparkle/feeds/v7/feed-one.xml</string>
 	<key>SUFeedURL-beta</key>
 	<string>https://textual-updates-backend.codeux.com/sparkle/feeds/v7/feed-one-beta.xml</string>
-	<key>SUFeedURL-beta-universal</key>
-	<string>https://textual-updates-backend.codeux.com/sparkle/feeds/v7/feed-one-beta-universal.xml</string>
 	<key>SUScheduledCheckInterval</key>
 	<string>345600</string>
 	<key>SUScheduledCheckInterval-beta</key>

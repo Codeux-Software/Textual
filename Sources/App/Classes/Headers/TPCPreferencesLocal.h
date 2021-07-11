@@ -129,7 +129,6 @@ typedef NS_ENUM(NSUInteger, TXPreferredAppearance) {
 
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
 + (BOOL)receiveBetaUpdates;
-+ (BOOL)receiveUniversalBetaUpdates;
 #endif
 
 + (BOOL)channelNavigationIsServerSpecific;

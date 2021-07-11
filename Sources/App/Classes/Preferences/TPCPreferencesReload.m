@@ -163,9 +163,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Sparkle framework update feed URL */
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	if ([keys containsObject:@"ReceiveBetaUpdates"] ||
-		[keys containsObject:@"ReceiveUniversalBetaUpdates"])
-	{
+	if ([keys containsObject:@"ReceiveBetaUpdates"]) {
 		reloadAction |= TPCPreferencesReloadActionSparkleFrameworkFeedURL;
 	}
 #endif
