@@ -134,6 +134,14 @@
 	<string>MacBook Pro (13-inch, 2020, Two Thunderbolt 3 ports)</string>
 	<key>MacBookPro17,1</key>
 	<string>MacBook Pro (13-inch, M1, 2020)</string>
+	<key>MacBookPro18,1</key>
+	<string>MacBook Pro (16-inch, 2021)</string>
+	<key>MacBookPro18,2</key>
+	<string>MacBook Pro (16-inch, 2021)</string>
+	<key>MacBookPro18,3</key>
+	<string>MacBook Pro (14-inch, 2021)</string>
+	<key>MacBookPro18,4</key>
+	<string>MacBook Pro (14-inch, 2021)</string>
 	<key>MacPro1,1*</key>
 	<string>Mac Pro (Original)</string>
 	<key>MacPro2,1</key>
