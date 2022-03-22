@@ -31,7 +31,7 @@ git submodule update --init --recursive
 
 ## Note Regarding Code Signing
 
-**DO NOT change the Code Signing Identity setting through Xcode.** Textual uses a configuration file to specify the code signing identity. This allows it to be used accross all projects associated with Textual without having to modify each.
+**DO NOT change the Code Signing Identity setting through Xcode.** Textual uses a configuration file to specify the code signing identity. This allows it to be used across all projects associated with Textual without having to modify each.
 
 **DO** edit the file located at _[Configurations ➜ Build ➜ Code Signing Identity.xcconfig](https://github.com/Codeux-Software/Textual/blob/master/Configurations/Build/Code%20Signing%20Identity.xcconfig)_
 
