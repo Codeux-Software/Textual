@@ -156,6 +156,10 @@
 	<string>Mac Pro (Late 2013)</string>
 	<key>MacPro7,1</key>
 	<string>Mac Pro (Mid-2019)</string>
+	<key>Mac13,1</key>
+	<string>Mac Studio (2022)</string>
+	<key>Mac13,2</key>
+	<string>Mac Studio (2022)</string>
 	<key>Macmini1,1</key>
 	<string>Mac Mini (Original)</string>
 	<key>Macmini2,1</key>
@@ -230,6 +234,14 @@
 	<string>iMac (27-inch, Retina, 2019)</string>
 	<key>iMac19,2</key>
 	<string>iMac (21.5-inch, Retina, 2019)</string>
+	<key>iMac20,1</key>
+	<string>iMac (Retina 5K, 27-inch, 2020)</string>
+	<key>iMac20,2</key>
+	<string>iMac (Retina 5K, 27-inch, 2020)</string>
+	<key>iMac21,1</key>
+	<string>iMac (24-inch, M1, 2021)</string>
+	<key>iMac21,2</key>
+	<string>iMac (24-inch, M1, 2021)</string>
 	<key>iMacPro1,1</key>
 	<string>iMac (27-inch, Retina, Late 2017)</string>
 	<key>iMac4,1</key>
