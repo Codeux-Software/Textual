@@ -16,7 +16,7 @@ Precompiled versions of Textual can be purchased in the [Mac App Store](http://w
 - [Homepage](https://codeux.com/textual)
 - [Frequently Asked Questions](https://help.codeux.com/textual/Frequently-Asked-Questions.kb)
 - [Support](https://help.codeux.com/textual/Support.kb)
-- \#textual on chat.freenode.net
+- \#textual on irc.libera.chat
 - Guides: [Writing Plugins](https://help.codeux.com/textual/Writing-Plugins.kb), [Writing Scripts](https://help.codeux.com/textual/Writing-Scripts.kb)
 
 ## Note Regarding Downloading Source Code
