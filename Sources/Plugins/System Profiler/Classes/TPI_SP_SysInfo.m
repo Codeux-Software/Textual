@@ -328,9 +328,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (showCPUModel) {
 		NSString *_cpu_model = [TPI_SP_SysInfo processor];
-		NSString *_cpu_speed = [TPI_SP_SysInfo processorClockSpeed];
 
 		NSUInteger _cpu_count_p	= [TPI_SP_SysInfo processorPhysicalCoreCount];
+		
+#if TARGET_CPU_ARM64
+		
+		if (_cpu_model.length > 0) {
+			[resultString appendString:
+			 TPILocalizedString(@"BasicLanguage[ifk-s5]",
+					_cpu_model,
+					_cpu_count_p)];
+		}
+		
+#elif TARGET_CPU_X86_64
+
+		NSString *_cpu_speed = [TPI_SP_SysInfo processorClockSpeed];
+
 		NSUInteger _cpu_count_v	= [TPI_SP_SysInfo processorVirtualCoreCount];
 
 		_cpu_model = [XRRegularExpression string:_cpu_model replacedByRegex:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)"	withString:@" "];
@@ -346,6 +359,9 @@ NS_ASSUME_NONNULL_BEGIN
 					_cpu_count_p,
 					_cpu_speed)];
 		}
+
+#endif
+
 	}
 
 	if (showMemory) {

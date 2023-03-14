@@ -45,6 +45,7 @@
 "lxj-ha" = "System Information:";
 "7g5-pf" = " \002Model:\002 %@ \002•\002";
 "mnc-vx" = " \002CPU:\002 %1$@ (%2$lu Threads, %3$lu Cores) @ %4$@ \002•\002";
+"ifk-s5" = " \002CPU:\002 %1$@ (%2$lu Cores) \002•\002";
 "1am-io" = " \002Memory:\002 %@ \002•\002";
 "xb6-bh" = " \002Uptime:\002 %@ \002•\002";
 "yrc-6l" = " \002Disk Space:\002 %@ \002•\002";
