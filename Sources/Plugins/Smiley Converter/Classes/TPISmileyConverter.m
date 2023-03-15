@@ -101,7 +101,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Save table contents */
 	self.conversionTable = converstionTable;
 
-	self.sortedSmileyList = converstionTable.sortedDictionaryReversedKeys;
+	self.sortedSmileyList = converstionTable.sortedDictionaryKeysReversed;
 }
 
 - (void)destroyConversionTable
