@@ -21,7 +21,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>7.2.1</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2010 - 2020 Codeux Software, LLC. All rights reserved.</string>
+	<string>Copyright © 2010 - 2023 Codeux Software, LLC. All rights reserved.</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
@@ -31,7 +31,7 @@
 	<key>NSMainNibFile</key>
 	<string>TXCMainMenu</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.12</string>
+	<string>10.13</string>
 	<key>NSPrincipalClass</key>
 	<string>TXApplication</string>
 	<key>NSContactsUsageDescription</key>
