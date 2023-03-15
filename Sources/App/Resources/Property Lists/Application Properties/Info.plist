@@ -106,7 +106,7 @@
 	<key>SUEnableSystemProfiling</key>
 	<false/>
 	<key>SUFeedURL</key>
-	<string>https://textual-updates-backend.codeux.com/sparkle/feeds/v7/feed-merged.xml</string>
+	<string>https://textual-updates-backend.codeux.com/sparkle/feeds/v7/feed-one-merged.xml</string>
 	<key>SUScheduledCheckInterval</key>
 	<string>345600</string>
 </dict>
