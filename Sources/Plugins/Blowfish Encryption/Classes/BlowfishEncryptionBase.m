@@ -91,7 +91,7 @@ static const char blowfish_ecb_base64_chars[64] = "./0123456789abcdefghijklmnopq
 	}
 }
 
-NSData *_commonCryptoIninitializationVector()
+NSData *_commonCryptoIninitializationVector(void)
 {
 	uint8_t ininitializationVector[kCCBlockSizeBlowfish] = {0};
 

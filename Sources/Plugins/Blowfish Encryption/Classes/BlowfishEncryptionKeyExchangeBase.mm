@@ -72,8 +72,6 @@
 static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+release+featuring+even+more+security+for+you+++shouts+go+out+to+TMG+for+helping+to+generate+this+cool+sophie+germain+prime+number++++/C32L";
 
 /* Static Definitions. */
-#define ISNO(s)				   (s == NO)
-
 #define DHAssertNO(c)		if (c == NO)	{ NSAssert(NO, @"DH1080 Key Exchange Failure."); }
 #define DHAssertYES(c)		if (c)			{ NSAssert(NO, @"DH1080 Key Exchange Failure."); }
 
@@ -105,7 +103,7 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 
 - (void)resetPublicInformation
 {
-	if (ISNO(self.publicBigNum == 0)) {
+	if (self.publicBigNum != 0) {
 		BN_free(self.publicBigNum);
 
 		self.publicBigNum = 0;
@@ -114,7 +112,7 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 
 - (void)resetStatus
 {
-	if (ISNO(self.DHStatus == 0)) {
+	if (self.DHStatus != 0) {
 		DH_free(self.DHStatus);
 
 		self.DHStatus = 0;
@@ -131,23 +129,25 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 	
 	DHAssertYES(self.DHStatus == 0);
 
-	DHAssertNO(self.DHStatus->g == 0);
-	DHAssertNO(self.DHStatus->p == 0);
+	DHAssertNO(DH_get0_g(self.DHStatus) == 0);
+	DHAssertNO(DH_get0_p(self.DHStatus) == 0);
 	
 	NSData *primeData = [self base64Decode:fishPrimeB64];
 
-	self.DHStatus->g = BN_new();
-	self.DHStatus->p = BN_new();
+	BIGNUM *g = BN_new();
+	BIGNUM *p = BN_new();
 
-	BN_dec2bn(&self.DHStatus->g, "2");
+	DH_set0_pqg(self.DHStatus, p, NULL, g);
+
+	BN_dec2bn(&g, "2");
 
 	DHAssertNO([primeData length] >= 1);
-	
-	BIGNUM *ret = BN_bin2bn((unsigned char *)[primeData bytes], (int)[primeData length], self.DHStatus->p);
+
+	BIGNUM *ret = BN_bin2bn((unsigned char *)[primeData bytes], (int)[primeData length], p);
 
 	DHAssertYES(ret == 0);
-	DHAssertYES(self.DHStatus->g == 0);
-	DHAssertYES(self.DHStatus->p == 0);
+	DHAssertYES(DH_get0_g(self.DHStatus) == 0);
+	DHAssertYES(DH_get0_p(self.DHStatus) == 0);
 
 	int check, codes;
 
@@ -165,9 +165,9 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 
 - (void)computeKey
 {
-	DHAssertYES(self.DHStatus	 == 0);
-	DHAssertYES(self.DHStatus->g == 0);
-	DHAssertYES(self.DHStatus->p == 0);
+	DHAssertYES(self.DHStatus == 0);
+	DHAssertYES(DH_get0_g(self.DHStatus) == 0);
+	DHAssertYES(DH_get0_p(self.DHStatus) == 0);
 	
 	DHAssertYES(self.publicBigNum == 0);
 
@@ -230,9 +230,9 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 
 - (NSData *)rawPublicKey
 {
-	DHAssertYES(self.DHStatus	 == 0);
-	DHAssertYES(self.DHStatus->g == 0);
-	DHAssertYES(self.DHStatus->p == 0);
+	DHAssertYES(self.DHStatus == 0);
+	DHAssertYES(DH_get0_g(self.DHStatus) == 0);
+	DHAssertYES(DH_get0_p(self.DHStatus) == 0);
 
 	NSInteger size = DH_size(self.DHStatus);
 
@@ -240,7 +240,9 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 
 	unsigned char key[EKBlowfishEncryptionKeyExchangeRequiredKeyLength];
 
-	BN_bn2bin(self.DHStatus->pub_key, key);
+	const BIGNUM *publicKey = DH_get0_pub_key(self.DHStatus);
+
+	BN_bn2bin(publicKey, key);
 
 	NSData *publicInput = [[NSData alloc] initWithBytes:key length:sizeof(key)];
 
