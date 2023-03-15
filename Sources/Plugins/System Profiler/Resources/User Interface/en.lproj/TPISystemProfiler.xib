@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,37 +14,14 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="1">
-            <rect key="frame" x="0.0" y="0.0" width="670" height="398"/>
+            <rect key="frame" x="0.0" y="0.0" width="670" height="292"/>
             <userGuides>
                 <userLayoutGuide location="432" affinity="minY"/>
                 <userLayoutGuide location="380" affinity="minY"/>
             </userGuides>
             <subviews>
-                <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="97">
-                    <rect key="frame" x="100" y="115" width="470" height="5"/>
-                </box>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="98">
-                    <rect key="frame" x="215" y="82" width="260" height="18"/>
-                    <buttonCell key="cell" type="check" title="Request model information from Apple" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="99">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="didChangePreferenceToUseRemoteRequestForModelID:" target="-2" id="110"/>
-                        <binding destination="114" name="value" keyPath="values.System Profiler Extension -&gt; Request Model Information from Apple" id="RA5-Lv-Ep8"/>
-                    </connections>
-                </button>
-                <textField verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6bj-fu-TKI">
-                    <rect key="frame" x="233" y="30" width="306" height="45"/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="mTb-3O-ZNG">
-                        <font key="font" metaFont="cellTitle"/>
-                        <string key="title">The last four characters of your Mac's serial number, which do not identify you in any way, will be sent to apple.com to retrieve model information.</string>
-                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <textField translatesAutoresizingMaskIntoConstraints="NO" id="Tag-MJ-P9h">
-                    <rect key="frame" x="130" y="352" width="411" height="16"/>
+                    <rect key="frame" x="130" y="246" width="411" height="16"/>
                     <textFieldCell key="cell" title="Select each item to appear in the output of the “sysinfo” command:" id="Mun-t6-pSD">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -52,7 +29,7 @@
                     </textFieldCell>
                 </textField>
                 <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" spacing="14" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cFu-gB-YZX">
-                    <rect key="frame" x="217" y="136" width="237" height="196"/>
+                    <rect key="frame" x="217" y="30" width="237" height="196"/>
                     <subviews>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="3">
                             <rect key="frame" x="-2" y="179" width="239" height="18"/>
@@ -174,22 +151,13 @@
                 </stackView>
             </subviews>
             <constraints>
-                <constraint firstItem="97" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="1hl-wt-fGE"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="98" secondAttribute="trailing" constant="20" id="7yl-zH-oAH"/>
-                <constraint firstAttribute="bottom" secondItem="6bj-fu-TKI" secondAttribute="bottom" constant="30" id="8pm-a5-DE1"/>
-                <constraint firstItem="97" firstAttribute="top" secondItem="cFu-gB-YZX" secondAttribute="bottom" constant="18" id="EE4-B3-obs"/>
+                <constraint firstAttribute="bottom" secondItem="22" secondAttribute="bottom" constant="30" id="HdJ-FX-u6w"/>
                 <constraint firstItem="Tag-MJ-P9h" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="IhP-Fe-PaF"/>
-                <constraint firstItem="6bj-fu-TKI" firstAttribute="top" secondItem="98" secondAttribute="bottom" constant="8" id="Ixu-Kj-Kve"/>
-                <constraint firstItem="97" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="100" id="RBY-yo-hYl"/>
-                <constraint firstItem="98" firstAttribute="top" secondItem="97" secondAttribute="bottom" constant="18" id="Tfk-11-JcR"/>
-                <constraint firstItem="98" firstAttribute="leading" secondItem="cFu-gB-YZX" secondAttribute="leading" id="XdB-mJ-0xB"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6bj-fu-TKI" secondAttribute="trailing" constant="20" id="cbc-ys-DMR"/>
                 <constraint firstItem="cFu-gB-YZX" firstAttribute="top" secondItem="Tag-MJ-P9h" secondAttribute="bottom" constant="20" id="gib-9x-L1K"/>
-                <constraint firstItem="6bj-fu-TKI" firstAttribute="leading" secondItem="98" secondAttribute="leading" constant="18" id="lmT-vP-6Kc"/>
                 <constraint firstItem="cFu-gB-YZX" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="ttS-NT-YIm"/>
                 <constraint firstItem="Tag-MJ-P9h" firstAttribute="top" secondItem="1" secondAttribute="top" constant="30" id="ziw-vl-9X4"/>
             </constraints>
-            <point key="canvasLocation" x="115" y="443"/>
+            <point key="canvasLocation" x="115" y="393.5"/>
         </customView>
         <userDefaultsController id="114" customClass="TPCPreferencesUserDefaultsController"/>
     </objects>

@@ -39,8 +39,6 @@
 
 #import "TPI_SP_SysInfo.h"
 
-#import "TPISystemProfilerModelRequest.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 #define _localVolumeBaseDirectory		@"/Volumes"
@@ -298,28 +296,22 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *modelIdentifier = [TPI_SP_SysInfo modelIdentifier];
 
 	if (modelIdentifier.length > 0) {
+		NSString *modelsDictionaryPath = [TPIBundleFromClass() pathForResource:@"MacintoshModels" ofType:@"plist"];
+
+		NSDictionary *modelsDictionary = [NSDictionary dictionaryWithContentsOfFile:modelsDictionaryPath];
+
 		NSString *modelTitle = nil;
 
-		NSString *modelTitleApple = [TPISystemProfilerModelRequest sharedController].cachedIdentifier;
-
-		if (modelTitleApple) {
-			modelTitle = modelTitleApple;
+		if ([modelIdentifier hasPrefix:@"VMware"]) {
+			modelTitle = modelsDictionary[@"VMware"];
+		} else if ([modelIdentifier hasPrefix:@"Parallels"]) {
+			modelTitle = modelsDictionary[@"Parallels"];
 		} else {
-			NSString *modelsDictionaryPath = [TPIBundleFromClass() pathForResource:@"MacintoshModels" ofType:@"plist"];
+			modelTitle = modelsDictionary[modelIdentifier];
+		}
 
-			NSDictionary *modelsDictionary = [NSDictionary dictionaryWithContentsOfFile:modelsDictionaryPath];
-
-			if ([modelIdentifier hasPrefix:@"VMware"]) {
-				modelTitle = modelsDictionary[@"VMware"];
-			} else if ([modelIdentifier hasPrefix:@"Parallels"]) {
-				modelTitle = modelsDictionary[@"Parallels"];
-			} else {
-				modelTitle = modelsDictionary[modelIdentifier];
-			}
-
-			if (modelTitle == nil) {
-				modelTitle = [XRSystemInformation systemModelName];
-			}
+		if (modelTitle == nil) {
+			modelTitle = [XRSystemInformation systemModelName];
 		}
 
 		[resultString appendString:

@@ -35,7 +35,6 @@
  *
  *********************************************************************** */
 
-#import "TPISystemProfilerModelRequest.h"
 #import "TPISystemProfiler.h"
 #import "TPI_SP_SysInfo.h"
 
@@ -43,8 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TPISystemProfiler ()
 @property (nonatomic, strong) NSView *preferencePaneView;
-
-- (IBAction)didChangePreferenceToUseRemoteRequestForModelID:(id)sender;
 @end
 
 @implementation TPISystemProfiler
@@ -63,14 +60,11 @@ NS_ASSUME_NONNULL_BEGIN
 			@"System Profiler Extension -> Feature Disabled -> System Uptime" : @(YES),
 			@"System Profiler Extension -> Feature Disabled -> Memory Information" : @(YES),
 			@"System Profiler Extension -> Feature Disabled -> Screen Resolution" : @(YES),
-			@"System Profiler Extension -> Request Model Information from Apple" : @(NO),
 		};
 
 		[RZUserDefaults() registerDefaults:defaults];
 
 		[TPIBundleFromClass() loadNibNamed:@"TPISystemProfiler" owner:self topLevelObjects:nil];
-
-		[self maybeRequestModelIDFromApple];
 	}];
 }
 
@@ -86,28 +80,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)pluginPreferencesPaneMenuItemName
 {
 	return TPILocalizedString(@"BasicLanguage[dff-13]");
-}
-
-- (void)didChangePreferenceToUseRemoteRequestForModelID:(id)sender
-{
-	[self maybeRequestModelIDFromApple];
-}
-
-- (void)maybeRequestModelIDFromApple
-{
-	BOOL featureEnabled = [RZUserDefaults() boolForKey:@"System Profiler Extension -> Request Model Information from Apple"];
-
-	if (featureEnabled == NO) {
-		return;
-	}
-
-	static BOOL _performedRequest = NO;
-
-	if (_performedRequest == NO) {
-		_performedRequest = YES;
-
-		[[TPISystemProfilerModelRequest sharedController] requestIdentifier];
-	}
 }
 
 #pragma mark -
