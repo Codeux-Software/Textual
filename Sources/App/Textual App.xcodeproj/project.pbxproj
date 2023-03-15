@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -6230,7 +6230,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1420;
 				ORGANIZATIONNAME = "Codeux Software, LLC";
 				TargetAttributes = {
 					4C0BA4F81990798800857343 = {
@@ -6904,6 +6904,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		4C01BA101581104D007E2DAF /* Build Extensions */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 12;
 			files = (
 			);
@@ -6919,6 +6920,7 @@
 		};
 		4C0BA6CA1990798800857343 /* Build Extensions */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 12;
 			files = (
 			);
@@ -6934,6 +6936,7 @@
 		};
 		4C4733BA20C7599800713C91 /* Build Extensions */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 12;
 			files = (
 			);
@@ -6949,6 +6952,7 @@
 		};
 		4C4733C420C7599800713C91 /* Build XPC Services */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -6964,6 +6968,7 @@
 		};
 		4C48B46420E4D34E00CF5F84 /* Merge Swift Libraries */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -6982,6 +6987,7 @@
 		};
 		4C48B46520E4D37C00CF5F84 /* Merge Swift Libraries */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -7000,6 +7006,7 @@
 		};
 		4C48B46620E4D38F00CF5F84 /* Merge Swift Libraries */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -7018,6 +7025,7 @@
 		};
 		4C48B46720E4D3A600CF5F84 /* Merge Swift Libraries */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -7036,6 +7044,7 @@
 		};
 		4C761BAF1E155D7400A505B7 /* Build XPC Services */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -7051,6 +7060,7 @@
 		};
 		4C761BB01E155DD900A505B7 /* Build XPC Services */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -7065,6 +7075,7 @@
 		};
 		4C761BB11E155E0000A505B7 /* Build XPC Services */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -7093,6 +7104,7 @@
 		};
 		4CEE0BDB268F3C68004CB3C3 /* Build Extensions */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
