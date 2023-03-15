@@ -21,7 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		4C06DF1F20EC49A50055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A720EB676400448776 /* 3rdPartyStaticStoreAppCenterFramework.plist */; };
+		4C06DF1F20EC49A50055D09A /* StaticStoreAppCenterFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A720EB676400448776 /* StaticStoreAppCenterFramework.plist */; };
 		4C06DF2120EC49A50055D09A /* IRCCommandIndexLocalData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A020EB676400448776 /* IRCCommandIndexLocalData.plist */; };
 		4C06DF2220EC49A50055D09A /* IRCCommandIndexRemoteData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31539F20EB676400448776 /* IRCCommandIndexRemoteData.plist */; };
 		4C06DF2320EC49A50055D09A /* IRCNetworks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A220EB676400448776 /* IRCNetworks.plist */; };
@@ -29,7 +29,7 @@
 		4C06DF2520EC49A50055D09A /* RegisteredUserDefaultsInContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A620EB676400448776 /* RegisteredUserDefaultsInContainer.plist */; };
 		4C06DF2620EC49A50055D09A /* StaticStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A420EB676400448776 /* StaticStore.plist */; };
 		4C06DF2720EC49A50055D09A /* TemplateLineTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A120EB676400448776 /* TemplateLineTypes.plist */; };
-		4C06DF2820EC49A60055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A720EB676400448776 /* 3rdPartyStaticStoreAppCenterFramework.plist */; };
+		4C06DF2820EC49A60055D09A /* StaticStoreAppCenterFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A720EB676400448776 /* StaticStoreAppCenterFramework.plist */; };
 		4C06DF2A20EC49A60055D09A /* IRCCommandIndexLocalData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A020EB676400448776 /* IRCCommandIndexLocalData.plist */; };
 		4C06DF2B20EC49A60055D09A /* IRCCommandIndexRemoteData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31539F20EB676400448776 /* IRCCommandIndexRemoteData.plist */; };
 		4C06DF2C20EC49A60055D09A /* IRCNetworks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A220EB676400448776 /* IRCNetworks.plist */; };
@@ -37,7 +37,7 @@
 		4C06DF2E20EC49A60055D09A /* RegisteredUserDefaultsInContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A620EB676400448776 /* RegisteredUserDefaultsInContainer.plist */; };
 		4C06DF2F20EC49A60055D09A /* StaticStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A420EB676400448776 /* StaticStore.plist */; };
 		4C06DF3020EC49A60055D09A /* TemplateLineTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A120EB676400448776 /* TemplateLineTypes.plist */; };
-		4C06DF3120EC49A60055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A720EB676400448776 /* 3rdPartyStaticStoreAppCenterFramework.plist */; };
+		4C06DF3120EC49A60055D09A /* StaticStoreAppCenterFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A720EB676400448776 /* StaticStoreAppCenterFramework.plist */; };
 		4C06DF3320EC49A60055D09A /* IRCCommandIndexLocalData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A020EB676400448776 /* IRCCommandIndexLocalData.plist */; };
 		4C06DF3420EC49A60055D09A /* IRCCommandIndexRemoteData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31539F20EB676400448776 /* IRCCommandIndexRemoteData.plist */; };
 		4C06DF3520EC49A60055D09A /* IRCNetworks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A220EB676400448776 /* IRCNetworks.plist */; };
@@ -45,7 +45,7 @@
 		4C06DF3720EC49A60055D09A /* RegisteredUserDefaultsInContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A620EB676400448776 /* RegisteredUserDefaultsInContainer.plist */; };
 		4C06DF3820EC49A60055D09A /* StaticStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A420EB676400448776 /* StaticStore.plist */; };
 		4C06DF3920EC49A60055D09A /* TemplateLineTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A120EB676400448776 /* TemplateLineTypes.plist */; };
-		4C06DF3A20EC49A70055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A720EB676400448776 /* 3rdPartyStaticStoreAppCenterFramework.plist */; };
+		4C06DF3A20EC49A70055D09A /* StaticStoreAppCenterFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A720EB676400448776 /* StaticStoreAppCenterFramework.plist */; };
 		4C06DF3C20EC49A70055D09A /* IRCCommandIndexLocalData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A020EB676400448776 /* IRCCommandIndexLocalData.plist */; };
 		4C06DF3D20EC49A70055D09A /* IRCCommandIndexRemoteData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31539F20EB676400448776 /* IRCCommandIndexRemoteData.plist */; };
 		4C06DF3E20EC49A70055D09A /* IRCNetworks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A220EB676400448776 /* IRCNetworks.plist */; };
@@ -3330,7 +3330,7 @@
 		4C3153A420EB676400448776 /* StaticStore.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = StaticStore.plist; sourceTree = "<group>"; };
 		4C3153A520EB676400448776 /* RegisteredUserDefaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = RegisteredUserDefaults.plist; sourceTree = "<group>"; };
 		4C3153A620EB676400448776 /* RegisteredUserDefaultsInContainer.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = RegisteredUserDefaultsInContainer.plist; sourceTree = "<group>"; };
-		4C3153A720EB676400448776 /* 3rdPartyStaticStoreAppCenterFramework.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = 3rdPartyStaticStoreAppCenterFramework.plist; sourceTree = "<group>"; };
+		4C3153A720EB676400448776 /* StaticStoreAppCenterFramework.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = StaticStoreAppCenterFramework.plist; sourceTree = "<group>"; };
 		4C3154B720EB685700448776 /* Textual App.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Textual App.xcconfig"; sourceTree = "<group>"; };
 		4C3154B820EB685700448776 /* Textual.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Textual.xcconfig; sourceTree = "<group>"; };
 		4C3154B920EB685700448776 /* Textual Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Textual Extensions.xcconfig"; sourceTree = "<group>"; };
@@ -4761,13 +4761,13 @@
 		4C31539B20EB676400448776 /* Property Lists */ = {
 			isa = PBXGroup;
 			children = (
-				4C3153A720EB676400448776 /* 3rdPartyStaticStoreAppCenterFramework.plist */,
 				4C3153A020EB676400448776 /* IRCCommandIndexLocalData.plist */,
 				4C31539F20EB676400448776 /* IRCCommandIndexRemoteData.plist */,
 				4C3153A220EB676400448776 /* IRCNetworks.plist */,
 				4C3153A520EB676400448776 /* RegisteredUserDefaults.plist */,
 				4C3153A620EB676400448776 /* RegisteredUserDefaultsInContainer.plist */,
 				4C3153A420EB676400448776 /* StaticStore.plist */,
+				4C3153A720EB676400448776 /* StaticStoreAppCenterFramework.plist */,
 				4C3153A120EB676400448776 /* TemplateLineTypes.plist */,
 			);
 			path = "Property Lists";
@@ -6405,7 +6405,7 @@
 				4C06E0AC20EC4A540055D09A /* FormattingColor_2.png in Resources */,
 				4C06E1A220EC4AC40055D09A /* TDCFileTransferDialog.xib in Resources */,
 				4C06E2F820EC4FF00055D09A /* TDCChannelBanListSheet.strings in Resources */,
-				4C06DF1F20EC49A50055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */,
+				4C06DF1F20EC49A50055D09A /* StaticStoreAppCenterFramework.plist in Resources */,
 				4C06E04620EC4A100055D09A /* DIGreenBadgeCenter.png in Resources */,
 				4C06E34020EC4FF00055D09A /* TDCChannelModifyTopicSheet.strings in Resources */,
 				4C06E19620EC4AC40055D09A /* TDCServerEndpointListSheet.xib in Resources */,
@@ -6512,7 +6512,7 @@
 				4C06E1A820EC4AC40055D09A /* TDCServerChannelListDialog.xib in Resources */,
 				4C06E0C820EC4A5B0055D09A /* channelRoomStatusIconDarkActive@2x.tif in Resources */,
 				4C06E30620EC4FF00055D09A /* TDCChannelInviteSheet.strings in Resources */,
-				4C06DF3120EC49A60055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */,
+				4C06DF3120EC49A60055D09A /* StaticStoreAppCenterFramework.plist in Resources */,
 				4C06E22820EC4AC50055D09A /* TVCMainWindowAppearance.plist in Resources */,
 				4C06E05D20EC4A4C0055D09A /* encryptionLockIconLight.tif in Resources */,
 				4C06E11A20EC4A630055D09A /* TPWTB_Advanced.png in Resources */,
@@ -6663,7 +6663,7 @@
 				4C06E1A920EC4AC40055D09A /* TDCServerChannelListDialog.xib in Resources */,
 				4C06E0DA20EC4A5B0055D09A /* channelRoomStatusIconDarkActive@2x.tif in Resources */,
 				4C06E30720EC4FF00055D09A /* TDCChannelInviteSheet.strings in Resources */,
-				4C06DF3A20EC49A70055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */,
+				4C06DF3A20EC49A70055D09A /* StaticStoreAppCenterFramework.plist in Resources */,
 				4C06E22920EC4AC50055D09A /* TVCMainWindowAppearance.plist in Resources */,
 				4C06E05920EC4A4C0055D09A /* encryptionLockIconLight.tif in Resources */,
 				4C06E12A20EC4A640055D09A /* TPWTB_Advanced.png in Resources */,
@@ -6814,7 +6814,7 @@
 				4C06E1A720EC4AC40055D09A /* TDCServerChannelListDialog.xib in Resources */,
 				4C06E0B620EC4A5A0055D09A /* channelRoomStatusIconDarkActive@2x.tif in Resources */,
 				4C06E30520EC4FF00055D09A /* TDCChannelInviteSheet.strings in Resources */,
-				4C06DF2820EC49A60055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */,
+				4C06DF2820EC49A60055D09A /* StaticStoreAppCenterFramework.plist in Resources */,
 				4C06E22720EC4AC50055D09A /* TVCMainWindowAppearance.plist in Resources */,
 				4C06E06120EC4A4C0055D09A /* encryptionLockIconLight.tif in Resources */,
 				4C06E10A20EC4A630055D09A /* TPWTB_Advanced.png in Resources */,

@@ -237,7 +237,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)prepareThirdPartyServiceAppCenterFramework
 {
 #if TEXTUAL_BUILT_WITH_APPCENTER_SDK_ENABLED == 1
-	NSDictionary *acData = [TPCResourceManager loadContentsOfPropertyListInResources:@"3rdPartyStaticStoreAppCenterFramework"];
+	NSDictionary *acData = [TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStoreAppCenterFramework"];
 
 	NSString *applicationIdentifier = acData[@"Application Identifier"];
 
