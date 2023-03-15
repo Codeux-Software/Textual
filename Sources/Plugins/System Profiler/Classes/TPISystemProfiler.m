@@ -120,10 +120,20 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
+	BOOL quietMessage = [messageString isEqualIgnoringCase:@"quiet"];
+
+	NSString *messageOut = nil;
+
 	if ([commandString isEqualToString:@"SYSINFO"]) {
-		[self sendMessage:[TPI_SP_CompiledOutput systemInformation] onClient:client toChannel:channel];
+		messageOut = [TPI_SP_CompiledOutput systemInformation];
 	} else if ([commandString isEqualToString:@"MEMORY"]) {
-		[self sendMessage:[TPI_SP_CompiledOutput applicationMemoryUsage] onClient:client toChannel:channel];
+		NSString *memoryMessage = [TPI_SP_CompiledOutput applicationMemoryUsage];
+
+		if (quietMessage) {
+			[self printDebugInformation:memoryMessage onClient:client inChannel:channel];
+		} else {
+			[self sendMessage:memoryMessage onClient:client toChannel:channel];
+		}
 
 		NSString *webKitMemoryUse = [TPI_SP_CompiledOutput webKitFrameworkMemoryUsage];
 
@@ -131,21 +141,29 @@ NS_ASSUME_NONNULL_BEGIN
 			[self printDebugInformation:webKitMemoryUse onClient:client inChannel:channel];
 		}
 	} else if ([commandString isEqualToString:@"UPTIME"]) {
-		[self sendMessage:[TPI_SP_CompiledOutput applicationAndSystemUptime] onClient:client toChannel:channel];
+		messageOut = [TPI_SP_CompiledOutput applicationAndSystemUptime];
 	} else if ([commandString isEqualToString:@"NETSTATS"]) {
-		[self sendMessage:[TPI_SP_CompiledOutput systemNetworkInformation] onClient:client toChannel:channel];
+		messageOut = [TPI_SP_CompiledOutput systemNetworkInformation];
 	} else if ([commandString isEqualToString:@"MSGCOUNT"]) {
-		[self sendMessage:[TPI_SP_CompiledOutput applicationBandwidthStatistics] onClient:client toChannel:channel];
+		messageOut = [TPI_SP_CompiledOutput applicationBandwidthStatistics];
 	} else if ([commandString isEqualToString:@"DISKSPACE"]) {
-		[self sendMessage:[TPI_SP_CompiledOutput systemDiskspaceInformation] onClient:client toChannel:channel];
+		messageOut = [TPI_SP_CompiledOutput systemDiskspaceInformation];
 	} else if ([commandString isEqualToString:@"STYLE"]) {
-		[self sendMessage:[TPI_SP_CompiledOutput applicationActiveStyle] onClient:client toChannel:channel];
+		messageOut = [TPI_SP_CompiledOutput applicationActiveStyle];
 	} else if ([commandString isEqualToString:@"SCREENS"]) {
-		[self sendMessage:[TPI_SP_CompiledOutput systemDisplayInformation] onClient:client toChannel:channel];
+		messageOut = [TPI_SP_CompiledOutput systemDisplayInformation];
 	} else if ([commandString isEqualToString:@"RUNCOUNT"]) {
-		[self sendMessage:[TPI_SP_CompiledOutput applicationRuntimeStatistics] onClient:client toChannel:channel];
+		messageOut = [TPI_SP_CompiledOutput applicationRuntimeStatistics];
 	} else if ([commandString isEqualToString:@"SYSMEM"]) {
-		[self sendMessage:[TPI_SP_CompiledOutput systemMemoryInformation] onClient:client toChannel:channel];
+		messageOut = [TPI_SP_CompiledOutput systemMemoryInformation];
+	}
+
+	if (messageOut) {
+		if (quietMessage) {
+			[self printDebugInformation:messageOut onClient:client inChannel:channel];
+		} else {
+			[self sendMessage:messageOut onClient:client toChannel:channel];
+		}
 	}
 }
 
