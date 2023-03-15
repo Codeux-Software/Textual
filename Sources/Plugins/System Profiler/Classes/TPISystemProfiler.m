@@ -54,7 +54,6 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	[self performBlockOnMainThread:^{
 		NSDictionary *defaults = @{
-			@"System Profiler Extension -> Feature Disabled -> CPU Model" : @(YES),
 			@"System Profiler Extension -> Feature Disabled -> GPU Model" : @(YES),
 			@"System Profiler Extension -> Feature Disabled -> Disk Information" : @(YES),
 			@"System Profiler Extension -> Feature Disabled -> System Uptime" : @(YES),
