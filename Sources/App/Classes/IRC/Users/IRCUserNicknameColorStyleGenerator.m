@@ -184,63 +184,90 @@ NS_ASSUME_NONNULL_BEGIN
  *    1. Easier to work with when modifying. No need to perform messy string conversion.
  *    2. Easier to change output format in another update (if that decision is made)
  */
+/*
+ *	 March 15, 2023:
+ *
+ *	 Looking back at this code I do not know why I ever chose to archive the color
+ *	 in the dictionary prior to storing it. NSDictionary and NSUserDefaults are
+ *	 entirely capable of storing an NSColor without prior manipulation because
+ *	 the data type already conforms to secure coding. I could modify this code
+ *	 to get ride of the archiving. I will not however as that adds the extra
+ *	 complexity of migrating data types. There is some /potential/ performance
+ *	 gain by removing that middle man. Not by a lot. Instead of doing the correct
+ *	 thing I will leave this message as a form of self relection.
+ */
 + (nullable NSColor *)nicknameColorStyleOverrideForKey:(NSString *)styleKey
 {
 	NSParameterAssert(styleKey != nil);
 
-	NSDictionary *colorStyleOverrides = [RZUserDefaults() dictionaryForKey:_overridesDefaultsKey];
+	NSDictionary *colorOverrides = [RZUserDefaults() dictionaryForKey:_overridesDefaultsKey];
 
-	if (colorStyleOverrides == nil) {
+	if (colorOverrides == nil) {
 		return nil;
 	}
 
-	id objectValue = colorStyleOverrides[styleKey];
+	id colorObject = colorOverrides[styleKey];
 
-	if (objectValue == nil || [objectValue isKindOfClass:[NSData class]] == NO) {
+	if ([colorObject isKindOfClass:[NSData class]] == NO) {
 		return nil;
 	}
 
-	id objectValueObj = [NSUnarchiver unarchiveObjectWithData:objectValue];
+	NSError *error;
 
-	if (objectValueObj == nil || [objectValueObj isKindOfClass:[NSColor class]] == NO) {
-		return nil;
+	NSColor *colorValue = [NSKeyedUnarchiver unarchivedObjectOfClass:[NSColor class]
+															fromData:colorObject
+															   error:&error];
+	if (error) {
+		LogToConsoleError("Failed to decode color for '%@': %@",
+				styleKey, error.description);
 	}
 
-	return objectValueObj;
+	return colorValue;
 }
 
 + (void)setNicknameColorStyleOverride:(nullable NSColor *)styleValue forKey:(NSString *)styleKey
 {
 	NSParameterAssert(styleKey != nil);
 
-	NSDictionary *colorStyleOverrides = [RZUserDefaults() dictionaryForKey:_overridesDefaultsKey];
+	NSDictionary *colorOverrides = [RZUserDefaults() dictionaryForKey:_overridesDefaultsKey];
 
-	if (colorStyleOverrides == nil && styleValue == nil) {
+	if (colorOverrides == nil && styleValue == nil) {
 		return;
 	}
 
-	NSData *styleValueRolled = nil;
+	NSData *colorObject = nil;
 
 	if (styleValue) {
-		styleValueRolled = [NSArchiver archivedDataWithRootObject:styleValue];
+		NSError *error;
 
-		if (colorStyleOverrides == nil) {
-			colorStyleOverrides = [NSDictionary new];
+		colorObject = [NSKeyedArchiver archivedDataWithRootObject:styleValue
+											requiringSecureCoding:YES
+															error:&error];
+
+		if (error) {
+			LogToConsoleError("Failed to decode color for '%@': %@",
+				 styleKey, error.description);
+
+			return;
+		}
+
+		if (colorOverrides == nil) {
+			colorOverrides = [NSDictionary new];
 		}
 	}
 
-	NSMutableDictionary *colorStyleOverridesMut = [colorStyleOverrides mutableCopy];
+	NSMutableDictionary *colorOverridesNew = [colorOverrides mutableCopy];
 
 	if (styleValue == nil) {
-		[colorStyleOverridesMut removeObjectForKey:styleKey];
+		[colorOverridesNew removeObjectForKey:styleKey];
 	} else {
-		colorStyleOverridesMut[styleKey] = styleValueRolled;
+		colorOverridesNew[styleKey] = colorObject;
 	}
 
-	if (colorStyleOverridesMut.count == 0) {
+	if (colorOverridesNew.count == 0) {
 		[RZUserDefaults() removeObjectForKey:_overridesDefaultsKey];
 	} else {
-		[RZUserDefaults() setObject:[colorStyleOverridesMut copy] forKey:_overridesDefaultsKey];
+		[RZUserDefaults() setObject:[colorOverridesNew copy] forKey:_overridesDefaultsKey];
 	}
 }
 
