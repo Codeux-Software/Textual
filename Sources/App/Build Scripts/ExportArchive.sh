@@ -43,6 +43,7 @@ zip -y -r -X "${ZIP_EXPORT_PATH}" "./${FULL_PRODUCT_NAME}/"
 
 BUNDLE_VERSION_LONG=$(/usr/libexec/PlistBuddy -c "Print \"CFBundleVersion\"" "./${FULL_PRODUCT_NAME}/Contents/Info.plist")
 BUNDLE_VERSION_SHORT=$(/usr/libexec/PlistBuddy -c "Print \"CFBundleShortVersionString\"" "./${FULL_PRODUCT_NAME}/Contents/Info.plist")
+BUNDLE_MINIMUM_TARGET=$(/usr/libexec/PlistBuddy -c "Print \"LSMinimumSystemVersion\"" "./${FULL_PRODUCT_NAME}/Contents/Info.plist")
 
 echo "<?php
 
@@ -52,6 +53,7 @@ echo "<?php
 echo "	\$current_release_version_short = \"${BUNDLE_VERSION_SHORT}\";" >> ./buildInfo.php
 echo "	\$current_release_version_long = \"${BUNDLE_VERSION_LONG}\";" >> ./buildInfo.php
 echo "	\$current_release_version_signature = \"${GIT_COMMIT_HASH}\";" >> ./buildInfo.php
+echo "	\$current_release_minimum_system_version = \"${BUNDLE_MINIMUM_TARGET}\";" >> buildInfo.php
 
 mv "./buildInfo.php" "${EXPORT_PATH}"
 
