@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -3848,7 +3848,7 @@ A lower value is always better especially when in a large number of channels.</s
                 </gridView>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wuk-ii-Ge1">
                     <rect key="frame" x="96" y="113" width="320" height="28"/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="You will be asked where to save downloaded files each time you start a file transfer a destination is not configured." id="3k5-n4-vrU">
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="You will be asked where to save downloaded files each time you start a file transfer if a destination is not configured." id="3k5-n4-vrU">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
