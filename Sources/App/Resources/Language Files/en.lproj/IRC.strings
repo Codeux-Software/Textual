@@ -318,7 +318,7 @@
 "tok-st" = "%1$@ (%2$@)";
 "8hg-7k" = "%@ IRC Network";
 "fxw-5s" = "%1$@ is now known as \002%2$@\002";
-"rr6-yo" = "You're now known as \002%2$@\002";
+"rr6-yo" = "You're now known as \002%@\002";
 "53b-dm" = "\002%1$@\002 (%2$@@%3$@) left IRC";
 "8bk-mx" = "\002%1$@\002 left the query by disconnecting from IRC";
 "q0q-ch" = "\002%1$@\002 joined the query by connecting to IRC";
