@@ -91,6 +91,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readwrite) IBOutlet TVCMainWindow *mainWindow;
 @property (nonatomic, weak, readwrite) IBOutlet TXMenuController *menuController;
 @property (nonatomic, assign) NSUInteger applicationLaunchRemainder;
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+@property (nonatomic, strong, readwrite) SPUStandardUpdaterController *updateController;
+#endif
 @end
 
 @implementation TXMasterController
@@ -276,27 +280,28 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)prepareThirdPartyServiceSparkleFramework
 {
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	NSDictionary *sparkleData = [TPCResourceManager loadContentsOfPropertyListInResources:@"3rdPartyStaticStoreSparkleFramework"];
+	  SPUStandardUpdaterController *controller =
+	[[SPUStandardUpdaterController alloc] initWithStartingUpdater:NO
+												  updaterDelegate:(id <SPUUpdaterDelegate>)self
+											   userDriverDelegate:nil];
 
-	BOOL receiveBetaUpdates = [TPCPreferences receiveBetaUpdates];
+	self.updateController = controller;
 
-	if (receiveBetaUpdates) {
-		[RZUserDefaults() setObject:sparkleData[@"SUFeedURL-beta"] forKey:@"SUFeedURL"];
-	} else { // beta
-		[RZUserDefaults() setObject:sparkleData[@"SUFeedURL"] forKey:@"SUFeedURL"];
-	}
+	SPUUpdater *updater = controller.updater;
 
-	SUUpdater *updater = [SUUpdater sharedUpdater];
-
-	updater.delegate = (id)self;
-
-	if (receiveBetaUpdates == NO) {
-		updater.updateCheckInterval = [sparkleData integerForKey:@"SUScheduledCheckInterval"];
+	if ([updater respondsToSelector:@selector(clearFeedURLFromUserDefaults)]) {
+		[updater performSelector:@selector(clearFeedURLFromUserDefaults)];
 	} else {
-		updater.updateCheckInterval = [sparkleData integerForKey:@"SUScheduledCheckInterval-beta"];
+		[RZUserDefaults() removeObjectForKey:@"SUFeedURL"];
 	}
 
-	[updater checkForUpdatesInBackground];
+	NSError *error;
+
+	(void)[updater startUpdater:&error];
+
+	if (error) {
+		LogToConsoleError("Sparkle failed to start updater: 5@", error.description);
+	}
 #endif
 }
 
@@ -659,9 +664,20 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Sparkle Delegate
 
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-- (void)updaterWillRelaunchApplication:(SUUpdater *)updater
+- (void)updaterWillRelaunchApplication:(SPUUpdater *)updater
 {
 	self.applicationIsTerminating = YES;
+}
+
+- (NSSet<NSString *> *)allowedChannelsForUpdater:(SPUUpdater *)updater
+{
+	BOOL receiveBetaUpdates = [TPCPreferences receiveBetaUpdates];
+
+	if (receiveBetaUpdates) {
+		return [NSSet setWithObject:@"beta"];
+	}
+
+	return [NSSet set];
 }
 #endif
 

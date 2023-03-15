@@ -3027,7 +3027,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)checkForUpdates:(id)sender
 {
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	[[SUUpdater sharedUpdater] checkForUpdates:sender];
+	SPUStandardUpdaterController *controller = masterController().updateController;
+
+	[controller checkForUpdates:sender];
 #endif
 }
 

@@ -30,7 +30,6 @@
 		4C06DF2620EC49A50055D09A /* StaticStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A420EB676400448776 /* StaticStore.plist */; };
 		4C06DF2720EC49A50055D09A /* TemplateLineTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A120EB676400448776 /* TemplateLineTypes.plist */; };
 		4C06DF2820EC49A60055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A720EB676400448776 /* 3rdPartyStaticStoreAppCenterFramework.plist */; };
-		4C06DF2920EC49A60055D09A /* 3rdPartyStaticStoreSparkleFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A320EB676400448776 /* 3rdPartyStaticStoreSparkleFramework.plist */; };
 		4C06DF2A20EC49A60055D09A /* IRCCommandIndexLocalData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A020EB676400448776 /* IRCCommandIndexLocalData.plist */; };
 		4C06DF2B20EC49A60055D09A /* IRCCommandIndexRemoteData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31539F20EB676400448776 /* IRCCommandIndexRemoteData.plist */; };
 		4C06DF2C20EC49A60055D09A /* IRCNetworks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A220EB676400448776 /* IRCNetworks.plist */; };
@@ -39,7 +38,6 @@
 		4C06DF2F20EC49A60055D09A /* StaticStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A420EB676400448776 /* StaticStore.plist */; };
 		4C06DF3020EC49A60055D09A /* TemplateLineTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A120EB676400448776 /* TemplateLineTypes.plist */; };
 		4C06DF3120EC49A60055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A720EB676400448776 /* 3rdPartyStaticStoreAppCenterFramework.plist */; };
-		4C06DF3220EC49A60055D09A /* 3rdPartyStaticStoreSparkleFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A320EB676400448776 /* 3rdPartyStaticStoreSparkleFramework.plist */; };
 		4C06DF3320EC49A60055D09A /* IRCCommandIndexLocalData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A020EB676400448776 /* IRCCommandIndexLocalData.plist */; };
 		4C06DF3420EC49A60055D09A /* IRCCommandIndexRemoteData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31539F20EB676400448776 /* IRCCommandIndexRemoteData.plist */; };
 		4C06DF3520EC49A60055D09A /* IRCNetworks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A220EB676400448776 /* IRCNetworks.plist */; };
@@ -48,7 +46,6 @@
 		4C06DF3820EC49A60055D09A /* StaticStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A420EB676400448776 /* StaticStore.plist */; };
 		4C06DF3920EC49A60055D09A /* TemplateLineTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A120EB676400448776 /* TemplateLineTypes.plist */; };
 		4C06DF3A20EC49A70055D09A /* 3rdPartyStaticStoreAppCenterFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A720EB676400448776 /* 3rdPartyStaticStoreAppCenterFramework.plist */; };
-		4C06DF3B20EC49A70055D09A /* 3rdPartyStaticStoreSparkleFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A320EB676400448776 /* 3rdPartyStaticStoreSparkleFramework.plist */; };
 		4C06DF3C20EC49A70055D09A /* IRCCommandIndexLocalData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A020EB676400448776 /* IRCCommandIndexLocalData.plist */; };
 		4C06DF3D20EC49A70055D09A /* IRCCommandIndexRemoteData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31539F20EB676400448776 /* IRCCommandIndexRemoteData.plist */; };
 		4C06DF3E20EC49A70055D09A /* IRCNetworks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3153A220EB676400448776 /* IRCNetworks.plist */; };
@@ -3330,7 +3327,6 @@
 		4C3153A020EB676400448776 /* IRCCommandIndexLocalData.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = IRCCommandIndexLocalData.plist; sourceTree = "<group>"; };
 		4C3153A120EB676400448776 /* TemplateLineTypes.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateLineTypes.plist; sourceTree = "<group>"; };
 		4C3153A220EB676400448776 /* IRCNetworks.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = IRCNetworks.plist; sourceTree = "<group>"; };
-		4C3153A320EB676400448776 /* 3rdPartyStaticStoreSparkleFramework.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = 3rdPartyStaticStoreSparkleFramework.plist; sourceTree = "<group>"; };
 		4C3153A420EB676400448776 /* StaticStore.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = StaticStore.plist; sourceTree = "<group>"; };
 		4C3153A520EB676400448776 /* RegisteredUserDefaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = RegisteredUserDefaults.plist; sourceTree = "<group>"; };
 		4C3153A620EB676400448776 /* RegisteredUserDefaultsInContainer.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = RegisteredUserDefaultsInContainer.plist; sourceTree = "<group>"; };
@@ -4766,7 +4762,6 @@
 			isa = PBXGroup;
 			children = (
 				4C3153A720EB676400448776 /* 3rdPartyStaticStoreAppCenterFramework.plist */,
-				4C3153A320EB676400448776 /* 3rdPartyStaticStoreSparkleFramework.plist */,
 				4C3153A020EB676400448776 /* IRCCommandIndexLocalData.plist */,
 				4C31539F20EB676400448776 /* IRCCommandIndexRemoteData.plist */,
 				4C3153A220EB676400448776 /* IRCNetworks.plist */,
@@ -6546,7 +6541,6 @@
 				4C06E20020EC4AC50055D09A /* TDCHighlightEntrySheet.xib in Resources */,
 				4C06DF3820EC49A60055D09A /* StaticStore.plist in Resources */,
 				4C06E12120EC4A630055D09A /* TPWTB_Interface.png in Resources */,
-				4C06DF3220EC49A60055D09A /* 3rdPartyStaticStoreSparkleFramework.plist in Resources */,
 				4C06E22C20EC4AC50055D09A /* TVCMainWindowTextViewAppearance.plist in Resources */,
 				4C06E11E20EC4A630055D09A /* TPWTB_Addons@2x.png in Resources */,
 				4C06E08820EC4A540055D09A /* FormattingColor_2.png in Resources */,
@@ -6698,7 +6692,6 @@
 				4C06E20120EC4AC50055D09A /* TDCHighlightEntrySheet.xib in Resources */,
 				4C06DF4120EC49A70055D09A /* StaticStore.plist in Resources */,
 				4C06E13120EC4A640055D09A /* TPWTB_Interface.png in Resources */,
-				4C06DF3B20EC49A70055D09A /* 3rdPartyStaticStoreSparkleFramework.plist in Resources */,
 				4C06E22D20EC4AC50055D09A /* TVCMainWindowTextViewAppearance.plist in Resources */,
 				4C06E12E20EC4A640055D09A /* TPWTB_Addons@2x.png in Resources */,
 				4C06E07620EC4A530055D09A /* FormattingColor_2.png in Resources */,
@@ -6850,7 +6843,6 @@
 				4C06E1FF20EC4AC50055D09A /* TDCHighlightEntrySheet.xib in Resources */,
 				4C06DF2F20EC49A60055D09A /* StaticStore.plist in Resources */,
 				4C06E11120EC4A630055D09A /* TPWTB_Interface.png in Resources */,
-				4C06DF2920EC49A60055D09A /* 3rdPartyStaticStoreSparkleFramework.plist in Resources */,
 				4C06E22B20EC4AC50055D09A /* TVCMainWindowTextViewAppearance.plist in Resources */,
 				4C06E10E20EC4A630055D09A /* TPWTB_Addons@2x.png in Resources */,
 				4C06E09A20EC4A540055D09A /* FormattingColor_2.png in Resources */,

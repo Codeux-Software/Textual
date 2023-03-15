@@ -1293,7 +1293,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateCheckForUpdatesMatrix
 {
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	SUUpdater *updater = [SUUpdater sharedUpdater];
+	SPUUpdater *updater = masterController().updateController.updater;
 
 	self.checkForUpdatesAutomaticallyDownload.state = updater.automaticallyDownloadsUpdates;
 	self.checkForUpdatesAutomaticallyCheck.state = updater.automaticallyChecksForUpdates;
@@ -1305,7 +1305,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)onChangedCheckForUpdates:(id)sender
 {
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	SUUpdater *updater = [SUUpdater sharedUpdater];
+	SPUUpdater *updater = masterController().updateController.updater;
 
 	updater.automaticallyChecksForUpdates = (self.checkForUpdatesAutomaticallyCheck.state == NSOnState);
 	updater.automaticallyDownloadsUpdates = (self.checkForUpdatesAutomaticallyDownload.state == NSOnState);
