@@ -38,6 +38,7 @@
 
 #import "TXGlobalModels.h"
 #import "IRCWorld.h"
+#import "IRCUserNicknameColorStyleGeneratorPrivate.h"
 #import "TPCApplicationInfoPrivate.h"
 #import "TPCPathInfoPrivate.h"
 #import "TPCPreferencesUserDefaultsLocal.h"
@@ -1227,6 +1228,26 @@ static NSArray<NSString *> *_matchKeywords = nil;
 }
 #endif
 
++ (void)_migrateNicknameColorOverridesToVersion722
+{
+	/* Migrate from database that used NSArchiver to one that uses NSKeyedArchiver. */
+
+#define _defaultsKey	@"TPCPreferences -> Migration -> Nickname Color Style Overrides"
+
+	BOOL overridesMigrated = [RZUserDefaults() boolForKey:_defaultsKey];
+
+	if (overridesMigrated) {
+		return;
+	}
+
+	[IRCUserNicknameColorStyleGenerator migrateNicknameColorStyleOverrides];
+
+	[RZUserDefaults() setBool:YES forKey:_defaultsKey];
+
+#undef _defaultsKey
+
+}
+
 + (void)_migrateAppearanceToVersion7011 /* 7.0.11 turned into 7.1.0 */
 {
 
@@ -1414,6 +1435,8 @@ TEXTUAL_IGNORE_DEPRECATION_END
 #endif
 
 	[self _migrateAppearanceToVersion7011];
+
+	[self _migrateNicknameColorOverridesToVersion722];
 
 	[TPCPathInfo startUsingTranscriptFolderURL];
 

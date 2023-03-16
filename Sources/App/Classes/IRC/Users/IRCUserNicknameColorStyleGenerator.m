@@ -45,7 +45,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define _overridesDefaultsKey		@"Nickname Color Style Overrides"
+#define _overridesDefaultsKey			@"Nickname Color Style Overrides (v2)"
 
 @implementation IRCUserNicknameColorStyleGenerator
 
@@ -184,18 +184,46 @@ NS_ASSUME_NONNULL_BEGIN
  *    1. Easier to work with when modifying. No need to perform messy string conversion.
  *    2. Easier to change output format in another update (if that decision is made)
  */
-/*
- *	 March 15, 2023:
- *
- *	 Looking back at this code I do not know why I ever chose to archive the color
- *	 in the dictionary prior to storing it. NSDictionary and NSUserDefaults are
- *	 entirely capable of storing an NSColor without prior manipulation because
- *	 the data type already conforms to secure coding. I could modify this code
- *	 to get ride of the archiving. I will not however as that adds the extra
- *	 complexity of migrating data types. There is some /potential/ performance
- *	 gain by removing that middle man. Not by a lot. Instead of doing the correct
- *	 thing I will leave this message as a form of self relection.
- */
++ (void)migrateNicknameColorStyleOverrides
+{
+	/* Migrate from database that used NSArchiver to one that uses NSKeyedArchiver. */
+	/* This migration is non-destructive to the legacy database. The data that is
+	 translated to NSKeyedUnarchiver is saved into a new defaults key. */
+
+	NSDictionary *legacyOverrides = [RZUserDefaults() dictionaryForKey:@"Nickname Color Style Overrides"];
+
+	NSMutableDictionary<NSString *, NSData *> *newOverrides = [NSMutableDictionary dictionaryWithCapacity:legacyOverrides.count];
+
+	[legacyOverrides enumerateKeysAndObjectsUsingBlock:^(NSString *key, id obj, BOOL *stop) {
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
+		id override = [NSUnarchiver unarchiveObjectWithData:obj];
+TEXTUAL_IGNORE_DEPRECATION_END
+
+		if (override == nil || [override isKindOfClass:[NSColor class]] == NO) {
+			LogToConsoleError("Failed to decode contents of '%@'", key);
+
+			return;
+		}
+
+		NSError *error;
+
+		override = [NSKeyedArchiver archivedDataWithRootObject:override
+										 requiringSecureCoding:YES
+														 error:&error];
+
+		if (error) {
+			LogToConsoleError("Failed to decode contents for '%@': %@",
+				 key, error.description);
+
+			return;
+		}
+
+		[newOverrides setObject:override forKey:key];
+	}];
+
+	[RZUserDefaults() setObject:[newOverrides copy] forKey:_overridesDefaultsKey];
+}
+
 + (nullable NSColor *)nicknameColorStyleOverrideForKey:(NSString *)styleKey
 {
 	NSParameterAssert(styleKey != nil);
@@ -217,6 +245,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSColor *colorValue = [NSKeyedUnarchiver unarchivedObjectOfClass:[NSColor class]
 															fromData:colorObject
 															   error:&error];
+
 	if (error) {
 		LogToConsoleError("Failed to decode color for '%@': %@",
 				styleKey, error.description);
