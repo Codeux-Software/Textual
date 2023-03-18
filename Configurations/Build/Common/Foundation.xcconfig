@@ -70,7 +70,7 @@ LD_NO_PIE = YES
 LD_NO_PIE[arch=arm64] = NO
 LD_RUNPATH_SEARCH_PATHS = @loader_path/../Frameworks @executable_path/../Frameworks
 LIBRARY_SEARCH_PATHS =
-MACOSX_DEPLOYMENT_TARGET = 10.13
+MACOSX_DEPLOYMENT_TARGET = 11.0
 ONLY_ACTIVE_ARCH = NO
 OTHER_CFLAGS = -Xclang -fobjc-runtime-has-weak
 PLIST_FILE_OUTPUT_FORMAT = binary
