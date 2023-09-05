@@ -105,6 +105,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSButton *clientCertificateMD5FingerprintCopyButton;
 @property (nonatomic, weak) IBOutlet NSButton *clientCertificateSHA1FingerprintCopyButton;
 @property (nonatomic, weak) IBOutlet NSButton *clientCertificateSHA2FingerprintCopyButton;
+@property (nonatomic, weak) IBOutlet NSButton *clientCertificateSHA512FingerprintCopyButton;
 @property (nonatomic, weak) IBOutlet NSButton *connectionIPv4AddressTypeCheck;
 @property (nonatomic, weak) IBOutlet NSButton *connectionIPv6AddressTypeCheck;
 @property (nonatomic, weak) IBOutlet NSButton *connectionDefaultddressTypeCheck;
@@ -136,6 +137,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IBOutlet NSTextField *clientCertificateMD5FingerprintField;
 @property (nonatomic, weak) IBOutlet NSTextField *clientCertificateSHA1FingerprintField;
 @property (nonatomic, weak) IBOutlet NSTextField *clientCertificateSHA2FingerprintField;
+@property (nonatomic, weak) IBOutlet NSTextField *clientCertificateSHA512FingerprintField;
 @property (nonatomic, weak) IBOutlet NSTextField *nicknamePasswordTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *proxyPasswordTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *proxyUsernameTextField;
@@ -208,6 +210,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)onClientCertificateResetRequested:(id)sender;
 - (IBAction)onClientCertificateChangeRequested:(id)sender;
+- (IBAction)onClientCertificateFingerprintSHA512CopyRequested:(id)sender;
 - (IBAction)onClientCertificateFingerprintSHA2CopyRequested:(id)sender;
 - (IBAction)onClientCertificateFingerprintSHA1CopyRequested:(id)sender;
 - (IBAction)onClientCertificateFingerprintMD5CopyRequested:(id)sender;
@@ -1514,6 +1517,15 @@ TEXTUAL_IGNORE_DEPRECATION_END
 #pragma mark -
 #pragma mark SSL Certificate
 
+- (void)onClientCertificateFingerprintSHA512CopyRequested:(id)sender
+{
+    NSString *fingerprint = self.clientCertificateSHA512FingerprintField.stringValue;
+
+    NSString *command = [NSString stringWithFormat:@"/msg NickServ cert add %@", fingerprint];
+
+    RZPasteboard().stringContent = command;
+}
+
 - (void)onClientCertificateFingerprintSHA2CopyRequested:(id)sender
 {
 	NSString *fingerprint = self.clientCertificateSHA2FingerprintField.stringValue;
@@ -1542,6 +1554,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 }
 
 - (void)readClientCertificateCommonName:(NSString **)commonNameOut
+					  sha512Fingerprint:(NSString **)sha512FingerprintOut
 						sha2Fingerprint:(NSString **)sha2FingerprintOut
 						sha1Fingerprint:(NSString **)sha1FingerprintOut
 						 md5Fingerprint:(NSString **)md5FingerprintOut
@@ -1587,6 +1600,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	if (certificateDataRef) {
 		NSData *certificateData = (__bridge NSData *)certificateDataRef;
 
+		*sha512FingerprintOut = certificateData.sha512;
 		*sha2FingerprintOut = certificateData.sha256;
 		*sha1FingerprintOut = certificateData.sha1;
 		*md5FingerprintOut = certificateData.md5;
@@ -1651,11 +1665,13 @@ TEXTUAL_IGNORE_DEPRECATION_END
 {
 	NSString *commonName = nil;
 
+	NSString *sha512Fingerprint = nil;
 	NSString *sha2Fingerprint = nil;
 	NSString *sha1Fingerprint = nil;
 	NSString *md5Fingerprint = nil;
 
 	[self readClientCertificateCommonName:&commonName
+						sha512Fingerprint:&sha512Fingerprint
 						  sha2Fingerprint:&sha2Fingerprint
 						  sha1Fingerprint:&sha1Fingerprint
 						   md5Fingerprint:&md5Fingerprint];
@@ -1664,13 +1680,15 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	if (hasNoCertificate) {
 		self.clientCertificateCommonNameField.stringValue = TXTLS(@"TDCServerPropertiesSheet[6xz-ec]");
-
+		
+		self.clientCertificateSHA512FingerprintField.stringValue = TXTLS(@"TDCServerPropertiesSheet[6xz-ec]");
 		self.clientCertificateSHA2FingerprintField.stringValue = TXTLS(@"TDCServerPropertiesSheet[6xz-ec]");
 		self.clientCertificateSHA1FingerprintField.stringValue = TXTLS(@"TDCServerPropertiesSheet[6xz-ec]");
 		self.clientCertificateMD5FingerprintField.stringValue = TXTLS(@"TDCServerPropertiesSheet[6xz-ec]");
 	} else {
 		self.clientCertificateCommonNameField.stringValue = commonName;
 
+		self.clientCertificateSHA512FingerprintField.stringValue = sha512Fingerprint.uppercaseString;
 		self.clientCertificateSHA2FingerprintField.stringValue = sha2Fingerprint.uppercaseString;
 		self.clientCertificateSHA1FingerprintField.stringValue = sha1Fingerprint.uppercaseString;
 		self.clientCertificateMD5FingerprintField.stringValue = md5Fingerprint.uppercaseString;
@@ -1678,6 +1696,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	self.clientCertificateResetCertificateButton.enabled = (hasNoCertificate == NO);
 
+	self.clientCertificateSHA512FingerprintCopyButton.enabled = (hasNoCertificate == NO);
 	self.clientCertificateSHA2FingerprintCopyButton.enabled = (hasNoCertificate == NO);
 	self.clientCertificateSHA1FingerprintCopyButton.enabled = (hasNoCertificate == NO);
 	self.clientCertificateMD5FingerprintCopyButton.enabled = (hasNoCertificate == NO);
