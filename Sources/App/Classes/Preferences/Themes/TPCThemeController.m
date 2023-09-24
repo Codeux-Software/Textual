@@ -1375,7 +1375,7 @@ typedef NSMutableDictionary	<NSString *, TPCTheme *> 	*TPCThemeControllerThemeLi
 	/* Once started, the operation cannot be cancelled. It will occur
 	 then it will either call -cancelOperation itself on failure or wait
 	 for the theme controller itself to call -completeOperation which 
-	 signials to the copier that the theme controller sees the files. */
+	 signals to the copier that the theme controller sees the files. */
 	[self performBlockOnGlobalQueue:^{
 		[self _beginOperation];
 	}];
