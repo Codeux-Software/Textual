@@ -253,7 +253,7 @@ ClassWithDesignatedInitializerInitMethod
 		}
 
 		[webView loadFileURL:filePath
-	 allowingReadAccessToURL:[TPCPathInfo applicationTemporaryURL]];
+	 allowingReadAccessToURL:themeController().temporaryURL];
 	}
 	else
 	{

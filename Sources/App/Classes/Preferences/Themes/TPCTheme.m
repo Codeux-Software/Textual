@@ -261,7 +261,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (void)_assignTemporaryURL
 {
-	NSURL *sourceURL = [TPCPathInfo applicationTemporaryProcessSpecificURL];
+//	NSURL *sourceURL = [TPCPathInfo applicationTemporaryProcessSpecificURL];
+	NSURL *sourceURL = [TPCPathInfo applicationCachesURL];
 
 	NSURL *baseURL = [sourceURL URLByAppendingPathComponent:@"/Cached-Style-Resources/"];
 
