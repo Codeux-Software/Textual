@@ -12168,9 +12168,10 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 		[self.requestedCommands recordIsonRequestOpened];
 	}
 
-	NSString *nicknamesString = [nicknames componentsJoinedByString:@" "];
-
-	[self send:@"ISON", nicknamesString, nil];
+    [nicknames enumerateSubarraysOfSize:8 usingBlock:^(NSArray *objects, BOOL *stop) {
+        NSString *nicknamesString = [objects componentsJoinedByString:@" "];
+        [self send:@"ISON", nicknamesString, nil];
+    }];
 }
 
 - (void)requestChannelList
