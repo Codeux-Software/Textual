@@ -224,6 +224,7 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, strong) TLOTimer *whoTimer;
 @property (nonatomic, assign) BOOL capabilityNegotiationIsPaused;
 @property (nonatomic, assign) BOOL invokingISONCommandForFirstTime;
+@property (nonatomic, assign) BOOL invokingBatchedISONCommand;
 @property (nonatomic, assign) BOOL isTerminating; // Is being destroyed
 @property (nonatomic, assign) BOOL inWhoisResponse;
 @property (nonatomic, assign) BOOL inWhowasResponse;
@@ -241,6 +242,7 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 @property (nonatomic, assign) NSUInteger autojoinDelayedWarningCount;
 @property (nonatomic, copy, nullable) NSString *tryingNicknameSentNickname;
 @property (nonatomic, strong) NSMutableArray<IRCChannel *> *channelListPrivate;
+@property (nonatomic, strong) NSMutableArray<NSString *> *onlineNicknames;
 @property (nonatomic, strong, nullable) NSMutableArray<IRCChannel *> *channelsToAutojoin;
 @property (nonatomic, strong) IRCAddressBookMatchCache *addressBookMatchCache;
 @property (nonatomic, strong) IRCAddressBookUserTrackingContainer *trackedUsers;
@@ -319,6 +321,8 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 	self.addressBookMatchCache = [[IRCAddressBookMatchCache alloc] initWithClient:self];
 	
 	self.trackedUsers = [[IRCAddressBookUserTrackingContainer alloc] initWithClient:self];
+
+    self.onlineNicknames = [NSMutableArray array];
 
 	self.requestedCommands = [IRCClientRequestedCommands new];
 
@@ -9463,6 +9467,16 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 
 			NSArray *onlineNicknames = [onlineNicknamesString componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
+            [self.onlineNicknames addObjectsFromArray: onlineNicknames];
+
+            /* If we were invoking a batched ISON command and there's still
+             batches to process, wait until we've the last batch before
+             updating the channel list */
+            if (self.invokingBatchedISONCommand)
+                return;
+
+            onlineNicknames = self.onlineNicknames;
+
 			/* Start going over the list of tracked nicknames */
 			NSDictionary *trackedUsers = self.trackedUsers.trackedUsers;
 
@@ -12161,6 +12175,8 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 	if (nicknames.count == 0) {
 		return;
 	}
+    
+    [self.onlineNicknames removeAllObjects];
 
 	if (hideResponse == NO) {
 		[self.requestedCommands recordIsonRequestOpenedAsVisible];
@@ -12168,9 +12184,12 @@ NSString * const IRCClientUserNicknameChangedNotification = @"IRCClientUserNickn
 		[self.requestedCommands recordIsonRequestOpened];
 	}
 
-	NSString *nicknamesString = [nicknames componentsJoinedByString:@" "];
-
-	[self send:@"ISON", nicknamesString, nil];
+    self.invokingBatchedISONCommand = true;
+    [nicknames enumerateSubarraysOfSize:8 usingBlock:^(NSArray *objects, BOOL *stop) {
+        NSString *nicknamesString = [objects componentsJoinedByString:@" "];
+        [self send:@"ISON", nicknamesString, nil];
+    }];
+    self.invokingBatchedISONCommand = false;
 }
 
 - (void)requestChannelList
